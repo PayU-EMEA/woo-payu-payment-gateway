@@ -1,4 +1,16 @@
 <?php
+/**
+ * Plugin Name: PayU - WooCommerce Gateway
+ * Plugin URI: http://payu.pl
+ * Description: Bramka płatności PayU dla WooCommerce.
+ * Version: 2.1.0
+ * Author: PayU
+ * Copyright Copyright (c) 2015 PayU
+ * License: http://opensource.org/licenses/LGPL-3.0  Open Software License (LGPL 3.0)
+ * http://www.payu.com
+ * http://openpayu.com
+ * http://twitter.com/openpayu
+ */
 
 require_once 'lib/openpayu.php';
 
@@ -7,6 +19,7 @@ class BPMJ_WooCommerce_PayU extends WC_Payment_Gateway {
     function __construct() {
 
         $this->id = "bpmj_payu";
+        $this->pluginVersion = '2.1.0';
 
         $this->method_title = __( "PayU", 'bpmj-woocommerce-payu' );
         $this->method_description = __( "Bramka płatności PayU dla WooCommerce.", 'bpmj-woocommerce-payu' );
@@ -49,13 +62,35 @@ class BPMJ_WooCommerce_PayU extends WC_Payment_Gateway {
         add_action( 'woocommerce_order_status_changed', array( $this, 'change_status_action' ), 10, 3 );
 
         // konfiguracja OpenPayU
+        $this->initializeOpenPayU();
+
+        $this->notifyUrl = str_replace('https:', 'http:', add_query_arg('wc-api', 'BPMJ_WooCommerce_PayU', home_url('/')));
+    }
+
+    protected function initializeOpenPayU()
+    {
+        OpenPayU_Configuration::setApiVersion(2.1);
         OpenPayU_Configuration::setEnvironment('secure');
         $key = 'pos_id_' . $this->currency_slug;
         OpenPayU_Configuration::setMerchantPosId($this->$key); // POS ID (Checkout)
         $key = 'md5_' . $this->currency_slug;
         OpenPayU_Configuration::setSignatureKey($this->$key); // Drugi klucz MD5
+        OpenPayU_Configuration::setSender('WooCommerce ver ' . $this->getWoocommerceVersionNumber() . '/Plugin ver ' . $this->pluginVersion);
+    }
 
-        $this->notifyUrl = str_replace('https:', 'http:', add_query_arg('wc-api', 'BPMJ_WooCommerce_PayU', home_url('/')));
+    function getWoocommerceVersionNumber() {
+        if ( ! function_exists( 'get_plugins' ) )
+            require_once( ABSPATH . 'wp-admin/includes/plugin.php' );
+
+        $pluginFolder = get_plugins( '/' . 'woocommerce' );
+        $pluginFile = 'woocommerce.php';
+
+        if ( isset( $pluginFolder[$pluginFile]['Version'] ) ) {
+            return $pluginFolder[$pluginFile]['Version'];
+
+        } else {
+            return false;
+        }
     }
 
     public function is_valid_for_use(){
@@ -130,6 +165,7 @@ class BPMJ_WooCommerce_PayU extends WC_Payment_Gateway {
         $order->update_status('pending', __('Płatność jest w trakcie rozliczenia.', 'bpmj-woocommerce-payu'));
 
         $woocommerce->cart->empty_cart();
+        $shipping = round($order->get_total_shipping() * 100);
 
         $orderData['continueUrl'] = $this->get_return_url($order);
         $orderData['notifyUrl'] = $this->notifyUrl;
@@ -137,8 +173,8 @@ class BPMJ_WooCommerce_PayU extends WC_Payment_Gateway {
         $orderData['merchantPosId'] = OpenPayU_Configuration::getMerchantPosId();
         $orderData['description'] = get_bloginfo('name') . ' #' . $order->get_order_number();
         $orderData['currencyCode'] = $this->currency;
-        $orderData['totalAmount'] = round( round( $order->get_total(), 2) * 100 );
-        $orderData['extOrderId'] = $order->get_order_number(); // musi być unikalny dla danego Pos'a
+        $orderData['totalAmount'] = round( round( $order->get_total(), 2) * 100 ) - $shipping;
+        $orderData['extOrderId'] = $order->get_order_number().'__'.microtime(); // musi być unikalny dla danego Pos'a
 
         if( !empty ( $this->validity_time ) )
             $orderData['validityTime'] = $this->validity_time;
@@ -152,11 +188,12 @@ class BPMJ_WooCommerce_PayU extends WC_Payment_Gateway {
             $i++;
         }
 
-        $shipping = $order->get_total_shipping();
         if( !empty( $shipping) ) {
-            $orderData['products'][$i]['name'] = __('Koszty wysyłki', 'bpmj-woocommerce-payu');
-            $orderData['products'][$i]['unitPrice'] = round( $shipping * 100.0 );
-            $orderData['products'][$i]['quantity'] = 1;
+            $orderData['shippingMethods'][] = array(
+                'price' => $shipping,
+                'name' => __('Koszty wysyłki', 'bpmj-woocommerce-payu'),
+                'country' => 'PL'
+            );
         }
 
         $orderData['buyer']['email'] = $order->billing_email;
@@ -164,25 +201,25 @@ class BPMJ_WooCommerce_PayU extends WC_Payment_Gateway {
         $orderData['buyer']['firstName'] = $order->billing_first_name;
         $orderData['buyer']['lastName'] = $order->billing_last_name;
 
-        try {
-            $response = OpenPayU_Order::create($orderData);
+//        try {
+        $response = OpenPayU_Order::create($orderData);
 
-            if($response->getStatus() == 'SUCCESS'){
-                add_post_meta( $order_id, '_transaction_id', $response->getResponse()->orderId, true );
+        if($response->getStatus() == 'SUCCESS'){
+            add_post_meta( $order_id, '_transaction_id', $response->getResponse()->orderId, true );
 
-                return array(
-                    'result' => 'success',
-                    'redirect' => $response->getResponse()->redirectUri
-                );
-            }
-            else {
-                wc_add_notice( __('Błąd płatności. Status z PayU: ', 'bpmj-woocommerce-payu') . $response->getStatus(), 'error' );
-                return;
-            }
-        } catch (OpenPayU_Exception $e) {
-            wc_add_notice( __('Błąd płatności: ', 'bpmj-woocommerce-payu') . $e->getCode() . ' ' . $e->getMessage(), 'error' );
+            return array(
+                'result' => 'success',
+                'redirect' => $response->getResponse()->redirectUri
+            );
+        }
+        else {
+            wc_add_notice( __('Błąd płatności. Status z PayU: ', 'bpmj-woocommerce-payu') . $response->getStatus(), 'error' );
             return;
         }
+//        } catch (OpenPayU_Exception $e) {
+//            wc_add_notice( __('Błąd płatności: ', 'bpmj-woocommerce-payu') . $e->getCode() . ' ' . $e->getMessage(), 'error' );
+//            return;
+//        }
     }
 
     function gateway_ipn () {
@@ -254,7 +291,7 @@ class BPMJ_WooCommerce_PayU extends WC_Payment_Gateway {
 
             if( empty( $orderId ) )
                 return false;
-            
+
             // zatwierdzenie płatności oczekującej WAITING_FOR_CONFIRMATION -> COMPLETED
             if( $old_status == 'on-hold' && ( $new_status == 'processing' || $new_status == 'completed' ) ) {
                 $status_update = array(
@@ -270,7 +307,7 @@ class BPMJ_WooCommerce_PayU extends WC_Payment_Gateway {
                 $response = OpenPayU_Order::cancel($orderId);
             }
         }
- 
+
     }
 
 }
