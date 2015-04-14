@@ -1,13 +1,4 @@
 <?php
-/**
- * Plugin Name: PayU Payment Gateway
- * Plugin URI: https://github.com/PayU/plugin_woocommerce
- * Description: PayU payment gateway for WooCommerce
- * Version: 1.0.0
- * Author: PayU SA
- * Copyright (c) 2015 PayU
- * License: LGPL 3.0
- */
 
 require_once 'lib/openpayu.php';
 
