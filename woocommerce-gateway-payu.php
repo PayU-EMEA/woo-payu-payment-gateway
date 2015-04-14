@@ -11,8 +11,7 @@
 
 add_action('plugins_loaded', 'woocommerce_payu_init', 0);
 
-function woocommerce_payu_init()
-{
+function woocommerce_payu_init() {
     if (!class_exists('WC_Payment_Gateway')) return;
 
     include_once('includes/class-woocommerce-payu.php');
