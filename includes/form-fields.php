@@ -37,11 +37,11 @@ return array(
         'title' => __('Ważność zamówienia [s]:', 'payu'),
         'type' => 'text',
         'description' =>  __('Wpisz tutaj, czas (w sekundach) po jakim nieopłacone zamówienie powinno stracić ważność.', 'payu'),
-        'default' => '',
+        'default' => '1440',
         'desc_tip' => true
     ),
     'payu_feedback' => array(
-        'title'=> __('Wysyłaj statusy do PayU', 'payu'),
+        'title'=> __('Autoodbiór wyłączony', 'payu'),
         'type' => 'checkbox',
         'description' =>  __('Zaznacz tę opcję, jeśli chcesz, aby przy ręcznej zmianie statusu zamówienia na anulowane lub zakceptowane informować PayU, w celu odrzucenia lub przyjęcia płatności.', 'payu'),
         'label' => __('Włącz', 'payu'),
