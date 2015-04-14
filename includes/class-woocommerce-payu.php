@@ -11,17 +11,17 @@
 
 require_once 'lib/openpayu.php';
 
-class BPMJ_WooCommerce_PayU extends WC_Payment_Gateway {
+class WC_Gateway_PayU extends WC_Payment_Gateway {
 
     function __construct() {
-        $this->id = "bpmj_payu";
+        $this->id = "payu";
         $this->pluginVersion = '1.0.0';
         $this->has_fields = false;
         $this->supported_currencies = array('PLN', 'EUR', 'USD', 'GPB');
 
-        $this->order_button_text = __('Pay with PayU', 'bpmj-woocommerce-payu');
-        $this->method_title = __("PayU", 'bpmj-woocommerce-payu');
-        $this->method_description = __('Official PayU payment gateway for WooCommerce', 'bpmj-woocommerce-payu');
+        $this->order_button_text = __('Pay with PayU', 'payu');
+        $this->method_title = __("PayU", 'payu');
+        $this->method_description = __('Official PayU payment gateway for WooCommerce', 'payu');
 
         $this->icon = apply_filters('woocommerce_payu_icon', plugins_url('assets/images/payu.png', dirname(__FILE__)));
 
@@ -50,7 +50,7 @@ class BPMJ_WooCommerce_PayU extends WC_Payment_Gateway {
         add_action('woocommerce_update_options_payment_gateways_' . $this->id, array($this, 'process_admin_options'));
 
         // Payment listener/API hook
-        add_action('woocommerce_api_bpmj_woocommerce_payu', array($this, 'gateway_ipn'));
+        add_action('woocommerce_api_wc_gateway_payu', array($this, 'gateway_ipn'));
 
         // Zmiana statusu
         add_action('woocommerce_order_status_changed', array($this, 'change_status_action'), 10, 3);
@@ -58,7 +58,7 @@ class BPMJ_WooCommerce_PayU extends WC_Payment_Gateway {
         // konfiguracja OpenPayU
         $this->init_OpenPayU();
 
-        $this->notifyUrl = str_replace('https:', 'http:', add_query_arg('wc-api', 'BPMJ_WooCommerce_PayU', home_url('/')));
+        $this->notifyUrl = str_replace('https:', 'http:', add_query_arg('wc-api', 'WC_Gateway_PayU', home_url('/')));
     }
 
     protected function init_OpenPayU()
@@ -82,9 +82,9 @@ class BPMJ_WooCommerce_PayU extends WC_Payment_Gateway {
         } else {
             ?>
             <h2><?php echo $this->get_description(); ?></h2>
-            <h3><?php _e('Gateway has been disabled.', 'bpmj-woocommerce-payu'); ?></h3>
-            <p><?php _e("This plugin doesn't support the currency of your shop.", 'bpmj-woocommerce-payu'); ?></p>
-            <p><?php _e("Supported currencies: ", 'bpmj-woocommerce-payu'); ?> <?php echo implode(', ', $this->supported_currencies); ?>.</p>
+            <h3><?php _e('Gateway has been disabled.', 'payu'); ?></h3>
+            <p><?php _e("This plugin doesn't support the currency of your shop.", 'payu'); ?></p>
+            <p><?php _e("Supported currencies: ", 'payu'); ?> <?php echo implode(', ', $this->supported_currencies); ?>.</p>
             <?php
         }
     }
@@ -98,7 +98,7 @@ class BPMJ_WooCommerce_PayU extends WC_Payment_Gateway {
 
         $order = new WC_Order($order_id);
 
-        $order->update_status('pending', __('Płatność jest w trakcie rozliczenia.', 'bpmj-woocommerce-payu'));
+        $order->update_status('pending', __('Płatność jest w trakcie rozliczenia.', 'payu'));
 
         $woocommerce->cart->empty_cart();
         $shipping = round($order->get_total_shipping() * 100);
@@ -128,7 +128,7 @@ class BPMJ_WooCommerce_PayU extends WC_Payment_Gateway {
         if (!empty($shipping)) {
             $orderData['shippingMethods'][] = array(
                 'price' => $shipping,
-                'name' => __('Koszty wysyłki', 'bpmj-woocommerce-payu'),
+                'name' => __('Koszty wysyłki', 'payu'),
                 'country' => 'PL'
             );
         }
@@ -150,12 +150,12 @@ class BPMJ_WooCommerce_PayU extends WC_Payment_Gateway {
                 );
             }
             else {
-                wc_add_notice(__('Błąd płatności. Status z PayU: ', 'bpmj-woocommerce-payu') . $response->getStatus(), 'error');
+                wc_add_notice(__('Błąd płatności. Status z PayU: ', 'payu') . $response->getStatus(), 'error');
 
                 return;
             }
         } catch (OpenPayU_Exception $e) {
-            wc_add_notice(__('Błąd płatności: ', 'bpmj-woocommerce-payu') . $e->getCode() . ' ' . $e->getMessage(), 'error');
+            wc_add_notice(__('Błąd płatności: ', 'payu') . $e->getCode() . ' ' . $e->getMessage(), 'error');
 
             return;
         }
@@ -179,11 +179,11 @@ class BPMJ_WooCommerce_PayU extends WC_Payment_Gateway {
                     break;
 
                 case 'CANCELED':
-                    $order->update_status('cancelled', __('Płatność została anulowana.', 'bpmj-woocommerce-payu'));
+                    $order->update_status('cancelled', __('Płatność została anulowana.', 'payu'));
                     break;
 
                 case 'REJECTED':
-                    $order->update_status('failed', __('Płatność została odrzucona z uwagi na życzenie sprzedawcy.', 'bpmj-woocommerce-payu'));
+                    $order->update_status('failed', __('Płatność została odrzucona z uwagi na życzenie sprzedawcy.', 'payu'));
                     break;
 
                 case 'COMPLETED':
@@ -191,7 +191,7 @@ class BPMJ_WooCommerce_PayU extends WC_Payment_Gateway {
                     break;
 
                 case 'WAITING_FOR_CONFIRMATION':
-                    $order->update_status('on-hold', __('System PayU oczekuje na akcje ze strony sprzedawcy w celu wykonania płatności. Ten status występuje w przypadku gdy auto-odbiór na posie sprzedawcy jest wyłączony.', 'bpmj-woocommerce-payu'));
+                    $order->update_status('on-hold', __('System PayU oczekuje na akcje ze strony sprzedawcy w celu wykonania płatności. Ten status występuje w przypadku gdy auto-odbiór na posie sprzedawcy jest wyłączony.', 'payu'));
                     break;
 
                 default:
@@ -211,7 +211,7 @@ class BPMJ_WooCommerce_PayU extends WC_Payment_Gateway {
 
         $refund = OpenPayU_Refund::create(
             $orderId,
-            __('Zwrot kwoty: ', 'bpmj-woocommerce-payu') . ' ' . $amount . ' ' . $this->currency . __(' dla zamówienia nr: ', 'bpmj-woocommerce-payu') . $order_id,
+            __('Zwrot kwoty: ', 'payu') . ' ' . $amount . ' ' . $this->currency . __(' dla zamówienia nr: ', 'payu') . $order_id,
             round($amount * 100.0)
         );
 

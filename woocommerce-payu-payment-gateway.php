@@ -17,11 +17,11 @@ function woocommerce_payu_init()
 
     include_once('includes/class-woocommerce-payu.php');
 
-    add_filter('woocommerce_payment_gateways', 'woocommerce_add_payu_gateway');
+    add_filter('woocommerce_payment_gateways', 'woocommerce_payu_add_gateway');
 }
 
-function woocommerce_add_payu_gateway($methods) {
-    $methods[] = 'BPMJ_WooCommerce_PayU';
+function woocommerce_payu_add_gateway($methods) {
+    $methods[] = 'WC_Gateway_PayU';
 
     return $methods;
 }
