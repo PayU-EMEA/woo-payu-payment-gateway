@@ -1,15 +1,12 @@
 <?php
 /**
- * Plugin Name: PayU - WooCommerce Gateway
- * Plugin URI: http://payu.pl
- * Description: Bramka płatności PayU dla WooCommerce.
- * Version: 2.1.0
- * Author: PayU
- * Copyright Copyright (c) 2015 PayU
- * License: http://opensource.org/licenses/LGPL-3.0  Open Software License (LGPL 3.0)
- * http://www.payu.com
- * http://openpayu.com
- * http://twitter.com/openpayu
+ * Plugin Name: PayU Payment Gateway
+ * Plugin URI: https://github.com/PayU/plugin_woocommerce
+ * Description: PayU payment gateway for WooCommerce
+ * Version: 1.0.0
+ * Author: PayU SA
+ * Copyright (c) 2015 PayU
+ * License: LGPL 3.0
  */
 
 add_action( 'plugins_loaded', 'bpmj_woocommerce_payu_init', 0 );
