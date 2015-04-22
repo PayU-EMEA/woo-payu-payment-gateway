@@ -92,7 +92,8 @@ class WC_Gateway_PayU extends WC_Payment_Gateway {
         $order->update_status('pending', __('Płatność jest w trakcie rozliczenia.', 'payu'));
 
         $woocommerce->cart->empty_cart();
-        $shipping = round($order->get_total_shipping() * 100);
+
+        $shipping = $order->get_total_shipping();
 
         $orderData['continueUrl'] = $this->get_return_url($order);
         $orderData['notifyUrl'] = $this->notifyUrl;
@@ -100,7 +101,7 @@ class WC_Gateway_PayU extends WC_Payment_Gateway {
         $orderData['merchantPosId'] = OpenPayU_Configuration::getMerchantPosId();
         $orderData['description'] = get_bloginfo('name') . ' #' . $order->get_order_number();
         $orderData['currencyCode'] = $this->currency;
-        $orderData['totalAmount'] = round(round($order->get_total(), 2) * 100) - $shipping;
+        $orderData['totalAmount'] = round(round($order->get_total() - $shipping, 2) * 100);
         $orderData['extOrderId'] = $order->get_order_number() . '_' . microtime(true);
 
         if (!empty($this->validity_time)) {
@@ -116,13 +117,15 @@ class WC_Gateway_PayU extends WC_Payment_Gateway {
             $i++;
         }
 
-        if (!empty($shipping)) {
-            $orderData['shippingMethods'][] = array(
-                'price' => $shipping,
-                'name' => __('Koszty wysyłki', 'payu'),
-                'country' => 'PL'
-            );
-        }
+        $orderData['shippingMethods'][0]['name'] = $order->get_shipping_method();
+        $orderData['shippingMethods'][0]['country'] = $order->shipping_country;
+        $orderData['shippingMethods'][0]['price'] = round($shipping * 100);
+
+        $orderData['buyer']['delivery']['recipientName'] = trim($order->shipping_first_name . ' ' . $order->shipping_last_name);
+        $orderData['buyer']['delivery']['street'] = trim($order->shipping_address_1 . ' ' . $order->shipping_address_2);
+        $orderData['buyer']['delivery']['postalCode'] = $order->shipping_postcode;
+        $orderData['buyer']['delivery']['city'] = $order->shipping_city;
+        $orderData['buyer']['delivery']['countryCode'] = $order->shipping_country;
 
         $orderData['buyer']['email'] = $order->billing_email;
         $orderData['buyer']['phone'] = $order->billing_phone;
@@ -178,7 +181,22 @@ class WC_Gateway_PayU extends WC_Payment_Gateway {
                     break;
 
                 case 'COMPLETED':
+                    $shipping_address = $response->getResponse()->order->buyer->delivery;
+                    $recipient_name = preg_split("/ ([a-zA-Z_-]+)$/", $shipping_address->recipientName, -1, PREG_SPLIT_DELIM_CAPTURE | PREG_SPLIT_NO_EMPTY);
+
+                    $address = array(
+                        'first_name' => $recipient_name[0],
+                        'last_name' => $recipient_name[1],
+                        'city' => $shipping_address->city,
+                        'postcode' => $shipping_address->postalCode,
+                        'address_1' => $shipping_address->street,
+                        'address_2' => '',
+                        'country' => $shipping_address->countryCode
+                    );
+
+                    $order->set_address($address, 'shipping');
                     $order->payment_complete($transaction_id);
+
                     break;
 
                 case 'WAITING_FOR_CONFIRMATION':

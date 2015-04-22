@@ -21,14 +21,50 @@ return array(
         'default' => __('PayU - płatności internetowe, szybkie przelewy przez Internet', 'payu'),
         'desc_tip' => true
     ),
-    'pos_id_' . $this->currency_slug => array(
-        'title' => __('Id punktu płatności (pos_id):', 'payu'),
+    'pos_id_pln' => array(
+        'title' => __('[PLN] Id punktu płatności (pos_id):', 'payu'),
         'type' => 'text',
-        'description' => __('Wpisz tutaj identyfikator punktu płatności znajdujący się w sekcji KLUCZE KONFIGURACYJNE"'),
+        'description' => __('Wpisz tutaj identyfikator punktu płatności znajdujący się w sekcji KLUCZE KONFIGURACYJNE', 'payu'),
         'desc_tip' => true
     ),
-    'md5_' . $this->currency_slug => array(
-        'title' => __('Drugi klucz (MD5):', 'payu'),
+    'md5_pln' => array(
+        'title' => __('[PLN] Drugi klucz (MD5):', 'payu'),
+        'type' => 'text',
+        'description' =>  __('Wpisz tutaj drugi klucz MD5 punktu płatności znajdujący się w sekcji KLUCZE KONFIGURACYJNE', 'payu'),
+        'desc_tip' => true
+    ),
+    'pos_id_eur' => array(
+        'title' => __('[EUR] Id punktu płatności (pos_id):', 'payu'),
+        'type' => 'text',
+        'description' => __('Wpisz tutaj identyfikator punktu płatności znajdujący się w sekcji KLUCZE KONFIGURACYJNE', 'payu'),
+        'desc_tip' => true
+    ),
+    'md5_eur' => array(
+        'title' => __('[EUR] Drugi klucz (MD5):', 'payu'),
+        'type' => 'text',
+        'description' =>  __('Wpisz tutaj drugi klucz MD5 punktu płatności znajdujący się w sekcji KLUCZE KONFIGURACYJNE', 'payu'),
+        'desc_tip' => true
+    ),
+    'pos_id_usd' => array(
+        'title' => __('[USD] Id punktu płatności (pos_id):', 'payu'),
+        'type' => 'text',
+        'description' => __('Wpisz tutaj identyfikator punktu płatności znajdujący się w sekcji KLUCZE KONFIGURACYJNE', 'payu'),
+        'desc_tip' => true
+    ),
+    'md5_usd' => array(
+        'title' => __('[USD] Drugi klucz (MD5):', 'payu'),
+        'type' => 'text',
+        'description' =>  __('Wpisz tutaj drugi klucz MD5 punktu płatności znajdujący się w sekcji KLUCZE KONFIGURACYJNE', 'payu'),
+        'desc_tip' => true
+    ),
+    'pos_id_gpb' => array(
+        'title' => __('[GPB] Id punktu płatności (pos_id):', 'payu'),
+        'type' => 'text',
+        'description' => __('Wpisz tutaj identyfikator punktu płatności znajdujący się w sekcji KLUCZE KONFIGURACYJNE', 'payu'),
+        'desc_tip' => true
+    ),
+    'md5_gpb' => array(
+        'title' => __('[GPB] Drugi klucz (MD5):', 'payu'),
         'type' => 'text',
         'description' =>  __('Wpisz tutaj drugi klucz MD5 punktu płatności znajdujący się w sekcji KLUCZE KONFIGURACYJNE', 'payu'),
         'desc_tip' => true
