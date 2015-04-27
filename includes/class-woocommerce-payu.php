@@ -14,7 +14,7 @@ class WC_Gateway_PayU extends WC_Payment_Gateway {
         $this->method_title = __('PayU', 'payu');
         $this->method_description = __('Official PayU payment gateway for WooCommerce.', 'payu');
 
-        $this->icon = apply_filters('woocommerce_payu_icon', plugins_url('assets/images/payu.png', dirname(__FILE__)));
+        $this->icon = apply_filters('woocommerce_payu_icon', 'https://static.payu.com/plugins/woocommerce_payu_logo.png');
 
         $this->supports = array(
             'products',
