@@ -2,85 +2,85 @@
 
 return array(
     'enabled' => array(
-        'title'=> __('Enable / Disable', 'payu'),
+        'title'=> __('Enable', 'payu'),
         'type' => 'checkbox',
-        'label' => __('Enable PayU payment gateway', 'payu'),
+        'label' => __(' ', 'payu'),
         'default' => 'no'
     ),
     'title' => array(
         'title' => __('Title:', 'payu'),
         'type'=> 'text',
-        'description' => __('Tytuł, który widzi użytkownik podczas składania zamówienia.', 'payu'),
+        'description' => __('Title of PayU Payment Gateway that users sees on Checkout page.', 'payu'),
         'default' => __('PayU', 'payu'),
         'desc_tip' => true
     ),
     'description' => array(
         'title' => __('Description:', 'payu'),
         'type' => 'text',
-        'description' => __('Opis, który widzi użytkownik podczas składania zamówienia.', 'payu'),
-        'default' => __('PayU - płatności internetowe, szybkie przelewy przez Internet', 'payu'),
+        'description' => __('Description of PayU Payment Gateway that users sees on Checkout page.', 'payu'),
+        'default' => __('PayU is a leading payment services provider with presence in 16 growth markets across the world.', 'payu'),
         'desc_tip' => true
     ),
     'pos_id_pln' => array(
-        'title' => __('[PLN] Id punktu płatności (pos_id):', 'payu'),
+        'title' => __('[PLN] POS ID:', 'payu'),
         'type' => 'text',
-        'description' => __('Wpisz tutaj identyfikator punktu płatności znajdujący się w sekcji KLUCZE KONFIGURACYJNE', 'payu'),
+        'description' => __('Pos identifier from "Configuration Keys" section of PayU management panel.', 'payu'),
         'desc_tip' => true
     ),
     'md5_pln' => array(
-        'title' => __('[PLN] Drugi klucz (MD5):', 'payu'),
+        'title' => __('[PLN] Second key (MD5):', 'payu'),
         'type' => 'text',
-        'description' =>  __('Wpisz tutaj drugi klucz MD5 punktu płatności znajdujący się w sekcji KLUCZE KONFIGURACYJNE', 'payu'),
+        'description' =>  __('Second key from "Configuration Keys" section of PayU management panel.', 'payu'),
         'desc_tip' => true
     ),
     'pos_id_eur' => array(
-        'title' => __('[EUR] Id punktu płatności (pos_id):', 'payu'),
+        'title' => __('[EUR] POS ID:', 'payu'),
         'type' => 'text',
-        'description' => __('Wpisz tutaj identyfikator punktu płatności znajdujący się w sekcji KLUCZE KONFIGURACYJNE', 'payu'),
+        'description' => __('Pos identifier from "Configuration Keys" section of PayU management panel.', 'payu'),
         'desc_tip' => true
     ),
     'md5_eur' => array(
-        'title' => __('[EUR] Drugi klucz (MD5):', 'payu'),
+        'title' => __('[EUR] Second key (MD5):', 'payu'),
         'type' => 'text',
-        'description' =>  __('Wpisz tutaj drugi klucz MD5 punktu płatności znajdujący się w sekcji KLUCZE KONFIGURACYJNE', 'payu'),
+        'description' =>  __('Second key from "Configuration Keys" section of PayU management panel.', 'payu'),
         'desc_tip' => true
     ),
     'pos_id_usd' => array(
-        'title' => __('[USD] Id punktu płatności (pos_id):', 'payu'),
+        'title' => __('[USD] POS ID:', 'payu'),
         'type' => 'text',
-        'description' => __('Wpisz tutaj identyfikator punktu płatności znajdujący się w sekcji KLUCZE KONFIGURACYJNE', 'payu'),
+        'description' => __('Pos identifier from "Configuration Keys" section of PayU management panel.', 'payu'),
         'desc_tip' => true
     ),
     'md5_usd' => array(
-        'title' => __('[USD] Drugi klucz (MD5):', 'payu'),
+        'title' => __('[USD] Second key (MD5):', 'payu'),
         'type' => 'text',
-        'description' =>  __('Wpisz tutaj drugi klucz MD5 punktu płatności znajdujący się w sekcji KLUCZE KONFIGURACYJNE', 'payu'),
+        'description' =>  __('Second key from "Configuration Keys" section of PayU management panel.', 'payu'),
         'desc_tip' => true
     ),
     'pos_id_gpb' => array(
-        'title' => __('[GPB] Id punktu płatności (pos_id):', 'payu'),
+        'title' => __('[GPB] POS ID:', 'payu'),
         'type' => 'text',
-        'description' => __('Wpisz tutaj identyfikator punktu płatności znajdujący się w sekcji KLUCZE KONFIGURACYJNE', 'payu'),
+        'description' => __('Pos identifier from "Configuration Keys" section of PayU management panel.', 'payu'),
         'desc_tip' => true
     ),
     'md5_gpb' => array(
-        'title' => __('[GPB] Drugi klucz (MD5):', 'payu'),
+        'title' => __('[GPB] Second key (MD5):', 'payu'),
         'type' => 'text',
-        'description' =>  __('Wpisz tutaj drugi klucz MD5 punktu płatności znajdujący się w sekcji KLUCZE KONFIGURACYJNE', 'payu'),
+        'description' =>  __('Second key from "Configuration Keys" section of PayU management panel.', 'payu'),
         'desc_tip' => true
     ),
     'validity_time' => array(
-        'title' => __('Ważność zamówienia [s]:', 'payu'),
+        'title' => __('Validity time:', 'payu'),
         'type' => 'text',
-        'description' =>  __('Wpisz tutaj, czas (w sekundach) po jakim nieopłacone zamówienie powinno stracić ważność.', 'payu'),
+        'description' =>  __('Time when paying for order is possible (in seconds).', 'payu'),
         'default' => '1440',
         'desc_tip' => true
     ),
     'payu_feedback' => array(
-        'title'=> __('Autoodbiór wyłączony', 'payu'),
+        'title'=> __('Automatic collection', 'payu'),
         'type' => 'checkbox',
-        'description' =>  __('Zaznacz tę opcję, jeśli chcesz, aby przy ręcznej zmianie statusu zamówienia na anulowane lub zakceptowane informować PayU, w celu odrzucenia lub przyjęcia płatności.', 'payu'),
-        'label' => __('Włącz', 'payu'),
+        'description' =>  __('Automatic collection makes it possible to automatically confirm incoming payments.', 'payu'),
+        'label' => __(' ', 'payu'),
         'default' => 'no',
         'desc_tip' => true
     )

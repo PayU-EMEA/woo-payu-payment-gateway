@@ -11,8 +11,8 @@ class WC_Gateway_PayU extends WC_Payment_Gateway {
         $this->supported_currencies = array('PLN', 'EUR', 'USD', 'GPB');
 
         $this->order_button_text = __('Pay with PayU', 'payu');
-        $this->method_title = __("PayU", 'payu');
-        $this->method_description = __('Official PayU payment gateway for WooCommerce', 'payu');
+        $this->method_title = __('PayU', 'payu');
+        $this->method_description = __('Official PayU payment gateway for WooCommerce.', 'payu');
 
         $this->icon = apply_filters('woocommerce_payu_icon', plugins_url('assets/images/payu.png', dirname(__FILE__)));
 
@@ -27,26 +27,24 @@ class WC_Gateway_PayU extends WC_Payment_Gateway {
             $this->$setting_key = $value;
         }
 
-        // pobranie ustawionej waluty
         $this->currency = get_woocommerce_currency();
         $this->currency_slug = strtolower(get_woocommerce_currency());
 
-        if (!$this->is_valid_for_use()) {
+        if (!in_array($this->currency, $this->supported_currencies)) {
             $this->enabled = false;
         }
 
         $this->init_form_fields();
 
-        // Zapisywanie ustawień
+        // Settings' saving hook
         add_action('woocommerce_update_options_payment_gateways_' . $this->id, array($this, 'process_admin_options'));
 
         // Payment listener/API hook
         add_action('woocommerce_api_wc_gateway_payu', array($this, 'gateway_ipn'));
 
-        // Zmiana statusu
+        // Status change hook
         add_action('woocommerce_order_status_changed', array($this, 'change_status_action'), 10, 3);
 
-        // konfiguracja OpenPayU
         $this->init_OpenPayU();
 
         $this->notifyUrl = str_replace('https:', 'http:', add_query_arg('wc-api', 'WC_Gateway_PayU', home_url('/')));
@@ -56,28 +54,23 @@ class WC_Gateway_PayU extends WC_Payment_Gateway {
     {
         OpenPayU_Configuration::setApiVersion(2.1);
         OpenPayU_Configuration::setEnvironment('secure');
-        $key = 'pos_id_' . $this->currency_slug;
-        OpenPayU_Configuration::setMerchantPosId($this->$key);
-        $key = 'md5_' . $this->currency_slug;
-        OpenPayU_Configuration::setSignatureKey($this->$key);
+        OpenPayU_Configuration::setMerchantPosId($this->{'pos_id_' . $this->currency_slug});
+        OpenPayU_Configuration::setSignatureKey($this->{'md5_' . $this->currency_slug});
         OpenPayU_Configuration::setSender('Wordpress v' . get_bloginfo('version') . '/WooCommerce v' . WOOCOMMERCE_VERSION . '/Plugin v' . $this->pluginVersion);
     }
 
-    public function is_valid_for_use() {
-        return in_array($this->currency, $this->supported_currencies);
-    }
-
     public function admin_options() {
-        if ($this->is_valid_for_use()) {
-            parent::admin_options();
-        } else {
-            ?>
-            <h2><?php echo $this->get_description(); ?></h2>
-            <h3><?php _e('Gateway has been disabled.', 'payu'); ?></h3>
-            <p><?php _e("This plugin doesn't support the currency of your shop.", 'payu'); ?></p>
-            <p><?php _e("Supported currencies: ", 'payu'); ?> <?php echo implode(', ', $this->supported_currencies); ?>.</p>
-            <?php
-        }
+        ?>
+
+        <h3><?php echo $this->method_title; ?></h3>
+        <p><?php echo $this->method_description; ?></p>
+        <p><?php _e('Supported currencies: ', 'payu'); ?> <?php echo implode(', ', $this->supported_currencies); ?>.</p>
+
+        <table class="form-table">
+            <?php $this->generate_settings_html(); ?>
+        </table>
+
+        <?php
     }
 
     function init_form_fields() {
@@ -89,7 +82,7 @@ class WC_Gateway_PayU extends WC_Payment_Gateway {
 
         $order = new WC_Order($order_id);
 
-        $order->update_status('pending', __('Płatność jest w trakcie rozliczenia.', 'payu'));
+        $order->update_status('pending', __('Pending payment.', 'payu'));
 
         $woocommerce->cart->empty_cart();
 
@@ -144,12 +137,12 @@ class WC_Gateway_PayU extends WC_Payment_Gateway {
                 );
             }
             else {
-                wc_add_notice(__('Błąd płatności. Status z PayU: ', 'payu') . $response->getStatus(), 'error');
+                wc_add_notice(__('Payment error. Status: ', 'payu') . $response->getStatus(), 'error');
 
                 return;
             }
         } catch (OpenPayU_Exception $e) {
-            wc_add_notice(__('Błąd płatności: ', 'payu') . $e->getCode() . ' ' . $e->getMessage(), 'error');
+            wc_add_notice(__('Payment error:: ', 'payu') . $e->getCode() . ' ' . $e->getMessage(), 'error');
 
             return;
         }
@@ -173,11 +166,11 @@ class WC_Gateway_PayU extends WC_Payment_Gateway {
                     break;
 
                 case 'CANCELED':
-                    $order->update_status('cancelled', __('Płatność została anulowana.', 'payu'));
+                    $order->update_status('cancelled', __('Payment has been cancelled.', 'payu'));
                     break;
 
                 case 'REJECTED':
-                    $order->update_status('failed', __('Płatność została odrzucona z uwagi na życzenie sprzedawcy.', 'payu'));
+                    $order->update_status('failed', __('Payment has been rejected.', 'payu'));
                     break;
 
                 case 'COMPLETED':
@@ -200,7 +193,7 @@ class WC_Gateway_PayU extends WC_Payment_Gateway {
                     break;
 
                 case 'WAITING_FOR_CONFIRMATION':
-                    $order->update_status('on-hold', __('System PayU oczekuje na akcje ze strony sprzedawcy w celu wykonania płatności. Ten status występuje w przypadku gdy auto-odbiór na posie sprzedawcy jest wyłączony.', 'payu'));
+                    $order->update_status('on-hold', __('Payment has been put on hold - merchant turned off the automatic collection and must approve this payment.', 'payu'));
                     break;
 
                 default:
@@ -220,7 +213,7 @@ class WC_Gateway_PayU extends WC_Payment_Gateway {
 
         $refund = OpenPayU_Refund::create(
             $orderId,
-            __('Zwrot kwoty: ', 'payu') . ' ' . $amount . ' ' . $this->currency . __(' dla zamówienia nr: ', 'payu') . $order_id,
+            __('Refund of: ', 'payu') . ' ' . $amount . ' ' . $this->currency . __(' for order: ', 'payu') . $order_id,
             round($amount * 100.0)
         );
 
