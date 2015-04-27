@@ -82,8 +82,6 @@ class WC_Gateway_PayU extends WC_Payment_Gateway {
 
         $order = new WC_Order($order_id);
 
-        $order->update_status('pending', __('Pending payment.', 'payu'));
-
         $woocommerce->cart->empty_cart();
 
         $shipping = $order->get_total_shipping();
@@ -193,7 +191,7 @@ class WC_Gateway_PayU extends WC_Payment_Gateway {
                     break;
 
                 case 'WAITING_FOR_CONFIRMATION':
-                    $order->update_status('on-hold', __('Payment has been put on hold - merchant turned off the automatic collection and must approve this payment.', 'payu'));
+                    $order->update_status('on-hold', __('Payment has been put on hold - merchant must approve this payment manually.', 'payu'));
                     break;
 
                 default:
