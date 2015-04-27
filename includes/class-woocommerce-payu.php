@@ -133,15 +133,12 @@ class WC_Gateway_PayU extends WC_Payment_Gateway {
                     'result' => 'success',
                     'redirect' => $response->getResponse()->redirectUri
                 );
-            }
-            else {
-                wc_add_notice(__('Payment error. Status: ', 'payu') . $response->getStatus(), 'error');
-
+            } else {
+                wc_add_notice(__('Payment error. Status code: ', 'payu') . $response->getStatus(), 'error');
                 return;
             }
         } catch (OpenPayU_Exception $e) {
-            wc_add_notice(__('Payment error:: ', 'payu') . $e->getCode() . ' ' . $e->getMessage(), 'error');
-
+            wc_add_notice(__('Payment error: ', 'payu') . $e->getMessage() . ' (' . $e->getCode() . ')', 'error');
             return;
         }
     }
@@ -159,10 +156,6 @@ class WC_Gateway_PayU extends WC_Payment_Gateway {
             $order = new WC_Order($order_id);
 
             switch ($status) {
-                case 'NEW':
-                case 'PENDING':
-                    break;
-
                 case 'CANCELED':
                     $order->update_status('cancelled', __('Payment has been cancelled.', 'payu'));
                     break;
@@ -193,8 +186,6 @@ class WC_Gateway_PayU extends WC_Payment_Gateway {
                 case 'WAITING_FOR_CONFIRMATION':
                     $order->update_status('on-hold', __('Payment has been put on hold - merchant must approve this payment manually.', 'payu'));
                     break;
-
-                default:
             }
 
             header("HTTP/1.1 200 OK");
@@ -215,11 +206,7 @@ class WC_Gateway_PayU extends WC_Payment_Gateway {
             round($amount * 100.0)
         );
 
-        $status_desc = OpenPayU_Util::statusDesc($refund->getStatus());
-        if ($refund->getStatus() != 'SUCCESS')
-            return false;
-
-        return true;
+        return ($refund->getStatus() == 'SUCCESS');
     }
 
     public function change_status_action($order_id, $old_status, $new_status) {
