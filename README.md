@@ -9,10 +9,10 @@ define their payment options, see their purchase history, and manage personal pr
 **Important:** This plugin works only with **checkout points of sales (POS)**.
 
 ## Features
-The PayU Payment Gateway for WooCommerce plugin adds the PayU payment option and enables you to process the following operations in your e-shop:
+The PayU Payment Gateway for WooCommerce adds the PayU payment option and enables you to process the following operations in your shop:
 
 * Creating a payment order
-* Updating order status (cancell/ complete order in case of autoreceive off option enabled)
+* Updating order status (canceling/completing an order will simultaneously update payment's status)
 * Conducting a refund operation (for a whole or partial order)
 
 ## Prerequisites
