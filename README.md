@@ -1,4 +1,4 @@
-# PayU plugin for Wordpress WooCommerce
+# PayU Payment Gateway for WooCommerce
 ``This plugin is released under the GPL license.``
 
 **If you have any questions or issues, feel free to contact our technical support: tech@payu.pl.**
@@ -15,13 +15,9 @@ The PayU Payment Gateway for WooCommerce plugin adds the PayU payment option and
 * Updating order status (cancell/ complete order in case of autoreceive off option enabled)
 * Conducting a refund operation (for a whole or partial order)
 
-
 ## Prerequisites
 
-The following PHP extensions are required:
-
-* [cURL][ext2] to connect and communicate to many different types of servers with many different types of protocols.
-* [hash][ext3] to process directly or incrementally the arbitrary length messages by using a variety of hashing algorithms.
+* WooCommerce v2.2 or higher
 
 ## Installation
 
@@ -34,8 +30,8 @@ In the Wordpress administration panel:
 3. Choose **Settings** option next to the **PayU** name
 4. Enable and configure the plugin
 
-## Usage:
+## Usage
 
-PayU Payment Gateway is visible for you customers as a single "Pay with PayU" button during checkout. After clicking the button customer is moved to the Payment Summary page to choose payment method. After successfull payment customer is redirected back to your shop. 
-
-
+PayU Payment Gateway is visible for your customers as a single "Pay with PayU" button during checkout.
+After clicking the button customer is redirected to the Payment Summary page to choose payment method.
+After successful payment customer is redirected back to your shop.
