@@ -37,7 +37,7 @@ class WC_Gateway_PayU extends WC_Payment_Gateway {
         $this->init_form_fields();
 
         // Settings' saving hook
-        add_action('woocommerce_update_options_payment_gateways_' . $this->id, array($this, 'process_admin_options'));
+        add_action('woocommerce_update_options_payment_gateways_payu', array($this, 'process_admin_options'));
 
         // Payment listener/API hook
         add_action('woocommerce_api_wc_gateway_payu', array($this, 'gateway_ipn'));
@@ -135,10 +135,12 @@ class WC_Gateway_PayU extends WC_Payment_Gateway {
                 );
             } else {
                 wc_add_notice(__('Payment error. Status code: ', 'payu') . $response->getStatus(), 'error');
+
                 return;
             }
         } catch (OpenPayU_Exception $e) {
             wc_add_notice(__('Payment error: ', 'payu') . $e->getMessage() . ' (' . $e->getCode() . ')', 'error');
+
             return;
         }
     }
@@ -202,7 +204,7 @@ class WC_Gateway_PayU extends WC_Payment_Gateway {
 
         $refund = OpenPayU_Refund::create(
             $orderId,
-            __('Refund of: ', 'payu') . ' ' . $amount . ' ' . $this->currency . __(' for order: ', 'payu') . $order_id,
+            __('Refund of: ', 'payu') . ' ' . $amount . $this->currency . __(' for order: ', 'payu') . $order_id,
             round($amount * 100.0)
         );
 
@@ -214,10 +216,10 @@ class WC_Gateway_PayU extends WC_Payment_Gateway {
             $order = new WC_Order($order_id);
             $orderId = $order->get_transaction_id();
 
-            if (empty($orderId))
+            if (empty($orderId)) {
                 return false;
+            }
 
-            // zatwierdzenie płatności oczekującej WAITING_FOR_CONFIRMATION -> COMPLETED
             if ($old_status == 'on-hold' && ($new_status == 'processing' || $new_status == 'completed')) {
                 $status_update = array(
                     "orderId" => $orderId,
@@ -227,7 +229,6 @@ class WC_Gateway_PayU extends WC_Payment_Gateway {
                 $response = OpenPayU_Order::statusUpdate($status_update);
             }
 
-            // anulowanie zamówienia
             if($new_status == 'cancelled') {
                 $response = OpenPayU_Order::cancel($orderId);
             }
