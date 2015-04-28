@@ -21,6 +21,21 @@ return array(
         'default' => __('PayU is a leading payment services provider with presence in 16 growth markets across the world.', 'payu'),
         'desc_tip' => true
     ),
+    'validity_time' => array(
+        'title' => __('Validity time:', 'payu'),
+        'type' => 'text',
+        'description' =>  __('Time when paying for order is possible (in seconds).', 'payu'),
+        'default' => '1440',
+        'desc_tip' => true
+    ),
+    'payu_feedback' => array(
+        'title'=> __('Automatic collection', 'payu'),
+        'type' => 'checkbox',
+        'description' =>  __('Automatic collection makes it possible to automatically confirm incoming payments.', 'payu'),
+        'label' => __(' ', 'payu'),
+        'default' => 'no',
+        'desc_tip' => true
+    ),
     'pos_id_pln' => array(
         'title' => __('[PLN] POS ID:', 'payu'),
         'type' => 'text',
@@ -67,21 +82,6 @@ return array(
         'title' => __('[GPB] Second key (MD5):', 'payu'),
         'type' => 'text',
         'description' =>  __('Second key from "Configuration Keys" section of PayU management panel.', 'payu'),
-        'desc_tip' => true
-    ),
-    'validity_time' => array(
-        'title' => __('Validity time:', 'payu'),
-        'type' => 'text',
-        'description' =>  __('Time when paying for order is possible (in seconds).', 'payu'),
-        'default' => '1440',
-        'desc_tip' => true
-    ),
-    'payu_feedback' => array(
-        'title'=> __('Automatic collection', 'payu'),
-        'type' => 'checkbox',
-        'description' =>  __('Automatic collection makes it possible to automatically confirm incoming payments.', 'payu'),
-        'label' => __(' ', 'payu'),
-        'default' => 'no',
         'desc_tip' => true
     )
 );
