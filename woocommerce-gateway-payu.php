@@ -7,12 +7,16 @@
  * Author: PayU SA
  * Author URI: http://www.payu.com
  * License: LGPL 3.0
+ * Text Domain: payu
+ * Domain Path: /lang
  */
 
 add_action('plugins_loaded', 'woocommerce_payu_init', 0);
 
 function woocommerce_payu_init() {
     if (!class_exists('WC_Payment_Gateway')) return;
+
+    load_plugin_textdomain( 'payu', false, dirname( plugin_basename(__FILE__) ) . '/lang/' );
 
     include_once('includes/class-woocommerce-payu.php');
 
@@ -24,3 +28,4 @@ function woocommerce_payu_add_gateway($methods) {
 
     return $methods;
 }
+

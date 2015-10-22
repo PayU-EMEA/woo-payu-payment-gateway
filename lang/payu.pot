@@ -1,0 +1,149 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: PayU Payment Gateway\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: Thu Oct 22 2015 14:26:03 GMT+0200 (Central European "
+"Standard Time)\n"
+"POT-Revision-Date: Thu Oct 22 2015 14:59:51 GMT+0200 (Central European "
+"Standard Time)\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"Language: \n"
+"Plural-Forms: nplurals=INTEGER; plural=EXPRESSION\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Poedit-SourceCharset: UTF-8\n"
+"X-Poedit-Basepath: .\n"
+"X-Poedit-SearchPath-0: ..\n"
+
+#: ../includes/class-woocommerce-payu.php:13
+msgid "Pay with PayU"
+msgstr ""
+
+#: ../includes/class-woocommerce-payu.php:14 ../includes/form-fields.php:14
+msgid "PayU"
+msgstr ""
+
+#: ../includes/class-woocommerce-payu.php:15
+msgid "Official PayU payment gateway for WooCommerce."
+msgstr ""
+
+#: ../includes/class-woocommerce-payu.php:67
+msgid "Supported currencies: "
+msgstr ""
+
+#: ../includes/class-woocommerce-payu.php:137
+msgid "Payment error. Status code: "
+msgstr ""
+
+#: ../includes/class-woocommerce-payu.php:142
+msgid "Payment error: "
+msgstr ""
+
+#: ../includes/class-woocommerce-payu.php:161
+msgid "Payment has been cancelled."
+msgstr ""
+
+#: ../includes/class-woocommerce-payu.php:165
+msgid "Payment has been rejected."
+msgstr ""
+
+#: ../includes/class-woocommerce-payu.php:188
+msgid "Payment has been put on hold - merchant must approve this payment manually."
+msgstr ""
+
+#: ../includes/class-woocommerce-payu.php:206
+msgid "Refund of: "
+msgstr ""
+
+#: ../includes/class-woocommerce-payu.php:206
+msgid " for order: "
+msgstr ""
+
+#: ../includes/form-fields.php:5
+msgid "Enable:"
+msgstr ""
+
+#: ../includes/form-fields.php:11
+msgid "Title:"
+msgstr ""
+
+#: ../includes/form-fields.php:13
+msgid "Title of PayU Payment Gateway that users sees on Checkout page."
+msgstr ""
+
+#: ../includes/form-fields.php:18
+msgid "Description:"
+msgstr ""
+
+#: ../includes/form-fields.php:20
+msgid "Description of PayU Payment Gateway that users sees on Checkout page."
+msgstr ""
+
+#: ../includes/form-fields.php:21
+msgid ""
+"PayU is a leading payment services provider with presence in 16 growth "
+"markets across the world."
+msgstr ""
+
+#: ../includes/form-fields.php:25
+msgid "Validity time:"
+msgstr ""
+
+#: ../includes/form-fields.php:27
+msgid "Time when paying for order is possible (in seconds)."
+msgstr ""
+
+#: ../includes/form-fields.php:32
+msgid "Automatic collection:"
+msgstr ""
+
+#: ../includes/form-fields.php:34
+msgid ""
+"Automatic collection makes it possible to automatically confirm incoming "
+"payments."
+msgstr ""
+
+#: ../includes/form-fields.php:40
+msgid "[PLN] POS ID:"
+msgstr ""
+
+#: ../includes/form-fields.php:42 ../includes/form-fields.php:54 ../includes/form-
+#: fields.php:66 ../includes/form-fields.php:78
+msgid "Pos identifier from \"Configuration Keys\" section of PayU management panel."
+msgstr ""
+
+#: ../includes/form-fields.php:46
+msgid "[PLN] Second key (MD5):"
+msgstr ""
+
+#: ../includes/form-fields.php:48 ../includes/form-fields.php:60 ../includes/form-
+#: fields.php:72 ../includes/form-fields.php:84
+msgid "Second key from \"Configuration Keys\" section of PayU management panel."
+msgstr ""
+
+#: ../includes/form-fields.php:52
+msgid "[EUR] POS ID:"
+msgstr ""
+
+#: ../includes/form-fields.php:58
+msgid "[EUR] Second key (MD5):"
+msgstr ""
+
+#: ../includes/form-fields.php:64
+msgid "[USD] POS ID:"
+msgstr ""
+
+#: ../includes/form-fields.php:70
+msgid "[USD] Second key (MD5):"
+msgstr ""
+
+#: ../includes/form-fields.php:76
+msgid "[GPB] POS ID:"
+msgstr ""
+
+#: ../includes/form-fields.php:82
+msgid "[GPB] Second key (MD5):"
+msgstr ""

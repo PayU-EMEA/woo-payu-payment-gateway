@@ -14,7 +14,7 @@ class WC_Gateway_PayU extends WC_Payment_Gateway {
         $this->method_title = __('PayU', 'payu');
         $this->method_description = __('Official PayU payment gateway for WooCommerce.', 'payu');
 
-        $this->icon = apply_filters('woocommerce_payu_icon', 'https://static.payu.com/plugins/woocommerce_payu_logo.png');
+        $this->icon = apply_filters('woocommerce_payu_icon', plugins_url('/../images/payu.png',__FILE__));
 
         $this->supports = array(
             'products',
@@ -149,7 +149,6 @@ class WC_Gateway_PayU extends WC_Payment_Gateway {
         if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             $body = file_get_contents('php://input');
             $data = stripslashes(trim($body));
-
             $response = OpenPayU_Order::consumeNotification($data);
             $order_id = (int) preg_replace('/_.*$/', '', $response->getResponse()->order->extOrderId);
             $status = $response->getResponse()->order->status;

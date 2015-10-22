@@ -2,9 +2,9 @@
 
 return array(
     'enabled' => array(
-        'title'=> __('Enable', 'payu'),
+        'title'=> __('Enable:', 'payu'),
         'type' => 'checkbox',
-        'label' => __(' ', 'payu'),
+        'label' => ' ',
         'default' => 'no'
     ),
     'title' => array(
@@ -29,10 +29,10 @@ return array(
         'desc_tip' => true
     ),
     'payu_feedback' => array(
-        'title'=> __('Automatic collection', 'payu'),
+        'title'=> __('Automatic collection:', 'payu'),
         'type' => 'checkbox',
         'description' =>  __('Automatic collection makes it possible to automatically confirm incoming payments.', 'payu'),
-        'label' => __(' ', 'payu'),
+        'label' => ' ',
         'default' => 'no',
         'desc_tip' => true
     ),
