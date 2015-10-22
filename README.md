@@ -6,7 +6,7 @@
 PayU account is a web application designed as an e-wallet for shoppers willing to open an account, 
 define their payment options, see their purchase history, and manage personal profiles.
 
-**Important:** This plugin works only with **checkout points of sales (POS)**.
+**Important:** This plugin works only with **REST API (checkout) points of sales (POS)**.
 
 **Important:** Currently supported currencies are: **PLN**, **EUR**, **USD**, **GPB**.
 

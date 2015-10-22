@@ -156,39 +156,28 @@ class WC_Gateway_PayU extends WC_Payment_Gateway {
 
             $order = new WC_Order($order_id);
 
-            switch ($status) {
-                case 'CANCELED':
-                    $order->update_status('cancelled', __('Payment has been cancelled.', 'payu'));
-                    break;
+            if ($order->get_status() != 'completed') {
+                switch ($status) {
+                    case 'CANCELED':
+                        $order->update_status('cancelled', __('Payment has been cancelled.', 'payu'));
+                        break;
 
-                case 'REJECTED':
-                    $order->update_status('failed', __('Payment has been rejected.', 'payu'));
-                    break;
+                    case 'REJECTED':
+                        $order->update_status('failed', __('Payment has been rejected.', 'payu'));
+                        break;
 
-                case 'COMPLETED':
-                    $shipping_address = $response->getResponse()->order->buyer->delivery;
-                    $recipient_name = preg_split("/ ([a-zA-Z_-]+)$/", $shipping_address->recipientName, -1, PREG_SPLIT_DELIM_CAPTURE | PREG_SPLIT_NO_EMPTY);
+                    case 'COMPLETED':
+                        $order->payment_complete($transaction_id);
+                        break;
 
-                    $address = array(
-                        'first_name' => $recipient_name[0],
-                        'last_name' => $recipient_name[1],
-                        'city' => $shipping_address->city,
-                        'postcode' => $shipping_address->postalCode,
-                        'address_1' => $shipping_address->street,
-                        'address_2' => '',
-                        'country' => $shipping_address->countryCode
-                    );
-
-                    $order->set_address($address, 'shipping');
-                    $order->payment_complete($transaction_id);
-
-                    break;
-
-                case 'WAITING_FOR_CONFIRMATION':
-                    $order->update_status('on-hold', __('Payment has been put on hold - merchant must approve this payment manually.', 'payu'));
-                    break;
+                    case 'WAITING_FOR_CONFIRMATION':
+                        $order->update_status(
+                            'on-hold',
+                            __('Payment has been put on hold - merchant must approve this payment manually.', 'payu')
+                        );
+                        break;
+                }
             }
-
             header("HTTP/1.1 200 OK");
         }
     }
