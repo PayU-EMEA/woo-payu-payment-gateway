@@ -8,7 +8,7 @@ class WC_Gateway_PayU extends WC_Payment_Gateway {
         $this->id = "payu";
         $this->pluginVersion = '1.0.0';
         $this->has_fields = false;
-        $this->supported_currencies = array('PLN', 'EUR', 'USD', 'GPB');
+        $this->supported_currencies = array('PLN', 'CZK', 'EUR', 'USD', 'GPB');
 
         $this->order_button_text = __('Pay with PayU', 'payu');
         $this->method_title = __('PayU', 'payu');
@@ -47,7 +47,7 @@ class WC_Gateway_PayU extends WC_Payment_Gateway {
 
         $this->init_OpenPayU();
 
-        $this->notifyUrl = str_replace('https:', 'http:', add_query_arg('wc-api', 'WC_Gateway_PayU', home_url('/')));
+        $this->notifyUrl = add_query_arg('wc-api', 'WC_Gateway_PayU', home_url('/'));
     }
 
     protected function init_OpenPayU()
@@ -101,22 +101,16 @@ class WC_Gateway_PayU extends WC_Payment_Gateway {
 
         $items = $order->get_items();
         $i = 0;
+        $orderData['products'][$i]['name'] = __('Shipment', 'payu').': '. $order->get_shipping_method();
+        $orderData['products'][$i]['unitPrice'] = round($shipping * 100);
+        $orderData['products'][$i]['quantity'] = 1;
+
         foreach ($items as $item) {
+            $i++;
             $orderData['products'][$i]['name'] = $item['name'];
             $orderData['products'][$i]['unitPrice'] = round(round($item['line_total'], 2) * 100.0 / $item['qty']);
             $orderData['products'][$i]['quantity'] = $item['qty'];
-            $i++;
         }
-
-        $orderData['shippingMethods'][0]['name'] = $order->get_shipping_method();
-        $orderData['shippingMethods'][0]['country'] = $order->shipping_country;
-        $orderData['shippingMethods'][0]['price'] = round($shipping * 100);
-
-        $orderData['buyer']['delivery']['recipientName'] = trim($order->shipping_first_name . ' ' . $order->shipping_last_name);
-        $orderData['buyer']['delivery']['street'] = trim($order->shipping_address_1 . ' ' . $order->shipping_address_2);
-        $orderData['buyer']['delivery']['postalCode'] = $order->shipping_postcode;
-        $orderData['buyer']['delivery']['city'] = $order->shipping_city;
-        $orderData['buyer']['delivery']['countryCode'] = $order->shipping_country;
 
         $orderData['buyer']['email'] = $order->billing_email;
         $orderData['buyer']['phone'] = $order->billing_phone;
@@ -214,11 +208,11 @@ class WC_Gateway_PayU extends WC_Payment_Gateway {
                     "orderStatus" => 'COMPLETED'
                 );
 
-                $response = OpenPayU_Order::statusUpdate($status_update);
+                OpenPayU_Order::statusUpdate($status_update);
             }
 
             if($new_status == 'cancelled') {
-                $response = OpenPayU_Order::cancel($orderId);
+                OpenPayU_Order::cancel($orderId);
             }
         }
 

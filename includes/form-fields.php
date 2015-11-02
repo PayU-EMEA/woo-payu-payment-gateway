@@ -48,6 +48,18 @@ return array(
         'description' =>  __('Second key from "Configuration Keys" section of PayU management panel.', 'payu'),
         'desc_tip' => true
     ),
+    'pos_id_czk' => array(
+        'title' => __('[CZK] POS ID:', 'payu'),
+        'type' => 'text',
+        'description' => __('Pos identifier from "Configuration Keys" section of PayU management panel.', 'payu'),
+        'desc_tip' => true
+    ),
+    'md5_czk' => array(
+        'title' => __('[CZK] Second key (MD5):', 'payu'),
+        'type' => 'text',
+        'description' =>  __('Second key from "Configuration Keys" section of PayU management panel.', 'payu'),
+        'desc_tip' => true
+    ),
     'pos_id_eur' => array(
         'title' => __('[EUR] POS ID:', 'payu'),
         'type' => 'text',
