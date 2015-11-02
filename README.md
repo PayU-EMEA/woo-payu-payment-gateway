@@ -8,7 +8,7 @@ define their payment options, see their purchase history, and manage personal pr
 
 **Important:** This plugin works only with **REST API (checkout) points of sales (POS)**.
 
-**Important:** Currently supported currencies are: **PLN**, **EUR**, **USD**, **GPB**.
+**Important:** Currently supported currencies are: **PLN**, **CZK**, **EUR**, **USD**, **GPB**.
 
 ## Features
 The PayU Payment Gateway for WooCommerce adds the PayU payment option and enables you to process the following operations in your shop:
