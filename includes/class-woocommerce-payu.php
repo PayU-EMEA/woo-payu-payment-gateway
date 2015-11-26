@@ -92,7 +92,7 @@ class WC_Gateway_PayU extends WC_Payment_Gateway {
         $orderData['merchantPosId'] = OpenPayU_Configuration::getMerchantPosId();
         $orderData['description'] = get_bloginfo('name') . ' #' . $order->get_order_number();
         $orderData['currencyCode'] = $this->currency;
-        $orderData['totalAmount'] = round(round($order->get_total() - $shipping, 2) * 100);
+        $orderData['totalAmount'] = round(round($order->get_total(), 2) * 100);
         $orderData['extOrderId'] = $order->get_order_number() . '_' . microtime(true);
 
         if (!empty($this->validity_time)) {
