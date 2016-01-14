@@ -1,15 +1,12 @@
 <?php
 
 /**
- * OpenPayU Order module
+ * OpenPayU Standard Library
  *
- * @copyright  Copyright (c) 2014 PayU
+ * @copyright  Copyright (c) 2011-2015 PayU
  * @license    http://opensource.org/licenses/LGPL-3.0  Open Software License (LGPL 3.0)
- *
  * http://www.payu.com
  * http://developers.payu.com
- * http://twitter.com/openpayu
- *
  */
 
 /**
@@ -133,8 +130,6 @@ class OpenPayU_Order extends OpenPayU
      */
     public static function consumeNotification($data)
     {
-        $sslConnection = self::isSecureConnection();
-
         if (empty($data)) {
             throw new OpenPayU_Exception('Empty value of data');
         }
@@ -142,11 +137,7 @@ class OpenPayU_Order extends OpenPayU
         $headers = OpenPayU_Util::getRequestHeaders();
         $incomingSignature = OpenPayU_HttpCurl::getSignature($headers);
 
-        if ($sslConnection) {
-            self::verifyBasicAuthCredentials();
-        } else {
-            self::verifyDocumentSignature($data, $incomingSignature);
-        }
+        self::verifyDocumentSignature($data, $incomingSignature);
 
         return OpenPayU_Order::verifyResponse(array('response' => $data, 'code' => 200), 'OrderNotifyRequest');
     }
