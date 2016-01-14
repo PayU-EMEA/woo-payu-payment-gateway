@@ -84,7 +84,7 @@ class WC_Gateway_PayU extends WC_Payment_Gateway {
 
         $woocommerce->cart->empty_cart();
 
-        $shipping = $order->get_total_shipping();
+        $shipping = $order->get_total_shipping() + $order->get_shipping_tax();
 
         $orderData['continueUrl'] = $this->get_return_url($order);
         $orderData['notifyUrl'] = $this->notifyUrl;
@@ -108,7 +108,7 @@ class WC_Gateway_PayU extends WC_Payment_Gateway {
         foreach ($items as $item) {
             $i++;
             $orderData['products'][$i]['name'] = $item['name'];
-            $orderData['products'][$i]['unitPrice'] = round(round($item['line_total'], 2) * 100.0 / $item['qty']);
+            $orderData['products'][$i]['unitPrice'] = $order->get_item_total($item, true) * 100;
             $orderData['products'][$i]['quantity'] = $item['qty'];
         }
 
