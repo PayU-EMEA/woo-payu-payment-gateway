@@ -6,7 +6,7 @@ class WC_Gateway_PayU extends WC_Payment_Gateway {
 
     function __construct() {
         $this->id = "payu";
-        $this->pluginVersion = '1.0.0';
+        $this->pluginVersion = '1.0.3';
         $this->has_fields = false;
         $this->supported_currencies = array('PLN', 'CZK', 'EUR', 'USD', 'GPB');
 
@@ -56,7 +56,7 @@ class WC_Gateway_PayU extends WC_Payment_Gateway {
         OpenPayU_Configuration::setEnvironment('secure');
         OpenPayU_Configuration::setMerchantPosId($this->{'pos_id_' . $this->currency_slug});
         OpenPayU_Configuration::setSignatureKey($this->{'md5_' . $this->currency_slug});
-        OpenPayU_Configuration::setSender('Wordpress v' . get_bloginfo('version') . '/WooCommerce v' . WOOCOMMERCE_VERSION . '/Plugin v' . $this->pluginVersion);
+        OpenPayU_Configuration::setSender('Wordpress ver ' . get_bloginfo('version') . ' / WooCommerce ver ' . WOOCOMMERCE_VERSION . ' / Plugin ver ' . $this->pluginVersion);
     }
 
     public function admin_options() {
