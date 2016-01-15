@@ -6,7 +6,7 @@ class WC_Gateway_PayU extends WC_Payment_Gateway {
 
     function __construct() {
         $this->id = "payu";
-        $this->pluginVersion = '1.0.3';
+        $this->pluginVersion = '1.0.4';
         $this->has_fields = false;
         $this->supported_currencies = array('PLN', 'CZK', 'EUR', 'USD', 'GPB');
 
@@ -93,7 +93,8 @@ class WC_Gateway_PayU extends WC_Payment_Gateway {
         $orderData['description'] = get_bloginfo('name') . ' #' . $order->get_order_number();
         $orderData['currencyCode'] = $this->currency;
         $orderData['totalAmount'] = round(round($order->get_total(), 2) * 100);
-        $orderData['extOrderId'] = $order->get_order_number() . '_' . microtime(true);
+        $orderData['extOrderId'] = $order->get_order_number() . '_' . uniqid();
+        $orderData['settings']['invoiceDisabled'] = true;
 
         if (!empty($this->validity_time)) {
             $orderData['validityTime'] = $this->validity_time;
