@@ -6,9 +6,8 @@ class WC_Gateway_PayU extends WC_Payment_Gateway {
 
     function __construct() {
         $this->id = "payu";
-        $this->pluginVersion = '1.0.4';
+        $this->pluginVersion = '1.1.0-DEV';
         $this->has_fields = false;
-        $this->supported_currencies = array('PLN', 'CZK', 'EUR', 'USD', 'GPB');
 
         $this->order_button_text = __('Pay with PayU', 'payu');
         $this->method_title = __('PayU', 'payu');
@@ -27,16 +26,9 @@ class WC_Gateway_PayU extends WC_Payment_Gateway {
             $this->$setting_key = $value;
         }
 
-        $this->currency = get_woocommerce_currency();
-        $this->currency_slug = strtolower(get_woocommerce_currency());
-
-        if (!in_array($this->currency, $this->supported_currencies)) {
-            $this->enabled = false;
-        }
-
         $this->init_form_fields();
 
-        // Settings' saving hook
+        // Saving hook
         add_action('woocommerce_update_options_payment_gateways_payu', array($this, 'process_admin_options'));
 
         // Payment listener/API hook
@@ -52,10 +44,9 @@ class WC_Gateway_PayU extends WC_Payment_Gateway {
 
     protected function init_OpenPayU()
     {
-        OpenPayU_Configuration::setApiVersion(2.1);
         OpenPayU_Configuration::setEnvironment('secure');
-        OpenPayU_Configuration::setMerchantPosId($this->{'pos_id_' . $this->currency_slug});
-        OpenPayU_Configuration::setSignatureKey($this->{'md5_' . $this->currency_slug});
+        OpenPayU_Configuration::setMerchantPosId($this->pos_id);
+        OpenPayU_Configuration::setSignatureKey($this->md5);
         OpenPayU_Configuration::setSender('Wordpress ver ' . get_bloginfo('version') . ' / WooCommerce ver ' . WOOCOMMERCE_VERSION . ' / Plugin ver ' . $this->pluginVersion);
     }
 
@@ -64,7 +55,6 @@ class WC_Gateway_PayU extends WC_Payment_Gateway {
 
         <h3><?php echo $this->method_title; ?></h3>
         <p><?php echo $this->method_description; ?></p>
-        <p><?php _e('Supported currencies: ', 'payu'); ?> <?php echo implode(', ', $this->supported_currencies); ?>.</p>
 
         <table class="form-table">
             <?php $this->generate_settings_html(); ?>
@@ -78,22 +68,21 @@ class WC_Gateway_PayU extends WC_Payment_Gateway {
     }
 
     function process_payment($order_id) {
-        global $woocommerce;
 
         $order = new WC_Order($order_id);
 
-        $woocommerce->cart->empty_cart();
+        WC()->cart->empty_cart();
 
         $shipping = $order->get_total_shipping() + $order->get_shipping_tax();
 
         $orderData['continueUrl'] = $this->get_return_url($order);
-        $orderData['notifyUrl'] = $this->notifyUrl;
+        $orderData['notifyUrl'] = add_query_arg('wc-api', 'WC_Gateway_PayU', home_url('/'));
         $orderData['customerIp'] = $_SERVER['REMOTE_ADDR'];
         $orderData['merchantPosId'] = OpenPayU_Configuration::getMerchantPosId();
         $orderData['description'] = get_bloginfo('name') . ' #' . $order->get_order_number();
-        $orderData['currencyCode'] = $this->currency;
+        $orderData['currencyCode'] = get_woocommerce_currency();
         $orderData['totalAmount'] = round(round($order->get_total(), 2) * 100);
-        $orderData['extOrderId'] = $order->get_order_number() . '_' . uniqid();
+        $orderData['extOrderId'] = uniqid($order->get_order_number() . '_', true);
         $orderData['settings']['invoiceDisabled'] = true;
 
         if (!empty($this->validity_time)) {
@@ -131,12 +120,12 @@ class WC_Gateway_PayU extends WC_Payment_Gateway {
             } else {
                 wc_add_notice(__('Payment error. Status code: ', 'payu') . $response->getStatus(), 'error');
 
-                return;
+                return false;
             }
         } catch (OpenPayU_Exception $e) {
             wc_add_notice(__('Payment error: ', 'payu') . $e->getMessage() . ' (' . $e->getCode() . ')', 'error');
 
-            return;
+            return false;
         }
     }
 
@@ -187,7 +176,7 @@ class WC_Gateway_PayU extends WC_Payment_Gateway {
 
         $refund = OpenPayU_Refund::create(
             $orderId,
-            __('Refund of: ', 'payu') . ' ' . $amount . $this->currency . __(' for order: ', 'payu') . $order_id,
+            __('Refund of: ', 'payu') . ' ' . $amount . $order->order_currency . __(' for order: ', 'payu') . $order_id,
             round($amount * 100.0)
         );
 

@@ -14,6 +14,18 @@ return array(
         'default' => __('PayU', 'payu'),
         'desc_tip' => true
     ),
+    'pos_id' => array(
+        'title' => __('POS ID:', 'payu'),
+        'type' => 'text',
+        'description' => __('Pos identifier from "Configuration Keys" section of PayU management panel.', 'payu'),
+        'desc_tip' => true
+    ),
+    'md5' => array(
+        'title' => __('Second key (MD5):', 'payu'),
+        'type' => 'text',
+        'description' =>  __('Second key from "Configuration Keys" section of PayU management panel.', 'payu'),
+        'desc_tip' => true
+    ),
     'description' => array(
         'title' => __('Description:', 'payu'),
         'type' => 'text',
@@ -34,66 +46,6 @@ return array(
         'description' =>  __('Automatic collection makes it possible to automatically confirm incoming payments.', 'payu'),
         'label' => ' ',
         'default' => 'no',
-        'desc_tip' => true
-    ),
-    'pos_id_pln' => array(
-        'title' => __('[PLN] POS ID:', 'payu'),
-        'type' => 'text',
-        'description' => __('Pos identifier from "Configuration Keys" section of PayU management panel.', 'payu'),
-        'desc_tip' => true
-    ),
-    'md5_pln' => array(
-        'title' => __('[PLN] Second key (MD5):', 'payu'),
-        'type' => 'text',
-        'description' =>  __('Second key from "Configuration Keys" section of PayU management panel.', 'payu'),
-        'desc_tip' => true
-    ),
-    'pos_id_czk' => array(
-        'title' => __('[CZK] POS ID:', 'payu'),
-        'type' => 'text',
-        'description' => __('Pos identifier from "Configuration Keys" section of PayU management panel.', 'payu'),
-        'desc_tip' => true
-    ),
-    'md5_czk' => array(
-        'title' => __('[CZK] Second key (MD5):', 'payu'),
-        'type' => 'text',
-        'description' =>  __('Second key from "Configuration Keys" section of PayU management panel.', 'payu'),
-        'desc_tip' => true
-    ),
-    'pos_id_eur' => array(
-        'title' => __('[EUR] POS ID:', 'payu'),
-        'type' => 'text',
-        'description' => __('Pos identifier from "Configuration Keys" section of PayU management panel.', 'payu'),
-        'desc_tip' => true
-    ),
-    'md5_eur' => array(
-        'title' => __('[EUR] Second key (MD5):', 'payu'),
-        'type' => 'text',
-        'description' =>  __('Second key from "Configuration Keys" section of PayU management panel.', 'payu'),
-        'desc_tip' => true
-    ),
-    'pos_id_usd' => array(
-        'title' => __('[USD] POS ID:', 'payu'),
-        'type' => 'text',
-        'description' => __('Pos identifier from "Configuration Keys" section of PayU management panel.', 'payu'),
-        'desc_tip' => true
-    ),
-    'md5_usd' => array(
-        'title' => __('[USD] Second key (MD5):', 'payu'),
-        'type' => 'text',
-        'description' =>  __('Second key from "Configuration Keys" section of PayU management panel.', 'payu'),
-        'desc_tip' => true
-    ),
-    'pos_id_gpb' => array(
-        'title' => __('[GPB] POS ID:', 'payu'),
-        'type' => 'text',
-        'description' => __('Pos identifier from "Configuration Keys" section of PayU management panel.', 'payu'),
-        'desc_tip' => true
-    ),
-    'md5_gpb' => array(
-        'title' => __('[GPB] Second key (MD5):', 'payu'),
-        'type' => 'text',
-        'description' =>  __('Second key from "Configuration Keys" section of PayU management panel.', 'payu'),
         'desc_tip' => true
     )
 );

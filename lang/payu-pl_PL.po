@@ -4,7 +4,7 @@ msgstr ""
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: Thu Oct 22 2015 14:26:03 GMT+0200 (Central European "
 "Standard Time)\n"
-"PO-Revision-Date: Mon Nov 02 2015 14:49:12 GMT+0100 (Central European "
+"PO-Revision-Date: Wed Feb 10 2016 11:28:48 GMT+0100 (Central European "
 "Standard Time)\n"
 "Language-Team: \n"
 "Language: Polish\n"
@@ -21,6 +21,16 @@ msgstr ""
 "_x:1,2c;_ex:1,2c;_nx:1,2,4c;_nx_noop:1,2,3c;_n_js:1,2;_nx_js:1,2,3c;"
 "esc_attr__:1;esc_html__:1;esc_attr_e:1;esc_html_e:1;esc_attr_x:1,2c;"
 "esc_html_x:1,2c;comments_number_link:2,3;t:1;st:1;trans:1;transChoice:1,2\n"
+"X-Loco-Target-Locale: pl_PL\n"
+"X-Generator: Loco - https://localise.biz/"
+
+#: ../includes/form-fields.php:18
+msgid "POS ID:"
+msgstr "POS ID:"
+
+#: ../includes/form-fields.php:24
+msgid "Second key (MD5):"
+msgstr "Drugi klucz (MD5):"
 
 #. Name of the plugin
 msgid "PayU Payment Gateway"
@@ -42,59 +52,47 @@ msgstr "PayU SA"
 msgid "http://www.payu.com"
 msgstr "http://www.payu.com"
 
-#: ../includes/class-woocommerce-payu.php:104
-msgid "Shipment"
-msgstr "Wysyłka"
-
-#: ../includes/form-fields.php:52
-msgid "[CZK] POS ID:"
-msgstr "[CZK] POS ID:"
-
-#: ../includes/form-fields.php:58
-msgid "[CZK] Second key (MD5):"
-msgstr "[CZK] Drugi klucz (MD5):"
-
-#: ../includes/class-woocommerce-payu.php:13
+#: ../includes/class-woocommerce-payu.php:12
 msgid "Pay with PayU"
 msgstr "Płacę teraz z PayU"
 
-#: ../includes/class-woocommerce-payu.php:14 ../includes/form-fields.php:14
+#: ../includes/class-woocommerce-payu.php:13 ../includes/form-fields.php:14
 msgid "PayU"
 msgstr "PayU"
 
-#: ../includes/class-woocommerce-payu.php:15
+#: ../includes/class-woocommerce-payu.php:14
 msgid "Official PayU payment gateway for WooCommerce."
 msgstr "Muduł płatności PayU dla WooCommerce."
 
-#: ../includes/class-woocommerce-payu.php:67
-msgid "Supported currencies: "
-msgstr "Wspierane waluty: "
+#: ../includes/class-woocommerce-payu.php:94
+msgid "Shipment"
+msgstr "Wysyłka"
 
-#: ../includes/class-woocommerce-payu.php:131
+#: ../includes/class-woocommerce-payu.php:121
 msgid "Payment error. Status code: "
 msgstr "Błąd płatności. Kod statusu: "
 
-#: ../includes/class-woocommerce-payu.php:136
+#: ../includes/class-woocommerce-payu.php:126
 msgid "Payment error: "
 msgstr "Błąd płatności: "
 
-#: ../includes/class-woocommerce-payu.php:156
+#: ../includes/class-woocommerce-payu.php:146
 msgid "Payment has been cancelled."
 msgstr "Płatność została anulowana."
 
-#: ../includes/class-woocommerce-payu.php:160
+#: ../includes/class-woocommerce-payu.php:150
 msgid "Payment has been rejected."
 msgstr "Płatność została odrzucona"
 
-#: ../includes/class-woocommerce-payu.php:170
+#: ../includes/class-woocommerce-payu.php:160
 msgid "Payment has been put on hold - merchant must approve this payment manually."
 msgstr "Płatność została wstrzymana sprzedawca musis zaakceptować płatność ręcznie."
 
-#: ../includes/class-woocommerce-payu.php:189
+#: ../includes/class-woocommerce-payu.php:179
 msgid "Refund of: "
 msgstr "Zwrot: "
 
-#: ../includes/class-woocommerce-payu.php:189
+#: ../includes/class-woocommerce-payu.php:179
 msgid " for order: "
 msgstr " dla zamówienia: "
 
@@ -110,15 +108,23 @@ msgstr "Nazwa:"
 msgid "Title of PayU Payment Gateway that users sees on Checkout page."
 msgstr "Nazwa płatności PayU widoczna przez kupującego na stronie zamówienia."
 
-#: ../includes/form-fields.php:18
+#: ../includes/form-fields.php:20
+msgid "Pos identifier from \"Configuration Keys\" section of PayU management panel."
+msgstr "Id punktu płatności z sekcji \"Klucze konfiguracji\" w panelu managera."
+
+#: ../includes/form-fields.php:26
+msgid "Second key from \"Configuration Keys\" section of PayU management panel."
+msgstr "Drugi klucz (MD5) z sekcji \"Klucze konfiguracji\" w panelu managera."
+
+#: ../includes/form-fields.php:30
 msgid "Description:"
 msgstr "Opis:"
 
-#: ../includes/form-fields.php:20
+#: ../includes/form-fields.php:32
 msgid "Description of PayU Payment Gateway that users sees on Checkout page."
 msgstr "Opis płatności PayU widoczny przez kupującego na stronie zamówienia."
 
-#: ../includes/form-fields.php:21
+#: ../includes/form-fields.php:33
 msgid ""
 "PayU is a leading payment services provider with presence in 16 growth "
 "markets across the world."
@@ -126,64 +132,22 @@ msgstr ""
 "PayU jest wiodącym dostawcą usług płatniczych obecnym na 16 rozwijających "
 "się rynkach na całym świecie."
 
-#: ../includes/form-fields.php:25
+#: ../includes/form-fields.php:37
 msgid "Validity time:"
 msgstr "Czas ważności:"
 
-#: ../includes/form-fields.php:27
+#: ../includes/form-fields.php:39
 msgid "Time when paying for order is possible (in seconds)."
 msgstr "Czas przez który można opłacić złożone zamówienie (w sekundach)."
 
-#: ../includes/form-fields.php:32
+#: ../includes/form-fields.php:44
 msgid "Automatic collection:"
 msgstr "Automatyczna obsługa:"
 
-#: ../includes/form-fields.php:34
+#: ../includes/form-fields.php:46
 msgid ""
 "Automatic collection makes it possible to automatically confirm incoming "
 "payments."
 msgstr ""
 "Umożliwia automatyczne odebranie transakcji oraz anulowanie po "
 "zmianiestatusu zamówienia w sklepie."
-
-#: ../includes/form-fields.php:40
-msgid "[PLN] POS ID:"
-msgstr "[PLN] POS ID:"
-
-#: ../includes/form-fields.php:42 ../includes/form-fields.php:54 ../includes/form-
-#: fields.php:66 ../includes/form-fields.php:78 ../includes/form-fields.php:90
-msgid "Pos identifier from \"Configuration Keys\" section of PayU management panel."
-msgstr "Id punktu płatności z sekcji \"Klucze konfiguracji\" w panelu managera."
-
-#: ../includes/form-fields.php:46
-msgid "[PLN] Second key (MD5):"
-msgstr "[PLN] Drugi klucz (MD5):"
-
-#: ../includes/form-fields.php:48 ../includes/form-fields.php:60 ../includes/form-
-#: fields.php:72 ../includes/form-fields.php:84 ../includes/form-fields.php:96
-msgid "Second key from \"Configuration Keys\" section of PayU management panel."
-msgstr "Drugi klucz (MD5) z sekcji \"Klucze konfiguracji\" w panelu managera."
-
-#: ../includes/form-fields.php:64
-msgid "[EUR] POS ID:"
-msgstr "[EUR] POS ID:"
-
-#: ../includes/form-fields.php:70
-msgid "[EUR] Second key (MD5):"
-msgstr "[EUR] Drugi klucz (MD5):"
-
-#: ../includes/form-fields.php:76
-msgid "[USD] POS ID:"
-msgstr "[USD] POS ID:"
-
-#: ../includes/form-fields.php:82
-msgid "[USD] Second key (MD5):"
-msgstr "[USD] Drugi klucz (MD5):"
-
-#: ../includes/form-fields.php:88
-msgid "[GPB] POS ID:"
-msgstr "[GPB] POS ID:"
-
-#: ../includes/form-fields.php:94
-msgid "[GPB] Second key (MD5):"
-msgstr "[GPB] Drugi klucz (MD5):"
