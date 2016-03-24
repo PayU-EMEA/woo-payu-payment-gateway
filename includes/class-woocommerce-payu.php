@@ -166,7 +166,7 @@ class WC_Gateway_PayU extends WC_Payment_Gateway {
         }
     }
 
-    public function process_refund($order_id, $amount = null) {
+	public function process_refund($order_id, $amount = null, $reason = '') {
         $order = new WC_Order($order_id);
         $orderId = $order->get_transaction_id();
 
