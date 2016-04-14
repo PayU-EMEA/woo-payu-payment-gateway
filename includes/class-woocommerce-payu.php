@@ -6,7 +6,7 @@ class WC_Gateway_PayU extends WC_Payment_Gateway {
 
     function __construct() {
         $this->id = "payu";
-        $this->pluginVersion = '1.1.0-DEV';
+        $this->pluginVersion = '1.1.0';
         $this->has_fields = false;
 
         $this->order_button_text = __('Pay with PayU', 'payu');
