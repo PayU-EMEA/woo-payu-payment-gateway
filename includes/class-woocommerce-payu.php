@@ -9,7 +9,6 @@ class WC_Gateway_PayU extends WC_Payment_Gateway {
         $this->pluginVersion = '1.1.0';
         $this->has_fields = false;
 
-        $this->order_button_text = __('Pay with PayU', 'payu');
         $this->method_title = __('PayU', 'payu');
         $this->method_description = __('Official PayU payment gateway for WooCommerce.', 'payu');
 
