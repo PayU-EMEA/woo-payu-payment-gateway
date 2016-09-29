@@ -6,7 +6,7 @@ msgstr ""
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: Thu Oct 22 2015 14:26:03 GMT+0200 (Central European "
 "Standard Time)\n"
-"POT-Revision-Date: Wed Aug 10 2016 12:41:33 GMT+0200 (Central European "
+"POT-Revision-Date: Wed Aug 10 2016 12:30:48 GMT+0200 (Central European "
 "Daylight Time)\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: \n"
@@ -39,14 +39,18 @@ msgid "Shipment"
 msgstr ""
 
 #: ../includes/class-woocommerce-payu.php:323
+msgctxt ""
+"Błąd płatności : Proszę zaakceptować \"Regulamin pojedynczej transakcji "
+"płatniczej PayU"
 msgid "Payment error : Terms of single PayU payment transaction"
 msgstr ""
 
 #: ../includes/class-woocommerce-payu.php:326
+msgctxt "Błąd płatności: Proszę wybrać metodę płatności"
 msgid "Payment error : Please select a method of payment"
 msgstr ""
 
-#: ../includes/class-woocommerce-payu.php:356
+#: ../includes/class-woocommerce-payu.php:357
 msgid ""
 "Payment is processed by PayU SA; The recipient's data, the payment title and "
 "the amount are provided to PayU SA by the recipient; The order is sent for "
@@ -55,20 +59,11 @@ msgid ""
 "business day; PayU SA does not charge any service fees."
 msgstr ""
 
-#: ../includes/class-woocommerce-payu.php:359
-msgctxt ""
-"http://static.payu."
-"com/sites/terms/files/payu_terms_of_service_single_transaction_pl_pl.pdf"
-msgid ""
-"http://static.payu."
-"com/sites/terms/files/payu_terms_of_service_single_transaction_pl_en.pdf"
-msgstr ""
-
-#: ../includes/class-woocommerce-payu.php:360
+#: ../includes/class-woocommerce-payu.php:361
 msgid "Terms of single PayU payment transaction"
 msgstr ""
 
-#: ../includes/class-woocommerce-payu.php:363
+#: ../includes/class-woocommerce-payu.php:364
 msgid ""
 "The administrator of your personal data within the meaning of the Personal "
 "Data Protection Act of 29 August 1997 (Journal of Laws of 2002, No. 101, "
@@ -81,31 +76,31 @@ msgid ""
 "purposes."
 msgstr ""
 
-#: ../includes/class-woocommerce-payu.php:408
+#: ../includes/class-woocommerce-payu.php:409
 msgid "Payment error. Status code: "
 msgstr ""
 
-#: ../includes/class-woocommerce-payu.php:413
+#: ../includes/class-woocommerce-payu.php:414
 msgid "Payment error: "
 msgstr ""
 
-#: ../includes/class-woocommerce-payu.php:433
+#: ../includes/class-woocommerce-payu.php:434
 msgid "Payment has been cancelled."
 msgstr ""
 
-#: ../includes/class-woocommerce-payu.php:437
+#: ../includes/class-woocommerce-payu.php:438
 msgid "Payment has been rejected."
 msgstr ""
 
-#: ../includes/class-woocommerce-payu.php:447
+#: ../includes/class-woocommerce-payu.php:448
 msgid "Payment has been put on hold - merchant must approve this payment manually."
 msgstr ""
 
-#: ../includes/class-woocommerce-payu.php:466
+#: ../includes/class-woocommerce-payu.php:467
 msgid "Refund of: "
 msgstr ""
 
-#: ../includes/class-woocommerce-payu.php:466
+#: ../includes/class-woocommerce-payu.php:467
 msgid " for order: "
 msgstr ""
 
