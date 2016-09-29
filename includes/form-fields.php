@@ -15,7 +15,7 @@ return array(
         'desc_tip' => true
     ),
     'pos_id' => array(
-        'title' => __('Id point of sales:', 'payu'),
+        'title' => __('POS ID:', 'payu'),
         'type' => 'text',
         'description' => __('Pos identifier from "Configuration Keys" section of PayU management panel.', 'payu'),
         'desc_tip' => true
@@ -24,18 +24,6 @@ return array(
         'title' => __('Second key (MD5):', 'payu'),
         'type' => 'text',
         'description' =>  __('Second key from "Configuration Keys" section of PayU management panel.', 'payu'),
-        'desc_tip' => true
-    ),
-    'client_id' => array(
-        'title' => __('OAuth - client_id:', 'payu'),
-        'type' => 'text',
-        'description' =>  __('Client Id for OAuth identifier  from "Configuration Keys" section of PayU management panel.', 'payu'),
-        'desc_tip' => true
-    ),
-    'client_secret' => array(
-        'title' => __('OAuth - client_secret:', 'payu'),
-        'type' => 'text',
-        'description' =>  __('First key from "Configuration Keys" section of PayU management panel.', 'payu'),
         'desc_tip' => true
     ),
     'description' => array(
@@ -59,15 +47,5 @@ return array(
         'label' => ' ',
         'default' => 'no',
         'desc_tip' => true
-    ),
-   
-    'display_bank' => array(
-    'title'=> __('Display Bank List:', 'payu'),
-    'type' => 'checkbox',
-    'description' =>  __('List of available bank on shop page', 'payu'),
-    'label' => ' ',
-    'default' => 'yes',
-    'desc_tip' => true
-),
-    
+    )
 );

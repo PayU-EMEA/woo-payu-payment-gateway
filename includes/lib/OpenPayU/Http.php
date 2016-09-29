@@ -2,7 +2,7 @@
 /**
  * OpenPayU Standard Library
  *
- * @copyright  Copyright (c) 2011-2016 PayU
+ * @copyright  Copyright (c) 2011-2015 PayU
  * @license    http://opensource.org/licenses/LGPL-3.0  Open Software License (LGPL 3.0)
  * http://www.payu.com
  * http://developers.payu.com
@@ -10,66 +10,69 @@
 
 class OpenPayU_Http
 {
-
     /**
-     * @param string $pathUrl
-     * @param string $data
-     * @param AuthType $authType
+     * @param $pathUrl
+     * @param $data
      * @return mixed
-     * @throws OpenPayU_Exception_Configuration
-     * @throws OpenPayU_Exception_Network
      */
-    public static function doPost($pathUrl, $data, $authType)
+    public static function post($pathUrl, $data)
     {
-        $response = OpenPayU_HttpCurl::doPayuRequest('POST', $pathUrl, $authType, $data);
+        $posId = OpenPayU_Configuration::getMerchantPosId();
+        $signatureKey = OpenPayU_Configuration::getSignatureKey();
+
+        $response = OpenPayU_HttpCurl::doRequest('POST', $pathUrl, $data, $posId, $signatureKey);
 
         return $response;
     }
 
     /**
-     * @param string $pathUrl
-     * @param AuthType $authType
+     * @param $pathUrl
+     * @param $data
      * @return mixed
-     * @throws OpenPayU_Exception_Configuration
-     * @throws OpenPayU_Exception_Network
      */
-    public static function doGet($pathUrl, $authType)
+    public static function get($pathUrl, $data)
     {
-        $response = OpenPayU_HttpCurl::doPayuRequest('GET', $pathUrl, $authType);
+        $posId = OpenPayU_Configuration::getMerchantPosId();
+        $signatureKey = OpenPayU_Configuration::getSignatureKey();
+
+        $response = OpenPayU_HttpCurl::doRequest('GET', $pathUrl, $data, $posId, $signatureKey);
 
         return $response;
     }
 
     /**
-     * @param string $pathUrl
-     * @param AuthType $authType
+     * @param $pathUrl
+     * @param $data
      * @return mixed
-     * @throws OpenPayU_Exception_Configuration
-     * @throws OpenPayU_Exception_Network
      */
-    public static function doDelete($pathUrl, $authType)
+    public static function put($pathUrl, $data)
     {
-        $response = OpenPayU_HttpCurl::doPayuRequest('DELETE', $pathUrl, $authType);
+        $posId = OpenPayU_Configuration::getMerchantPosId();
+        $signatureKey = OpenPayU_Configuration::getSignatureKey();
+
+        $response = OpenPayU_HttpCurl::doRequest('PUT', $pathUrl, $data, $posId, $signatureKey);
 
         return $response;
     }
 
     /**
-     * @param string $pathUrl
-     * @param string $data
-     * @param AuthType $authType
+     * @param $pathUrl
+     * @param $data
      * @return mixed
-     * @throws OpenPayU_Exception_Configuration
-     * @throws OpenPayU_Exception_Network
      */
-    public static function doPut($pathUrl, $data, $authType)
+    public static function delete($pathUrl, $data)
     {
-        $response = OpenPayU_HttpCurl::doPayuRequest('PUT', $pathUrl, $authType, $data);
+        $posId = OpenPayU_Configuration::getMerchantPosId();
+        $signatureKey = OpenPayU_Configuration::getSignatureKey();
+
+        $response = OpenPayU_HttpCurl::doRequest('DELETE', $pathUrl, $data, $posId, $signatureKey);
 
         return $response;
     }
 
     /**
+     *
+     *
      * @param $statusCode
      * @param null $message
      * @throws OpenPayU_Exception
@@ -80,22 +83,23 @@ class OpenPayU_Http
      */
     public static function throwHttpStatusException($statusCode, $message = null)
     {
-
-        $response = $message->getResponse();
-        $statusDesc = ($response->status && $response->status->statusDesc) ? $response->status->statusDesc : '';
-
         switch ($statusCode) {
+            default:
+                throw new OpenPayU_Exception_Network('Unexpected HTTP code response', $statusCode);
+                break;
+
             case 400:
-                throw new OpenPayU_Exception($message->getStatus().' - '.$statusDesc, $statusCode);
+                throw new OpenPayU_Exception($message->getStatus().' - '.$message->getResponse(), $statusCode);
                 break;
 
             case 401:
             case 403:
-                throw new OpenPayU_Exception_Authorization($message->getStatus().' - '.$statusDesc, $statusCode);
+                throw new OpenPayU_Exception_Authorization($message->getStatus().' - '.$message->getResponse(), $statusCode);
                 break;
 
+
             case 404:
-                throw new OpenPayU_Exception_Network($message->getStatus().' - '.$statusDesc, $statusCode);
+                throw new OpenPayU_Exception_Network('Data indicated in the request is not available in the PayU system.');
                 break;
 
             case 408:
@@ -105,62 +109,12 @@ class OpenPayU_Http
             case 500:
                 throw new OpenPayU_Exception_ServerError('PayU system is unavailable or your order is not processed.
                 Error:
-                [' . $statusDesc . ']', $statusCode);
+                [' . ($message->getResponse() ? $message->getResponse() : '') . ']', $statusCode);
                 break;
 
             case 503:
                 throw new OpenPayU_Exception_ServerMaintenance('Service unavailable', $statusCode);
                 break;
-
-            default:
-                throw new OpenPayU_Exception_Network('Unexpected HTTP code response', $statusCode);
-                break;
-
         }
     }
-
-    /**
-     * @param $statusCode
-     * @param ResultError $resultError
-     * @throws OpenPayU_Exception
-     * @throws OpenPayU_Exception_Authorization
-     * @throws OpenPayU_Exception_Network
-     * @throws OpenPayU_Exception_ServerError
-     * @throws OpenPayU_Exception_ServerMaintenance
-     */
-    public static function throwErrorHttpStatusException($statusCode, $resultError)
-    {
-        switch ($statusCode) {
-            case 400:
-                throw new OpenPayU_Exception($resultError->getError().' - '.$resultError->getErrorDescription(), $statusCode);
-                break;
-
-            case 401:
-            case 403:
-                throw new OpenPayU_Exception_Authorization($resultError->getError().' - '.$resultError->getErrorDescription(), $statusCode);
-                break;
-
-            case 404:
-                throw new OpenPayU_Exception_Network($resultError->getError().' - '.$resultError->getErrorDescription(), $statusCode);
-                break;
-
-            case 408:
-                throw new OpenPayU_Exception_ServerError('Request timeout', $statusCode);
-                break;
-
-            case 500:
-                throw new OpenPayU_Exception_ServerError('PayU system is unavailable. Error: [' . $resultError->getErrorDescription() . ']', $resultError);
-                break;
-
-            case 503:
-                throw new OpenPayU_Exception_ServerMaintenance('Service unavailable', $statusCode);
-                break;
-
-            default:
-                throw new OpenPayU_Exception_Network('Unexpected HTTP code response', $statusCode);
-                break;
-
-        }
-    }
-
 }
