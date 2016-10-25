@@ -13,8 +13,6 @@
 
 add_action('plugins_loaded', 'woocommerce_payu_init', 0);
 
-add_action( 'wp_enqueue_scripts', 'add_theme_scripts' );
-
 function woocommerce_payu_init() {
     if (!class_exists('WC_Payment_Gateway')) return;
 
@@ -31,10 +29,3 @@ function woocommerce_payu_add_gateway($methods) {
     return $methods;
 }
 
-function add_theme_scripts()
-{
-
-    wp_enqueue_style('PayUMethodsCss', plugin_dir_url( __FILE__ ).'assets/css/PayUMethodsCss.css',array(), '1.1', 'all');
-
-    wp_enqueue_script('PayUMethodsJs',  plugin_dir_url( __FILE__ ).'assets/js/PayUMethodsJs.js');
-}

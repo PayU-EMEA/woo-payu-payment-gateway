@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PayU Payment Gateway\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-10-25 08:35+0000\n"
-"PO-Revision-Date: 2016-10-25 08:39+0000\n"
+"POT-Creation-Date: 2016-10-25 08:16+0000\n"
+"PO-Revision-Date: 2016-10-25 08:17+0000\n"
 "Language-Team: Polish\n"
 "Language: pl-PL\n"
 "Plural-Forms: nplurals=3; plural=(n==1 ? 0 : n%10 >= 2 && n%10<=4 "
@@ -23,25 +23,14 @@ msgstr ""
 "X-Generator: Loco - https://localise.biz/\n"
 "Last-Translator: test@test.pl <test@test.pl>"
 
-#: ../includes/form-fields.php:18
-msgid "Id point of sales:"
-msgstr "Id punktu płatności"
+#: ../includes/form-fields.php:23
+msgid "First key (MD5):"
+msgstr "Drugi klucz (MD5)"
 
-#: ../includes/form-fields.php:30
-msgid "OAuth - client_id:"
-msgstr "OAuth - client_id:"
-
-#: ../includes/form-fields.php:32
-msgid ""
-"Client Id for OAuth identifier  from \"Configuration Keys\" section of PayU "
-"management panel."
+#: ../includes/form-fields.php:26
+msgid "First key from \"Configuration Keys\" section of PayU management panel."
 msgstr ""
-"Id punktu płatności do autentykacji Oauth z sekcji \\\"Klucze "
-"konfiguracji\\\" w panelu managera."
-
-#: ../includes/form-fields.php:36
-msgid "OAuth - client_secret:"
-msgstr "OAuth - client_secret:"
+"Pierwszy klucz (MD5) z sekcji \"Klucze konfiguracji\" w panelu managera."
 
 #. Name of the plugin
 msgid "PayU Payment Gateway"
@@ -121,25 +110,24 @@ msgstr "Nazwa:"
 msgid "Title of PayU Payment Gateway that users sees on Checkout page."
 msgstr "Nazwa płatności PayU widoczna przez kupującego na stronie zamówienia."
 
+#: ../includes/form-fields.php:18
+msgid "POS ID:"
+msgstr "POS ID:"
+
 #: ../includes/form-fields.php:20
 msgid ""
 "Pos identifier from \"Configuration Keys\" section of PayU management panel."
 msgstr ""
 "Id punktu płatności z sekcji \"Klucze konfiguracji\" w panelu managera."
 
-#: ../includes/form-fields.php:24
+#: ../includes/form-fields.php:30
 msgid "Second key (MD5):"
 msgstr "Drugi klucz (MD5):"
 
-#: ../includes/form-fields.php:26
+#: ../includes/form-fields.php:32
 msgid ""
 "Second key from \"Configuration Keys\" section of PayU management panel."
 msgstr "Drugi klucz (MD5) z sekcji \"Klucze konfiguracji\" w panelu managera."
-
-#: ../includes/form-fields.php:38
-msgid "First key from \"Configuration Keys\" section of PayU management panel."
-msgstr ""
-"Pierwszy klucz (MD5) z sekcji \"Klucze konfiguracji\" w panelu managera."
 
 #: ../includes/form-fields.php:30
 msgid "Description:"
