@@ -1,6 +1,7 @@
 <?php
 
 require_once 'lib/openpayu.php';
+require_once('OauthCacheWoocommerce.php');
 
 class WC_Gateway_PayU extends WC_Payment_Gateway {
 
@@ -46,6 +47,12 @@ class WC_Gateway_PayU extends WC_Payment_Gateway {
         OpenPayU_Configuration::setEnvironment('secure');
         OpenPayU_Configuration::setMerchantPosId($this->pos_id);
         OpenPayU_Configuration::setSignatureKey($this->md5);
+        if ($this->client_secret && $this->client_id) {
+            OpenPayU_Configuration::setOauthClientId($this->pos_id);
+            OpenPayU_Configuration::setOauthClientSecret($this->client_secret);
+            OpenPayU_Configuration::setOauthTokenCache(new OauthCacheWP());
+        }
+
         OpenPayU_Configuration::setSender('Wordpress ver ' . get_bloginfo('version') . ' / WooCommerce ver ' . WOOCOMMERCE_VERSION . ' / Plugin ver ' . $this->pluginVersion);
     }
 

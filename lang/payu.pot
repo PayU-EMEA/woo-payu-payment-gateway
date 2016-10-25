@@ -103,7 +103,7 @@ msgid "Title of PayU Payment Gateway that users sees on Checkout page."
 msgstr ""
 
 #: ../includes/form-fields.php:18
-msgid "POS ID:"
+msgid "Id point of sales:"
 msgstr ""
 
 #: ../includes/form-fields.php:20
@@ -116,6 +116,24 @@ msgstr ""
 
 #: ../includes/form-fields.php:26
 msgid "Second key from \"Configuration Keys\" section of PayU management panel."
+msgstr ""
+
+#: ../includes/form-fields.php:30
+msgid "OAuth - client_id:"
+msgstr ""
+
+#: ../includes/form-fields.php:32
+msgid ""
+"Client Id for OAuth identifier  from \"Configuration Keys\" section of PayU "
+"management panel."
+msgstr ""
+
+#: ../includes/form-fields.php:36
+msgid "OAuth - client_secret:"
+msgstr ""
+
+#: ../includes/form-fields.php:38
+msgid "First key from \"Configuration Keys\" section of PayU management panel."
 msgstr ""
 
 #: ../includes/form-fields.php:30
