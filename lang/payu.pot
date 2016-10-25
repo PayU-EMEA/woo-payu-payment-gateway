@@ -187,13 +187,6 @@ msgid ""
 "payments."
 msgstr ""
 
-#: ../includes/form-fields.php:65
-msgid "Display Bank List:"
-msgstr ""
-
-#: ../includes/form-fields.php:67
-msgid "List of available bank on shop page"
-msgstr ""
 
 #. Name of the plugin
 msgid "PayU Payment Gateway"

@@ -2,13 +2,11 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PayU Payment Gateway\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: Thu Oct 22 2015 14:26:03 GMT+0200 (Central European "
-"Standard Time)\n"
-"PO-Revision-Date: Wed Aug 10 2016 12:46:01 GMT+0200 (Central European "
-"Daylight Time)\n"
-"Last-Translator: woocommerce <bartosz.zielinski@payu.pl>\n"
-"Language-Team: \n"
-"Language: Czech\n"
+"POT-Creation-Date: 2016-10-25 10:37+0000\n"
+"PO-Revision-Date: 2016-10-25 10:37+0000\n"
+"Last-Translator: test@test.pl <test@test.pl>\n"
+"Language-Team: Czech\n"
+"Language: cs-CZ\n"
 "Plural-Forms: nplurals=3; plural=( n == 1 ) ? 0 : ( n >= 2 && n <= 4 ) ? 1 : "
 "2\n"
 "MIME-Version: 1.0\n"
@@ -25,25 +23,45 @@ msgstr ""
 "X-Generator: Loco - https://localise.biz/\n"
 "X-Loco-Target-Locale: cs_CZ"
 
+#. Name of the plugin
+msgid "PayU Payment Gateway"
+msgstr "PayU Payment Gateway"
+
+#. URI of the plugin
+msgid "https://github.com/PayU/plugin_woocommerce"
+msgstr "https://github.com/PayU/plugin_woocommerce"
+
+#. Description of the plugin
+msgid "PayU payment gateway for WooCommerce"
+msgstr "PayU payment gateway for WooCommerce"
+
+#. Author of the plugin
+msgid "PayU SA"
+msgstr "PayU SA"
+
+#. Author URI of the plugin
+msgid "http://www.payu.com"
+msgstr "http://www.payu.com"
+
 #: ../includes/class-woocommerce-payu.php:14 ../includes/form-fields.php:14
 msgid "PayU"
-msgstr ""
+msgstr "PayU"
 
 #: ../includes/class-woocommerce-payu.php:15
 msgid "Official PayU payment gateway for WooCommerce."
-msgstr ""
+msgstr "Official PayU payment gateway for WooCommerce."
 
 #: ../includes/class-woocommerce-payu.php:171
 msgid "Shipment"
-msgstr ""
+msgstr "Shipment"
 
 #: ../includes/class-woocommerce-payu.php:323
 msgid "Payment error : Terms of single PayU payment transaction"
-msgstr ""
+msgstr "Payment error : Terms of single PayU payment transaction"
 
 #: ../includes/class-woocommerce-payu.php:326
 msgid "Payment error : Please select a method of payment"
-msgstr ""
+msgstr "Payment error : Please select a method of payment"
 
 #: ../includes/class-woocommerce-payu.php:356
 msgid ""
@@ -53,6 +71,11 @@ msgid ""
 "the recipient within 1 hour, not later than until the end of the next "
 "business day; PayU SA does not charge any service fees."
 msgstr ""
+"Payment is processed by PayU SA; The recipient's data, the payment title and "
+"the amount are provided to PayU SA by the recipient; The order is sent for "
+"processing when PayU SA receives your payment. The payment is transferred to "
+"\"the recipient within 1 hour, not later than until the end of the next "
+"\"business day; PayU SA does not charge any service fees."
 
 #: ../includes/class-woocommerce-payu.php:359
 msgctxt ""
@@ -67,151 +90,146 @@ msgstr ""
 
 #: ../includes/class-woocommerce-payu.php:360
 msgid "Terms of single PayU payment transaction"
-msgstr ""
+msgstr "Terms of single PayU payment transaction"
 
 #: ../includes/class-woocommerce-payu.php:363
 msgid ""
 "The administrator of your personal data within the meaning of the Personal "
 "Data Protection Act of 29 August 1997 (Journal of Laws of 2002, No. 101, "
-"item 926 as amended) is PayU SA with the registered office in Poznań (60-"
-"166) at ul. Grunwaldzka 182. Your personal data will be processed according "
-"to the applicable provisions of law for archiving and service provision "
+"item 926 as amended) is PayU SA with the registered office in Poznań (60-166)"
+" at ul. Grunwaldzka 182. Your personal data will be processed according to "
+"the applicable provisions of law for archiving and service provision "
 "purposes. Your data will not be made available to other entities, except of "
 "entities authorized by law. You are entitled to access and edit your data. "
 "Data provision is voluntary but required to achieve the above-mentioned "
 "purposes."
 msgstr ""
+"\"The administrator of your personal data within the meaning of the Personal "
+"Data Protection Act of 29 August 1997 (Journal of Laws of 2002, No. 101, "
+"item 926 as amended) is PayU SA with the registered office in Poznań (60-166)"
+" at ul. Grunwaldzka 182. Your personal data will be processed according \"to "
+"the applicable provisions of law for archiving and service provision "
+"purposes. Your data will not be made available to other entities, except of "
+"entities authorized by law. You are entitled to access and edit your data. "
+"Data provision is voluntary but required to achieve the above-mentioned "
+"purposes."
 
 #: ../includes/class-woocommerce-payu.php:408
 msgid "Payment error. Status code: "
-msgstr ""
+msgstr "Payment error. Status code:"
 
 #: ../includes/class-woocommerce-payu.php:413
 msgid "Payment error: "
-msgstr ""
+msgstr "Payment error: "
 
 #: ../includes/class-woocommerce-payu.php:433
 msgid "Payment has been cancelled."
-msgstr ""
+msgstr "Payment has been cancelled."
 
 #: ../includes/class-woocommerce-payu.php:437
 msgid "Payment has been rejected."
-msgstr ""
+msgstr "Payment has been rejected."
 
 #: ../includes/class-woocommerce-payu.php:447
-msgid "Payment has been put on hold - merchant must approve this payment manually."
+msgid ""
+"Payment has been put on hold - merchant must approve this payment manually."
 msgstr ""
+"Payment has been put on hold - merchant must approve this payment manually."
 
 #: ../includes/class-woocommerce-payu.php:466
 msgid "Refund of: "
-msgstr ""
+msgstr "Refund of:"
 
 #: ../includes/class-woocommerce-payu.php:466
 msgid " for order: "
-msgstr ""
+msgstr "for order:"
 
 #: ../includes/form-fields.php:5
 msgid "Enable:"
-msgstr ""
+msgstr "Enable:"
 
 #: ../includes/form-fields.php:11
 msgid "Title:"
-msgstr ""
+msgstr "Title:"
 
 #: ../includes/form-fields.php:13
 msgid "Title of PayU Payment Gateway that users sees on Checkout page."
-msgstr ""
+msgstr "Title of PayU Payment Gateway that users sees on Checkout page."
 
 #: ../includes/form-fields.php:18
 msgid "Id point of sales:"
-msgstr ""
+msgstr "Id point of sales:"
 
 #: ../includes/form-fields.php:20
-msgid "Pos identifier from \"Configuration Keys\" section of PayU management panel."
+msgid ""
+"Pos identifier from \"Configuration Keys\" section of PayU management panel."
 msgstr ""
+"Pos identifier from \\\"Configuration Keys\\\" section of PayU management "
+"panel."
 
 #: ../includes/form-fields.php:24
 msgid "Second key (MD5):"
-msgstr ""
+msgstr "Second key (MD5):"
 
 #: ../includes/form-fields.php:26
-msgid "Second key from \"Configuration Keys\" section of PayU management panel."
+msgid ""
+"Second key from \"Configuration Keys\" section of PayU management panel."
 msgstr ""
+"Second key from \\\"Configuration Keys\\\" section of PayU management panel."
 
 #: ../includes/form-fields.php:30
 msgid "OAuth - client_id:"
-msgstr ""
+msgstr "OAuth - client_id:"
 
 #: ../includes/form-fields.php:32
 msgid ""
 "Client Id for OAuth identifier  from \"Configuration Keys\" section of PayU "
 "management panel."
 msgstr ""
+"Client Id for OAuth identifier  from \\\"Configuration Keys\\\" section of "
+"PayU management panel."
 
 #: ../includes/form-fields.php:36
 msgid "OAuth - client_secret:"
-msgstr ""
+msgstr "OAuth - client_secret:"
 
 #: ../includes/form-fields.php:38
 msgid "First key from \"Configuration Keys\" section of PayU management panel."
 msgstr ""
+"First key from \\\"Configuration Keys\\\" section of PayU management panel."
 
 #: ../includes/form-fields.php:42
 msgid "Description:"
-msgstr ""
+msgstr "Description:"
 
 #: ../includes/form-fields.php:44
 msgid "Description of PayU Payment Gateway that users sees on Checkout page."
-msgstr ""
+msgstr "Description of PayU Payment Gateway that users sees on Checkout page."
 
 #: ../includes/form-fields.php:45
 msgid ""
 "PayU is a leading payment services provider with presence in 16 growth "
 "markets across the world."
 msgstr ""
+"PayU is a leading payment services provider with presence in 16 growth "
+"markets across the world."
 
 #: ../includes/form-fields.php:49
 msgid "Validity time:"
-msgstr ""
+msgstr "Validity time:"
 
 #: ../includes/form-fields.php:51
 msgid "Time when paying for order is possible (in seconds)."
-msgstr ""
+msgstr "Time when paying for order is possible (in seconds)."
 
 #: ../includes/form-fields.php:56
 msgid "Automatic collection:"
-msgstr ""
+msgstr "Automatic collection:"
 
 #: ../includes/form-fields.php:58
 msgid ""
 "Automatic collection makes it possible to automatically confirm incoming "
 "payments."
 msgstr ""
-
-#: ../includes/form-fields.php:65
-msgid "Display Bank List:"
-msgstr ""
-
-#: ../includes/form-fields.php:67
-msgid "List of available bank on shop page"
-msgstr ""
-
-#. Name of the plugin
-msgid "PayU Payment Gateway"
-msgstr ""
-
-#. URI of the plugin
-msgid "https://github.com/PayU/plugin_woocommerce"
-msgstr ""
-
-#. Description of the plugin
-msgid "PayU payment gateway for WooCommerce"
-msgstr ""
-
-#. Author of the plugin
-msgid "PayU SA"
-msgstr ""
-
-#. Author URI of the plugin
-msgid "http://www.payu.com"
-msgstr ""
+"Automatic collection makes it possible to automatically confirm incoming "
+"payments."

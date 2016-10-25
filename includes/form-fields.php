@@ -60,14 +60,4 @@ return array(
         'default' => 'no',
         'desc_tip' => true
     ),
-   
-    'display_bank' => array(
-    'title'=> __('Display Bank List:', 'payu'),
-    'type' => 'checkbox',
-    'description' =>  __('List of available bank on shop page', 'payu'),
-    'label' => ' ',
-    'default' => 'yes',
-    'desc_tip' => true
-),
-    
 );
