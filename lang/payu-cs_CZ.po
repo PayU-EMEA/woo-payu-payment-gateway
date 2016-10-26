@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PayU Payment Gateway\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-10-25 10:37+0000\n"
-"PO-Revision-Date: 2016-10-25 10:37+0000\n"
+"POT-Creation-Date: 2016-10-26 12:01+0000\n"
+"PO-Revision-Date: 2016-10-26 12:01+0000\n"
 "Last-Translator: test@test.pl <test@test.pl>\n"
 "Language-Team: Czech\n"
 "Language: cs-CZ\n"
@@ -23,26 +23,6 @@ msgstr ""
 "X-Generator: Loco - https://localise.biz/\n"
 "X-Loco-Target-Locale: cs_CZ"
 
-#. Name of the plugin
-msgid "PayU Payment Gateway"
-msgstr "PayU Payment Gateway"
-
-#. URI of the plugin
-msgid "https://github.com/PayU/plugin_woocommerce"
-msgstr "https://github.com/PayU/plugin_woocommerce"
-
-#. Description of the plugin
-msgid "PayU payment gateway for WooCommerce"
-msgstr "PayU payment gateway for WooCommerce"
-
-#. Author of the plugin
-msgid "PayU SA"
-msgstr "PayU SA"
-
-#. Author URI of the plugin
-msgid "http://www.payu.com"
-msgstr "http://www.payu.com"
-
 #: ../includes/class-woocommerce-payu.php:14 ../includes/form-fields.php:14
 msgid "PayU"
 msgstr "PayU"
@@ -54,65 +34,6 @@ msgstr "Official PayU payment gateway for WooCommerce."
 #: ../includes/class-woocommerce-payu.php:171
 msgid "Shipment"
 msgstr "Shipment"
-
-#: ../includes/class-woocommerce-payu.php:323
-msgid "Payment error : Terms of single PayU payment transaction"
-msgstr "Payment error : Terms of single PayU payment transaction"
-
-#: ../includes/class-woocommerce-payu.php:326
-msgid "Payment error : Please select a method of payment"
-msgstr "Payment error : Please select a method of payment"
-
-#: ../includes/class-woocommerce-payu.php:356
-msgid ""
-"Payment is processed by PayU SA; The recipient's data, the payment title and "
-"the amount are provided to PayU SA by the recipient; The order is sent for "
-"processing when PayU SA receives your payment. The payment is transferred to "
-"the recipient within 1 hour, not later than until the end of the next "
-"business day; PayU SA does not charge any service fees."
-msgstr ""
-"Payment is processed by PayU SA; The recipient's data, the payment title and "
-"the amount are provided to PayU SA by the recipient; The order is sent for "
-"processing when PayU SA receives your payment. The payment is transferred to "
-"\"the recipient within 1 hour, not later than until the end of the next "
-"\"business day; PayU SA does not charge any service fees."
-
-#: ../includes/class-woocommerce-payu.php:359
-msgctxt ""
-"http://static.payu."
-"com/sites/terms/files/payu_terms_of_service_single_transaction_pl_pl.pdf"
-msgid ""
-"http://static.payu."
-"com/sites/terms/files/payu_terms_of_service_single_transaction_pl_en.pdf"
-msgstr ""
-"http://static.payu.com/sites/terms/files/Podmínky pro provedení jednorázové "
-"platební transakce v PayU.pdf\n"
-
-#: ../includes/class-woocommerce-payu.php:360
-msgid "Terms of single PayU payment transaction"
-msgstr "Terms of single PayU payment transaction"
-
-#: ../includes/class-woocommerce-payu.php:363
-msgid ""
-"The administrator of your personal data within the meaning of the Personal "
-"Data Protection Act of 29 August 1997 (Journal of Laws of 2002, No. 101, "
-"item 926 as amended) is PayU SA with the registered office in Poznań (60-166)"
-" at ul. Grunwaldzka 182. Your personal data will be processed according to "
-"the applicable provisions of law for archiving and service provision "
-"purposes. Your data will not be made available to other entities, except of "
-"entities authorized by law. You are entitled to access and edit your data. "
-"Data provision is voluntary but required to achieve the above-mentioned "
-"purposes."
-msgstr ""
-"\"The administrator of your personal data within the meaning of the Personal "
-"Data Protection Act of 29 August 1997 (Journal of Laws of 2002, No. 101, "
-"item 926 as amended) is PayU SA with the registered office in Poznań (60-166)"
-" at ul. Grunwaldzka 182. Your personal data will be processed according \"to "
-"the applicable provisions of law for archiving and service provision "
-"purposes. Your data will not be made available to other entities, except of "
-"entities authorized by law. You are entitled to access and edit your data. "
-"Data provision is voluntary but required to achieve the above-mentioned "
-"purposes."
 
 #: ../includes/class-woocommerce-payu.php:408
 msgid "Payment error. Status code: "
@@ -233,3 +154,23 @@ msgid ""
 msgstr ""
 "Automatic collection makes it possible to automatically confirm incoming "
 "payments."
+
+#. Name of the plugin
+msgid "PayU Payment Gateway"
+msgstr "PayU Payment Gateway"
+
+#. URI of the plugin
+msgid "https://github.com/PayU/plugin_woocommerce"
+msgstr "https://github.com/PayU/plugin_woocommerce"
+
+#. Description of the plugin
+msgid "PayU payment gateway for WooCommerce"
+msgstr "PayU payment gateway for WooCommerce"
+
+#. Author of the plugin
+msgid "PayU SA"
+msgstr "PayU SA"
+
+#. Author URI of the plugin
+msgid "http://www.payu.com"
+msgstr "http://www.payu.com"
