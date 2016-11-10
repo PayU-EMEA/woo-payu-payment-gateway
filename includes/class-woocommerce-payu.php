@@ -131,7 +131,7 @@ class WC_Gateway_PayU extends WC_Payment_Gateway {
     function gateway_ipn() {
         if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             $body = file_get_contents('php://input');
-            $data = stripslashes(trim($body));
+            $data = trim($body);
             $response = OpenPayU_Order::consumeNotification($data);
             $order_id = (int) preg_replace('/_.*$/', '', $response->getResponse()->order->extOrderId);
             $status = $response->getResponse()->order->status;
