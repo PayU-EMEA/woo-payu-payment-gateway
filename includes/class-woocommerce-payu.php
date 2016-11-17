@@ -6,7 +6,7 @@ class WC_Gateway_PayU extends WC_Payment_Gateway {
 
     function __construct() {
         $this->id = "payu";
-        $this->pluginVersion = '1.1.0';
+        $this->pluginVersion = '1.1.1';
         $this->has_fields = false;
 
         $this->method_title = __('PayU', 'payu');
