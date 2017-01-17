@@ -6,7 +6,7 @@ require_once 'OauthCacheWP.php';
 class WC_Gateway_PayU extends WC_Payment_Gateway
 {
 
-    private $pluginVersion = '1.2.0';
+    private $pluginVersion = '1.2.1';
 
     private $pos_id;
     private $md5;
@@ -98,7 +98,7 @@ class WC_Gateway_PayU extends WC_Payment_Gateway
         $orderData['description'] = get_bloginfo('name') . ' #' . $order->get_order_number();
         $orderData['currencyCode'] = get_woocommerce_currency();
         $orderData['totalAmount'] = $this->toAmount($order->get_total());
-        $orderData['extOrderId'] = uniqid($order->get_order_number() . '_', true);
+        $orderData['extOrderId'] = uniqid($order_id . '_', true);
         $orderData['settings']['invoiceDisabled'] = true;
 
         $items = $order->get_items();
