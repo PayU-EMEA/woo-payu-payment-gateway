@@ -127,7 +127,7 @@ class WC_Gateway_PayU extends WC_Payment_Gateway
 
                 return array(
                     'result' => 'success',
-                    'redirect' => $response->getResponse()->redirectUri
+                    'redirect' => $response->getResponse()->redirectUri . '&lang=' . $this->getLanguage()
                 );
             } else {
                 wc_add_notice(__('Payment error. Status code: ', 'payu') . $response->getStatus(), 'error');
@@ -247,6 +247,14 @@ class WC_Gateway_PayU extends WC_Payment_Gateway
     private function toAmount($value)
     {
         return (int)round($value * 100);
+    }
+
+    /**
+     * @return string
+     */
+    private function getLanguage()
+    {
+        return substr(get_locale(), 0, 2);
     }
 
 }
