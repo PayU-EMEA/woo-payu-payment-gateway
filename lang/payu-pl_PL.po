@@ -2,9 +2,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PayU Payment Gateway\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-01-11 10:31+0000\n"
-"PO-Revision-Date: 2017-01-11 10:32+0000\n"
-"Last-Translator: admin <tomek@regdos.com>\n"
+"POT-Creation-Date: 2017-06-21 13:58+0000\n"
+"PO-Revision-Date: 2017-06-21 13:58+0000\n"
+"Last-Translator: Tomasz Regdos <tomasz.regdos@payu.pl>\n"
 "Language-Team: Polish\n"
 "Language: pl-PL\n"
 "Plural-Forms: nplurals=3; plural=(n==1 ? 0 : n%10 >= 2 && n%10<=4 "
@@ -35,7 +35,7 @@ msgstr "Nazwa:"
 msgid "Title of PayU Payment Gateway that users sees on Checkout page."
 msgstr "Nazwa płatności PayU widoczna przez kupującego na stronie zamówienia."
 
-#: includes/form-fields.php:14 includes/class-woocommerce-payu.php:16
+#: includes/form-fields.php:14 includes/class-woocommerce-payu.php:22
 msgid "PayU"
 msgstr "PayU"
 
@@ -107,41 +107,45 @@ msgstr ""
 "Umożliwia automatyczne odebranie transakcji oraz anulowanie po "
 "zmianiestatusu zamówienia w sklepie."
 
-#: includes/class-woocommerce-payu.php:17
+#: includes/class-woocommerce-payu.php:23
 msgid "Official PayU payment gateway for WooCommerce."
 msgstr "Moduł płatności PayU dla WooCommerce."
 
-#: includes/class-woocommerce-payu.php:100
+#: includes/class-woocommerce-payu.php:106
 msgid "Shipment"
 msgstr "Wysyłka"
 
-#: includes/class-woocommerce-payu.php:127
+#: includes/class-woocommerce-payu.php:128
+msgid "Awaiting PayU payment."
+msgstr "Oczekiwanie na płatność PayU."
+
+#: includes/class-woocommerce-payu.php:137
 msgid "Payment error. Status code: "
 msgstr "Błąd płatności. Kod statusu: "
 
-#: includes/class-woocommerce-payu.php:132
+#: includes/class-woocommerce-payu.php:142
 msgid "Payment error: "
 msgstr "Błąd płatności: "
 
-#: includes/class-woocommerce-payu.php:164
+#: includes/class-woocommerce-payu.php:174
 msgid "Payment has been cancelled."
 msgstr "Płatność została anulowana."
 
-#: includes/class-woocommerce-payu.php:168
+#: includes/class-woocommerce-payu.php:178
 msgid "Payment has been rejected."
 msgstr "Płatność została odrzucona"
 
-#: includes/class-woocommerce-payu.php:178
+#: includes/class-woocommerce-payu.php:188
 msgid ""
 "Payment has been put on hold - merchant must approve this payment manually."
 msgstr ""
 "Płatność została wstrzymana sprzedawca musis zaakceptować płatność ręcznie."
 
-#: includes/class-woocommerce-payu.php:204
+#: includes/class-woocommerce-payu.php:214
 msgid "Refund of: "
 msgstr "Zwrot: "
 
-#: includes/class-woocommerce-payu.php:204
+#: includes/class-woocommerce-payu.php:214
 msgid " for order: "
 msgstr " dla zamówienia: "
 

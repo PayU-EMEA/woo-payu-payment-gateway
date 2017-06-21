@@ -123,6 +123,10 @@ class WC_Gateway_PayU extends WC_Payment_Gateway
             $response = OpenPayU_Order::create($orderData);
 
             if ($response->getStatus() == 'SUCCESS') {
+
+                $order->reduce_order_stock();
+                $order->update_status( 'on-hold', __( 'Awaiting PayU payment.', 'payu' ) );
+
                 add_post_meta($order_id, '_transaction_id', $response->getResponse()->orderId, true);
 
                 return array(
