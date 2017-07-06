@@ -6,7 +6,7 @@ require_once 'OauthCacheWP.php';
 class WC_Gateway_PayU extends WC_Payment_Gateway
 {
 
-    private $pluginVersion = '1.2.2';
+    private $pluginVersion = '1.2.3';
 
     private $pos_id;
     private $md5;
@@ -86,6 +86,7 @@ class WC_Gateway_PayU extends WC_Payment_Gateway
     {
 
         $order = new WC_Order($order_id);
+        $billingData = $order->get_address();
 
         WC()->cart->empty_cart();
 
@@ -114,17 +115,18 @@ class WC_Gateway_PayU extends WC_Payment_Gateway
             $orderData['products'][$i]['quantity'] = $item['qty'];
         }
 
-        $orderData['buyer']['email'] = $order->billing_email;
-        $orderData['buyer']['phone'] = $order->billing_phone;
-        $orderData['buyer']['firstName'] = $order->billing_first_name;
-        $orderData['buyer']['lastName'] = $order->billing_last_name;
+        $orderData['buyer']['email'] = $billingData['email'];
+        $orderData['buyer']['phone'] = $billingData['phone'];
+        $orderData['buyer']['firstName'] = $billingData['first_name'];
+        $orderData['buyer']['lastName'] = $billingData['last_name'];
 
         try {
             $response = OpenPayU_Order::create($orderData);
 
             if ($response->getStatus() == 'SUCCESS') {
 
-                $order->reduce_order_stock();
+                $this->reduceStock($order);
+
                 $order->update_status( 'on-hold', __( 'Awaiting PayU payment.', 'payu' ) );
 
                 add_post_meta($order_id, '_transaction_id', $response->getResponse()->orderId, true);
@@ -211,7 +213,7 @@ class WC_Gateway_PayU extends WC_Payment_Gateway
 
         $refund = OpenPayU_Refund::create(
             $orderId,
-            __('Refund of: ', 'payu') . ' ' . $amount . $order->order_currency . __(' for order: ', 'payu') . $order_id,
+            __('Refund of: ', 'payu') . ' ' . $amount . $this->getOrderCurrecny($order) . __(' for order: ', 'payu') . $order_id,
             $this->toAmount($amount)
         );
 
@@ -261,6 +263,24 @@ class WC_Gateway_PayU extends WC_Payment_Gateway
         return substr(get_locale(), 0, 2);
     }
 
+    /**
+     * @param WC_Order $order
+     * @return string
+     */
+    private function getOrderCurrecny($order)
+    {
+        return method_exists($order,'get_currency') ? $order->get_currency() : $order->get_order_currency();
+    }
+
+    /**
+     * @param WC_Order $order
+     */
+    private function reduceStock($order)
+    {
+        function_exists('wc_reduce_stock_levels') ?
+            wc_reduce_stock_levels($order->get_id()) : $order->reduce_order_stock();
+
+    }
 }
 
 ?>
