@@ -6,7 +6,7 @@ require_once 'OauthCacheWP.php';
 class WC_Gateway_PayU extends WC_Payment_Gateway
 {
 
-    private $pluginVersion = '1.2.3';
+    private $pluginVersion = '1.2.4';
 
     private $pos_id;
     private $md5;
@@ -111,7 +111,7 @@ class WC_Gateway_PayU extends WC_Payment_Gateway
         foreach ($items as $item) {
             $i++;
             $orderData['products'][$i]['name'] = $item['name'];
-            $orderData['products'][$i]['unitPrice'] = $order->get_item_total($item, true) * 100;
+            $orderData['products'][$i]['unitPrice'] = $this->toAmount($order->get_item_total($item, true));
             $orderData['products'][$i]['quantity'] = $item['qty'];
         }
 

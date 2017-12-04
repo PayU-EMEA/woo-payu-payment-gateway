@@ -3,7 +3,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PayU Payment Gateway\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-06-21 13:55+0000\n"
+"POT-Creation-Date: 2017-12-04 11:03+0000\n"
 "POT-Revision-Date: Wed Aug 10 2016 12:41:33 GMT+0200 (Central European "
 "Daylight Time)\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
@@ -28,73 +28,83 @@ msgstr ""
 msgid "Enable:"
 msgstr ""
 
-#: includes/form-fields.php:11
+#: includes/form-fields.php:9
+msgid ""
+"If you do not already have PayU merchant account, <a href=\"https://secure."
+"payu.com/boarding/#/form&pk_campaign=Plugin&pk_kwd=WooCommerce\" "
+"target=\"_blank\">please register in Production</a> or <a href=\"https:"
+"//secure.snd.payu."
+"com/boarding/#/form&pk_campaign=Plugin&pk_kwd=WooCommerce\" "
+"target=\"_blank\">please register in Sandbox</a>."
+msgstr ""
+
+#: includes/form-fields.php:12
 msgid "Title:"
 msgstr ""
 
-#: includes/form-fields.php:13
+#: includes/form-fields.php:14
 msgid "Title of PayU Payment Gateway that users sees on Checkout page."
 msgstr ""
 
-#: includes/form-fields.php:14 includes/class-woocommerce-payu.php:22
+#: includes/form-fields.php:15 includes/class-woocommerce-payu.php:22
 msgid "PayU"
 msgstr ""
 
-#: includes/form-fields.php:18
+#: includes/form-fields.php:19
 msgid "Id point of sales:"
 msgstr ""
 
-#: includes/form-fields.php:20
+#: includes/form-fields.php:21
 msgid ""
 "Pos identifier from \"Configuration Keys\" section of PayU management panel."
 msgstr ""
 
-#: includes/form-fields.php:24
+#: includes/form-fields.php:25
 msgid "Second key (MD5):"
 msgstr ""
 
-#: includes/form-fields.php:26
+#: includes/form-fields.php:27
 msgid ""
 "Second key from \"Configuration Keys\" section of PayU management panel."
 msgstr ""
 
-#: includes/form-fields.php:30
+#: includes/form-fields.php:31
 msgid "OAuth - client_id:"
 msgstr ""
 
-#: includes/form-fields.php:32
+#: includes/form-fields.php:33
 msgid ""
 "Client Id for OAuth identifier  from \"Configuration Keys\" section of PayU "
 "management panel."
 msgstr ""
 
-#: includes/form-fields.php:36
+#: includes/form-fields.php:37
 msgid "OAuth - client_secret:"
 msgstr ""
 
-#: includes/form-fields.php:38
+#: includes/form-fields.php:39
 msgid "First key from \"Configuration Keys\" section of PayU management panel."
 msgstr ""
 
-#: includes/form-fields.php:42
+#: includes/form-fields.php:43
 msgid "Description:"
 msgstr ""
 
-#: includes/form-fields.php:44
+#: includes/form-fields.php:45
 msgid "Description of PayU Payment Gateway that users sees on Checkout page."
 msgstr ""
 
-#: includes/form-fields.php:45
+#: includes/form-fields.php:46
 msgid ""
 "PayU is a leading payment services provider with presence in 16 growth "
 "markets across the world."
 msgstr ""
 
-#: includes/form-fields.php:49
+#: includes/form-fields.php:50
 msgid "Automatic collection:"
 msgstr ""
 
-#: includes/form-fields.php:51
+#: includes/form-fields.php:52
 msgid ""
 "Automatic collection makes it possible to automatically confirm incoming "
 "payments."
@@ -104,40 +114,40 @@ msgstr ""
 msgid "Official PayU payment gateway for WooCommerce."
 msgstr ""
 
-#: includes/class-woocommerce-payu.php:106
+#: includes/class-woocommerce-payu.php:107
 msgid "Shipment"
 msgstr ""
 
-#: includes/class-woocommerce-payu.php:128
+#: includes/class-woocommerce-payu.php:130
 msgid "Awaiting PayU payment."
 msgstr ""
 
-#: includes/class-woocommerce-payu.php:137
+#: includes/class-woocommerce-payu.php:139
 msgid "Payment error. Status code: "
 msgstr ""
 
-#: includes/class-woocommerce-payu.php:142
+#: includes/class-woocommerce-payu.php:144
 msgid "Payment error: "
 msgstr ""
 
-#: includes/class-woocommerce-payu.php:174
+#: includes/class-woocommerce-payu.php:176
 msgid "Payment has been cancelled."
 msgstr ""
 
-#: includes/class-woocommerce-payu.php:178
+#: includes/class-woocommerce-payu.php:180
 msgid "Payment has been rejected."
 msgstr ""
 
-#: includes/class-woocommerce-payu.php:188
+#: includes/class-woocommerce-payu.php:190
 msgid ""
 "Payment has been put on hold - merchant must approve this payment manually."
 msgstr ""
 
-#: includes/class-woocommerce-payu.php:214
+#: includes/class-woocommerce-payu.php:216
 msgid "Refund of: "
 msgstr ""
 
-#: includes/class-woocommerce-payu.php:214
+#: includes/class-woocommerce-payu.php:216
 msgid " for order: "
 msgstr ""
 
