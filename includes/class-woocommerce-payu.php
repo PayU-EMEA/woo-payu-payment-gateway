@@ -6,7 +6,7 @@ require_once 'OauthCacheWP.php';
 class WC_Gateway_PayU extends WC_Payment_Gateway
 {
 
-    private $pluginVersion = '1.2.4';
+    private $pluginVersion = '1.2.5';
 
     private $pos_id;
     private $md5;
