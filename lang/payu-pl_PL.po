@@ -43,6 +43,10 @@ msgstr ""
 msgid "Enable:"
 msgstr "Włączony:"
 
+#: includes/form-fields.php:15
+msgid "Test payment:"
+msgstr "Płatność testowa:"
+
 #: includes/form-fields.php:12
 msgid "Title:"
 msgstr "Nazwa:"

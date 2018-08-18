@@ -8,6 +8,13 @@ return array(
         'description' => __('If you do not already have PayU merchant account, <a href="https://secure.payu.com/boarding/#/form&pk_campaign=Plugin&pk_kwd=WooCommerce" target="_blank">please register in Production</a> or <a href="https://secure.snd.payu.com/boarding/#/form&pk_campaign=Plugin&pk_kwd=WooCommerce" target="_blank">please register in Sandbox</a>.', 'payu'),
         'default' => 'no'
     ),
+    'sandbox' => array(
+        'title' => __('Sandox:', 'payu'),
+        'type' => 'checkbox',
+        'label' => ' ',
+        'description' => __('Test payment', 'payu'),
+        'default' => 'no'
+    ),
     'title' => array(
         'title' => __('Title:', 'payu'),
         'type' => 'text',

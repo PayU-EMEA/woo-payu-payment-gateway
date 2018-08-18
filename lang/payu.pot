@@ -28,6 +28,10 @@ msgstr ""
 msgid "Enable:"
 msgstr ""
 
+#: includes/form-fields.php:5
+msgid "Test payment:"
+msgstr ""
+
 #: includes/form-fields.php:9
 msgid ""
 "If you do not already have PayU merchant account, <a href=\"https://secure."

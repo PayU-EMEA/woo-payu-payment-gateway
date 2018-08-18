@@ -13,6 +13,7 @@ class WC_Gateway_PayU extends WC_Payment_Gateway
     private $client_id;
     private $client_secret;
     private $payu_feedback;
+    private $sandbox;
 
     function __construct()
     {
@@ -51,7 +52,7 @@ class WC_Gateway_PayU extends WC_Payment_Gateway
 
     protected function init_OpenPayU()
     {
-        OpenPayU_Configuration::setEnvironment();
+        OpenPayU_Configuration::setEnvironment($this->getEnv());
         OpenPayU_Configuration::setMerchantPosId($this->pos_id);
         OpenPayU_Configuration::setSignatureKey($this->md5);
         if ($this->client_secret && $this->client_id) {
@@ -244,6 +245,17 @@ class WC_Gateway_PayU extends WC_Payment_Gateway
             }
         }
 
+    }
+
+    /**
+     * @return string
+     */
+    private function getEnv()
+    {
+        if ($this->sandbox === 'yes') {
+            return 'sandbox';
+        }
+        return 'secure';
     }
 
     /**
