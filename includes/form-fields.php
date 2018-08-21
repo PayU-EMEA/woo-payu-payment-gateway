@@ -2,11 +2,11 @@
 
 return array(
     'enabled' => array(
-        'title' => __('Enable:', 'payu'),
+        'title' => __('Enable/Disable', 'woocommerce'),
+        'label' => __('Enable PayU payment method', 'payu'),
         'type' => 'checkbox',
-        'label' => ' ',
         'description' => __('If you do not already have PayU merchant account, <a href="https://secure.payu.com/boarding/#/form&pk_campaign=Plugin&pk_kwd=WooCommerce" target="_blank">please register in Production</a> or <a href="https://secure.snd.payu.com/boarding/#/form&pk_campaign=Plugin&pk_kwd=WooCommerce" target="_blank">please register in Sandbox</a>.', 'payu'),
-        'default' => 'no'
+        'default' => 'no',
     ),
     'title' => array(
         'title' => __('Title:', 'payu'),
@@ -35,6 +35,36 @@ return array(
     ),
     'client_secret' => array(
         'title' => __('OAuth - client_secret:', 'payu'),
+        'type' => 'text',
+        'description' => __('First key from "Configuration Keys" section of PayU management panel.', 'payu'),
+        'desc_tip' => true
+    ),
+    'sandbox' => array(
+        'title' => __('Sandbox mode:', 'payu'),
+        'type' => 'checkbox',
+        'label' => __('Use sandbox environment.', 'payu'),
+        'default' => 'no'
+    ),
+    'sandbox_pos_id' => array(
+        'title' => __('Sandbox - Id point of sales:', 'payu'),
+        'type' => 'text',
+        'description' => __('Pos identifier from "Configuration Keys" section of PayU management panel.', 'payu'),
+        'desc_tip' => true
+    ),
+    'sandbox_md5' => array(
+        'title' => __('Sandbox - Second key (MD5):', 'payu'),
+        'type' => 'text',
+        'description' => __('Second key from "Configuration Keys" section of PayU management panel.', 'payu'),
+        'desc_tip' => true
+    ),
+    'sandbox_client_id' => array(
+        'title' => __('Sandbox - OAuth - client_id:', 'payu'),
+        'type' => 'text',
+        'description' => __('Client Id for OAuth identifier  from "Configuration Keys" section of PayU management panel.', 'payu'),
+        'desc_tip' => true
+    ),
+    'sandbox_client_secret' => array(
+        'title' => __('Sandbox - OAuth - client_secret:', 'payu'),
         'type' => 'text',
         'description' => __('First key from "Configuration Keys" section of PayU management panel.', 'payu'),
         'desc_tip' => true
