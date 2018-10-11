@@ -3,9 +3,6 @@
 
 **If you have any questions or issues, feel free to contact our technical support: tech@payu.pl.**
 
-PayU account is a web application designed as an e-wallet for shoppers willing to open an account, 
-define their payment options, see their purchase history, and manage personal profiles.
-
 **Important:** This plugin works only with **REST API (checkout) points of sales (POS)**.
 
 ## Features
@@ -14,6 +11,7 @@ The PayU Payment Gateway for WooCommerce adds the PayU payment option and enable
 * Creating a payment order
 * Updating order status (canceling/completing an order will simultaneously update payment's status)
 * Conducting a refund operation (for a whole or partial order)
+* Multicurrency - working only with WPML
 
 ## Prerequisites
 
