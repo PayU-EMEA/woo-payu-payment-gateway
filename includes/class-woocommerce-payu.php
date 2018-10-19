@@ -13,7 +13,7 @@ class WC_Gateway_PayU extends WC_Payment_Gateway
     function __construct()
     {
         $this->id = 'payu';
-        $this->has_fields = false;
+        $this->has_fields = apply_filters( 'woocommerce_payu_has_fields', false );
         $this->method_title = __('PayU', 'payu');
         $this->method_description = __('Official PayU payment gateway for WooCommerce.', 'payu');
         $this->icon = apply_filters('woocommerce_payu_icon', 'https://static.payu.com/plugins/woocommerce_payu_logo.png');
@@ -97,6 +97,7 @@ class WC_Gateway_PayU extends WC_Payment_Gateway
         }
 
         $this->form_fields = array_merge($this->getFormFieldsBasic(), $this->getFormFieldConfig($currencies), $this->getFormFieldInfo());
+	    $this->form_fields = apply_filters( 'woocommerce_payu_form_fields', $this->form_fields );
     }
 
     function process_payment($order_id)
@@ -128,10 +129,14 @@ class WC_Gateway_PayU extends WC_Payment_Gateway
             )
         );
 
+	    $orderData = apply_filters( 'woocommerce_payu_order_args', $orderData, $order );
+
         try {
             $response = OpenPayU_Order::create($orderData);
 
-            if ($response->getStatus() === OpenPayU_Order::SUCCESS) {
+	        $isSuccess = apply_filters( 'woocommerce_payu_order_status', $response->getStatus() === OpenPayU_Order::SUCCESS, $order, $response );
+
+            if ($isSuccess) {
 
                 $this->reduceStock($order);
                 WC()->cart->empty_cart();
@@ -140,9 +145,11 @@ class WC_Gateway_PayU extends WC_Payment_Gateway
 
                 add_post_meta($order_id, '_transaction_id', $response->getResponse()->orderId, true);
 
+	            $url = apply_filters( 'woocommerce_payu_payment_redirect_url', $response->getResponse()->redirectUri . '&lang=' . $this->getLanguage(), $order, $response );
+
                 return array(
                     'result' => 'success',
-                    'redirect' => $response->getResponse()->redirectUri . '&lang=' . $this->getLanguage()
+                    'redirect' => $url
                 );
             } else {
                 wc_add_notice(__('Payment error. Status code: ', 'payu') . $response->getStatus(), 'error');
@@ -155,6 +162,10 @@ class WC_Gateway_PayU extends WC_Payment_Gateway
             return false;
         }
     }
+
+	public function payment_fields() {
+		do_action( 'woocommerce_payu_payment_fields' );
+	}
 
     function gateway_ipn()
     {
