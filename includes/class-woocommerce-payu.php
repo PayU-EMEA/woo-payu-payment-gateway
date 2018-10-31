@@ -124,7 +124,8 @@ class WC_Gateway_PayU extends WC_Payment_Gateway
                 'email' => $billingData['email'],
                 'phone' => $billingData['phone'],
                 'firstName' => $billingData['first_name'],
-                'lastName' => $billingData['last_name']
+                'lastName' => $billingData['last_name'],
+                'language' => $this->getLanguage()
             )
         );
 
@@ -142,7 +143,7 @@ class WC_Gateway_PayU extends WC_Payment_Gateway
 
                 return array(
                     'result' => 'success',
-                    'redirect' => $response->getResponse()->redirectUri . '&lang=' . $this->getLanguage()
+                    'redirect' => $response->getResponse()->redirectUri
                 );
             } else {
                 wc_add_notice(__('Payment error. Status code: ', 'payu') . $response->getStatus(), 'error');
@@ -176,7 +177,7 @@ class WC_Gateway_PayU extends WC_Payment_Gateway
             }
 
 
-            if ($response->getResponse()->refund) {
+            if (property_exists($response->getResponse(),'refund')) {
                 $reportOutput = 'Refund notification - ignore|';
             } else {
 
