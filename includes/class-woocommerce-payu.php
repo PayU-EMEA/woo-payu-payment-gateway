@@ -44,13 +44,9 @@ class WC_Gateway_PayU extends WC_Payment_Gateway
 
     protected function init_OpenPayU($currency = null)
     {
-        global $woocommerce_wpml;
-
         $isSandbox = 'yes' === $this->get_option('sandbox');
 
-        if ($woocommerce_wpml
-            && property_exists($woocommerce_wpml, 'multi_currency')
-            && count($woocommerce_wpml->multi_currency->get_currency_codes()) > 1)
+        if ($this->isWpmlActiveAndConfigure())
         {
             $optionSuffix = '_' . (null !== $currency ? $currency : get_woocommerce_currency());
         } else {
@@ -89,9 +85,7 @@ class WC_Gateway_PayU extends WC_Payment_Gateway
 
         $currencies = [];
 
-        if ($woocommerce_wpml
-            && property_exists($woocommerce_wpml, 'multi_currency')
-            && count($woocommerce_wpml->multi_currency->get_currency_codes()) > 1)
+        if ($this->isWpmlActiveAndConfigure())
         {
             $currencies = $woocommerce_wpml->multi_currency->get_currency_codes();
         }
@@ -330,6 +324,16 @@ class WC_Gateway_PayU extends WC_Payment_Gateway
         return ($_SERVER['REMOTE_ADDR'] == '::1' || $_SERVER['REMOTE_ADDR'] == '::' ||
             !preg_match('/^((?:25[0-5]|2[0-4][0-9]|[01]?[0-9]?[0-9]).){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9]?[0-9])$/m',
                 $_SERVER['REMOTE_ADDR'])) ? '127.0.0.1' : $_SERVER['REMOTE_ADDR'];
+    }
+
+    /** @return bool */
+    private function isWpmlActiveAndConfigure() {
+        global $woocommerce_wpml;
+
+        return $woocommerce_wpml
+            && property_exists($woocommerce_wpml, 'multi_currency')
+            && $woocommerce_wpml->multi_currency
+            && count($woocommerce_wpml->multi_currency->get_currency_codes()) > 1;
     }
 
     /**
