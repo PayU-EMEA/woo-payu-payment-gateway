@@ -1,7 +1,7 @@
 # PayU Payment Gateway for WooCommerce
 ``This plugin is released under the GPL license.``
 
-**If you have any questions or issues, feel free to contact our technical support: tech@payu.pl.**
+**If you have any questions or issues, feel free to contact our [technical support][ext0].**
 
 **Important:** This plugin works only with **REST API (checkout) points of sales (POS)**.
 
@@ -33,3 +33,6 @@ In the Wordpress administration panel:
 PayU Payment Gateway is visible for your customers as a single "Pay with PayU" button during checkout.
 After clicking the button customer is redirected to the Payment Summary page to choose payment method.
 After successful payment customer is redirected back to your shop.
+
+<!--external links:-->
+[ext0]: https://www.payu.pl/en/help
