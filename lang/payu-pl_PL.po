@@ -2,9 +2,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PayU Payment Gateway\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-08-21 06:28+0000\n"
-"PO-Revision-Date: 2018-08-21 06:49+0000\n"
-"Last-Translator: Tomasz Regdos <tomasz.regdos@payu.pl>\n"
+"POT-Creation-Date: 2020-04-06 10:23+0000\n"
+"PO-Revision-Date: 2020-04-06 10:25+0000\n"
+"Last-Translator: \n"
 "Language-Team: Polski\n"
 "Language: pl_PL\n"
 "Plural-Forms: nplurals=3; plural=(n==1 ? 0 : n%10 >= 2 && n%10<=4 "
@@ -21,12 +21,57 @@ msgstr ""
 "esc_attr__:1;esc_html__:1;esc_attr_e:1;esc_html_e:1;esc_attr_x:1,2c;"
 "esc_html_x:1,2c;comments_number_link:2,3;t:1;st:1;trans:1;transChoice:1,2\n"
 "X-Loco-Target-Locale: pl_PL\n"
+"X-Generator: Loco https://localise.biz/\n"
+"X-Loco-Version: 2.3.2; wp-5.4"
 
-#: includes/form-fields.php:6
+#: includes/class-woocommerce-payu.php:42
+#: includes/class-woocommerce-payu.php:436
+msgid "PayU"
+msgstr "PayU"
+
+#: includes/class-woocommerce-payu.php:43
+msgid "Official PayU payment gateway for WooCommerce."
+msgstr "Moduł płatności PayU dla WooCommerce."
+
+#: includes/class-woocommerce-payu.php:214
+msgid "Awaiting PayU payment."
+msgstr "Oczekiwanie na płatność PayU."
+
+#: includes/class-woocommerce-payu.php:223
+msgid "Payment error. Status code: "
+msgstr "Błąd płatności. Kod statusu: "
+
+#: includes/class-woocommerce-payu.php:228
+msgid "Payment error: "
+msgstr "Błąd płatności: "
+
+#: includes/class-woocommerce-payu.php:271
+msgid "Payment has been cancelled."
+msgstr "Płatność została anulowana."
+
+#: includes/class-woocommerce-payu.php:275
+msgid "Payment has been rejected."
+msgstr "Płatność została odrzucona"
+
+#: includes/class-woocommerce-payu.php:285
+msgid ""
+"Payment has been put on hold - merchant must approve this payment manually."
+msgstr ""
+"Płatność została wstrzymana sprzedawca musis zaakceptować płatność ręcznie."
+
+#: includes/class-woocommerce-payu.php:314
+msgid "Refund of: "
+msgstr "Zwrot: "
+
+#: includes/class-woocommerce-payu.php:314
+msgid " for order: "
+msgstr " dla zamówienia: "
+
+#: includes/class-woocommerce-payu.php:427
 msgid "Enable PayU payment method"
 msgstr "Włącz płatność przez PayU"
 
-#: includes/form-fields.php:8
+#: includes/class-woocommerce-payu.php:429
 msgid ""
 "If you do not already have PayU merchant account, <a href=\"https://secure."
 "payu.com/boarding/#/form&pk_campaign=Plugin&pk_kwd=WooCommerce\" "
@@ -42,91 +87,31 @@ msgstr ""
 "com/boarding/#/form&pk_campaign=Plugin&pk_kwd=WooCommerce\" "
 "target=\"_blank\">zarejestruj się w systemie sandbox</a>"
 
-#: includes/form-fields.php:12
+#: includes/class-woocommerce-payu.php:433
 msgid "Title:"
 msgstr "Nazwa:"
 
-#: includes/form-fields.php:14
+#: includes/class-woocommerce-payu.php:435
 msgid "Title of PayU Payment Gateway that users sees on Checkout page."
 msgstr "Nazwa płatności PayU widoczna przez kupującego na stronie zamówienia."
 
-#: includes/form-fields.php:15 includes/class-woocommerce-payu.php:26
-msgid "PayU"
-msgstr "PayU"
-
-#: includes/form-fields.php:19
-msgid "Id point of sales:"
-msgstr "Id punktu płatności:"
-
-#: includes/form-fields.php:21 includes/form-fields.php:51
-msgid ""
-"Pos identifier from \"Configuration Keys\" section of PayU management panel."
-msgstr ""
-"Id punktu płatności z sekcji \"Klucze konfiguracji\" w panelu managera."
-
-#: includes/form-fields.php:25
-msgid "Second key (MD5):"
-msgstr "Drugi klucz (MD5):"
-
-#: includes/form-fields.php:27 includes/form-fields.php:57
-msgid ""
-"Second key from \"Configuration Keys\" section of PayU management panel."
-msgstr "Drugi klucz (MD5) z sekcji \"Klucze konfiguracji\" w panelu managera."
-
-#: includes/form-fields.php:31
-msgid "OAuth - client_id:"
-msgstr "OAuth - client_id:"
-
-#: includes/form-fields.php:33 includes/form-fields.php:63
-msgid ""
-"Client Id for OAuth identifier  from \"Configuration Keys\" section of PayU "
-"management panel."
-msgstr ""
-"Id punktu płatności do autentykacji Oauth z sekcji \"Klucze konfiguracji\" w "
-"panelu managera."
-
-#: includes/form-fields.php:37
-msgid "OAuth - client_secret:"
-msgstr "OAuth - client_secret:"
-
-#: includes/form-fields.php:39 includes/form-fields.php:69
-msgid "First key from \"Configuration Keys\" section of PayU management panel."
-msgstr ""
-"Pierwszy klucz (MD5) z sekcji \"Klucze konfiguracji\" w panelu managera."
-
-#: includes/form-fields.php:43
+#: includes/class-woocommerce-payu.php:440
 msgid "Sandbox mode:"
 msgstr "Tryb sandbox:"
 
-#: includes/form-fields.php:45
+#: includes/class-woocommerce-payu.php:442
 msgid "Use sandbox environment."
 msgstr "Używaj środowiska sandbox."
 
-#: includes/form-fields.php:49
-msgid "Sandbox - Id point of sales:"
-msgstr "Sandbox - Id punktu płatności:"
-
-#: includes/form-fields.php:55
-msgid "Sandbox - Second key (MD5):"
-msgstr "Sandbox - Second key (MD5):"
-
-#: includes/form-fields.php:61
-msgid "Sandbox - OAuth - client_id:"
-msgstr "Sandbox - OAuth - client_id:"
-
-#: includes/form-fields.php:67
-msgid "Sandbox - OAuth - client_secret:"
-msgstr "Sandbox - OAuth - client_secret:"
-
-#: includes/form-fields.php:73
+#: includes/class-woocommerce-payu.php:454
 msgid "Description:"
 msgstr "Opis:"
 
-#: includes/form-fields.php:75
+#: includes/class-woocommerce-payu.php:456
 msgid "Description of PayU Payment Gateway that users sees on Checkout page."
 msgstr "Opis płatności PayU widoczny przez kupującego na stronie zamówienia."
 
-#: includes/form-fields.php:76
+#: includes/class-woocommerce-payu.php:457
 msgid ""
 "PayU is a leading payment services provider with presence in 16 growth "
 "markets across the world."
@@ -134,11 +119,27 @@ msgstr ""
 "PayU jest wiodącym dostawcą usług płatniczych obecnym na 16 rozwijających "
 "się rynkach na całym świecie."
 
-#: includes/form-fields.php:80
+#: includes/class-woocommerce-payu.php:461
+msgid "Enable for shipping methods"
+msgstr "Włącz dla metod wysyłki"
+
+#: includes/class-woocommerce-payu.php:466
+msgid ""
+"If PayU is only available for certain methods, set it up here. Leave blank "
+"to enable for all methods."
+msgstr ""
+"Jeżeli PayU ma być dostępne tylko dla niektórych metod to ustaw je tutaj. "
+"Pozostaw puste, aby włączyć wszystkie metody."
+
+#: includes/class-woocommerce-payu.php:470
+msgid "Select shipping methods"
+msgstr "Wybierz metody wysyłki"
+
+#: includes/class-woocommerce-payu.php:474
 msgid "Automatic collection:"
 msgstr "Automatyczna obsługa:"
 
-#: includes/form-fields.php:82
+#: includes/class-woocommerce-payu.php:476
 msgid ""
 "Automatic collection makes it possible to automatically confirm incoming "
 "payments."
@@ -146,43 +147,65 @@ msgstr ""
 "Umożliwia automatyczne odebranie transakcji oraz anulowanie po "
 "zmianiestatusu zamówienia w sklepie."
 
-#: includes/class-woocommerce-payu.php:27
-msgid "Official PayU payment gateway for WooCommerce."
-msgstr "Moduł płatności PayU dla WooCommerce."
+#: includes/class-woocommerce-payu.php:501
+msgid "Id point of sales:"
+msgstr "Id punktu płatności:"
 
-#: includes/class-woocommerce-payu.php:130
-msgid "Awaiting PayU payment."
-msgstr "Oczekiwanie na płatność PayU."
-
-#: includes/class-woocommerce-payu.php:139
-msgid "Payment error. Status code: "
-msgstr "Błąd płatności. Kod statusu: "
-
-#: includes/class-woocommerce-payu.php:144
-msgid "Payment error: "
-msgstr "Błąd płatności: "
-
-#: includes/class-woocommerce-payu.php:181
-msgid "Payment has been cancelled."
-msgstr "Płatność została anulowana."
-
-#: includes/class-woocommerce-payu.php:185
-msgid "Payment has been rejected."
-msgstr "Płatność została odrzucona"
-
-#: includes/class-woocommerce-payu.php:195
+#: includes/class-woocommerce-payu.php:503
+#: includes/class-woocommerce-payu.php:527
 msgid ""
-"Payment has been put on hold - merchant must approve this payment manually."
+"Pos identifier from \"Configuration Keys\" section of PayU management panel."
 msgstr ""
-"Płatność została wstrzymana sprzedawca musis zaakceptować płatność ręcznie."
+"Id punktu płatności z sekcji \"Klucze konfiguracji\" w panelu managera."
 
-#: includes/class-woocommerce-payu.php:222
-msgid "Refund of: "
-msgstr "Zwrot: "
+#: includes/class-woocommerce-payu.php:507
+msgid "Second key (MD5):"
+msgstr "Drugi klucz (MD5):"
 
-#: includes/class-woocommerce-payu.php:222
-msgid " for order: "
-msgstr " dla zamówienia: "
+#: includes/class-woocommerce-payu.php:509
+#: includes/class-woocommerce-payu.php:533
+msgid ""
+"Second key from \"Configuration Keys\" section of PayU management panel."
+msgstr "Drugi klucz (MD5) z sekcji \"Klucze konfiguracji\" w panelu managera."
+
+#: includes/class-woocommerce-payu.php:513
+msgid "OAuth - client_id:"
+msgstr "OAuth - client_id:"
+
+#: includes/class-woocommerce-payu.php:515
+#: includes/class-woocommerce-payu.php:539
+msgid ""
+"Client Id for OAuth identifier  from \"Configuration Keys\" section of PayU "
+"management panel."
+msgstr ""
+"Id punktu płatności do autentykacji Oauth z sekcji \"Klucze konfiguracji\" w "
+"panelu managera."
+
+#: includes/class-woocommerce-payu.php:519
+msgid "OAuth - client_secret:"
+msgstr "OAuth - client_secret:"
+
+#: includes/class-woocommerce-payu.php:521
+#: includes/class-woocommerce-payu.php:545
+msgid "First key from \"Configuration Keys\" section of PayU management panel."
+msgstr ""
+"Pierwszy klucz (MD5) z sekcji \"Klucze konfiguracji\" w panelu managera."
+
+#: includes/class-woocommerce-payu.php:525
+msgid "Sandbox - Id point of sales:"
+msgstr "Sandbox - Id punktu płatności:"
+
+#: includes/class-woocommerce-payu.php:531
+msgid "Sandbox - Second key (MD5):"
+msgstr "Sandbox - Second key (MD5):"
+
+#: includes/class-woocommerce-payu.php:537
+msgid "Sandbox - OAuth - client_id:"
+msgstr "Sandbox - OAuth - client_id:"
+
+#: includes/class-woocommerce-payu.php:543
+msgid "Sandbox - OAuth - client_secret:"
+msgstr "Sandbox - OAuth - client_secret:"
 
 #. Name of the plugin
 msgid "PayU Payment Gateway"
