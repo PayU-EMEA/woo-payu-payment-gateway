@@ -90,27 +90,28 @@ class WC_Gateway_PayU extends WC_Payment_Gateway
      */
     public function is_available()
     {
-        if (!is_admin()) {
-            $order = null;
+        $order = null;
+        $is_order_processing = false;
 
-            if (!WC()->cart && is_page(wc_get_page_id('checkout')) && 0 < get_query_var('order-pay')) {
-                $order_id = absint(get_query_var('order-pay'));
-                $order = wc_get_order($order_id);
+        if (WC()->cart) {
+            $is_order_processing = true;
+        } elseif ( is_page( wc_get_page_id( 'checkout' ) ) && get_query_var( 'order-pay' ) > 0 ) {
+            $order = wc_get_order( absint( get_query_var( 'order-pay' ) ) );
+            $is_order_processing = true;
+        }
+
+        if (!empty($this->enable_for_shipping) && $is_order_processing) {
+            $order_shipping_items = is_object($order) ? $order->get_shipping_methods() : false;
+            $chosen_shipping_methods_session = WC()->session->get('chosen_shipping_methods');
+
+            if ($order_shipping_items) {
+                $canonical_rate_ids = $this->get_canonical_order_shipping_item_rate_ids($order_shipping_items);
+            } else {
+                $canonical_rate_ids = $this->get_canonical_package_rate_ids($chosen_shipping_methods_session);
             }
 
-            if (!empty($this->enable_for_shipping)) {
-                $order_shipping_items = is_object($order) ? $order->get_shipping_methods() : false;
-                $chosen_shipping_methods_session = WC()->session->get('chosen_shipping_methods');
-
-                if ($order_shipping_items) {
-                    $canonical_rate_ids = $this->get_canonical_order_shipping_item_rate_ids($order_shipping_items);
-                } else {
-                    $canonical_rate_ids = $this->get_canonical_package_rate_ids($chosen_shipping_methods_session);
-                }
-
-                if (!count($this->get_matching_rates($canonical_rate_ids))) {
-                    return false;
-                }
+            if (!count($this->get_matching_rates($canonical_rate_ids))) {
+                return false;
             }
         }
 
@@ -550,9 +551,44 @@ class WC_Gateway_PayU extends WC_Payment_Gateway
         return $config;
     }
 
+
+    /**
+     * Checks to see whether or not the admin settings are being accessed by the current request.
+     * Copy from COD module
+     *
+     * @return bool
+     */
+    private function is_accessing_settings() {
+        if ( is_admin() ) {
+            if ( ! isset( $_REQUEST['page'] ) || 'wc-settings' !== $_REQUEST['page'] ) {
+                return false;
+            }
+            if ( ! isset( $_REQUEST['tab'] ) || 'checkout' !== $_REQUEST['tab'] ) {
+                return false;
+            }
+            if ( ! isset( $_REQUEST['section'] ) || 'payu' !== $_REQUEST['section'] ) {
+                return false;
+            }
+
+            return true;
+        }
+
+        if ( defined( 'REST_REQUEST' ) && REST_REQUEST ) {
+            global $wp;
+            if ( isset( $wp->query_vars['rest_route'] ) && false !== strpos( $wp->query_vars['rest_route'], '/payment_gateways' ) ) {
+                return true;
+            }
+        }
+
+        return false;
+    }
     private function getShippingMethods()
     {
-        $options    = [];
+        // Since this is expensive, we only want to do it if we're actually on the settings page.
+        if ( ! $this->is_accessing_settings() ) {
+            return array();
+        }
+
         $data_store = WC_Data_Store::load( 'shipping-zone' );
         $raw_zones  = $data_store->get_zones();
 
@@ -562,6 +598,7 @@ class WC_Gateway_PayU extends WC_Payment_Gateway
 
         $zones[] = new WC_Shipping_Zone( 0 );
 
+        $options = array();
         foreach ( WC()->shipping()->load_shipping_methods() as $method ) {
 
             $options[ $method->get_method_title() ] = array();

@@ -9,6 +9,8 @@
  * License: LGPL 3.0
  * Text Domain: payu
  * Domain Path: /lang
+ * WC requires at least: 3.0.0
+ * WC tested up to: 4.3.0
  */
 
 add_action('plugins_loaded', 'woocommerce_payu_init', 0);
