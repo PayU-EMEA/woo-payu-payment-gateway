@@ -49,7 +49,7 @@ class WC_Gateway_PayU extends WC_Payment_Gateway
     {
         $isSandbox = 'yes' === $this->get_option('sandbox');
 
-        if ($this->isWpmlActiveAndConfigure())
+        if ($this->isWpmlActiveAndConfigure() || apply_filters('woocommerce_payu_multicurrency_active', false))
         {
             $optionSuffix = '_' . (null !== $currency ? $currency : get_woocommerce_currency());
         } else {
@@ -76,8 +76,10 @@ class WC_Gateway_PayU extends WC_Payment_Gateway
 
         if ($this->isWpmlActiveAndConfigure())
         {
-            $currencies = $woocommerce_wpml->multi_currency->get_currency_codes();
-        }
+			$currencies = $woocommerce_wpml->multi_currency->get_currency_codes();
+		} elseif(apply_filters('woocommerce_payu_multicurrency_active', false)) {
+			$currencies = apply_filters('woocommerce_payu_get_currency_codes', array());
+		}
 
         $this->form_fields = array_merge($this->getFormFieldsBasic(), $this->getFormFieldConfig($currencies), $this->getFormFieldInfo());
     }
