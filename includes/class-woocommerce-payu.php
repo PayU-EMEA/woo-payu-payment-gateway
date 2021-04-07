@@ -29,6 +29,9 @@ class WC_Gateway_PayU extends WC_Payment_Gateway
         add_action('woocommerce_api_wc_gateway_' . $this->id, [$this, 'gateway_ipn']);
         // Status change hook
         add_action('woocommerce_order_status_changed', [$this, 'change_status_action'], 10, 3);
+        // process in thank you page, if has param error=501 - that means that order not paid
+        // using woocommerce_thankyou_order_id filter, because this nearest hook before wc_get_order
+        add_filter('woocommerce_thankyou_order_id', [$this, 'processThankYouForNonPaidOrder']);
 
         $this->init_OpenPayU();
     }
@@ -630,5 +633,29 @@ class WC_Gateway_PayU extends WC_Payment_Gateway
         }
 
         return $options;
+    }
+
+    /**
+     * process in thank you page, if has param error=501 - that means that order not paid
+     * in this case set status 'failed' for order
+     * @param $orderId
+     * @return int
+     */
+    public function processThankYouForNonPaidOrder($orderId)
+    {
+        // using parse_url, because wordpress unset $_GET['error']
+        $parseUrl = parse_url($_SERVER['REQUEST_URI']);
+        if (!empty($parseUrl['query'])) {
+            parse_str($parseUrl['query'], $queryArray);
+            if (!empty($queryArray['error']) && $queryArray['error'] == 501) {
+                $order = wc_get_order($orderId);
+                if ($order->get_status() === 'on-hold' && $order->get_payment_method_title() === 'PayU') {
+                    $order->update_status('failed', __('Payment has been rejected.', 'payu'));
+                    wc_maybe_increase_stock_levels($orderId);
+                }
+            }
+        }
+
+        return $orderId;
     }
 }
