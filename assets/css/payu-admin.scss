@@ -1,0 +1,31 @@
+.payu-table{
+  input[data-global="can-be-global"]{
+    &[readonly="readonly"]{
+      color: transparent;
+    }
+  }
+  .absolute-global{
+    fieldset{
+      position: relative;
+      span{
+        position: absolute;
+        left: 10px;
+        top: 6px;
+      }
+    }
+  }
+}
+.receive-payment{
+  border: 1px solid #a6c307 !important;
+  color: #fff !important;
+  background: #a6c307 !important;
+}
+.discard-payment{
+  border: 1px solid #ff0000 !important;
+  color: #fff !important;
+  background: #ff0000 !important;
+}
+
+.payu-red {
+  color: #aa0000;
+}
