@@ -4,7 +4,7 @@
  * Plugin URI: https://github.com/PayU/plugin_woocommerce
  * GitHub Plugin URI: https://github.com/PayU-EMEA/plugin_woocommerce_dev
  * Description: PayU payment gateway for WooCommerce
- * Version: 2.0.0
+ * Version: 2.0.1
  * Author: PayU SA
  * Author URI: http://www.payu.com
  * License: LGPL 3.0
@@ -17,7 +17,7 @@
 /*
  * Add new gateway
  */
-define('PAYU_PLUGIN_VERSION', '2.0.0');
+define('PAYU_PLUGIN_VERSION', '2.0.1');
 add_action('plugins_loaded', 'init_gateway_payu');
 add_action('admin_init', 'move_old_payu_settings');
 
@@ -42,9 +42,11 @@ function init_gateway_payu()
     require_once('includes/WC_Gateway_PayuInstallments.php');
 
     add_filter('woocommerce_payment_gateways', 'add_payu_gateways');
+    add_filter('woocommerce_valid_order_statuses_for_payment_complete', 'payu_filter_woocommerce_valid_order_statuses_for_payment_complete', 10, 2 );
+
     if (!is_admin() && @$_GET['pay_for_order'] && @$_GET['key']) {
         add_filter('woocommerce_valid_order_statuses_for_payment',
-            'filter_woocommerce_valid_order_statuses_for_payment',
+            'payu_filter_woocommerce_valid_order_statuses_for_payment',
             10, 2);
     }
     add_filter('plugin_row_meta', 'plugin_row_meta', 10, 2);
@@ -93,13 +95,23 @@ function move_old_payu_settings()
 /**
  * @return array
  */
-function filter_woocommerce_valid_order_statuses_for_payment()
+function payu_filter_woocommerce_valid_order_statuses_for_payment()
 {
     return ['pending', 'failed', 'on-hold', 'payu-waiting'];
 }
 
 /**
- * @param $gateways
+ * @param array $statuses
+ * @return array
+ */
+function payu_filter_woocommerce_valid_order_statuses_for_payment_complete($statuses)
+{
+    $statuses[] = 'payu-waiting';
+    return $statuses;
+}
+
+/**
+ * @param array $gateways
  *
  * @return array
  */

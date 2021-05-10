@@ -926,7 +926,6 @@ abstract class WC_PayUGateways extends WC_Payment_Gateway
                             break;
 
                         case OpenPayuOrderStatus::STATUS_COMPLETED:
-                            $order->update_status('processing');
                             $order->payment_complete($transaction_id);
                             break;
 
