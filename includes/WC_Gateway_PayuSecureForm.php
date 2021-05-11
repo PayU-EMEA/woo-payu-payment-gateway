@@ -153,8 +153,8 @@ class WC_Gateway_PayuSecureForm extends WC_PayUGateways
     {
         $payu_sdk_url = $this->sandbox==='yes'?'https://secure.snd.payu.com/javascript/sdk':'https://secure.payu.com/javascript/sdk';
         wp_enqueue_script('payu-sfsdk', $payu_sdk_url, [], null);
-        wp_enqueue_script('polyfill', 'https://cdn.jsdelivr.net/npm/es6-promise@4/dist/es6-promise.auto.min.js', [], null);
-        wp_enqueue_script('payu_sf_init', plugin_dir_url(__FILE__) . '../assets/js/sf-init.js', [], PAYU_PLUGIN_VERSION,
+        wp_enqueue_script('payu-promise-polyfill', 'https://cdn.jsdelivr.net/npm/es6-promise@4/dist/es6-promise.auto.min.js', [], null);
+        wp_enqueue_script('payu-sf-init', plugin_dir_url(__FILE__) . '../assets/js/sf-init.js', [], PAYU_PLUGIN_VERSION,
             true);
     }
 }
