@@ -4,7 +4,7 @@
  * Plugin URI: https://github.com/PayU/plugin_woocommerce
  * GitHub Plugin URI: https://github.com/PayU-EMEA/plugin_woocommerce_dev
  * Description: PayU payment gateway for WooCommerce
- * Version: 2.0.1
+ * Version: 2.0.2
  * Author: PayU SA
  * Author URI: http://www.payu.com
  * License: LGPL 3.0
@@ -17,7 +17,7 @@
 /*
  * Add new gateway
  */
-define('PAYU_PLUGIN_VERSION', '2.0.1');
+define('PAYU_PLUGIN_VERSION', '2.0.2');
 add_action('plugins_loaded', 'init_gateway_payu');
 add_action('admin_init', 'move_old_payu_settings');
 

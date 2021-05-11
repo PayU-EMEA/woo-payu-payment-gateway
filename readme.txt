@@ -38,6 +38,10 @@ Use [automatic installation and activation](https://wordpress.org/support/articl
 Upon plugin update from version 1.X to version 2.X the existing config data will be automatically converted.
 
 == Changelog ==
+= 2.0.2 =
+* Fix #31 js loading dependency
+* Fix #30 remove 100% layout width
+* Fix #27 fix registration url
 = 2.0.1 =
 * Fix change order status for virtual products
 = 2.0.0 =
