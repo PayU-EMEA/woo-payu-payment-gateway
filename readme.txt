@@ -25,7 +25,7 @@ Detailed information about each method and its configuration [can be found here]
 If you have any questions or would like to raise an issue please contact [our technical support](https://www.payu.pl/pomoc).
 
 = Minimum Requirements =
-PayU merchant account - if you do not have an account you can [**register a production account**](https://poland.payu.com/en/home/) or [**register a sandbox account**](https://registration-merch-prod.snd.payu.com/boarding/#/registerSandbox/?lang=en)
+PayU merchant account - if you do not have an account you can [**register a production account**](https://poland.payu.com/en/how-to-activate-payu/) or [**register a sandbox account**](https://registration-merch-prod.snd.payu.com/boarding/#/registerSandbox/?lang=en)
 
 **Note:** Module works only with `REST API` POS type (POS type is configured in PayU merchant panel after you register).
 

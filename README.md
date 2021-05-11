@@ -99,6 +99,6 @@ W przypadku włączonego ponownienia płatności do maila potwierdzajacego zamó
 [ext1]: http://php.net/manual/en/book.curl.php
 [ext2]: http://php.net/manual/en/book.hash.php
 [ext4]: https://www.payu.pl/oferta-handlowa
-[ext5]: https://secure.snd.payu.com/boarding/?pk_campaign=Plugin-Github&pk_kwd=WooCoomerce#/form
+[ext5]: https://secure.snd.payu.com/boarding/#/registerSandbox/?lang=pl
 [ext6]: http://developers.payu.com/pl/overview.html#paymethods
 [ext13]: https://www.payu.pl/pomoc

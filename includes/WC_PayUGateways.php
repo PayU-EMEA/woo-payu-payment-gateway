@@ -256,7 +256,7 @@ abstract class WC_PayUGateways extends WC_Payment_Gateway
                 'title' => __('Enable/Disable', 'woocommerce'),
                 'label' => __('Enable PayU payment method', 'payu'),
                 'type' => 'checkbox',
-                'description' => __('If you do not already have PayU merchant account, <a href="https://secure.payu.com/boarding/#/form&pk_campaign=Plugin&pk_kwd=WooCommerce" target="_blank">please register in Production</a> or <a href="https://secure.snd.payu.com/boarding/#/form&pk_campaign=Plugin&pk_kwd=WooCommerce" target="_blank">please register in Sandbox</a>.',
+                'description' => __('If you do not already have PayU merchant account, <a href="https://poland.payu.com/en/how-to-activate-payu/" target="_blank" rel="nofollow">please register in Production</a> or <a href="https://secure.snd.payu.com/boarding/#/registerSandbox/?lang=en" target="_blank" rel="nofollow">please register in Sandbox</a>.',
                     'payu'),
                 'default' => 'no',
             ],

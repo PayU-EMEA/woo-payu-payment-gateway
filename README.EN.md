@@ -98,7 +98,7 @@ In case repayment is configured, the mail confirming order placement is enhanced
 <!--external links:-->
 [ext1]: http://php.net/manual/en/book.curl.php
 [ext2]: http://php.net/manual/en/book.hash.php
-[ext4]: https://poland.payu.com/en/home/
-[ext5]: https://secure.snd.payu.com/boarding/?pk_campaign=Plugin-Github&pk_kwd=WooCoomerce#/form?lang=en
+[ext4]: https://poland.payu.com/en/how-to-activate-payu/
+[ext5]: https://secure.snd.payu.com/boarding/#/registerSandbox/?lang=en
 [ext6]: http://developers.payu.com/en/overview.html#paymethods
 [ext13]: https://poland.payu.com/en/support/
