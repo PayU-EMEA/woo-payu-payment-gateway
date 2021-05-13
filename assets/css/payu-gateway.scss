@@ -24,17 +24,27 @@
         filter: gray;
       }
 
+      &:not(.payu-inactive) {
+        label {
+          cursor: pointer;
+
+          &:hover {
+            background: #ddd;
+            border-color: #aaa;
+          }
+        }
+      }
+
       label {
         padding: 10px;
         display: flex;
         border: 1px solid #bbb;
         transition: all 250ms;
-        cursor: pointer;
         width: 86px;
         justify-content: center;
         align-items: center;
 
-        &.active, &:hover {
+        &.active {
           background: #ddd;
           border-color: #aaa;
         }
