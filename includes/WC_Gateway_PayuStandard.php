@@ -7,11 +7,13 @@ class WC_Gateway_PayuStandard extends WC_PayUGateways
     {
         parent::__construct('payustandard');
 
-        $this->has_terms_checkbox = false;
+        if ($this->is_enabled()) {
+            $this->has_terms_checkbox = false;
 
-        if (!is_admin()) {
-            if (!$this->try_retrieve_banks()) {
-                add_filter('woocommerce_available_payment_gateways', [$this, 'unset_gateway']);
+            if (!is_admin()) {
+                if (!$this->try_retrieve_banks()) {
+                    add_filter('woocommerce_available_payment_gateways', [$this, 'unset_gateway']);
+                }
             }
         }
     }

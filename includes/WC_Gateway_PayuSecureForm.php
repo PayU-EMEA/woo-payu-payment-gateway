@@ -8,16 +8,18 @@ class WC_Gateway_PayuSecureForm extends WC_PayUGateways
     {
         parent::__construct('payusecureform');
 
-        $this->has_terms_checkbox = true;
-        $this->icon = apply_filters('woocommerce_payu_icon', plugin_dir_url(__FILE__) . '../assets/images/card-visa-mc.svg');
+        if ($this->is_enabled()) {
+            $this->has_terms_checkbox = true;
+            $this->icon = apply_filters('woocommerce_payu_icon', plugins_url( '/assets/images/card-visa-mc.svg', PAYU_PLUGIN_FILE ));
 
-        add_action('wp_enqueue_scripts', [$this, 'include_payu_sf_scripts']);
+            add_action('wp_enqueue_scripts', [$this, 'include_payu_sf_scripts']);
 
-        //refresh card iframe after checkout change
-        if (!is_admin()) {
-            add_action('wp_footer', [$this, 'minicart_checkout_refresh_script']);
-            if (!$this->try_retrieve_banks()) {
-                add_filter('woocommerce_available_payment_gateways', [$this, 'unset_gateway']);
+            //refresh card iframe after checkout change
+            if (!is_admin()) {
+                add_action('wp_footer', [$this, 'minicart_checkout_refresh_script']);
+                if (!$this->try_retrieve_banks()) {
+                    add_filter('woocommerce_available_payment_gateways', [$this, 'unset_gateway']);
+                }
             }
         }
     }
@@ -154,7 +156,7 @@ class WC_Gateway_PayuSecureForm extends WC_PayUGateways
         $payu_sdk_url = $this->sandbox==='yes'?'https://secure.snd.payu.com/javascript/sdk':'https://secure.payu.com/javascript/sdk';
         wp_enqueue_script('payu-sfsdk', $payu_sdk_url, [], null);
         wp_enqueue_script('payu-promise-polyfill', 'https://cdn.jsdelivr.net/npm/es6-promise@4/dist/es6-promise.auto.min.js', [], null);
-        wp_enqueue_script('payu-sf-init', plugin_dir_url(__FILE__) . '../assets/js/sf-init.js', [], PAYU_PLUGIN_VERSION,
+        wp_enqueue_script('payu-sf-init', plugins_url( '/assets/js/sf-init.js', PAYU_PLUGIN_FILE ), [], PAYU_PLUGIN_VERSION,
             true);
     }
 }

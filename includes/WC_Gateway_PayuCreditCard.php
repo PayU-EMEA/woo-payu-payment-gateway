@@ -8,12 +8,14 @@ class WC_Gateway_PayuCreditCard extends WC_PayUGateways
     {
         parent::__construct('payucreditcard');
 
-        $this->has_terms_checkbox = false;
-        $this->icon = apply_filters('woocommerce_payu_icon', plugin_dir_url(__FILE__) . '../assets/images/card-visa-mc.svg');
+        if ($this->is_enabled()) {
+            $this->has_terms_checkbox = false;
+            $this->icon = apply_filters('woocommerce_payu_icon', plugins_url( '/assets/images/card-visa-mc.svg', PAYU_PLUGIN_FILE ));
 
-        if (!is_admin()) {
-            if (!$this->try_retrieve_banks()) {
-                add_filter('woocommerce_available_payment_gateways', [$this, 'unset_gateway']);
+            if (!is_admin()) {
+                if (!$this->try_retrieve_banks()) {
+                    add_filter('woocommerce_available_payment_gateways', [$this, 'unset_gateway']);
+                }
             }
         }
     }

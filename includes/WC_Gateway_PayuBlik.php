@@ -8,12 +8,14 @@ class WC_Gateway_PayuBlik extends WC_PayUGateways
     {
         parent::__construct('payublik');
 
-        $this->has_terms_checkbox = true;
-        $this->icon = apply_filters('woocommerce_payu_icon', plugin_dir_url(__FILE__) . '../assets/images/blik.svg');
+        if ($this->is_enabled()) {
+            $this->has_terms_checkbox = true;
+            $this->icon = apply_filters('woocommerce_payu_icon', plugins_url( '/assets/images/blik.svg', PAYU_PLUGIN_FILE ));
 
-        if (!is_admin()) {
-            if (!$this->try_retrieve_banks()) {
-                add_filter('woocommerce_available_payment_gateways', [$this, 'unset_gateway']);
+            if (!is_admin()) {
+                if (!$this->try_retrieve_banks()) {
+                    add_filter('woocommerce_available_payment_gateways', [$this, 'unset_gateway']);
+                }
             }
         }
     }

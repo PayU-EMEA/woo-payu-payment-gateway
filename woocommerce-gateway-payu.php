@@ -14,10 +14,9 @@
  * WC tested up to: 5.2
  */
 
-/*
- * Add new gateway
- */
 define('PAYU_PLUGIN_VERSION', '2.0.2');
+define('PAYU_PLUGIN_FILE', __FILE__);
+
 add_action('plugins_loaded', 'init_gateway_payu');
 add_action('admin_init', 'move_old_payu_settings');
 
@@ -140,22 +139,12 @@ function plugin_row_meta($links, $plugin_file) {
 //enqueue assets
 function enqueue_payu_admin_assets()
 {
-    wp_enqueue_script('payu-admin', plugin_dir_url(__FILE__) . 'assets/js/payu-admin.js', ['jquery'], PAYU_PLUGIN_VERSION);
-    wp_enqueue_style('payu-admin', plugin_dir_url(__FILE__) . 'assets/css/payu-admin.css', [], PAYU_PLUGIN_VERSION);
-}
-
-function enqueue_payu_gateway_assets()
-{
-    wp_enqueue_script('payu-gateway', plugin_dir_url(__FILE__) . 'assets/js/payu-gateway.js', ['jquery', 'payu-promise-polyfill'],
-        PAYU_PLUGIN_VERSION, true);
-    wp_enqueue_style('payu-gateway', plugin_dir_url(__FILE__) . 'assets/css/payu-gateway.css', [],
-        PAYU_PLUGIN_VERSION);
+    wp_enqueue_script('payu-admin', plugins_url( '/assets/js/payu-admin.js', PAYU_PLUGIN_FILE ), ['jquery'], PAYU_PLUGIN_VERSION);
+    wp_enqueue_style('payu-admin', plugins_url( '/assets/css/payu-admin.css', PAYU_PLUGIN_FILE ), [], PAYU_PLUGIN_VERSION);
 }
 
 if (is_admin()) {
     add_action('admin_enqueue_scripts', 'enqueue_payu_admin_assets');
-} else {
-    add_action('wp_enqueue_scripts', 'enqueue_payu_gateway_assets');
 }
 
 add_action('woocommerce_view_order', 'view_order');

@@ -32,7 +32,7 @@ abstract class WC_PayUGateways extends WC_Payment_Gateway
         $this->init_form_fields();
         $this->init_settings();
 
-        $this->icon = apply_filters('woocommerce_payu_icon', plugin_dir_url(__FILE__) . '../assets/images/logo-payu.svg');
+        $this->icon = apply_filters('woocommerce_payu_icon', plugins_url( '/assets/images/logo-payu.svg', PAYU_PLUGIN_FILE ));
         $this->title = $this->get_option('title');
         $this->description = $this->get_option('description', ' ');
         $this->sandbox = $this->get_option('sandbox', false);
@@ -49,11 +49,28 @@ abstract class WC_PayUGateways extends WC_Payment_Gateway
             $this->cart_contents_total = WC()->cart->cart_contents_total;
         }
 
+        add_action('wp_enqueue_scripts', [$this, 'enqueue_payu_gateway_assets']);
+
         // Saving hook
         add_action('woocommerce_update_options_payment_gateways_' . $this->id, [$this, 'process_admin_options']);
 
         // Payment listener/API hook
         add_action('woocommerce_api_wc_gateway_' . $this->id, [$this, 'gateway_ipn']);
+    }
+
+    public function enqueue_payu_gateway_assets()
+    {
+        wp_enqueue_script('payu-gateway', plugins_url( '/assets/js/payu-gateway.js', PAYU_PLUGIN_FILE ),
+            ['jquery'], PAYU_PLUGIN_VERSION, true);
+        wp_enqueue_style('payu-gateway', plugins_url( '/assets/css/payu-gateway.css', PAYU_PLUGIN_FILE ),
+            [], PAYU_PLUGIN_VERSION);
+    }
+
+    /**
+     * @return boolean
+     */
+    protected function is_enabled() {
+        return 'yes' === $this->enabled;
     }
 
     /**
@@ -62,7 +79,7 @@ abstract class WC_PayUGateways extends WC_Payment_Gateway
      * @param mixed $value
      * @return int|bool
      */
-    function get_post_id_by_meta_key_and_value($key, $value)
+    protected function get_post_id_by_meta_key_and_value($key, $value)
     {
         global $wpdb;
         $meta = $wpdb->get_results("SELECT * FROM `" . $wpdb->postmeta . "` WHERE meta_key='" . esc_sql($key) . "' AND meta_value='" . esc_sql($value) . "'");

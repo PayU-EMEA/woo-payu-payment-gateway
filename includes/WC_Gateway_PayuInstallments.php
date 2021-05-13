@@ -8,9 +8,11 @@ class WC_Gateway_PayuInstallments extends WC_PayUGateways
     {
         parent::__construct('payuinstallments');
 
-        if (!is_admin()) {
-            if (!$this->try_retrieve_banks()) {
-                add_filter('woocommerce_available_payment_gateways', [$this, 'unset_gateway']);
+        if ($this->is_enabled()) {
+            if (!is_admin()) {
+                if (!$this->try_retrieve_banks()) {
+                    add_filter('woocommerce_available_payment_gateways', [$this, 'unset_gateway']);
+                }
             }
         }
     }

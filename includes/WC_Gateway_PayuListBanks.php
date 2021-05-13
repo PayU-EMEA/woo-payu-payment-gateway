@@ -8,11 +8,13 @@ class WC_Gateway_PayuListBanks extends WC_PayUGateways
     {
         parent::__construct('payulistbanks');
 
-        $this->has_terms_checkbox = true;
+        if ($this->is_enabled()) {
+            $this->has_terms_checkbox = true;
 
-        if (!is_admin()) {
-            if (!$this->try_retrieve_banks()) {
-                add_filter('woocommerce_available_payment_gateways', [$this, 'unset_gateway']);
+            if (!is_admin()) {
+                if (!$this->try_retrieve_banks()) {
+                    add_filter('woocommerce_available_payment_gateways', [$this, 'unset_gateway']);
+                }
             }
         }
     }
