@@ -3,7 +3,7 @@ Contributors: payusa
 Tags: woocommerce, PayU, payment, payment gateway, platnosci, PayU Poland, PayU EU
 Requires at least: 4.4
 Tested up to: 5.7
-Stable tag: 2.0.1
+Stable tag: 2.0.3
 Requires PHP: 7.0
 License: GPLv2
 
@@ -38,6 +38,9 @@ Use [automatic installation and activation](https://wordpress.org/support/articl
 Upon plugin update from version 1.X to version 2.X the existing config data will be automatically converted.
 
 == Changelog ==
+= 2.0.3 =
+* Better js and css enqueue and optimize load methods
+* Better UX for bank icons
 = 2.0.2 =
 * Fix #31 js loading dependency
 * Fix #30 remove 100% layout width
