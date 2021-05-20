@@ -150,6 +150,9 @@ if (is_admin()) {
 add_action('woocommerce_view_order', 'view_order');
 function view_order($order_id)
 {
+    wp_enqueue_style('payu-gateway', plugins_url( '/assets/css/payu-gateway.css', PAYU_PLUGIN_FILE ),
+        [], PAYU_PLUGIN_VERSION);
+
     $order = wc_get_order($order_id);
     $payu_gateways = WC_PayUGateways::gateways_list();
     if (in_array($order->get_status(), ['on-hold', 'pending', 'failed'])) {

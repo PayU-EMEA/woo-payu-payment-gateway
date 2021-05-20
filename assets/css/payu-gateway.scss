@@ -190,21 +190,17 @@
   display: flex;
   align-items: center;
   text-decoration: none;
-  color: inherit;
   margin: 10px 0;
 
   img {
     margin-left: 10px;
-    width: 40px;
+    width: 50px;
     height: auto;
   }
 }
 
-[class*="payment_method_payu"] {
-  > label {
-    > img {
-      width: 54px;
-      border-radius: 0;
-    }
-  }
+label[for*="payment_method_payu"] {
+   img {
+     border-radius: 0;
+   }
 }
