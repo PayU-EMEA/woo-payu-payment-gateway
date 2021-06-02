@@ -191,7 +191,7 @@ msgstr ""
 
 #: includes/WC_PayUGateways.php:1009
 msgid "If you have not yet paid for the order, you can do so by going to"
-msgstr "Jeżeli jeszcze nie opłaciłeś zamówienia możesz to zrobić przechodzą na"
+msgstr "Jeżeli jeszcze nie opłaciłeś zamówienia możesz to zrobić przechodząc na"
 
 #: includes/PayUSettings.php:32
 msgid "OAuth - client_id"

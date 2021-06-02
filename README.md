@@ -93,7 +93,7 @@ Ponowienie płatności umożliwia zakładanie wielu płatności w PayU do jedneg
 ## Maile
 Plugin nie wysyła żadnych dodatkowych maili. Nie ingeruje również w proces, kiedy maile są wysyłane.
 
-W przypadku włączonego ponownienia płatności do maila potwierdzajacego zamówienia dodawana jest informacja o możliwości wykonania płatności: `Jeżeli jeszcze nie opłaciłeś zamówienia możesz to zrobić przechodzą na stronę.`
+W przypadku włączonego ponownienia płatności do maila potwierdzajacego zamówienia dodawana jest informacja o możliwości wykonania płatności: `Jeżeli jeszcze nie opłaciłeś zamówienia możesz to zrobić przechodząc na stronę.`
 
 <!--external links:-->
 [ext1]: http://php.net/manual/en/book.curl.php
