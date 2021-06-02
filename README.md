@@ -51,8 +51,8 @@ Parametry punktu płatności:
 | Sandbox - OAuth - client_id | client_id dla protokołu OAuth z systemu Sandbox PayU
 | Sandbox - OAuth - client_secret | client_secret dla protokołu OAuth z systemu Sandbox PayU
 
-* W przypadku korzystania z pluginu `WPML` dla każdej waluty będzie dostępna osobna konfiguracja punktu płatności
-* Domyślnie każda z metod płatności korzysta z globalnych parametrów punktu płatności
+* W przypadku wielu walut dla każdej waluty będzie dostępna osobna konfiguracja punktu płatności - więcej informacji w sekcji [Wielowalutowość](#wielowalutowość).
+* Domyślnie każda z metod płatności korzysta z globalnych parametrów punktu płatności.
 
 Inne parametry - mają zastosowanie do wszystkich modułów:
 
@@ -79,6 +79,38 @@ Parametry, które są dodatkowo dostępne dla metody płatności `PayU - lista b
 | --------- | ---- |
 | Własna kolejność | W celu ustalenia kolejności wyświetlanych ikon typów płatności należy podać ich symbole oddzielając je przecinkiem. [Lista typów płatności][ext6].
 | Pokaż nieaktywne metody płatności | W przypadku włączenia, gdy dany typ płatności jest nieaktywny pokazuje się na liście jako wyszarzony, w przeciwnym razie nie jest w ogóle pokazywany
+
+## Wielowalutowość
+Są dwie możliwości uzyskania wielowalutowości:
+### Pluginu `WMPL`
+Dla walut dodanych w pluginie `WPML` automatycznie pojawia się osobna konfiguracja punktu płatności dla każdej z walut.
+### Filtry
+Plugin dostarcza dwa filtry, które umożliwiają dodanie obsługi wielu walut podczas płatności
+
+| Nazwa filtra | Opis | Typ
+| --------- | ---- | ----
+| `woocommerce_payu_multicurrency_active` | Czy ma być włączona obsługa wielowalutowości | bool
+| `woocommerce_payu_get_currency_codes` | Lista walut w kodów ISO w standardzie ISO 4217, np. "PLN". | array
+
+Przykład:
+```php
+function payu_activate_multicurrency($active)
+{
+    return true;
+}
+
+function payu_set_currency_list($currencies)
+{
+    return ['PLN', 'EUR'];
+}
+
+add_filter('woocommerce_payu_multicurrency_active', 'payu_activate_multicurrency');
+add_filter('woocommerce_payu_get_currency_codes', 'payu_set_currency_list');
+```
+
+Uwagi:
+* W przypadku gdy zainstalowany jest plugin `WMPL` i są skonfigurowane filtry najpierw następuje sprawdzenie dostępności walut w `WMPL` a następnie poprzez filtry. 
+* Osobne konfiguracje punktu płatności dla walut będą dostępny gdy liczba walut jest większa od 1.
 
 ## Ponawianie płatności
 Dzięki tej opcji kupujący otrzymuje możliwość skutecznego opłacenia zamówienia, nawet jeśli pierwsza płatność była nieudana (np. brak środków na karcie, problemy z logowaniem do banku itp.).

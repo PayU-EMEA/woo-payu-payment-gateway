@@ -116,10 +116,11 @@ class PayUSettings
             [], // callback
             'payu-settings-admin' // page
         );
-        $currencies = [''];
-        if (is_wmpl_active_and_configure()) {
-            $currencies = $woocommerce_wpml->multi_currency->get_currency_codes();
+        $currencies = woocommerce_payu_get_currencies();
+        if (count($currencies) < 2) {
+            $currencies = [''];
         }
+
         foreach ($currencies as $code) {
             $idSuffix = ($code ? '_' : '') . $code;
             $namePrefix = $code . ($code ? ' - ' : '');
@@ -173,12 +174,8 @@ class PayUSettings
      */
     public function payu_settings_sanitize($input)
     {
-        global $woocommerce_wpml;
         $sanitary_values = [];
-        $currencies = [];
-        if (is_wmpl_active_and_configure()) {
-            $currencies = $woocommerce_wpml->multi_currency->get_currency_codes();
-        }
+        $currencies = woocommerce_payu_get_currencies();
         if (count($currencies) < 2) {
             $currencies = [''];
         }

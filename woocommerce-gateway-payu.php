@@ -176,7 +176,10 @@ function register_waiting_payu_order_status()
     );
 }
 
-function is_wmpl_active_and_configure()
+/**
+ * @return bool
+ */
+function woocommerce_payu_is_wmpl_active_and_configure()
 {
     global $woocommerce_wpml;
 
@@ -184,6 +187,33 @@ function is_wmpl_active_and_configure()
         && property_exists($woocommerce_wpml, 'multi_currency')
         && $woocommerce_wpml->multi_currency
         && count($woocommerce_wpml->multi_currency->get_currency_codes()) > 1;
+}
+
+/**
+ * @return bool
+ */
+function woocommerce_payu_is_currency_custom_config()
+{
+    return apply_filters('woocommerce_payu_multicurrency_active', false)
+        && count(apply_filters('woocommerce_payu_get_currency_codes', [])) > 1;
+}
+
+/**
+ * @return array
+ */
+function woocommerce_payu_get_currencies()
+{
+    global $woocommerce_wpml;
+
+    $currencies = [];
+
+    if (woocommerce_payu_is_wmpl_active_and_configure()) {
+        $currencies = $woocommerce_wpml->multi_currency->get_currency_codes();
+    } elseif (woocommerce_payu_is_currency_custom_config()) {
+        $currencies = apply_filters('woocommerce_payu_get_currency_codes', []);
+    }
+
+    return $currencies;
 }
 
 add_action('init', 'register_waiting_payu_order_status');

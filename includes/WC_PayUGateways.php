@@ -247,13 +247,7 @@ abstract class WC_PayUGateways extends WC_Payment_Gateway
      */
     function payu_init_form_fields($custom_order = false)
     {
-        global $woocommerce_wpml;
-
-        $currencies = [];
-
-        if (is_wmpl_active_and_configure()) {
-            $currencies = $woocommerce_wpml->multi_currency->get_currency_codes();
-        }
+        $currencies = woocommerce_payu_get_currencies();
 
         $this->form_fields = array_merge(
             $this->get_form_fields_basic(),
@@ -494,7 +488,7 @@ abstract class WC_PayUGateways extends WC_Payment_Gateway
     }
 
     /**
-     * @param array $currency
+     * @param string|null $currency
      * @throws
      *
      * @return void
@@ -503,7 +497,7 @@ abstract class WC_PayUGateways extends WC_Payment_Gateway
     {
         $isSandbox = 'yes' === $this->get_option('sandbox');
 
-        if (is_wmpl_active_and_configure()) {
+        if (woocommerce_payu_is_wmpl_active_and_configure() || woocommerce_payu_is_currency_custom_config()) {
             $optionSuffix = '_' . (null !== $currency ? $currency : get_woocommerce_currency());
         } else {
             $optionSuffix = '';
