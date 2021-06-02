@@ -363,12 +363,15 @@ abstract class WC_PayUGateways extends WC_Payment_Gateway
         if (!is_array($key)) {
             return false;
         }
-        if (@get_option($key[0])[$key[1]]) {
-            return get_option($key[0])[$key[1]];
-        }
-        return false;
-    }
 
+        $option = get_option($key[0]);
+
+        if (!is_array($option) || !array_key_exists($key[1], $option)) {
+            return false;
+        }
+
+        return $option[$key[1]];
+    }
     /**
      * @return array
      */
