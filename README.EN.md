@@ -51,7 +51,7 @@ POS parameters:
 | Sandbox - OAuth - client_secret | client_secret for OAuth in Sandbox
 
 
-* In case `WPML` plugin is used, there will be a separate configuration for each available currency
+* In case of using more than one currency, there will be a separate configuration for each available currency - more information in [Multicurrency](#multicurrency) section
 * By default, each payment method uses global POS parameters
 
 Other parameters - applicable to all modules:
@@ -79,6 +79,39 @@ Parameters available for `PayU - bank list`:
 | --------- | ---- |
 | Own ordering | To use your own ordering of payment types, you need to provide a comma-separated list of payment types codes from PayU system. [Payment types list][ext6].
 | Show inactive payment methods | In case a given payment type is not active it is still displayed, but greyed out, otherwise not displayed.
+
+## Multicurrency
+There are two ways to handle multicurrency:
+### `WMPL` Plugin
+For every currency added to `WPML` plugin you can find separate point of sale configuration.
+### Filters
+The plugin provides two filters, that allow to add support for multiple currencies during payment
+
+| Filter name | Description | Type
+| --------- | ---- | ----
+| `woocommerce_payu_multicurrency_active` | Should multicurrency service be enabled | bool
+| `woocommerce_payu_get_currency_codes` | List of currencies ISO codes in ISO 4217 standard e.g. "PLN". | array
+
+Example:
+```php
+function payu_activate_multicurrency($active)
+{
+    return true;
+}
+
+function payu_set_currency_list($currencies)
+{
+    return ['PLN', 'EUR'];
+}
+
+add_filter('woocommerce_payu_multicurrency_active', 'payu_activate_multicurrency');
+add_filter('woocommerce_payu_get_currency_codes', 'payu_set_currency_list');
+```
+
+Notes:
+*  When the `WMPL` plugin is installed and filters are configured, the availability of currencies is checked in `WMPL` then through the filters. 
+* Seperate point of sale configurations are available when number of currencies is greater than 1.
+
 
 ## Repayment
 This feature enables the payer to create a new payment for the same order if the previous payment was not successful.
