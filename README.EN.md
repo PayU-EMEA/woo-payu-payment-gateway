@@ -123,7 +123,7 @@ From user point of view, repayment is possible:
 * by clicking "Pay with PayU" link in Actions column in order list
 * by clicking "Pay with PayU" link over order details section
 
-## Maile
+## Emails
 The plugin does not send any additional emails and does not interfere with any mailing process.
 
 In case repayment is configured, the mail confirming order placement is enhanced with information about the possibility to pay the order.
