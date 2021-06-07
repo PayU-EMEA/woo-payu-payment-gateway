@@ -1,3 +1,8 @@
+#2.0.5
+* Translate fix
+* Add filters for multicurrency support
+* Notice fix
+
 #2.0.4
 * Fix size gateway logotypes in some themes
 
