@@ -63,20 +63,4 @@ class WC_Gateway_PayuBlik extends WC_PayUGateways
 
         return $payMethods->payByLinks && $this->process_pay_methods($payMethods->payByLinks);
     }
-
-    /**
-     * @param array $payMethods
-     *
-     * @return bool
-     */
-    function process_pay_methods($payMethods)
-    {
-        foreach ($payMethods as $payMethod) {
-            if (!$this->check_min_max($payMethod, $this->paytype)) {
-                return false;
-            }
-        }
-
-        return true;
-    }
 }
