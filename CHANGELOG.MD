@@ -1,3 +1,6 @@
+#2.0.6
+* Fix hide inactive method
+
 #2.0.5
 * Translate fix
 * Add filters for multicurrency support
