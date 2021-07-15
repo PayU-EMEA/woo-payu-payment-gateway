@@ -1,3 +1,6 @@
+#2.0.7
+* Fix show paymethods when WPML is active
+
 #2.0.6
 * Fix hide inactive method
 
