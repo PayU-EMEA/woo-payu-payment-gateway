@@ -12,7 +12,7 @@ abstract class WC_PayUGateways extends WC_Payment_Gateway
     public $pos_id;
     public $selected_method;
     public $has_terms_checkbox;
-    public $cart_contents_total = 0;
+    private $order_total = null;
     const CONDITION_PL = 'http://static.payu.com/sites/terms/files/payu_terms_of_service_single_transaction_pl_pl.pdf';
     const CONDITION_EN = 'http://static.payu.com/sites/terms/files/payu_terms_of_service_single_transaction_pl_en.pdf';
     const CONDITION_CS = 'http://static.payu.com/sites/terms/files/Podmínky pro provedení jednorázové platební transakce v PayU.pdf';
@@ -43,10 +43,8 @@ abstract class WC_PayUGateways extends WC_Payment_Gateway
                 filter_input_array(INPUT_GET, FILTER_SANITIZE_STRING)['key']);
             if ($order_id) {
                 $order = wc_get_order($order_id);
-                $this->cart_contents_total = $order->get_total();
+                $this->order_total = $order->get_total();
             }
-        } elseif (isset(WC()->cart->cart_contents_total)) {
-            $this->cart_contents_total = WC()->cart->cart_contents_total;
         }
 
         add_action('wp_enqueue_scripts', [$this, 'enqueue_payu_gateway_assets']);
@@ -865,16 +863,18 @@ abstract class WC_PayUGateways extends WC_Payment_Gateway
 
     /**
      * @param object $payMethod
-     * @param string $paytype
+     * @param null|string $paytype
      * @return bool
      */
-    protected function check_min_max($payMethod, $paytype)
+    protected function check_min_max($payMethod, $paytype = null)
     {
-        if ($payMethod->value === $paytype && $payMethod->status === 'ENABLED') {
-            if (isset($payMethod->minAmount) && $this->toAmount($this->cart_contents_total) < $payMethod->minAmount) {
+        if (($paytype === null || $payMethod->value === $paytype) && $payMethod->status === 'ENABLED') {
+            $total = $this->toAmount($this->order_total !== null ? $this->order_total : WC()->cart->get_total(null));
+
+            if (isset($payMethod->minAmount) && $total < $payMethod->minAmount) {
                 return false;
             }
-            if (isset($payMethod->maxAmount) && $this->toAmount($this->cart_contents_total) > $payMethod->maxAmount) {
+            if (isset($payMethod->maxAmount) && $total > $payMethod->maxAmount) {
                 return false;
             }
 

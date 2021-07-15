@@ -138,7 +138,7 @@ class WC_Gateway_PayuListBanks extends WC_PayUGateways
                     if ($payMethod->status !== 'ENABLED') {
                         $show_method = false;
                     } else {
-                        if (!$this->check_min_max($payMethod, $payMethod->value)) {
+                        if (!$this->check_min_max($payMethod)) {
                             $show_method = false;
                         }
                     }
@@ -150,7 +150,7 @@ class WC_Gateway_PayuListBanks extends WC_PayUGateways
                 } else {
                     if ($payMethod->status === 'ENABLED') {
                         $can_be_use = true;
-                        if (!$this->check_min_max($payMethod, $payMethod->value)) {
+                        if (!$this->check_min_max($payMethod)) {
                             $can_be_use = false;
                         }
                         if ($can_be_use) {
