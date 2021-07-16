@@ -16,6 +16,7 @@
 
 define('PAYU_PLUGIN_VERSION', '2.0.7');
 define('PAYU_PLUGIN_FILE', __FILE__);
+define('PAYU_PLUGIN_STATUS_WAITING', 'payu-waiting');
 
 add_action('plugins_loaded', 'init_gateway_payu');
 add_action('admin_init', 'move_old_payu_settings');
@@ -42,6 +43,8 @@ function init_gateway_payu()
 
     add_filter('woocommerce_payment_gateways', 'add_payu_gateways');
     add_filter('woocommerce_valid_order_statuses_for_payment_complete', 'payu_filter_woocommerce_valid_order_statuses_for_payment_complete', 10, 2 );
+    add_filter('woocommerce_email_actions', 'add_payu_order_status_to_email_notifications');
+    add_filter('woocommerce_email_classes', 'add_payu_order_status_to_email_notifications_triger');
 
     if (!is_admin() && @$_GET['pay_for_order'] && @$_GET['key']) {
         add_filter('woocommerce_valid_order_statuses_for_payment',
@@ -96,7 +99,7 @@ function move_old_payu_settings()
  */
 function payu_filter_woocommerce_valid_order_statuses_for_payment()
 {
-    return ['pending', 'failed', 'on-hold', 'payu-waiting'];
+    return ['pending', 'failed', 'on-hold', PAYU_PLUGIN_STATUS_WAITING];
 }
 
 /**
@@ -123,6 +126,32 @@ function add_payu_gateways($gateways)
     $gateways[] = 'WC_Gateway_PayuBlik';
     $gateways[] = 'WC_Gateway_PayuInstallments';
     return $gateways;
+}
+
+/**
+ * @param array $actions
+ *
+ * @return array
+ */
+function add_payu_order_status_to_email_notifications($actions)
+{
+    $actions[] = 'woocommerce_order_status_'.PAYU_PLUGIN_STATUS_WAITING.'_to_processing';
+
+    return $actions;
+}
+
+/**
+ * @param array $clases
+ *
+ * @return array
+ */
+function add_payu_order_status_to_email_notifications_triger($clases)
+{
+    if ($clases['WC_Email_Customer_Processing_Order']) {
+        add_action('woocommerce_order_status_' . PAYU_PLUGIN_STATUS_WAITING . '_to_processing_notification', array($clases['WC_Email_Customer_Processing_Order'], 'trigger'), 10, 2);
+    }
+
+    return $clases;
 }
 
 function plugin_row_meta($links, $plugin_file) {
@@ -165,7 +194,7 @@ function view_order($order_id)
 // Register new status
 function register_waiting_payu_order_status()
 {
-    register_post_status('wc-payu-waiting',
+    register_post_status('wc-'. PAYU_PLUGIN_STATUS_WAITING,
         [
             'label' => __('Awaiting receipt of payment', 'payu'),
             'public' => true,
@@ -221,7 +250,7 @@ add_action('init', 'register_waiting_payu_order_status');
 // Add to list of WC Order statuses
 function add_waiting_payu_to_order_statuses($order_statuses)
 {
-    $order_statuses['wc-payu-waiting'] = __('Awaiting receipt of payment', 'payu');
+    $order_statuses['wc-'.PAYU_PLUGIN_STATUS_WAITING] = __('Awaiting receipt of payment', 'payu');
     return $order_statuses;
 }
 
@@ -236,7 +265,7 @@ function filter_woocommerce_my_account_my_orders_actions($actions, $order)
     if (in_array($order_status,
         [
             'failed',
-            'payu-waiting',
+            PAYU_PLUGIN_STATUS_WAITING,
             get_option('payu_settings_option_name')['global_default_on_hold_status']
         ])) {
         $payu_gateways = WC_PayUGateways::gateways_list();

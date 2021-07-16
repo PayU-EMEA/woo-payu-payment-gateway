@@ -966,7 +966,7 @@ abstract class WC_PayUGateways extends WC_Payment_Gateway
                                 $response_order_id = $response->getResponse()->order->orderId;
                                 OpenPayU_Order::cancel($response_order_id);
                             } else {
-                                $order->update_status('payu-waiting',
+                                $order->update_status(PAYU_PLUGIN_STATUS_WAITING,
                                     __('Payment has been put on hold - merchant must approve this payment manually.',
                                         'payu')
                                 );
