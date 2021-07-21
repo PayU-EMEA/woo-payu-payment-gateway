@@ -19,7 +19,6 @@ abstract class WC_PayUGateways extends WC_Payment_Gateway
     const PRIVACY_PL = 'https://static.payu.com/sites/terms/files/payu_privacy_policy_pl_pl.pdf';
     const PRIVACY_EN = 'https://static.payu.com/sites/terms/files/payu_privacy_policy_en_en.pdf';
 
-
     /**
      * Setup general properties for the gateway.
      * @param string $id
@@ -869,7 +868,7 @@ abstract class WC_PayUGateways extends WC_Payment_Gateway
     protected function check_min_max($payMethod, $paytype = null)
     {
         if (($paytype === null || $payMethod->value === $paytype) && $payMethod->status === 'ENABLED') {
-            $total = $this->toAmount($this->order_total !== null ? $this->order_total : WC()->cart->get_total(null));
+            $total = $this->getTotal();
 
             if (isset($payMethod->minAmount) && $total < $payMethod->minAmount) {
                 return false;
@@ -882,6 +881,20 @@ abstract class WC_PayUGateways extends WC_Payment_Gateway
         }
 
         return false;
+    }
+
+    /**
+     * @return float
+     */
+    private function getTotal()
+    {
+        if ($this->order_total !== null) {
+            return $this->order_total;
+        } elseif (WC()->cart) {
+            return WC()->cart->get_total(null);
+        }
+
+        return 0;
     }
 
     /**
