@@ -1,5 +1,6 @@
 #2.0.8
 * Send mail to customer when status change from payu-waiting to processing
+* Fix get_total() on null
 
 #2.0.7
 * Fix show paymethods when WPML is active
