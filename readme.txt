@@ -3,7 +3,7 @@ Contributors: payusa
 Tags: woocommerce, PayU, payment, payment gateway, platnosci, PayU Poland, PayU EU
 Requires at least: 4.4
 Tested up to: 5.7
-Stable tag: 2.0.8
+Stable tag: 2.0.9
 Requires PHP: 7.0
 License: GPLv2
 
@@ -38,6 +38,8 @@ Use [automatic installation and activation](https://wordpress.org/support/articl
 Upon plugin update from version 1.X to version 2.X the existing config data will be automatically converted.
 
 == Changelog ==
+= 2.0.9 =
+* Fix not show installments, blik, card as separated method
 = 2.0.8 =
 * Send mail to customer when status change from payu-waiting to processing
 = 2.0.7 =

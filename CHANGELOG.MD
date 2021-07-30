@@ -1,3 +1,6 @@
+#2.0.9
+* Fix not show installments, blik, card as separated method
+
 #2.0.8
 * Send mail to customer when status change from payu-waiting to processing
 * Fix get_total() on null
