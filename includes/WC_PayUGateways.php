@@ -868,7 +868,7 @@ abstract class WC_PayUGateways extends WC_Payment_Gateway
     protected function check_min_max($payMethod, $paytype = null)
     {
         if (($paytype === null || $payMethod->value === $paytype) && $payMethod->status === 'ENABLED') {
-            $total = $this->getTotal();
+            $total = $this->getTotal() * 100;
 
             if (isset($payMethod->minAmount) && $total < $payMethod->minAmount) {
                 return false;
@@ -891,7 +891,7 @@ abstract class WC_PayUGateways extends WC_Payment_Gateway
         if ($this->order_total !== null) {
             return $this->order_total;
         } elseif (WC()->cart) {
-            return WC()->cart->get_total(null);
+            return WC()->cart->get_cart_contents_total();
         }
 
         return 0;
