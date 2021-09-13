@@ -9,7 +9,7 @@ jQuery('body').on('click', '.payu-list-banks li.payu-active label', function () 
     });
 
     $('body').on('click', '.payu-conditions-description .payu-read-more', function () {
-        $(this).next('.payu-more-hidden').slideDown(250);
+        $(this).next('.payu-more-hidden').show();
         $(this).remove();
     });
 

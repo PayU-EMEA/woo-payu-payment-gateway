@@ -9,7 +9,7 @@ class WC_Gateway_PayuListBanks extends WC_PayUGateways
         parent::__construct('payulistbanks');
 
         if ($this->is_enabled()) {
-            $this->has_terms_checkbox = true;
+            $this->show_terms_info = true;
 
             if (!is_admin()) {
                 if (!$this->try_retrieve_banks()) {

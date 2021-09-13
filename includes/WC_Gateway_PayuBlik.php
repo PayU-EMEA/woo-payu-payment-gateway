@@ -9,7 +9,7 @@ class WC_Gateway_PayuBlik extends WC_PayUGateways
         parent::__construct('payublik');
 
         if ($this->is_enabled()) {
-            $this->has_terms_checkbox = true;
+            $this->show_terms_info = true;
             $this->icon = apply_filters('woocommerce_payu_icon', plugins_url( '/assets/images/blik.svg', PAYU_PLUGIN_FILE ));
 
             if (!is_admin()) {

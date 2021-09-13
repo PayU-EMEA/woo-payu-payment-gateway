@@ -8,7 +8,7 @@ class WC_Gateway_PayuStandard extends WC_PayUGateways
         parent::__construct('payustandard');
 
         if ($this->is_enabled()) {
-            $this->has_terms_checkbox = false;
+            $this->show_terms_info = false;
 
             if (!is_admin()) {
                 if (!$this->try_retrieve_banks()) {

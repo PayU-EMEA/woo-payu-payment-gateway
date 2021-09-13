@@ -11,7 +11,7 @@ abstract class WC_PayUGateways extends WC_Payment_Gateway
 
     public $pos_id;
     public $selected_method;
-    public $has_terms_checkbox;
+    public $show_terms_info;
     private $order_total = null;
     const CONDITION_PL = 'http://static.payu.com/sites/terms/files/payu_terms_of_service_single_transaction_pl_pl.pdf';
     const CONDITION_EN = 'http://static.payu.com/sites/terms/files/payu_terms_of_service_single_transaction_pl_en.pdf';
@@ -137,17 +137,17 @@ abstract class WC_PayUGateways extends WC_Payment_Gateway
      */
     protected function agreements_field()
     {
-        if ($this->has_terms_checkbox) {
+        if ($this->show_terms_info) {
             echo '<div class="payu-accept-conditions">';
-            echo '<div class="payu-checkbox-line"><label><input name="condition-checkbox-' . $this->id . '" type="checkbox" checked="checked" required="required" />';
-            printf(__('<span>I accept <a href="%s" target="_blank">Terms of single PayU payment transaction</a></span>',
-                'payu'),
-                $this->get_condition_url());
-            echo '</label></div>';
-            echo '<div class="payu-conditions-description">' . __('Payment is processed by PayU SA; The recipient\'s data, the payment title and the amount are provided to PayU SA by the recipient;',
+            echo '<div class="payu-conditions-description"><div>' . __('Payment is processed by PayU SA; The recipient\'s data, the payment title and the amount are provided to PayU SA by the recipient;',
                     'payu') . ' <span class="payu-read-more">' . __('read more',
                     'payu') . '</span> <span class="payu-more-hidden">' . __('The order is sent for processing when PayU SA receives your payment. The payment is transferred to the recipient within 1 hour, not later than until the end of the next business day; PayU SA does not charge any service fees.',
-                    'payu') . '</span><br />';
+                    'payu') . '</span>';
+            echo '</div><div>';
+            printf(__('By paying you accept <a href="%s" target="_blank">"PayU Payment Terms".</a>',
+                'payu'),
+                $this->get_condition_url());
+            echo '</div><div>';
             echo __('The controller of your personal data is PayU S.A. with its registered office in Poznan (60-166), at Grunwaldzka Street 182 ("PayU").',
                     'payu') . ' <span class="payu-read-more">' . __('read more',
                     'payu') . '</span> <span class="payu-more-hidden">';
@@ -158,7 +158,7 @@ abstract class WC_PayUGateways extends WC_Payment_Gateway
             echo __('You have the right to access, rectify, restrict or oppose the processing of data, not to be subject to automated decision making, including profiling, or to transfer and erase Your personal data. Providing personal data is voluntary however necessary for the processing the payment and failure to provide the data may result in the rejection of the payment. For more information on how PayU processes your personal data, please click ',
                 'payu');
             printf(__('<a href="%s" target="_blank">PayU privacy policy</a>', 'payu'), $this->get_privacy_policy_url());
-            echo '</span>';
+            echo '</span></div>';
             echo '</div>';
             echo '</div>';
         }
@@ -692,12 +692,6 @@ abstract class WC_PayUGateways extends WC_Payment_Gateway
         }
 
         try {
-            if ($this->has_terms_checkbox) {
-                if (!isset($_POST['condition-checkbox-' . $this->id]) || $_POST['condition-checkbox-' . $this->id] !== 'on') {
-                    wc_add_notice(__('Payment error: accept terms and conditions', 'payu'), 'error');
-                    return false;
-                }
-            }
             $response = OpenPayU_Order::create($orderData);
 
             if ($response->getStatus() === OpenPayU_Order::SUCCESS || $response->getStatus() === 'WARNING_CONTINUE_3DS') {

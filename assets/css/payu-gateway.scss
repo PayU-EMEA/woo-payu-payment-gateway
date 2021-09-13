@@ -78,27 +78,14 @@
 
 .payu-accept-conditions {
   margin-top: 15px;
-
-  .payu-checkbox-line {
-    label {
-      display: flex;
-      align-items: center;
-      font-size: 13px;
-
-      input {
-        margin-right: 5px;
-      }
-
-      a {
-        margin-left: 5px;
-        text-decoration: underline;
-      }
-    }
-  }
-
   .payu-conditions-description {
     margin-top: 8px;
     font-size: 12px;
+    line-height: 120%;
+
+    > div {
+      margin: 5px 0;
+    }
 
     a {
       text-decoration: underline;

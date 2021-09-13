@@ -9,7 +9,7 @@ class WC_Gateway_PayuSecureForm extends WC_PayUGateways
         parent::__construct('payusecureform');
 
         if ($this->is_enabled()) {
-            $this->has_terms_checkbox = true;
+            $this->show_terms_info = true;
             $this->icon = apply_filters('woocommerce_payu_icon', plugins_url( '/assets/images/card-visa-mc.svg', PAYU_PLUGIN_FILE ));
 
             add_action('wp_enqueue_scripts', [$this, 'include_payu_sf_scripts']);
