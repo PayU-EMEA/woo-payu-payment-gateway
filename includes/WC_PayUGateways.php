@@ -548,22 +548,20 @@ abstract class WC_PayUGateways extends WC_Payment_Gateway
         $order = null;
         $is_order_processing = false;
 
-        if (WC()->cart) {
-            $is_order_processing = true;
-        } elseif (is_page(wc_get_page_id('checkout')) && get_query_var('order-pay') > 0) {
+        if (is_page(wc_get_page_id('checkout')) && get_query_var('order-pay') > 0) {
             $order = wc_get_order(absint(get_query_var('order-pay')));
-            add_post_meta($order->get_id(), '_test_key', 'randomvalue');
+            $is_order_processing = true;
+        } elseif (WC()->cart) {
             $is_order_processing = true;
         }
 
         if (!empty($this->enable_for_shipping) && $is_order_processing) {
             $order_shipping_items = is_object($order) ? $order->get_shipping_methods() : false;
-            $chosen_shipping_methods_session = WC()->session->get('chosen_shipping_methods');
 
             if ($order_shipping_items) {
                 $canonical_rate_ids = $this->get_canonical_order_shipping_item_rate_ids($order_shipping_items);
             } else {
-                $canonical_rate_ids = $this->get_canonical_package_rate_ids($chosen_shipping_methods_session);
+                $canonical_rate_ids = $this->get_canonical_package_rate_ids(WC()->session->get('chosen_shipping_methods'));
             }
 
             if (!count($this->get_matching_rates($canonical_rate_ids))) {
