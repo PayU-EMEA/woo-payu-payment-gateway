@@ -1,3 +1,7 @@
+#2.0.10
+* PayU terms - info instead of checkbox
+* Better check shipping method, clean up
+
 #2.0.9
 * Fix not show installments, blik, card as separated method
 
