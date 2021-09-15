@@ -954,12 +954,14 @@ abstract class WC_PayUGateways extends WC_Payment_Gateway
                     switch ($status) {
                         case OpenPayuOrderStatus::STATUS_CANCELED:
                             if (!isset(get_option('payu_settings_option_name')['global_repayment'])) {
-                                $order->update_status('cancelled', __('Payment has been cancelled.', 'payu'));
+                            	$status = apply_filters( 'woocommerce_payu_status_cancelled', 'cancelled' , $order );
+                                $order->update_status($status, __('Payment has been cancelled.', 'payu'));
                             }
                             break;
 
                         case OpenPayuOrderStatus::STATUS_REJECTED:
-                            $order->update_status('failed', __('Payment has been rejected.', 'payu'));
+	                        $status = apply_filters( 'woocommerce_payu_status_rejected', 'failed' , $order );
+                            $order->update_status($status, __('Payment has been rejected.', 'payu'));
                             break;
 
                         case OpenPayuOrderStatus::STATUS_COMPLETED:
@@ -971,7 +973,8 @@ abstract class WC_PayUGateways extends WC_Payment_Gateway
                                 $response_order_id = $response->getResponse()->order->orderId;
                                 OpenPayU_Order::cancel($response_order_id);
                             } else {
-                                $order->update_status(PAYU_PLUGIN_STATUS_WAITING,
+	                            $status = apply_filters( 'woocommerce_payu_status_waiting', PAYU_PLUGIN_STATUS_WAITING , $order );
+                                $order->update_status($status,
                                     __('Payment has been put on hold - merchant must approve this payment manually.',
                                         'payu')
                                 );
