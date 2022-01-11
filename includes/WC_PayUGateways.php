@@ -942,7 +942,8 @@ abstract class WC_PayUGateways extends WC_Payment_Gateway
                     switch ($status) {
                         case OpenPayuOrderStatus::STATUS_CANCELED:
                             if (!isset(get_option('payu_settings_option_name')['global_repayment'])) {
-                                $order->update_status('cancelled', __('Payment has been cancelled.', 'payu'));
+                                $status = apply_filters('woocommerce_payu_status_cancelled', 'cancelled' , $order);
+                                $order->update_status($status, __('Payment has been cancelled.', 'payu'));
                             }
                             break;
 

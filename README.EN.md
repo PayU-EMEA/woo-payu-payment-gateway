@@ -112,6 +112,12 @@ Notes:
 *  When the `WMPL` plugin is installed and filters are configured, the availability of currencies is checked in `WMPL` then through the filters. 
 * Seperate point of sale configurations are available when number of currencies is greater than 1.
 
+## Filter hooks
+
+### Change order status
+| Filter Name                         | Description                              | Type   | Parameters
+|-------------------------------------|------------------------------------------|--------| ----
+| `woocommerce_payu_status_cancelled` | Order status for `CANCELED` notification | string | Order
 
 ## Repayment
 This feature enables the payer to create a new payment for the same order if the previous payment was not successful.

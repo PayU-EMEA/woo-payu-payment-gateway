@@ -112,6 +112,13 @@ Uwagi:
 * W przypadku gdy zainstalowany jest plugin `WMPL` i są skonfigurowane filtry najpierw następuje sprawdzenie dostępności walut w `WMPL` a następnie poprzez filtry. 
 * Osobne konfiguracje punktu płatności dla walut będą dostępny gdy liczba walut jest większa od 1.
 
+## Hooki - Filtry
+
+###Zmiana statusu zamówienia
+| Nazwa filtra | Opis                                       | Typ | Parametry
+| --------- |--------------------------------------------| ---- | ----
+| `woocommerce_payu_status_cancelled` | Status zamówienia dla notyfikacji `CANCELED` | string | Order
+
 ## Ponawianie płatności
 Dzięki tej opcji kupujący otrzymuje możliwość skutecznego opłacenia zamówienia, nawet jeśli pierwsza płatność była nieudana (np. brak środków na karcie, problemy z logowaniem do banku itp.).
 
