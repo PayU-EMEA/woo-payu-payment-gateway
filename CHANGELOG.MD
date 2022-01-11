@@ -1,3 +1,8 @@
+#2.0.11
+* Remove manual stock reduced
+* Remove unused REJECTED
+* Add filter `woocommerce_payu_status_cancelled`
+
 #2.0.10
 * PayU terms - info instead of checkbox
 * Better check shipping method, clean up

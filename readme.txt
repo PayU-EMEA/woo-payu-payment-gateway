@@ -3,7 +3,7 @@ Contributors: payusa
 Tags: woocommerce, PayU, payment, payment gateway, platnosci, PayU Poland, PayU EU
 Requires at least: 4.4
 Tested up to: 5.8
-Stable tag: 2.0.10
+Stable tag: 2.0.11
 Requires PHP: 7.0
 License: GPLv2
 
@@ -38,6 +38,10 @@ Use [automatic installation and activation](https://wordpress.org/support/articl
 Upon plugin update from version 1.X to version 2.X the existing config data will be automatically converted.
 
 == Changelog ==
+= 2.0.11 =
+* Remove manual stock reduced
+* Remove unused REJECTED
+* Add filter woocommerce_payu_status_cancelled
 = 2.0.10 =
 * PayU terms - info instead of checkbox
 * Better check shipping method, clean up
