@@ -694,7 +694,6 @@ abstract class WC_PayUGateways extends WC_Payment_Gateway
 
             if ($response->getStatus() === OpenPayU_Order::SUCCESS || $response->getStatus() === 'WARNING_CONTINUE_3DS') {
 
-                $this->reduceStock($order);
                 WC()->cart->empty_cart();
 
                 //add link to email
@@ -745,17 +744,6 @@ abstract class WC_PayUGateways extends WC_Payment_Gateway
     protected function getLanguage()
     {
         return substr(get_locale(), 0, 2);
-    }
-
-    /**
-     * @param WC_Order $order
-     *
-     * @return void
-     */
-    protected function reduceStock($order)
-    {
-        function_exists('wc_reduce_stock_levels') ?
-            wc_reduce_stock_levels($order->get_id()) : $order->reduce_order_stock();
     }
 
     /**

@@ -58,7 +58,7 @@ Other parameters - applicable to all modules:
 
 | Parameter | Description
 | --------- | ----
-| Default order status | Status set after payment is started. Possible values  `on-hold` or `pending`
+| Default order status | Status set after payment is started. Possible values  `on-hold` or `pending`.< br/>According to the WooCommerce documentation, when warehouse management is enabled for `on-hold` status, the number of products in the warehouse will be reduced and restored when the order changes to `canceled` status, for `pending` status, the inventory levels will not be changed.
 | Enable repayment | Allows the payer to try again after failed payment. Before using this option please check [Repayment](#repayment).
 
 #### Payment method configuration
