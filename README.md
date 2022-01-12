@@ -114,7 +114,7 @@ Uwagi:
 
 ## Hooki - Filtry
 
-###Zmiana statusu zamówienia
+### Zmiana statusu zamówienia
 | Nazwa filtra | Opis                                       | Typ | Parametry
 | --------- |--------------------------------------------| ---- | ----
 | `woocommerce_payu_status_cancelled` | Status zamówienia dla notyfikacji `CANCELED` | string | Order
