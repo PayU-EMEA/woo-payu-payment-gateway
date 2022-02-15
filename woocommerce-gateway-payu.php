@@ -46,7 +46,7 @@ function init_gateway_payu()
     add_filter('woocommerce_email_actions', 'add_payu_order_status_to_email_notifications');
     add_filter('woocommerce_email_classes', 'add_payu_order_status_to_email_notifications_triger');
 
-    if (!is_admin() && @$_GET['pay_for_order'] && @$_GET['key']) {
+    if (!is_admin() && isset($_GET['pay_for_order'], $_GET['key'])) {
         add_filter('woocommerce_valid_order_statuses_for_payment',
             'payu_filter_woocommerce_valid_order_statuses_for_payment',
             10, 2);

@@ -39,7 +39,7 @@ abstract class WC_PayUGateways extends WC_Payment_Gateway
         $this->enable_for_shipping = $this->get_option('enable_for_shipping', []);
         $this->enable_for_virtual = $this->get_option( 'enable_for_virtual', 'yes' ) === 'yes';
 
-        if (!is_admin() && @$_GET['pay_for_order'] && @$_GET['key']) {
+        if (!is_admin() && isset($_GET['pay_for_order'], $_GET['key'])) {
             $order_id = $this->get_post_id_by_meta_key_and_value('_order_key',
                 filter_input_array(INPUT_GET, FILTER_SANITIZE_STRING)['key']);
             if ($order_id) {
