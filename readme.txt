@@ -2,7 +2,7 @@
 Contributors: payusa
 Tags: woocommerce, PayU, payment, payment gateway, platnosci, PayU Poland, PayU EU
 Requires at least: 4.4
-Tested up to: 5.8
+Tested up to: 5.9
 Stable tag: 2.0.12
 Requires PHP: 7.0
 License: GPLv2
@@ -42,6 +42,7 @@ Upon plugin update from version 1.X to version 2.X the existing config data will
 * Fix calculate total for check min/max
 * Possibility to enable for virtual orders
 * Fix #43 php notice
+* Update Visa logo
 = 2.0.11 =
 * Remove manual stock reduced
 * Remove unused REJECTED

@@ -2,6 +2,7 @@
 * Fix calculate total for check min/max
 * Possibility to enable for virtual orders
 * Fix #43 php notice
+* Update Visa logo
 
 # 2.0.11
 * Remove manual stock reduced
