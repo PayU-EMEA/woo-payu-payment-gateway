@@ -13,7 +13,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: Loco https://localise.biz/\n"
-"X-Loco-Version: 2.5.2; wp-5.7.1\n"
+"X-Loco-Version: 2.5.8; wp-5.9\n"
 "X-Domain: payu"
 
 #: includes/WC_PayUGateways.php:805 includes/WC_PayUGateways.php:981
