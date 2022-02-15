@@ -7,6 +7,7 @@ abstract class WC_PayUGateways extends WC_Payment_Gateway
     public static $paymethods = [];
 
     protected $enable_for_shipping;
+    protected $enable_for_virtual;
     protected $paytype;
 
     public $pos_id;
@@ -36,6 +37,7 @@ abstract class WC_PayUGateways extends WC_Payment_Gateway
         $this->description = $this->get_option('description', ' ');
         $this->sandbox = $this->get_option('sandbox', false);
         $this->enable_for_shipping = $this->get_option('enable_for_shipping', []);
+        $this->enable_for_virtual = $this->get_option( 'enable_for_virtual', 'yes' ) === 'yes';
 
         if (!is_admin() && @$_GET['pay_for_order'] && @$_GET['key']) {
             $order_id = $this->get_post_id_by_meta_key_and_value('_order_key',
@@ -396,6 +398,12 @@ abstract class WC_PayUGateways extends WC_Payment_Gateway
                     'data-placeholder' => __('Select shipping methods', 'payu'),
                 ],
             ],
+            'enable_for_virtual' => array(
+                'title'   => __( 'Virtual orders', 'payu' ),
+                'label'   => __( 'Enable for virtual orders', 'payu' ),
+                'type'    => 'checkbox',
+                'default' => 'yes',
+            ),
         ];
     }
 
@@ -555,7 +563,7 @@ abstract class WC_PayUGateways extends WC_Payment_Gateway
             $is_order_processing = true;
         }
 
-        if (!empty($this->enable_for_shipping) && $is_order_processing) {
+        if (!empty($this->enable_for_shipping) && !$this->enable_for_virtual && $is_order_processing) {
             $order_shipping_items = is_object($order) ? $order->get_shipping_methods() : false;
 
             if ($order_shipping_items) {
