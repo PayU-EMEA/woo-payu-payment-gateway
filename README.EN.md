@@ -72,6 +72,7 @@ Parameters available for every payment method:
 | Use global settings | If not enabled, you need to provide specific settings for given payment method.
 | Description | Payment method description displayed during checkout.
 | Enable for shipping method | Payment method may be enabled only for specific shipping methods. In case no shipping method is provided, the payment method is enabled for every shipping method.
+| Virtual orders | Payment method will be enabled for virtual orders
 
 Parameters available for `PayU - bank list`:
 

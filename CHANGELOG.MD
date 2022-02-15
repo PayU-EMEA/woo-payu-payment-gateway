@@ -1,3 +1,8 @@
+# 2.0.12
+* Fix calculate total for check min/max
+* Possibility to enable for virtual orders
+* Fix #43 php notice
+
 # 2.0.11
 * Remove manual stock reduced
 * Remove unused REJECTED

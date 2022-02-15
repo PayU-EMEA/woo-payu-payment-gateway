@@ -72,6 +72,7 @@ Parametry, które są dostępne dla każdej metody płatności:
 | Użyj wartości globalnych | W przypadku włączenia używane są globalne parametry punktu płatności, w przeciwnym wypadku należy wprowadzić parametry
 | Opis | Opis metody wyświetlany po wybraniu jej na stronie wyboru metody płatności
 | Włącz dla metod wysyłki | Możliwość wyboru dla jakich metod wysyłki będzie dostępna metoda płatności. W przypadku gdy nie wybierzemy żadnej metody wysyłki to metoda płatności jest dostępna dla wszystkich metod wysyłki.
+| Wirtualne zamówienia  | Metoda płatności będzie dostępna dla zamówień wirtualnych
 
 Parametry, które są dodatkowo dostępne dla metody płatności `PayU - lista banków`:
 
