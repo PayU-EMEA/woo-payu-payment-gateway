@@ -37,7 +37,7 @@ abstract class WC_PayUGateways extends WC_Payment_Gateway
         $this->description = $this->get_option('description', ' ');
         $this->sandbox = $this->get_option('sandbox', false);
         $this->enable_for_shipping = $this->get_option('enable_for_shipping', []);
-        $this->enable_for_virtual = $this->get_option( 'enable_for_virtual', 'yes' ) === 'yes';
+        $this->enable_for_virtual = $this->get_option( 'enable_for_virtual', 'no' ) === 'yes';
 
         if (!is_admin() && isset($_GET['pay_for_order'], $_GET['key'])) {
             $order_id = $this->get_post_id_by_meta_key_and_value('_order_key',
@@ -554,16 +554,32 @@ abstract class WC_PayUGateways extends WC_Payment_Gateway
     public function is_available()
     {
         $order = null;
-        $is_order_processing = false;
+        $is_order_processing = true;
+        $needs_shipping = false;
 
         if (is_page(wc_get_page_id('checkout')) && get_query_var('order-pay') > 0) {
             $order = wc_get_order(absint(get_query_var('order-pay')));
-            $is_order_processing = true;
+
+            if ($order && 0 < count($order->get_items()) ) {
+                foreach ($order->get_items() as $item) {
+                    $_product = $item->get_product();
+                    if ($_product && $_product->needs_shipping()) {
+                        $needs_shipping = true;
+                        break;
+                    }
+                }
+            }
         } elseif (WC()->cart) {
-            $is_order_processing = true;
+            $needs_shipping = WC()->cart->needs_shipping();
+        } else {
+            $is_order_processing = false;
         }
 
-        if (!empty($this->enable_for_shipping) && !$this->enable_for_virtual && $is_order_processing) {
+        if (!$needs_shipping) {
+            return $this->enable_for_virtual;
+        }
+
+        if (!empty($this->enable_for_shipping) && $is_order_processing) {
             $order_shipping_items = is_object($order) ? $order->get_shipping_methods() : false;
 
             if ($order_shipping_items) {
