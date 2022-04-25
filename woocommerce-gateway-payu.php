@@ -40,6 +40,8 @@ function init_gateway_payu()
     require_once('includes/WC_Gateway_PayuSecureForm.php');
     require_once('includes/WC_Gateway_PayuBlik.php');
     require_once('includes/WC_Gateway_PayuInstallments.php');
+    require_once('includes/WC_Gateway_PayuPaypo.php');
+    require_once('includes/WC_Gateway_PayuTwistoPl.php');
 
     add_filter('woocommerce_payment_gateways', 'add_payu_gateways');
     add_filter('woocommerce_valid_order_statuses_for_payment_complete', 'payu_filter_woocommerce_valid_order_statuses_for_payment_complete', 10, 2 );
@@ -125,6 +127,8 @@ function add_payu_gateways($gateways)
     $gateways[] = 'WC_Gateway_PayuSecureForm';
     $gateways[] = 'WC_Gateway_PayuBlik';
     $gateways[] = 'WC_Gateway_PayuInstallments';
+    $gateways[] = 'WC_Gateway_PayuPaypo';
+    $gateways[] = 'WC_Gateway_PayuTwistoPl';
     return $gateways;
 }
 

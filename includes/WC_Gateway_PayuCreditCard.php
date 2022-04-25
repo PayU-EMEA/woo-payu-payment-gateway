@@ -20,30 +20,9 @@ class WC_Gateway_PayuCreditCard extends WC_PayUGateways
         }
     }
 
-    /**
-     * @return bool
-     */
-    public function try_retrieve_banks()
+    public function payment_fields()
     {
-        $response = $this->get_payu_response();
-        if (isset($response) && $response->getStatus() === 'SUCCESS') {
-            $payMethods = $response->getResponse();
-
-            return $payMethods->payByLinks && $this->process_pay_methods($payMethods->payByLinks);
-        }
-
-        return false;
-    }
-
-    /**
-     * @param OpenPayU_Result $response
-     *
-     * @return bool
-     */
-    function retrieve_methods($response)
-    {
-        $payMethods = $response->getResponse();
-
-        return $payMethods->payByLinks && $this->process_pay_methods($payMethods->payByLinks);
+        parent::payment_fields();
+        $this->agreements_field();
     }
 }

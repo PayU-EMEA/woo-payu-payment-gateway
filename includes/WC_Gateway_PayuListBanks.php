@@ -26,7 +26,7 @@ class WC_Gateway_PayuListBanks extends WC_PayUGateways
     /**
      * @return bool
      */
-    public function try_retrieve_banks()
+    protected function try_retrieve_banks()
     {
         $response = $this->get_payu_response();
         if (isset($response) && $response->getStatus() === 'SUCCESS') {
@@ -38,14 +38,10 @@ class WC_Gateway_PayuListBanks extends WC_PayUGateways
         return false;
     }
 
-    /**
-     * @return void
-     */
     public function payment_fields()
     {
-        if ($this->description) {
-            echo wpautop(wp_kses_post($this->description));
-        }
+        parent::payment_fields();
+
         $response = $this->get_payu_response();
         if (isset($response) && $response->getStatus() === 'SUCCESS') {
             $this->retrieve_methods($response);
@@ -53,13 +49,12 @@ class WC_Gateway_PayuListBanks extends WC_PayUGateways
         }
     }
 
-
     /**
      * @param OpenPayU_Result $response
      *
      * @return null
      */
-    function retrieve_methods($response)
+    private function retrieve_methods($response)
     {
         $payMethods = $response->getResponse();
         $custom_order = '';
@@ -127,6 +122,12 @@ class WC_Gateway_PayuListBanks extends WC_PayUGateways
                 }
                 if ($available_gateway === 'payuinstallments' && $data->enabled === 'yes') {
                     array_push($this->unset_banks, 'ai');
+                }
+                if ($available_gateway === 'payupaypo' && $data->enabled === 'yes') {
+                    array_push($this->unset_banks, 'dpp');
+                }
+                if ($available_gateway === 'payutwistopl' && $data->enabled === 'yes') {
+                    array_push($this->unset_banks, 'dpt');
                 }
             }
         }

@@ -49,31 +49,10 @@ class WC_Gateway_PayuSecureForm extends WC_PayUGateways
         endif;
     }
 
-    /**
-     * @return bool
-     */
-    public function try_retrieve_banks()
-    {
-        $response = $this->get_payu_response();
-        if (isset($response) && $response->getStatus() === 'SUCCESS') {
-            $payMethods = $response->getResponse();
-
-            return $payMethods->payByLinks && $this->process_pay_methods($payMethods->payByLinks);
-        }
-
-        return false;
-    }
-
-    /**
-     * @return null
-     */
     public function payment_fields()
     {
-        $this->init_OpenPayU();
-        if ($this->description) {
-            // display the description with <p> tags etc.
-            echo wpautop(wp_kses_post($this->description));
-        }
+        parent::payment_fields();
+
         $response = $this->get_payu_response();
         if (isset($response) && $response->getStatus() === 'SUCCESS') {
             $this->retrieve_methods($response);
@@ -87,7 +66,7 @@ class WC_Gateway_PayuSecureForm extends WC_PayUGateways
      *
      * @return null
      */
-    function retrieve_methods($response)
+    private function retrieve_methods($response)
     {
         $payMethods = $response->getResponse();
         if ($payMethods->payByLinks) {

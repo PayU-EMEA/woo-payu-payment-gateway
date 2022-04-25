@@ -3,7 +3,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PayU Payment Gateway\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-02-15 08:35+0000\n"
+"POT-Creation-Date: 2022-04-22 12:09+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: PayU\n"
 "Language-Team: \n"
@@ -16,7 +16,7 @@ msgstr ""
 "X-Loco-Version: 2.5.2; wp-5.7\n"
 "X-Domain: payu"
 
-#: includes/WC_PayUGateways.php:805 includes/WC_PayUGateways.php:981
+#: includes/WC_PayUGateways.php:848 includes/WC_PayUGateways.php:1024
 msgid " for order: "
 msgstr ""
 
@@ -25,21 +25,21 @@ msgstr ""
 msgid "<a href=\"%s\" target=\"_blank\">PayU privacy policy</a>"
 msgstr ""
 
-#: woocommerce-gateway-payu.php:338
+#: woocommerce-gateway-payu.php:342
 #, php-format
 msgid "[PayU] User %s accepted payment"
 msgstr ""
 
-#: woocommerce-gateway-payu.php:349
+#: woocommerce-gateway-payu.php:353
 #, php-format
 msgid "[PayU] User %s rejected payment"
 msgstr ""
 
-#: includes/WC_PayUGateways.php:713
+#: includes/WC_PayUGateways.php:756
 msgid "Awaiting PayU payment."
 msgstr ""
 
-#: woocommerce-gateway-payu.php:199 woocommerce-gateway-payu.php:253
+#: woocommerce-gateway-payu.php:203 woocommerce-gateway-payu.php:257
 msgid "Awaiting receipt of payment"
 msgstr ""
 
@@ -55,6 +55,10 @@ msgstr ""
 msgid "Blik"
 msgstr ""
 
+#: includes/WC_PayUGateways.php:228 includes/WC_PayUGateways.php:234
+msgid "Buy now, pay in 30 days."
+msgstr ""
+
 #: includes/WC_PayUGateways.php:149
 #, php-format
 msgid ""
@@ -62,7 +66,7 @@ msgid ""
 "</a>"
 msgstr ""
 
-#: includes/WC_Gateway_PayuSecureForm.php:101
+#: includes/WC_Gateway_PayuSecureForm.php:80
 msgid "Card number"
 msgstr ""
 
@@ -70,7 +74,7 @@ msgstr ""
 msgid "Card payment with PayU"
 msgstr ""
 
-#: includes/WC_PayUGateways.php:198 includes/WC_Gateway_PayuListBanks.php:100
+#: includes/WC_PayUGateways.php:198 includes/WC_Gateway_PayuListBanks.php:95
 msgid "Choose payment method."
 msgstr ""
 
@@ -80,15 +84,15 @@ msgid ""
 "management panel."
 msgstr ""
 
-#: includes/WC_PayUGateways.php:305 includes/WC_PayUGateways.php:306
+#: includes/WC_PayUGateways.php:317 includes/WC_PayUGateways.php:318
 msgid "Custom order, separate payment methods with commas"
 msgstr ""
 
-#: includes/WC_PayUGateways.php:303
+#: includes/WC_PayUGateways.php:315
 msgid "Custom order:"
 msgstr ""
 
-#: includes/WC_Gateway_PayuSecureForm.php:113
+#: includes/WC_Gateway_PayuSecureForm.php:92
 msgid "CVV"
 msgstr ""
 
@@ -97,31 +101,31 @@ msgstr ""
 msgid "Default on-hold status"
 msgstr ""
 
-#: includes/WC_PayUGateways.php:383
+#: includes/WC_PayUGateways.php:395
 msgid "Description of PayU Payment Gateway that users sees on Checkout page."
 msgstr ""
 
-#: includes/WC_PayUGateways.php:381
+#: includes/WC_PayUGateways.php:393
 msgid "Description:"
 msgstr ""
 
-#: woocommerce-gateway-payu.php:300
+#: woocommerce-gateway-payu.php:304
 msgid "Discard payment"
 msgstr ""
 
-#: woocommerce-gateway-payu.php:162
+#: woocommerce-gateway-payu.php:166
 msgid "Docs"
 msgstr ""
 
-#: includes/WC_PayUGateways.php:388
+#: includes/WC_PayUGateways.php:400
 msgid "Enable for shipping methods"
 msgstr ""
 
-#: includes/WC_PayUGateways.php:403
+#: includes/WC_PayUGateways.php:415
 msgid "Enable for virtual orders"
 msgstr ""
 
-#: includes/WC_PayUGateways.php:267
+#: includes/WC_PayUGateways.php:279
 msgid "Enable PayU payment method"
 msgstr ""
 
@@ -130,7 +134,7 @@ msgstr ""
 msgid "Enable repayment"
 msgstr ""
 
-#: includes/WC_Gateway_PayuSecureForm.php:107
+#: includes/WC_Gateway_PayuSecureForm.php:86
 msgid "Expire date"
 msgstr ""
 
@@ -138,7 +142,7 @@ msgstr ""
 msgid "First key from \"Configuration Keys\" section of PayU management panel."
 msgstr ""
 
-#: includes/WC_PayUGateways.php:937
+#: includes/WC_PayUGateways.php:980
 msgid "has status"
 msgstr ""
 
@@ -154,13 +158,13 @@ msgstr ""
 msgid "Id point of sales"
 msgstr ""
 
-#: includes/WC_PayUGateways.php:393
+#: includes/WC_PayUGateways.php:405
 msgid ""
 "If PayU is only available for certain methods, set it up here. Leave blank "
 "to enable for all methods."
 msgstr ""
 
-#: includes/WC_PayUGateways.php:269
+#: includes/WC_PayUGateways.php:281
 msgid ""
 "If you do not already have PayU merchant account, <a href=\"https://poland."
 "payu.com/en/how-to-activate-payu/\" target=\"_blank\" rel=\"nofollow\">"
@@ -169,7 +173,7 @@ msgid ""
 "please register in Sandbox</a>."
 msgstr ""
 
-#: includes/WC_PayUGateways.php:1041
+#: includes/WC_PayUGateways.php:1084
 msgid "If you have not yet paid for the order, you can do so by going to"
 msgstr ""
 
@@ -189,27 +193,35 @@ msgstr ""
 msgid "Online payment by PayU"
 msgstr ""
 
+#: includes/WC_PayUGateways.php:227
+msgid "Pay letter with PayPo"
+msgstr ""
+
+#: includes/WC_PayUGateways.php:233
+msgid "Pay letter with Twisto"
+msgstr ""
+
 #: html/payu-repayment.php:4
 msgid "Pay with"
 msgstr ""
 
-#: woocommerce-gateway-payu.php:274
+#: woocommerce-gateway-payu.php:278
 msgid "Pay with PayU"
 msgstr ""
 
-#: includes/WC_PayUGateways.php:728
+#: includes/WC_PayUGateways.php:771
 msgid "Payment error. Status code: "
 msgstr ""
 
-#: includes/WC_PayUGateways.php:733
+#: includes/WC_PayUGateways.php:776
 msgid "Payment error: "
 msgstr ""
 
-#: includes/WC_PayUGateways.php:956
+#: includes/WC_PayUGateways.php:999
 msgid "Payment has been cancelled."
 msgstr ""
 
-#: includes/WC_PayUGateways.php:970
+#: includes/WC_PayUGateways.php:1013
 msgid ""
 "Payment has been put on hold - merchant must approve this payment manually."
 msgstr ""
@@ -236,12 +248,20 @@ msgstr ""
 msgid "PayU - list banks"
 msgstr ""
 
+#: includes/WC_PayUGateways.php:226
+msgid "PayU - PayPo"
+msgstr ""
+
 #: includes/WC_PayUGateways.php:208
 msgid "PayU - secure form"
 msgstr ""
 
 #: includes/WC_PayUGateways.php:190
 msgid "PayU - standard"
+msgstr ""
+
+#: includes/WC_PayUGateways.php:232
+msgid "PayU - Twisto"
 msgstr ""
 
 #. id
@@ -280,11 +300,11 @@ msgstr ""
 msgid "read more"
 msgstr ""
 
-#: woocommerce-gateway-payu.php:299
+#: woocommerce-gateway-payu.php:303
 msgid "Receive payment"
 msgstr ""
 
-#: includes/WC_PayUGateways.php:805 includes/WC_PayUGateways.php:980
+#: includes/WC_PayUGateways.php:848 includes/WC_PayUGateways.php:1023
 msgid "Refund of: "
 msgstr ""
 
@@ -304,7 +324,7 @@ msgstr ""
 msgid "Sandbox - Second key (MD5):"
 msgstr ""
 
-#: includes/WC_PayUGateways.php:281
+#: includes/WC_PayUGateways.php:293
 msgid "Sandbox mode:"
 msgstr ""
 
@@ -317,23 +337,23 @@ msgid ""
 "Second key from \"Configuration Keys\" section of PayU management panel."
 msgstr ""
 
-#: includes/WC_PayUGateways.php:398
+#: includes/WC_PayUGateways.php:410
 msgid "Select shipping methods"
 msgstr ""
 
-#: includes/WC_PayUGateways.php:313
+#: includes/WC_PayUGateways.php:325
 msgid "show"
 msgstr ""
 
-#: includes/WC_PayUGateways.php:310
+#: includes/WC_PayUGateways.php:322
 msgid "Show inactive methods:"
 msgstr ""
 
-#: includes/WC_PayUGateways.php:312
+#: includes/WC_PayUGateways.php:324
 msgid "Show inactive payment methods as grayed out"
 msgstr ""
 
-#: includes/WC_Gateway_PayuSecureForm.php:100
+#: includes/WC_Gateway_PayuSecureForm.php:79
 msgid "The card could not be sent"
 msgstr ""
 
@@ -362,31 +382,31 @@ msgid ""
 "shared with merchants to inform them about the status of the payment."
 msgstr ""
 
-#: includes/WC_PayUGateways.php:1043 includes/WC_PayUGateways.php:1044
+#: includes/WC_PayUGateways.php:1086 includes/WC_PayUGateways.php:1087
 msgid "the website"
 msgstr ""
 
-#: includes/WC_PayUGateways.php:276
+#: includes/WC_PayUGateways.php:288
 msgid "Title of PayU Payment Gateway that users sees on Checkout page."
 msgstr ""
 
-#: includes/WC_PayUGateways.php:274
+#: includes/WC_PayUGateways.php:286
 msgid "Title:"
 msgstr ""
 
-#: includes/WC_PayUGateways.php:289
+#: includes/WC_PayUGateways.php:301
 msgid "Use global values."
 msgstr ""
 
-#: includes/WC_PayUGateways.php:287
+#: includes/WC_PayUGateways.php:299
 msgid "Use global values:"
 msgstr ""
 
-#: includes/WC_PayUGateways.php:283
+#: includes/WC_PayUGateways.php:295
 msgid "Use sandbox environment."
 msgstr ""
 
-#: includes/WC_PayUGateways.php:402
+#: includes/WC_PayUGateways.php:414
 msgid "Virtual orders"
 msgstr ""
 

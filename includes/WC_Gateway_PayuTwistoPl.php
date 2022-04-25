@@ -1,14 +1,16 @@
 <?php
 
-class WC_Gateway_PayuStandard extends WC_PayUGateways
+class WC_Gateway_PayuTwistoPl extends WC_PayUGateways
 {
+    protected $paytype = 'dpt';
 
     function __construct()
     {
-        parent::__construct('payustandard');
+        parent::__construct('payutwistopl');
 
         if ($this->is_enabled()) {
             $this->show_terms_info = false;
+            $this->icon = apply_filters('woocommerce_payu_icon', plugins_url( '/assets/images/twisto-pl.svg', PAYU_PLUGIN_FILE ));
 
             if (!is_admin()) {
                 if (!$this->try_retrieve_banks()) {
@@ -16,21 +18,6 @@ class WC_Gateway_PayuStandard extends WC_PayUGateways
                 }
             }
         }
-    }
-
-    /**
-     * @return bool
-     */
-    public function try_retrieve_banks()
-    {
-        $response = $this->get_payu_response();
-        if (isset($response) && $response->getStatus() === 'SUCCESS') {
-            $payMethods = $response->getResponse();
-
-            return isset($payMethods->payByLinks);
-        }
-
-        return false;
     }
 
     public function payment_fields()

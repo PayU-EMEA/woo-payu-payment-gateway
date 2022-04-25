@@ -93,7 +93,7 @@ abstract class WC_PayUGateways extends WC_Payment_Gateway
     }
 
     /**
-     * @return array
+     * @return OpenPayU_Result
      */
     protected function get_payu_response()
     {
@@ -221,7 +221,19 @@ abstract class WC_PayUGateways extends WC_Payment_Gateway
                 'front_name' => __('PayU installments', 'payu'),
                 'default_description' => __('You will be redirected to an installment payment application.', 'payu'),
                 'api' => 'WC_Gateway_PayuInstallments'
-            ]
+            ],
+            'payupaypo' => [
+                'name' => __('PayU - PayPo', 'payu'),
+                'front_name' => __('Pay letter with PayPo', 'payu'),
+                'default_description' => __('Buy now, pay in 30 days.', 'payu'),
+                'api' => 'WC_Gateway_PayuPaypo'
+            ],
+            'payutwistopl' => [
+                'name' => __('PayU - Twisto', 'payu'),
+                'front_name' => __('Pay letter with Twisto', 'payu'),
+                'default_description' => __('Buy now, pay in 30 days.', 'payu'),
+                'api' => 'WC_Gateway_PayuTwistoPl'
+            ],
         ];
     }
 
@@ -553,6 +565,10 @@ abstract class WC_PayUGateways extends WC_Payment_Gateway
      */
     public function is_available()
     {
+        if (!$this->is_enabled()) {
+            return false;
+        }
+
         $order = null;
         $is_order_processing = true;
         $needs_shipping = false;
@@ -607,6 +623,21 @@ abstract class WC_PayUGateways extends WC_Payment_Gateway
             if ($this->check_min_max($payMethod, $this->paytype)) {
                 return true;
             }
+        }
+
+        return false;
+    }
+
+    /**
+     * @return bool
+     */
+    protected function try_retrieve_banks()
+    {
+        $response = $this->get_payu_response();
+        if (isset($response) && $response->getStatus() === 'SUCCESS') {
+            $payMethods = $response->getResponse();
+
+            return $payMethods->payByLinks && $this->process_pay_methods($payMethods->payByLinks);
         }
 
         return false;
