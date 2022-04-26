@@ -3,7 +3,7 @@ Contributors: payusa
 Tags: woocommerce, PayU, payment, payment gateway, platnosci, PayU Poland, PayU EU
 Requires at least: 4.4
 Tested up to: 5.9
-Stable tag: 2.0.12
+Stable tag: 2.0.13
 Requires PHP: 7.0
 License: GPLv2
 
@@ -18,6 +18,8 @@ The plugin offers the following payment methods:
 * PayU - secure form - a secure form collecting credit, debit or prepaid card data will be displayed
 * PayU - Blik - payer will be redirected to Blik's page
 * PayU - installments - payer will be redirected to installment payment form
+* PayU - PayPo - payer will be redirected to PayPo payment form
+* PayU - Twisto - payer will be redirected to Twisto payment form
 
 Detailed information about each method and its configuration [can be found here](https://github.com/PayU-EMEA/plugin_woocommerce).
 
@@ -38,6 +40,9 @@ Use [automatic installation and activation](https://wordpress.org/support/articl
 Upon plugin update from version 1.X to version 2.X the existing config data will be automatically converted.
 
 == Changelog ==
+= 2.0.13 =
+* Fix method available for virtual products
+* Separate Twisto and PayPo
 = 2.0.12 =
 * Fix calculate total for check min/max
 * Possibility to enable for virtual orders

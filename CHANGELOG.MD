@@ -1,3 +1,7 @@
+# 2.0.13
+* Fix method available for virtual products
+* Separate Twisto and PayPo
+
 # 2.0.12
 * Fix calculate total for check min/max
 * Possibility to enable for virtual orders
