@@ -565,12 +565,7 @@ abstract class WC_PayUGateways extends WC_Payment_Gateway
      */
     public function is_available()
     {
-        if (!$this->is_enabled()) {
-            return false;
-        }
-
         $order = null;
-        $is_order_processing = true;
         $needs_shipping = false;
 
         if (is_page(wc_get_page_id('checkout')) && get_query_var('order-pay') > 0) {
@@ -585,17 +580,15 @@ abstract class WC_PayUGateways extends WC_Payment_Gateway
                     }
                 }
             }
-        } elseif (WC()->cart) {
-            $needs_shipping = WC()->cart->needs_shipping();
-        } else {
-            $is_order_processing = false;
+        } elseif (WC()->cart && WC()->cart->needs_shipping()) {
+            $needs_shipping = true;
         }
 
-        if (!$needs_shipping) {
-            return $this->enable_for_virtual;
+        if (!$this->enable_for_virtual && !$needs_shipping ) {
+            return false;
         }
 
-        if (!empty($this->enable_for_shipping) && $is_order_processing) {
+        if (!empty($this->enable_for_shipping) && $needs_shipping) {
             $order_shipping_items = is_object($order) ? $order->get_shipping_methods() : false;
 
             if ($order_shipping_items) {
