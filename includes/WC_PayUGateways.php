@@ -1082,10 +1082,11 @@ abstract class WC_PayUGateways extends WC_Payment_Gateway
                 'key' => $order->get_order_key()
             ], wc_get_endpoint_url('order-pay', $order->get_id(), wc_get_checkout_url()));
 
-            echo esc_html_e('If you have not yet paid for the order, you can do so by going to', 'woo-payu-payment-gateway')
-                . ($plain_text ?
-                    ' ' . esc_html_e('the website', 'woo-payu-payment-gateway') . ': ' . esc_url($url) . "\n" :
-                    ' <a href="' . esc_url($url) . '">' . esc_html_e('the website', 'woo-payu-payment-gateway') . '</a>.<br /><br />');
+            echo esc_html__('If you have not yet paid for the order, you can do so by going to', 'woo-payu-payment-gateway') .' '. (
+                $plain_text
+                    ? esc_html__('the website', 'woo-payu-payment-gateway') . ': ' . esc_url($url) . "\n"
+                    : '<a href="' . esc_url($url) . '">' . esc_html__('the website', 'woo-payu-payment-gateway') . '</a>.<br /><br />'
+                );
         }
     }
 
