@@ -720,7 +720,7 @@ abstract class WC_PayUGateways extends WC_Payment_Gateway
             'extOrderId' => uniqid($order_id . '_', true),
             'products' => [
                 [
-                    'name' => get_bloginfo('name') . ' #' . $order->get_order_number(),
+                    'name' => '#' . $order->get_order_number(),
                     'unitPrice' => $this->toAmount($order->get_total()),
                     'quantity' => 1
                 ]
