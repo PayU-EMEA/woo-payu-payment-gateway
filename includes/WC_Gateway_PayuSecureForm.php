@@ -73,23 +73,23 @@ class WC_Gateway_PayuSecureForm extends WC_PayUGateways
             $payByLinks = $this->process_pay_methods($payMethods->payByLinks);
             if ($payByLinks) {
                 ?>
-                <div class="card-container" id="payu-card-container" data-payu-posid="<?php echo $this->pos_id ?>"
-                     data-lang="<?php echo explode('_', get_locale())[0] ?>">
+                <div class="card-container" id="payu-card-container" data-payu-posid="<?php echo esc_attr($this->pos_id) ?>"
+                     data-lang="<?php echo esc_attr(explode('_', get_locale())[0]) ?>">
                     <div class="payu-sf-technical-error"
-                         data-type="technical"><?php echo __('The card could not be sent', 'payu') ?></div>
-                    <label for="payu-card-number"><?php echo __('Card number', 'payu') ?></label>
+                         data-type="technical"><?php esc_html_e('The card could not be sent', 'woo-payu-payment-gateway') ?></div>
+                    <label for="payu-card-number"><?php esc_html_e('Card number', 'woo-payu-payment-gateway') ?></label>
                     <div class="payu-card-form" id="payu-card-number"></div>
                     <div class="payu-sf-validation-error" data-type="number"></div>
 
                     <div class="card-details clearfix">
                         <div class="expiration">
-                            <label for="payu-card-date"><?php echo __('Expire date', 'payu') ?></label>
+                            <label for="payu-card-date"><?php esc_html_e('Expire date', 'woo-payu-payment-gateway') ?></label>
                             <div class="payu-card-form" id="payu-card-date"></div>
                             <div class="payu-sf-validation-error" data-type="date"></div>
                         </div>
 
                         <div class="cvv">
-                            <label for="payu-card-cvv"><?php echo __('CVV', 'payu') ?></label>
+                            <label for="payu-card-cvv"><?php esc_html_e('CVV', 'woo-payu-payment-gateway') ?></label>
                             <div class="payu-card-form" id="payu-card-cvv"></div>
                             <div class="payu-sf-validation-error" data-type="cvv"></div>
                         </div>
@@ -107,7 +107,7 @@ class WC_Gateway_PayuSecureForm extends WC_PayUGateways
      */
     protected function get_payu_pay_method()
     {
-        $token = filter_var($_POST['response-tokenize'], FILTER_SANITIZE_STRING);
+        $token = sanitize_text_field($_POST['response-tokenize']);
 
         return $this->get_payu_pay_method_array('CARD_TOKEN', $token ? $token : -1, $this->paytype);
     }
@@ -119,7 +119,7 @@ class WC_Gateway_PayuSecureForm extends WC_PayUGateways
     {
         $payu_sdk_url = $this->sandbox==='yes'?'https://secure.snd.payu.com/javascript/sdk':'https://secure.payu.com/javascript/sdk';
         wp_enqueue_script('payu-sfsdk', $payu_sdk_url, [], null);
-        wp_enqueue_script('payu-promise-polyfill', 'https://cdn.jsdelivr.net/npm/es6-promise@4/dist/es6-promise.auto.min.js', [], null);
+        wp_enqueue_script('payu-promise-polyfill', plugins_url( '/assets/js/es6-promise.auto.min.js', PAYU_PLUGIN_FILE ), [], null);
         wp_enqueue_script('payu-sf-init', plugins_url( '/assets/js/sf-init.js', PAYU_PLUGIN_FILE ), [], PAYU_PLUGIN_VERSION,
             true);
     }

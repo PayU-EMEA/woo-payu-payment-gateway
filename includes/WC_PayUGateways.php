@@ -142,24 +142,24 @@ abstract class WC_PayUGateways extends WC_Payment_Gateway
         if ($this->show_terms_info) {
             echo '<div class="payu-accept-conditions">';
             echo '<div class="payu-conditions-description"><div>' . __('Payment is processed by PayU SA; The recipient\'s data, the payment title and the amount are provided to PayU SA by the recipient;',
-                    'payu') . ' <span class="payu-read-more">' . __('read more',
-                    'payu') . '</span> <span class="payu-more-hidden">' . __('The order is sent for processing when PayU SA receives your payment. The payment is transferred to the recipient within 1 hour, not later than until the end of the next business day; PayU SA does not charge any service fees.',
-                    'payu') . '</span>';
+                    'woo-payu-payment-gateway') . ' <span class="payu-read-more">' . __('read more',
+                    'woo-payu-payment-gateway') . '</span> <span class="payu-more-hidden">' . __('The order is sent for processing when PayU SA receives your payment. The payment is transferred to the recipient within 1 hour, not later than until the end of the next business day; PayU SA does not charge any service fees.',
+                    'woo-payu-payment-gateway') . '</span>';
             echo '</div><div>';
             printf(__('By paying you accept <a href="%s" target="_blank">"PayU Payment Terms".</a>',
-                'payu'),
-                $this->get_condition_url());
+                'woo-payu-payment-gateway'),
+                esc_url($this->get_condition_url()));
             echo '</div><div>';
             echo __('The controller of your personal data is PayU S.A. with its registered office in Poznan (60-166), at Grunwaldzka Street 182 ("PayU").',
-                    'payu') . ' <span class="payu-read-more">' . __('read more',
-                    'payu') . '</span> <span class="payu-more-hidden">';
+                    'woo-payu-payment-gateway') . ' <span class="payu-read-more">' . __('read more',
+                    'woo-payu-payment-gateway') . '</span> <span class="payu-more-hidden">';
             echo __('Your personal data will be processed for purposes of processing  payment transaction, notifying You about the status of this payment, dealing with complaints and also in order to fulfill the legal obligations imposed on PayU.',
-                    'payu') . '<br />';
+                    'woo-payu-payment-gateway') . '<br />';
             echo __('The recipients of your personal data may be entities cooperating with PayU during processing the payment. Depending on the payment method you choose, these may include: banks, payment institutions, loan institutions, payment card organizations, payment schemes), as well as suppliers supporting PayU’s activity providing: IT infrastructure, payment risk analysis tools and also entities that are authorised to receive it under the applicable provisions of law, including relevant judicial authorities. Your personal data may be shared with merchants to inform them about the status of the payment.',
-                    'payu') . '<br />';
+                    'woo-payu-payment-gateway') . '<br />';
             echo __('You have the right to access, rectify, restrict or oppose the processing of data, not to be subject to automated decision making, including profiling, or to transfer and erase Your personal data. Providing personal data is voluntary however necessary for the processing the payment and failure to provide the data may result in the rejection of the payment. For more information on how PayU processes your personal data, please click ',
-                'payu');
-            printf(__('<a href="%s" target="_blank">PayU privacy policy</a>', 'payu'), $this->get_privacy_policy_url());
+                'woo-payu-payment-gateway');
+            printf(__('<a href="%s" target="_blank">PayU privacy policy</a>', 'woo-payu-payment-gateway'), esc_url($this->get_privacy_policy_url()));
             echo '</span></div>';
             echo '</div>';
             echo '</div>';
@@ -175,7 +175,7 @@ abstract class WC_PayUGateways extends WC_Payment_Gateway
     {
         $this->id = $id;
         $this->method_title = $this->gateway_data('name');
-        $this->method_description = __('Official PayU payment gateway for WooCommerce.', 'payu');
+        $this->method_description = __('Official PayU payment gateway for WooCommerce.', 'woo-payu-payment-gateway');
         $this->has_fields = false;
         $this->supports = ['products', 'refunds'];
     }
@@ -187,51 +187,51 @@ abstract class WC_PayUGateways extends WC_Payment_Gateway
     {
         return [
             'payustandard' => [
-                'name' => __('PayU - standard', 'payu'),
-                'front_name' => __('Online payment by PayU', 'payu'),
-                'default_description' => __('You will be redirected to a payment method selection page.', 'payu'),
+                'name' => __('PayU - standard', 'woo-payu-payment-gateway'),
+                'front_name' => __('Online payment by PayU', 'woo-payu-payment-gateway'),
+                'default_description' => __('You will be redirected to a payment method selection page.', 'woo-payu-payment-gateway'),
                 'api' => 'WC_Gateway_PayuStandard'
             ],
             'payulistbanks' => [
-                'name' => __('PayU - list banks', 'payu'),
-                'front_name' => __('Online payment by PayU', 'payu'),
-                'default_description' => __('Choose payment method.', 'payu'),
+                'name' => __('PayU - list banks', 'woo-payu-payment-gateway'),
+                'front_name' => __('Online payment by PayU', 'woo-payu-payment-gateway'),
+                'default_description' => __('Choose payment method.', 'woo-payu-payment-gateway'),
                 'api' => 'WC_Gateway_PayuListBanks'
             ],
             'payucreditcard' => [
-                'name' => __('PayU - credit card', 'payu'),
-                'front_name' => __('Card payment with PayU', 'payu'),
-                'default_description' => __('You will be redirected to a card form.', 'payu'),
+                'name' => __('PayU - credit card', 'woo-payu-payment-gateway'),
+                'front_name' => __('Card payment with PayU', 'woo-payu-payment-gateway'),
+                'default_description' => __('You will be redirected to a card form.', 'woo-payu-payment-gateway'),
                 'api' => 'WC_Gateway_PayuCreditCard'
             ],
             'payusecureform' => [
-                'name' => __('PayU - secure form', 'payu'),
-                'front_name' => __('Card payment with PayU', 'payu'),
-                'default_description' => __('You may be redirected to a payment confirmation page.', 'payu'),
+                'name' => __('PayU - secure form', 'woo-payu-payment-gateway'),
+                'front_name' => __('Card payment with PayU', 'woo-payu-payment-gateway'),
+                'default_description' => __('You may be redirected to a payment confirmation page.', 'woo-payu-payment-gateway'),
                 'api' => 'WC_Gateway_PayuSecureForm'
             ],
             'payublik' => [
-                'name' => __('PayU - Blik', 'payu'),
-                'front_name' => __('Blik', 'payu'),
-                'default_description' => __('You will be redirected to BLIK.', 'payu'),
+                'name' => __('PayU - Blik', 'woo-payu-payment-gateway'),
+                'front_name' => __('Blik', 'woo-payu-payment-gateway'),
+                'default_description' => __('You will be redirected to BLIK.', 'woo-payu-payment-gateway'),
                 'api' => 'WC_Gateway_PayuBlik'
             ],
             'payuinstallments' => [
-                'name' => __('PayU - installments', 'payu'),
-                'front_name' => __('PayU installments', 'payu'),
-                'default_description' => __('You will be redirected to an installment payment application.', 'payu'),
+                'name' => __('PayU - installments', 'woo-payu-payment-gateway'),
+                'front_name' => __('PayU installments', 'woo-payu-payment-gateway'),
+                'default_description' => __('You will be redirected to an installment payment application.', 'woo-payu-payment-gateway'),
                 'api' => 'WC_Gateway_PayuInstallments'
             ],
             'payupaypo' => [
-                'name' => __('PayU - PayPo', 'payu'),
-                'front_name' => __('Pay letter with PayPo', 'payu'),
-                'default_description' => __('Buy now, pay in 30 days.', 'payu'),
+                'name' => __('PayU - PayPo', 'woo-payu-payment-gateway'),
+                'front_name' => __('Pay letter with PayPo', 'woo-payu-payment-gateway'),
+                'default_description' => __('Buy now, pay in 30 days.', 'woo-payu-payment-gateway'),
                 'api' => 'WC_Gateway_PayuPaypo'
             ],
             'payutwistopl' => [
-                'name' => __('PayU - Twisto', 'payu'),
-                'front_name' => __('Pay letter with Twisto', 'payu'),
-                'default_description' => __('Buy now, pay in 30 days.', 'payu'),
+                'name' => __('PayU - Twisto', 'woo-payu-payment-gateway'),
+                'front_name' => __('Pay letter with Twisto', 'woo-payu-payment-gateway'),
+                'default_description' => __('Buy now, pay in 30 days.', 'woo-payu-payment-gateway'),
                 'api' => 'WC_Gateway_PayuTwistoPl'
             ],
         ];
@@ -276,29 +276,29 @@ abstract class WC_PayUGateways extends WC_Payment_Gateway
         return [
             'enabled' => [
                 'title' => __('Enable/Disable', 'woocommerce'),
-                'label' => __('Enable PayU payment method', 'payu'),
+                'label' => __('Enable PayU payment method', 'woo-payu-payment-gateway'),
                 'type' => 'checkbox',
                 'description' => __('If you do not already have PayU merchant account, <a href="https://poland.payu.com/en/how-to-activate-payu/" target="_blank" rel="nofollow">please register in Production</a> or <a href="https://secure.snd.payu.com/boarding/#/registerSandbox/?lang=en" target="_blank" rel="nofollow">please register in Sandbox</a>.',
-                    'payu'),
+                    'woo-payu-payment-gateway'),
                 'default' => 'no',
             ],
             'title' => [
-                'title' => __('Title:', 'payu'),
+                'title' => __('Title:', 'woo-payu-payment-gateway'),
                 'type' => 'text',
-                'description' => __('Title of PayU Payment Gateway that users sees on Checkout page.', 'payu'),
+                'description' => __('Title of PayU Payment Gateway that users sees on Checkout page.', 'woo-payu-payment-gateway'),
                 'default' => self::gateways_list()[$this->id]['front_name'],
                 'desc_tip' => true
             ],
             'sandbox' => [
-                'title' => __('Sandbox mode:', 'payu'),
+                'title' => __('Sandbox mode:', 'woo-payu-payment-gateway'),
                 'type' => 'checkbox',
-                'label' => __('Use sandbox environment.', 'payu'),
+                'label' => __('Use sandbox environment.', 'woo-payu-payment-gateway'),
                 'default' => 'no'
             ],
             'use_global' => [
-                'title' => __('Use global values:', 'payu'),
+                'title' => __('Use global values:', 'woo-payu-payment-gateway'),
                 'type' => 'checkbox',
-                'label' => __('Use global values.', 'payu'),
+                'label' => __('Use global values.', 'woo-payu-payment-gateway'),
                 'default' => 'yes',
                 'custom_attributes' => ['data-toggle-global' => '1']
             ]
@@ -312,17 +312,17 @@ abstract class WC_PayUGateways extends WC_Payment_Gateway
     {
         return [
             'custom_order' => [
-                'title' => __('Custom order:', 'payu'),
+                'title' => __('Custom order:', 'woo-payu-payment-gateway'),
                 'type' => 'text',
-                'description' => __('Custom order, separate payment methods with commas', 'payu'),
-                'placeholder' => __('Custom order, separate payment methods with commas', 'payu'),
+                'description' => __('Custom order, separate payment methods with commas', 'woo-payu-payment-gateway'),
+                'placeholder' => __('Custom order, separate payment methods with commas', 'woo-payu-payment-gateway'),
                 'desc_tip' => true
             ],
             'show_inactive_methods' => [
-                'title' => __('Show inactive methods:', 'payu'),
+                'title' => __('Show inactive methods:', 'woo-payu-payment-gateway'),
                 'type' => 'checkbox',
-                'description' => __('Show inactive payment methods as grayed out', 'payu'),
-                'label' => __('show', 'payu'),
+                'description' => __('Show inactive payment methods as grayed out', 'woo-payu-payment-gateway'),
+                'label' => __('show', 'woo-payu-payment-gateway'),
                 'desc_tip' => true
             ]
         ];
@@ -365,7 +365,7 @@ abstract class WC_PayUGateways extends WC_Payment_Gateway
     }
 
     /**
-     * @param string $key
+     * @param array $key
      *
      * @return string|false
      */
@@ -390,29 +390,29 @@ abstract class WC_PayUGateways extends WC_Payment_Gateway
     {
         return [
             'description' => [
-                'title' => __('Description:', 'payu'),
+                'title' => __('Description:', 'woo-payu-payment-gateway'),
                 'type' => 'text',
-                'description' => __('Description of PayU Payment Gateway that users sees on Checkout page.', 'payu'),
+                'description' => __('Description of PayU Payment Gateway that users sees on Checkout page.', 'woo-payu-payment-gateway'),
                 'default' => self::gateways_list()[$this->id]['default_description'],
                 'desc_tip' => true
             ],
             'enable_for_shipping' => [
-                'title' => __('Enable for shipping methods', 'payu'),
+                'title' => __('Enable for shipping methods', 'woo-payu-payment-gateway'),
                 'type' => 'multiselect',
                 'class' => 'wc-enhanced-select',
                 'css' => 'width: 400px;',
                 'default' => '',
                 'description' => __('If PayU is only available for certain methods, set it up here. Leave blank to enable for all methods.',
-                    'payu'),
+                    'woo-payu-payment-gateway'),
                 'options' => $this->getShippingMethods(),
                 'desc_tip' => true,
                 'custom_attributes' => [
-                    'data-placeholder' => __('Select shipping methods', 'payu'),
+                    'data-placeholder' => __('Select shipping methods', 'woo-payu-payment-gateway'),
                 ],
             ],
             'enable_for_virtual' => array(
-                'title'   => __( 'Virtual orders', 'payu' ),
-                'label'   => __( 'Enable for virtual orders', 'payu' ),
+                'title'   => __( 'Virtual orders', 'woo-payu-payment-gateway' ),
+                'label'   => __( 'Enable for virtual orders', 'woo-payu-payment-gateway' ),
                 'type'    => 'checkbox',
                 'default' => 'yes',
             ),
@@ -750,7 +750,7 @@ abstract class WC_PayUGateways extends WC_Payment_Gateway
                 }
 
                 $order->update_status(get_option('payu_settings_option_name')['global_default_on_hold_status'],
-                    __('Awaiting PayU payment.', 'payu'));
+                    __('Awaiting PayU payment.', 'woo-payu-payment-gateway'));
 
                 update_post_meta($order_id, '_transaction_id', $response->getResponse()->orderId);
                 update_post_meta($order_id, '_payu_payment_method', $this->selected_method, true);
@@ -765,12 +765,12 @@ abstract class WC_PayUGateways extends WC_Payment_Gateway
 
                 return $result;
             } else {
-                wc_add_notice(__('Payment error. Status code: ', 'payu') . $response->getStatus(), 'error');
+                wc_add_notice(__('Payment error. Status code: ', 'woo-payu-payment-gateway') . $response->getStatus(), 'error');
 
                 return false;
             }
         } catch (OpenPayU_Exception $e) {
-            wc_add_notice(__('Payment error: ', 'payu') . $e->getMessage() . ' (' . $e->getCode() . ')', 'error');
+            wc_add_notice(__('Payment error: ', 'woo-payu-payment-gateway') . $e->getMessage() . ' (' . $e->getCode() . ')', 'error');
 
             return false;
         }
@@ -842,8 +842,8 @@ abstract class WC_PayUGateways extends WC_Payment_Gateway
             $this->init_OpenPayU($order->get_currency());
             $refund = OpenPayU_Refund::create(
                 $orderId,
-                __('Refund of: ', 'payu') . ' ' . $amount . $this->getOrderCurrency($order) . __(' for order: ',
-                    'payu') . $order_id,
+                __('Refund of: ', 'woo-payu-payment-gateway') . ' ' . $amount . $this->getOrderCurrency($order) . __(' for order: ',
+                    'woo-payu-payment-gateway') . $order_id,
                 $this->toAmount($amount)
             );
 
@@ -974,7 +974,7 @@ abstract class WC_PayUGateways extends WC_Payment_Gateway
                 $reportOutput = 'Refund notification - ignore|';
                 $order_id = (int)preg_replace('/_.*$/', '', $response->getResponse()->extOrderId);
                 $order = wc_get_order($order_id);
-                $note = '[PayU] ' . $response->getResponse()->refund->reasonDescription . ' ' . __('has status', 'payu') . ' ' . $response->getResponse()->refund->status;
+                $note = '[PayU] ' . $response->getResponse()->refund->reasonDescription . ' ' . __('has status', 'woo-payu-payment-gateway') . ' ' . $response->getResponse()->refund->status;
                 $order->add_order_note($note);
             } else {
                 $order_id = (int)preg_replace('/_.*$/', '', $response->getResponse()->order->extOrderId);
@@ -993,7 +993,7 @@ abstract class WC_PayUGateways extends WC_Payment_Gateway
                         case OpenPayuOrderStatus::STATUS_CANCELED:
                             if (!isset(get_option('payu_settings_option_name')['global_repayment'])) {
                                 $status = apply_filters('woocommerce_payu_status_cancelled', 'cancelled' , $order);
-                                $order->update_status($status, __('Payment has been cancelled.', 'payu'));
+                                $order->update_status($status, __('Payment has been cancelled.', 'woo-payu-payment-gateway'));
                             }
                             break;
 
@@ -1008,7 +1008,7 @@ abstract class WC_PayUGateways extends WC_Payment_Gateway
                             } else {
                                 $order->update_status(PAYU_PLUGIN_STATUS_WAITING,
                                     __('Payment has been put on hold - merchant must approve this payment manually.',
-                                        'payu')
+                                        'woo-payu-payment-gateway')
                                 );
                                 if (isset(get_option('payu_settings_option_name')['global_repayment'])) {
                                     $payu_statuses = get_post_meta($order_id, '_payu_order_status');
@@ -1018,8 +1018,8 @@ abstract class WC_PayUGateways extends WC_Payment_Gateway
                                         OpenPayU_Refund::create(
                                             $transaction_id,
                                             __('Refund of: ',
-                                                'payu') . ' ' . $order->get_total() . $this->getOrderCurrency($order) . __(' for order: ',
-                                                'payu') . $order_id,
+                                                'woo-payu-payment-gateway') . ' ' . $order->get_total() . $this->getOrderCurrency($order) . __(' for order: ',
+                                                'woo-payu-payment-gateway') . $order_id,
                                             $this->toAmount($order->get_total())
                                         );
                                     } else {
@@ -1044,7 +1044,7 @@ abstract class WC_PayUGateways extends WC_Payment_Gateway
 
             header("HTTP/1.1 200 OK");
 
-            echo $reportOutput;
+            echo esc_html($reportOutput);
         }
 
         ob_flush();
@@ -1077,11 +1077,15 @@ abstract class WC_PayUGateways extends WC_Payment_Gateway
     public function email_instructions($order, $sent_to_admin, $plain_text = false)
     {
         if (!$sent_to_admin && $order->has_status(get_option('payu_settings_option_name')['global_default_on_hold_status'])) {
-            $url = wc_get_endpoint_url('order-pay', $order->get_id(), wc_get_checkout_url()) . '?pay_for_order=true&key=' . $order->get_order_key();
-            echo __('If you have not yet paid for the order, you can do so by going to', 'payu')
+            $url = add_query_arg([
+                'pay_for_order' => 'true',
+                'key' => $order->get_order_key()
+            ], wc_get_endpoint_url('order-pay', $order->get_id(), wc_get_checkout_url()));
+
+            echo esc_html_e('If you have not yet paid for the order, you can do so by going to', 'woo-payu-payment-gateway')
                 . ($plain_text ?
-                    ' ' . __('the website', 'payu') . ': ' . $url . "\n" :
-                    ' <a href="' . $url . '">' . __('the website', 'payu') . '</a>.<br /><br />');
+                    ' ' . esc_html_e('the website', 'woo-payu-payment-gateway') . ': ' . esc_url($url) . "\n" :
+                    ' <a href="' . esc_url($url) . '">' . esc_html_e('the website', 'woo-payu-payment-gateway') . '</a>.<br /><br />');
         }
     }
 

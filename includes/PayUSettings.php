@@ -20,40 +20,40 @@ class PayUSettings
     {
         return [
             'pos_id' => [
-                'label' => __('Id point of sales', 'payu'),
+                'label' => __('Id point of sales', 'woo-payu-payment-gateway'),
                 'description' => __('Pos identifier from "Configuration Keys" section of PayU management panel.',
-                    'payu')
+                    'woo-payu-payment-gateway')
             ],
             'md5' => [
-                'label' => __('Second key (MD5)', 'payu'),
-                'description' => __('Second key from "Configuration Keys" section of PayU management panel.', 'payu')
+                'label' => __('Second key (MD5)', 'woo-payu-payment-gateway'),
+                'description' => __('Second key from "Configuration Keys" section of PayU management panel.', 'woo-payu-payment-gateway')
             ],
             'client_id' => [
-                'label' => __('OAuth - client_id', 'payu'),
+                'label' => __('OAuth - client_id', 'woo-payu-payment-gateway'),
                 'description' => __('Client Id for OAuth identifier  from "Configuration Keys" section of PayU management panel.',
-                    'payu')
+                    'woo-payu-payment-gateway')
             ],
             'client_secret' => [
-                'label' => __('OAuth - client_secret', 'payu'),
-                'description' => __('First key from "Configuration Keys" section of PayU management panel.', 'payu'),
+                'label' => __('OAuth - client_secret', 'woo-payu-payment-gateway'),
+                'description' => __('First key from "Configuration Keys" section of PayU management panel.', 'woo-payu-payment-gateway'),
             ],
             'sandbox_pos_id' => [
-                'label' => __('Sandbox - Id point of sales', 'payu'),
+                'label' => __('Sandbox - Id point of sales', 'woo-payu-payment-gateway'),
                 'description' => __('Pos identifier from "Configuration Keys" section of PayU management panel.',
-                    'payu'),
+                    'woo-payu-payment-gateway'),
             ],
             'sandbox_md5' => [
-                'label' => __('Sandbox - Second key (MD5):', 'payu'),
-                'description' => __('Second key from "Configuration Keys" section of PayU management panel.', 'payu'),
+                'label' => __('Sandbox - Second key (MD5):', 'woo-payu-payment-gateway'),
+                'description' => __('Second key from "Configuration Keys" section of PayU management panel.', 'woo-payu-payment-gateway'),
             ],
             'sandbox_client_id' => [
-                'label' => __('Sandbox - OAuth - client_id:', 'payu'),
+                'label' => __('Sandbox - OAuth - client_id:', 'woo-payu-payment-gateway'),
                 'description' => __('Client Id for OAuth identifier  from "Configuration Keys" section of PayU management panel.',
-                    'payu'),
+                    'woo-payu-payment-gateway'),
             ],
             'sandbox_client_secret' => [
-                'label' => __('Sandbox - OAuth - client_secret:', 'payu'),
-                'description' => __('First key from "Configuration Keys" section of PayU management panel.', 'payu'),
+                'label' => __('Sandbox - OAuth - client_secret:', 'woo-payu-payment-gateway'),
+                'description' => __('First key from "Configuration Keys" section of PayU management panel.', 'woo-payu-payment-gateway'),
             ],
         ];
     }
@@ -65,8 +65,8 @@ class PayUSettings
     {
         add_submenu_page(
             'woocommerce',
-            __('PayU settings', 'payu'), // page_title
-            __('PayU settings', 'payu'), // menu_title
+            __('PayU settings', 'woo-payu-payment-gateway'), // page_title
+            __('PayU settings', 'woo-payu-payment-gateway'), // menu_title
             'manage_options', // capability
             'payu-settings', // menu_slug
             [$this, 'payu_settings_create_admin_page'], // function
@@ -82,7 +82,7 @@ class PayUSettings
         $this->payu_settings_options = get_option('payu_settings_option_name'); ?>
 
         <div class="wrap">
-            <h2><?php echo __('PayU settings', 'payu') ?></h2>
+            <h2><?php esc_html_e('PayU settings', 'woo-payu-payment-gateway') ?></h2>
             <p></p>
             <?php settings_errors(); ?>
 
@@ -112,7 +112,7 @@ class PayUSettings
         //global
         add_settings_section(
             'payu_settings_setting_section', // id
-            __('PayU config global', 'payu'), // title
+            __('PayU config global', 'woo-payu-payment-gateway'), // title
             [], // callback
             'payu-settings-admin' // page
         );
@@ -142,14 +142,14 @@ class PayUSettings
         }
         add_settings_field(
             'global_default_on_hold_status', // id
-            __('Default on-hold status', 'payu'), // title
+            __('Default on-hold status', 'woo-payu-payment-gateway'), // title
             [$this, 'global_default_on_hold_status_callback'], // callback
             'payu-settings-admin', // page
             'payu_settings_setting_section' // section
         );
         add_settings_field(
             'global_repayment', // id
-            __('Enable repayment', 'payu'), // title
+            __('Enable repayment', 'woo-payu-payment-gateway'), // title
             [$this, 'global_repayment_callback'], // callback
             'payu-settings-admin', // page
             'payu_settings_setting_section' // section
@@ -212,7 +212,7 @@ class PayUSettings
         ?>
         <span class="description payu-red">
             <span class="dashicons dashicons-warning"></span>
-            <?php echo __('Before enabling repayment, read <a target="_blank" href="https://github.com/PayU-EMEA/plugin_woocommerce#ponawianie-p%C5%82atno%C5%9Bci">the documentation</a> and disable <strong>automatic collection</strong> in POS configuration.', 'payu'); ?>
+            <?php echo wp_kses(__('Before enabling repayment, read <a target="_blank" href="https://github.com/PayU-EMEA/plugin_woocommerce#ponawianie-p%C5%82atno%C5%9Bci">the documentation</a> and disable <strong>automatic collection</strong> in POS configuration.', 'woo-payu-payment-gateway'), ['a' => ['target' => [], 'href' => []], 'strong' => []]); ?>
         </span>
         <?php
     }
@@ -227,7 +227,7 @@ class PayUSettings
                 id="global_default_on_hold_status">
             <?php foreach ($this->before_payment_statuses() as $key => $value): ?>
                 <option <?php if (@$this->payu_settings_options['global_default_on_hold_status'] === $key) echo 'selected="selected"' ?>
-                        value="<?php echo $key ?>"><?php echo $value ?></option>
+                        value="<?php echo esc_attr($key) ?>"><?php echo esc_html($value) ?></option>
             <?php endforeach; ?>
         </select>
         <?php

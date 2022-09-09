@@ -1,3 +1,6 @@
+# 2.0.14 - 2.0.17
+* Changes required by wordpress plugin teams (plugin name, change translate domain, sanitize variables, remove external js, update readme)
+
 # 2.0.13
 * Fix method available for virtual products
 * Separate Twisto and PayPo

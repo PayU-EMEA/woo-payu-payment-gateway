@@ -76,13 +76,13 @@ class WC_Gateway_PayuListBanks extends WC_PayUGateways
                     if ($payByLinks):
                         foreach ($payByLinks as $key => $value):
                             ?>
-                            <li class="payu-bank payu-bank-<?php echo $key . ' ' . $value['active'] ?>"
-                                title="<?php echo $value['name'] ?>">
+                            <li class="payu-bank payu-bank-<?php echo esc_attr($key . ' ' . $value['active']) ?>"
+                                title="<?php echo esc_attr($value['name']) ?>">
                                 <label>
                                     <input type="radio"
-                                           value="<?php if ($value['active'] === 'payu-active') echo $key ?>"
+                                           value="<?php if ($value['active'] === 'payu-active') echo esc_attr($key) ?>"
                                            name="selected-bank"/>
-                                    <div><img src="<?php echo $value['brandImageUrl']; ?>"></div>
+                                    <div><img src="<?php echo esc_url($value['brandImageUrl']); ?>"></div>
                                 </label>
                             </li>
                         <?php
@@ -92,7 +92,7 @@ class WC_Gateway_PayuListBanks extends WC_PayUGateways
                 ?>
             </ul>
             <ul class="pbl-error woocommerce-error" role="alert">
-                <li><?php echo __('Choose payment method.', 'payu') ?></li>
+                <li><?php esc_html_e('Choose payment method.', 'woo-payu-payment-gateway') ?></li>
             </ul>
         </div>
 
@@ -210,7 +210,7 @@ class WC_Gateway_PayuListBanks extends WC_PayUGateways
      */
     protected function get_payu_pay_method()
     {
-        $selected_method = filter_var($_POST['selected-bank'], FILTER_SANITIZE_STRING);
+        $selected_method = sanitize_text_field($_POST['selected-bank']);
 
         return $this->get_payu_pay_method_array('PBL', $selected_method ? $selected_method : -1, $selected_method);
     }

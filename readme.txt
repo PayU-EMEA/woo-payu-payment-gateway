@@ -1,9 +1,9 @@
-﻿=== WooCommerce PayU EU Payment Gateway ===
+﻿=== PayU EU Payment Gateway for WooCommerce ===
 Contributors: payusa
-Tags: woocommerce, PayU, payment, payment gateway, platnosci, PayU Poland, PayU EU
+Tags: PayU, payment, payment gateway, platnosci, PayU Poland, PayU EU
 Requires at least: 4.4
-Tested up to: 5.9
-Stable tag: 2.0.13
+Tested up to: 6.0.1
+Stable tag: 2.0.17
 Requires PHP: 7.0
 License: GPLv2
 
@@ -34,12 +34,20 @@ PayU merchant account - if you do not have an account you can [**register a prod
 Following PHP libraries are required: cURL i hash.
 
 = Automatic installation =
-Use [automatic installation and activation](https://wordpress.org/support/article/managing-plugins/#automatic-plugin-installation) available in Wordpress admin panel. Module name is `WooCommerce PayU EU Payment Gateway`.
+Use [automatic installation and activation](https://wordpress.org/support/article/managing-plugins/#automatic-plugin-installation) available in Wordpress admin panel. Module name is `PayU EU Payment Gateway for WooCommerce`.
 
 = Updating =
 Upon plugin update from version 1.X to version 2.X the existing config data will be automatically converted.
 
+== Frequently Asked Questions ==
+
+= Does this load external javacript resources ? =
+
+Yes, it does. For card payment we used [PayU Secure Form](https://developers.payu.com/en/card_tokenization.html#secureform) and for proper working it is necessary to load Secure Form JS SDK from the * .payu.com domain. As a result, you do not need to have PCI DSS, PayU does it for you.
+
 == Changelog ==
+= 2.0.14 - 2.0.17 =
+* Changes required by wordpress plugin teams (plugin name, change translate domain, sanitize variables, remove external js, update readme)
 = 2.0.13 =
 * Fix method available for virtual products
 * Separate Twisto and PayPo

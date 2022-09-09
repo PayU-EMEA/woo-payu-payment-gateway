@@ -4,17 +4,17 @@
  * Plugin URI: https://github.com/PayU/plugin_woocommerce
  * GitHub Plugin URI: https://github.com/PayU-EMEA/plugin_woocommerce_dev
  * Description: PayU payment gateway for WooCommerce
- * Version: 2.0.13
+ * Version: 2.0.17
  * Author: PayU SA
  * Author URI: http://www.payu.com
  * License: LGPL 3.0
- * Text Domain: payu
+ * Text Domain: woo-payu-payment-gateway
  * Domain Path: /lang
  * WC requires at least: 3.0
- * WC tested up to: 6.3
+ * WC tested up to: 6.8.1
  */
 
-define('PAYU_PLUGIN_VERSION', '2.0.13');
+define('PAYU_PLUGIN_VERSION', '2.0.17');
 define('PAYU_PLUGIN_FILE', __FILE__);
 define('PAYU_PLUGIN_STATUS_WAITING', 'payu-waiting');
 
@@ -30,7 +30,7 @@ function init_gateway_payu()
     if (!class_exists('WC_Payment_Gateway')) {
         return;
     }
-    load_plugin_textdomain('payu', false, dirname(plugin_basename(__FILE__)) . '/lang/');
+    load_plugin_textdomain('woo-payu-payment-gateway', false, dirname(plugin_basename(__FILE__)) . '/lang/');
 
     require_once('includes/WC_PayUGateways.php');
     require_once('includes/PayUSettings.php');
@@ -163,7 +163,7 @@ function plugin_row_meta($links, $plugin_file) {
         return $links;
     }
     $row_meta = array(
-        'docs' => '<a href="' . esc_url( 'https://github.com/PayU-EMEA/plugin_woocommerce' ) . '">' . esc_html__( 'Docs', 'payu' ) . '</a>'
+        'docs' => '<a href="' . esc_url( 'https://github.com/PayU-EMEA/plugin_woocommerce' ) . '">' . esc_html__( 'Docs', 'woo-payu-payment-gateway' ) . '</a>'
     );
 
     return array_merge( $links, $row_meta );
@@ -190,7 +190,16 @@ function view_order($order_id)
     $payu_gateways = WC_PayUGateways::gateways_list();
     if (in_array($order->get_status(), ['on-hold', 'pending', 'failed'])) {
         if (@$payu_gateways[$order->get_payment_method()] && isset(get_option('payu_settings_option_name')['global_repayment'])) {
-            include('html/payu-repayment.php');
+            $pay_now_url = add_query_arg([
+                'pay_for_order' => 'true',
+                'key' => $order->get_order_key()
+            ], wc_get_endpoint_url('order-pay', $order->get_id(), wc_get_checkout_url()));
+
+            ?>
+            <a href="<?php echo esc_url($pay_now_url) ?>" class="autonomy-payu-button"><?php esc_html_e('Pay with', 'woo-payu-payment-gateway'); ?>
+                <img src="<?php echo esc_url(plugins_url( '/assets/images/logo-payu.svg', PAYU_PLUGIN_FILE )) ?>"/>
+            </a>
+            <?php
         }
     }
 }
@@ -200,7 +209,7 @@ function register_waiting_payu_order_status()
 {
     register_post_status('wc-'. PAYU_PLUGIN_STATUS_WAITING,
         [
-            'label' => __('Awaiting receipt of payment', 'payu'),
+            'label' => __('Awaiting receipt of payment', 'woo-payu-payment-gateway'),
             'public' => true,
             'exclude_from_search' => false,
             'show_in_admin_all_list' => true,
@@ -254,7 +263,7 @@ add_action('init', 'register_waiting_payu_order_status');
 // Add to list of WC Order statuses
 function add_waiting_payu_to_order_statuses($order_statuses)
 {
-    $order_statuses['wc-'.PAYU_PLUGIN_STATUS_WAITING] = __('Awaiting receipt of payment', 'payu');
+    $order_statuses['wc-'.PAYU_PLUGIN_STATUS_WAITING] = __('Awaiting receipt of payment', 'woo-payu-payment-gateway');
     return $order_statuses;
 }
 
@@ -275,7 +284,7 @@ function filter_woocommerce_my_account_my_orders_actions($actions, $order)
         $payu_gateways = WC_PayUGateways::gateways_list();
         if (@$payu_gateways[$order->get_payment_method()] && isset(get_option('payu_settings_option_name')['global_repayment'])) {
             $actions['repayu'] = [
-                'name' => __('Pay with PayU', 'payu'),
+                'name' => __('Pay with PayU', 'woo-payu-payment-gateway'),
                 'url' => wc_get_endpoint_url('order-pay', $order->get_id(),
                         wc_get_checkout_url()) . '?pay_for_order=true&key=' . $order->get_order_key()
             ];
@@ -300,10 +309,6 @@ function wc_order_item_add_action_buttons_callback($order)
                     $payu_statuses) && !in_array(OpenPayuOrderStatus::STATUS_CANCELED,
                     $payu_statuses)) && in_array(OpenPayuOrderStatus::STATUS_WAITING_FOR_CONFIRMATION,
                 $payu_statuses)) {
-            $label_receive_payment = esc_html__('Receive payment', 'payu');
-            $label_discard_payment = esc_html__('Discard payment', 'payu');
-            $slug_receive_payment = 'receive-payment';
-            $slug_discard_payment = 'discard-payment';
             $url_receive = add_query_arg([
                 'post' => $order->get_id(),
                 'action' => 'edit',
@@ -315,10 +320,10 @@ function wc_order_item_add_action_buttons_callback($order)
                 'discard-payment' => 1
             ], admin_url('post.php'));
             ?>
-            <a href="<?php echo $url_receive ?>" type="button"
-               class="button <?php echo $slug_receive_payment; ?>"><?php echo $label_receive_payment; ?></a>
-            <a href="<?php echo $url_discard ?>" type="button"
-               class="button <?php echo $slug_discard_payment; ?>"><?php echo $label_discard_payment; ?></a>
+            <a href="<?php echo esc_url($url_receive) ?>" type="button"
+               class="button receive-payment"><?php esc_html_e('Receive payment', 'woo-payu-payment-gateway') ?></a>
+            <a href="<?php echo esc_url($url_discard) ?>" type="button"
+               class="button discard-payment"><?php esc_html_e('Discard payment', 'woo-payu-payment-gateway') ?></a>
             <?php
             $url_return = add_query_arg([
                 'post' => $order->get_id(),
@@ -328,7 +333,7 @@ function wc_order_item_add_action_buttons_callback($order)
                 global $current_user;
                 wp_get_current_user();
 
-                if (isset($_GET['receive-payment'])) {
+                if (isset($_GET['receive-payment']) && !isset($_GET['discard-payment'])) {
                     $orderId = $order->get_transaction_id();
                     $status_update = [
                         "orderId" => $orderId,
@@ -339,18 +344,18 @@ function wc_order_item_add_action_buttons_callback($order)
                     $payment = new $payment_init;
                     $payment->init_OpenPayU($order->get_currency());
                     OpenPayU_Order::statusUpdate($status_update);
-                    $order->add_order_note(sprintf(__('[PayU] User %s accepted payment', 'payu'),
+                    $order->add_order_note(sprintf(__('[PayU] User %s accepted payment', 'woo-payu-payment-gateway'),
                         $current_user->user_login));
                     wp_redirect($url_return);
                 }
-                if (isset($_GET['discard-payment'])) {
+                if (!isset($_GET['receive-payment']) && isset($_GET['discard-payment'])) {
                     $payment_method_name = $order->get_payment_method();
                     $payment_init = WC_PayUGateways::gateways_list()[$payment_method_name]['api'];
                     $payment = new $payment_init;
                     $payment->init_OpenPayU($order->get_currency());
                     $orderId = $order->get_transaction_id();
                     OpenPayU_Order::cancel($orderId);
-                    $order->add_order_note(sprintf(__('[PayU] User %s rejected payment', 'payu'),
+                    $order->add_order_note(sprintf(__('[PayU] User %s rejected payment', 'woo-payu-payment-gateway'),
                         $current_user->user_login));
                     wp_redirect($url_return);
                 }
