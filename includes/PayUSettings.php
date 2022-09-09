@@ -212,7 +212,7 @@ class PayUSettings
         ?>
         <span class="description payu-red">
             <span class="dashicons dashicons-warning"></span>
-            <?php echo wp_kses(__('Before enabling repayment, read <a target="_blank" href="https://github.com/PayU-EMEA/plugin_woocommerce#ponawianie-p%C5%82atno%C5%9Bci">the documentation</a> and disable <strong>automatic collection</strong> in POS configuration.', 'woo-payu-payment-gateway'), ['a' => ['target' => [], 'href' => []], 'strong' => []]); ?>
+            <?php echo wp_kses(__('Before enabling repayment, read <a target="_blank" href="https://github.com/PayU-EMEA/woo-payu-payment-gateway#ponawianie-p%C5%82atno%C5%9Bci">the documentation</a> and disable <strong>automatic collection</strong> in POS configuration.', 'woo-payu-payment-gateway'), ['a' => ['target' => [], 'href' => []], 'strong' => []]); ?>
         </span>
         <?php
     }

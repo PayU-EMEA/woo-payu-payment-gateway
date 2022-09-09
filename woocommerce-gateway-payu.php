@@ -1,8 +1,8 @@
 <?php
 /**
  * Plugin Name: PayU Payment Gateway
- * Plugin URI: https://github.com/PayU/plugin_woocommerce
- * GitHub Plugin URI: https://github.com/PayU-EMEA/plugin_woocommerce_dev
+ * Plugin URI: https://github.com/PayU/woo-payu-payment-gateway
+ * GitHub Plugin URI: https://github.com/PayU-EMEA/woo-payu-payment-gateway
  * Description: PayU payment gateway for WooCommerce
  * Version: 2.0.18
  * Author: PayU SA
@@ -163,7 +163,7 @@ function plugin_row_meta($links, $plugin_file) {
         return $links;
     }
     $row_meta = array(
-        'docs' => '<a href="' . esc_url( 'https://github.com/PayU-EMEA/plugin_woocommerce' ) . '">' . esc_html__( 'Docs', 'woo-payu-payment-gateway' ) . '</a>'
+        'docs' => '<a href="' . esc_url( 'https://github.com/PayU-EMEA/woo-payu-payment-gateway' ) . '">' . esc_html__( 'Docs', 'woo-payu-payment-gateway' ) . '</a>'
     );
 
     return array_merge( $links, $row_meta );

@@ -21,7 +21,7 @@ The plugin offers the following payment methods:
 * PayU - PayPo - payer will be redirected to PayPo payment form
 * PayU - Twisto - payer will be redirected to Twisto payment form
 
-Detailed information about each method and its configuration [can be found here](https://github.com/PayU-EMEA/plugin_woocommerce).
+Detailed information about each method and its configuration [can be found here](https://github.com/PayU-EMEA/woo-payu-payment-gateway).
 
 == Installation ==
 If you have any questions or would like to raise an issue please contact [our technical support](https://www.payu.pl/pomoc).
@@ -49,6 +49,7 @@ Yes, it does. For card payment we used [PayU Secure Form](https://developers.pay
 = 2.0.18 =
 * Fixed link to repay in email
 * The shorter product name
+* Changed plugin url on github
 = 2.0.14 - 2.0.17 =
 * Changes required by wordpress plugin teams (plugin name, change translate domain, sanitize variables, remove external js, update readme)
 = 2.0.13 =

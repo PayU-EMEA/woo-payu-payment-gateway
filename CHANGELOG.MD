@@ -1,6 +1,7 @@
 # 2.0.18
 * Fixed link to repay in email
 * The shorter product name
+* Changed plugin url on github
 
 # 2.0.14 - 2.0.17
 * Changes required by wordpress plugin teams (plugin name, change translate domain, sanitize variables, remove external js, update readme)
