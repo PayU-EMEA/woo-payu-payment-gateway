@@ -405,7 +405,7 @@ msgstr "Nie udało się przesłać karty"
 #: includes/WC_PayUGateways.php:153
 msgid ""
 "The controller of your personal data is PayU S.A. with its registered office "
-"in Poznan (60-166), at Grunwaldzka Street 182 (\"PayU\")."
+"in Poznan (60-166), at Grunwaldzka Street 186 (\"PayU\")."
 msgstr ""
 "Administratorem Twoich danych osobowych jest PayU S.A. z siedzibą w Poznaniu "
 "(60-166), przy ul. Grunwaldzkiej 186."

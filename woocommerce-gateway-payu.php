@@ -180,6 +180,126 @@ if (is_admin()) {
     add_action('admin_enqueue_scripts', 'enqueue_payu_admin_assets');
 }
 
+//TODO: remove and rewrite all places to use body ready event like for woocommerce_blocks_product_grid_item_html
+function installments_widget_scripts() {
+    echo '<script type="text/javascript" src="https://static.payu.com/res/v2/widget-mini-installments.js"></script>';
+}
+add_action( 'wp_head', 'installments_widget_scripts' );
+
+function get_payu_option($option) {
+    //TODO: handle also non global settings
+    //$isSandbox = 'yes' === get_option('payu_settings_option_name')['sandbox'];
+    $isSandbox = true;
+    $optionPrefix = $isSandbox ? 'sandbox_' : '';
+
+    return get_option('payu_settings_option_name')['global_' . $optionPrefix . $option];
+}
+
+add_action('woocommerce_after_shop_loop_item', 'installments_mini');
+add_action('woocommerce_before_add_to_cart_form', 'installments_mini');
+function installments_mini() {
+    global $product;
+    $price = $product->get_price();
+    $productId = $product->get_id();
+
+    $posId = get_payu_option('pos_id');
+    //todo: double check that it's the right key
+    $widgetKey = substr(get_payu_option('client_secret'), 0, 2);
+
+    ?>
+        <div>
+            <p><span id="installment-mini-<?php echo esc_html($productId)?>"></span></p>
+            <script type="text/javascript">
+                var value = <?php echo esc_html($price)?>;
+                if (value >= 300 && value <= 50000) {
+                    var options = {
+                        creditAmount: value,
+                        posId: '<?php echo esc_html($posId)?>',
+                        key: '<?php echo esc_html($widgetKey)?>',
+                        showLongDescription: true
+                    };
+                    OpenPayU.Installments.miniInstallment('#installment-mini-<?php echo esc_html($productId)?>', options);
+                }
+            </script>
+        </div>
+    <?php
+}
+
+//TODO: check why widgets dissapears after clicking "zaktualizuj koszyk"
+add_action('woocommerce_cart_totals_after_order_total', 'installments_mini_cart');
+function installments_mini_cart() {
+    $price = WC()->cart->total;
+
+    $posId = get_payu_option('pos_id');
+    //todo: double check that it's the right key
+    $widgetKey = substr(get_payu_option('client_secret'), 0, 2);
+    ?>
+    <tr>
+        <td></td>
+        <td>
+            <p><span id="installment-mini-cart"></span></p>
+            <script type="text/javascript">
+                var value = <?php echo esc_html($price)?>;
+                if (value >= 300 && value <= 50000) {
+                    var options = {
+                        creditAmount: value,
+                        posId: '<?php echo esc_html($posId)?>',
+                        key: '<?php echo esc_html($widgetKey)?>',
+                        showLongDescription: true
+                    };
+                    OpenPayU.Installments.miniInstallment('#installment-mini-cart', options);
+                }
+            </script>
+        </td>
+    </tr>
+    <?php
+}
+
+add_filter( 'woocommerce_blocks_product_grid_item_html', 'installments_mini_aware_product_block', 10, 3);
+function installments_mini_aware_product_block( $html, $data, $product ) {
+    $price = $product->get_price();
+    $productId = $product->get_id();
+
+    $posId = get_payu_option('pos_id');
+    //todo: double check that it's the right key
+    $widgetKey = substr(get_payu_option('client_secret'), 0, 2);
+
+    wp_enqueue_script('payu-installments-widget', 'https://static.payu.com/res/v2/widget-mini-installments.js', ['jquery'], PAYU_PLUGIN_VERSION);
+
+    return "<li class=\"wc-block-grid__product\">
+        <div >
+            <a href=\"{$data->permalink}\" class=\"wc-block-grid__product-link\">
+               {$data->image}
+			   {$data->title}
+            </a>
+		</div>
+            {$data->badge}
+            {$data->price}
+			<div>
+				<p><span id=\"installment-mini-{$productId}\"></span></p>
+				<script type=\"text/javascript\">
+				(function ($) {
+                    $(document).ready(function(){
+					var value = {$price};
+					if (value >= 300 && value <= 50000) {
+						var options = {
+							creditAmount: value,
+							posId: '{$posId}',
+							key: '{$widgetKey}',
+							showLongDescription: true
+						};
+						OpenPayU.Installments.miniInstallment('#installment-mini-{$productId}', options);
+					}
+                    });
+                })(jQuery);
+				</script>
+			</div>
+            {$data->rating}
+            {$data->button}
+         </li>";
+
+}
+
 add_action('woocommerce_view_order', 'view_order');
 function view_order($order_id)
 {
