@@ -7,7 +7,7 @@
  * Version: 2.0.18
  * Author: PayU SA
  * Author URI: http://www.payu.com
- * License: LGPL 3.0
+ * License: Apache License 2.0
  * Text Domain: woo-payu-payment-gateway
  * Domain Path: /lang
  * WC requires at least: 3.0
