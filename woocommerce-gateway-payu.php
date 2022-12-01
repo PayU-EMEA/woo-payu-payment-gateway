@@ -186,13 +186,30 @@ function installments_widget_scripts() {
 }
 add_action( 'wp_head', 'installments_widget_scripts' );
 
-function get_payu_option($option) {
-    //TODO: handle also non global settings
-    //$isSandbox = 'yes' === get_option('payu_settings_option_name')['sandbox'];
-    $isSandbox = true;
-    $optionPrefix = $isSandbox ? 'sandbox_' : '';
+function get_installment_option($option)
+{
 
-    return get_option('payu_settings_option_name')['global_' . $optionPrefix . $option];
+    $paymentGateways = WC()->payment_gateways->payment_gateways();
+    $result = null;
+
+    if (array_key_exists('payuinstallments', $paymentGateways)) {
+
+        /**
+         * @var  $installmentsGateway WC_Gateway_PayuInstallments
+         */
+        $installmentsGateway = $paymentGateways['payuinstallments'];
+
+        switch ($option) {
+            case 'pos_id':
+                $result = $installmentsGateway->pos_id;
+                break;
+            case 'widget_key':
+                $result = $installmentsGateway->pos_widget_key;
+                break;
+        }
+    }
+
+    return $result;
 }
 
 
@@ -208,9 +225,8 @@ function installments_mini() {
     $price = $product->get_price();
     $productId = $product->get_id();
 
-    $posId = get_payu_option('pos_id');
-    //todo: double check that it's the right key
-    $widgetKey = substr(get_payu_option('client_secret'), 0, 2);
+    $posId = get_installment_option('pos_id');
+    $widgetKey = get_installment_option('widget_key');
 
     ?>
         <div>
@@ -239,9 +255,9 @@ if(get_option('woocommerce_payuinstallments_settings')['credit_widget_on_cart_pa
 function installments_mini_cart() {
     $price = WC()->cart->total;
 
-    $posId = get_payu_option('pos_id');
-    //todo: double check that it's the right key
-    $widgetKey = substr(get_payu_option('client_secret'), 0, 2);
+    $posId = get_installment_option('pos_id');
+    $widgetKey = get_installment_option('widget_key');
+
     ?>
     <tr>
         <td></td>
@@ -271,9 +287,8 @@ function installments_mini_aware_product_block( $html, $data, $product ) {
     $price = $product->get_price();
     $productId = $product->get_id();
 
-    $posId = get_payu_option('pos_id');
-    //todo: double check that it's the right key
-    $widgetKey = substr(get_payu_option('client_secret'), 0, 2);
+    $posId = get_installment_option('pos_id');
+    $widgetKey = get_installment_option('widget_key');
 
     wp_enqueue_script('payu-installments-widget', 'https://static.payu.com/res/v2/widget-mini-installments.js', ['jquery'], PAYU_PLUGIN_VERSION);
 

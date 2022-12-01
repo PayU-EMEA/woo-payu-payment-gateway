@@ -11,6 +11,7 @@ abstract class WC_PayUGateways extends WC_Payment_Gateway
     protected $paytype;
 
     public $pos_id;
+    public $pos_widget_key;
     public $selected_method;
     public $show_terms_info;
     private $order_total = null;
@@ -553,10 +554,12 @@ abstract class WC_PayUGateways extends WC_Payment_Gateway
             OpenPayU_Configuration::setOauthClientSecret($client_secret);
         } else {
             $this->pos_id = $this->get_option($optionPrefix . 'pos_id' . $optionSuffix);
+            $client_secret = $this->get_option($optionPrefix . 'client_secret' . $optionSuffix);
+            $this->pos_widget_key = substr($client_secret, 0, 2);
             OpenPayU_Configuration::setMerchantPosId($this->pos_id);
             OpenPayU_Configuration::setSignatureKey($this->get_option($optionPrefix . 'md5' . $optionSuffix));
             OpenPayU_Configuration::setOauthClientId($this->get_option($optionPrefix . 'client_id' . $optionSuffix));
-            OpenPayU_Configuration::setOauthClientSecret($this->get_option($optionPrefix . 'client_secret' . $optionSuffix));
+            OpenPayU_Configuration::setOauthClientSecret($client_secret);
         }
 
 
