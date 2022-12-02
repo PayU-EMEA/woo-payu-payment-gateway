@@ -22,6 +22,8 @@ class WC_Gateway_PayuInstallments extends WC_PayUGateways
 
     public function installments_filter_gateway_title( $title, $id )
     {
+        wp_enqueue_script('payu-installments-widget', 'https://static.payu.com/res/v2/widget-mini-installments.js', ['jquery'], PAYU_PLUGIN_VERSION);
+
         if ($id === 'payuinstallments' &&
             get_option('woocommerce_payuinstallments_settings')['credit_widget_on_checkout_page'] === 'yes') {
             $posId = $this->pos_id;
@@ -31,16 +33,18 @@ class WC_Gateway_PayuInstallments extends WC_PayUGateways
                 '<div class="wc-payu-installments-widget-cart">'.$title.
                 '<div id="installment-mini-cart"></div>'.
                 '<script type="text/javascript">'.
-                '    var value = '.$priceTotal.';'.
-                '    if (value >= 300 && value <= 50000) {'.
+                '(function ($) {'.
+                '    $(document).ready(function(){'.
+                '        var value = '.$priceTotal.';'.
                 '        var options = {'.
                 '            creditAmount: value,'.
                 '            posId: \''.$posId.'\','.
                 '            key: \''.$widgetKey.'\','.
                 '            showLongDescription: true'.
-                '       };'.
+                '        };'.
                 '        OpenPayU.Installments.miniInstallment(\'#installment-mini-cart\', options);'.
-                '    }'.
+                '    });'.
+                '})(jQuery);'.
                 '</script>'.
                 '</div>';
             return $transformedTitle;

@@ -180,12 +180,6 @@ if (is_admin()) {
     add_action('admin_enqueue_scripts', 'enqueue_payu_admin_assets');
 }
 
-//TODO: remove and rewrite all places to use body ready event like for woocommerce_blocks_product_grid_item_html
-function installments_widget_scripts() {
-    echo '<script type="text/javascript" src="https://static.payu.com/res/v2/widget-mini-installments.js"></script>';
-}
-add_action( 'wp_head', 'installments_widget_scripts' );
-
 function get_installment_option($option)
 {
 
@@ -228,20 +222,24 @@ function installments_mini() {
     $posId = get_installment_option('pos_id');
     $widgetKey = get_installment_option('widget_key');
 
+    wp_enqueue_script('payu-installments-widget', 'https://static.payu.com/res/v2/widget-mini-installments.js', ['jquery'], PAYU_PLUGIN_VERSION);
+
     ?>
         <div>
             <p><span id="installment-mini-<?php echo esc_html($productId)?>"></span></p>
             <script type="text/javascript">
-                var value = <?php echo esc_html($price)?>;
-                if (value >= 300 && value <= 50000) {
-                    var options = {
-                        creditAmount: value,
-                        posId: '<?php echo esc_html($posId)?>',
-                        key: '<?php echo esc_html($widgetKey)?>',
-                        showLongDescription: true
-                    };
-                    OpenPayU.Installments.miniInstallment('#installment-mini-<?php echo esc_html($productId)?>', options);
-                }
+                (function ($) {
+                    $(document).ready(function(){
+                        var value = <?php echo esc_html($price)?>;
+                        var options = {
+                            creditAmount: value,
+                            posId: '<?php echo esc_html($posId)?>',
+                            key: '<?php echo esc_html($widgetKey)?>',
+                            showLongDescription: true
+                        };
+                        OpenPayU.Installments.miniInstallment('#installment-mini-<?php echo esc_html($productId)?>', options);
+                    });
+                })(jQuery);
             </script>
         </div>
     <?php
@@ -258,22 +256,26 @@ function installments_mini_cart() {
     $posId = get_installment_option('pos_id');
     $widgetKey = get_installment_option('widget_key');
 
+    wp_enqueue_script('payu-installments-widget', 'https://static.payu.com/res/v2/widget-mini-installments.js', ['jquery'], PAYU_PLUGIN_VERSION);
+
     ?>
     <tr>
         <td></td>
         <td>
             <p><span id="installment-mini-cart"></span></p>
             <script type="text/javascript">
-                var value = <?php echo esc_html($price)?>;
-                if (value >= 300 && value <= 50000) {
-                    var options = {
-                        creditAmount: value,
-                        posId: '<?php echo esc_html($posId)?>',
-                        key: '<?php echo esc_html($widgetKey)?>',
-                        showLongDescription: true
-                    };
-                    OpenPayU.Installments.miniInstallment('#installment-mini-cart', options);
-                }
+                (function ($) {
+                    $(document).ready(function(){
+                        var value = <?php echo esc_html($price)?>;
+                        var options = {
+                            creditAmount: value,
+                            posId: '<?php echo esc_html($posId)?>',
+                            key: '<?php echo esc_html($widgetKey)?>',
+                            showLongDescription: true
+                        };
+                        OpenPayU.Installments.miniInstallment('#installment-mini-cart', options);
+                    });
+                })(jQuery);
             </script>
         </td>
     </tr>
@@ -306,17 +308,15 @@ function installments_mini_aware_product_block( $html, $data, $product ) {
 				<script type=\"text/javascript\">
 				(function ($) {
                     $(document).ready(function(){
-					var value = {$price};
-					if (value >= 300 && value <= 50000) {
-						var options = {
-							creditAmount: value,
-							posId: '{$posId}',
-							key: '{$widgetKey}',
-							showLongDescription: true
-						};
-						OpenPayU.Installments.miniInstallment('#installment-mini-{$productId}', options);
-					}
-                    });
+                        var value = {$price};
+                        var options = {
+                            creditAmount: value,
+                            posId: '{$posId}',
+                            key: '{$widgetKey}',
+                            showLongDescription: true
+                        };
+                        OpenPayU.Installments.miniInstallment('#installment-mini-{$productId}', options);
+					});
                 })(jQuery);
 				</script>
 			</div>
