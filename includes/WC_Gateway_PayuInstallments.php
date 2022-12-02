@@ -20,8 +20,10 @@ class WC_Gateway_PayuInstallments extends WC_PayUGateways
         }
     }
 
-    public function installments_filter_gateway_title( $title, $id ) {
-        if ($id === 'payuinstallments') {
+    public function installments_filter_gateway_title( $title, $id )
+    {
+        if ($id === 'payuinstallments' &&
+            get_option('woocommerce_payuinstallments_settings')['credit_widget_on_checkout_page'] === 'yes') {
             $posId = $this->pos_id;
             $widgetKey = $this->pos_widget_key;
             $priceTotal = WC()->cart->total;
@@ -51,5 +53,35 @@ class WC_Gateway_PayuInstallments extends WC_PayUGateways
     {
         parent::payment_fields();
         $this->agreements_field();
+    }
+
+    protected function get_additional_gateway_fields()
+    {
+        return [
+            'credit_widget_on_listings' => [
+                'title' => __('Widget ratalny', 'woo-payu-payment-gateway'),
+                'type' => 'checkbox',
+                'label' => __('Włączony na listingach', 'woo-payu-payment-gateway'),
+                'default' => 'no'
+            ],
+            'credit_widget_on_product_page' => [
+                'title' => __('Widget ratalny', 'woo-payu-payment-gateway'),
+                'type' => 'checkbox',
+                'label' => __('Włączony na stronie produktu', 'woo-payu-payment-gateway'),
+                'default' => 'no'
+            ],
+            'credit_widget_on_cart_page' => [
+                'title' => __('Widget ratalny', 'woo-payu-payment-gateway'),
+                'type' => 'checkbox',
+                'label' => __('Włączony na stronie koszyku', 'woo-payu-payment-gateway'),
+                'default' => 'no'
+            ],
+            'credit_widget_on_checkout_page' => [
+                'title' => __('Widget ratalny', 'woo-payu-payment-gateway'),
+                'type' => 'checkbox',
+                'label' => __('Włączony na wyborze metody płatności', 'woo-payu-payment-gateway'),
+                'default' => 'no'
+            ],
+        ];
     }
 }

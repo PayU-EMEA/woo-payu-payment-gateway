@@ -264,8 +264,13 @@ abstract class WC_PayUGateways extends WC_Payment_Gateway
             $this->get_form_fields_basic(),
             $this->get_form_field_config($currencies),
             $this->get_form_field_info(),
+            $this->get_additional_gateway_fields(),
             $custom_order ? $this->get_form_custom_order() : []
         );
+    }
+
+    protected function get_additional_gateway_fields() {
+        return [];
     }
 
     /**

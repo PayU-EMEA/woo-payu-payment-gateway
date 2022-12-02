@@ -195,8 +195,14 @@ function get_payu_option($option) {
     return get_option('payu_settings_option_name')['global_' . $optionPrefix . $option];
 }
 
-add_action('woocommerce_after_shop_loop_item', 'installments_mini');
-add_action('woocommerce_before_add_to_cart_form', 'installments_mini');
+
+if(get_option('woocommerce_payuinstallments_settings')['credit_widget_on_listings'] === 'yes') {
+    add_action('woocommerce_after_shop_loop_item', 'installments_mini');
+}
+
+if(get_option('woocommerce_payuinstallments_settings')['credit_widget_on_product_page'] === 'yes') {
+    add_action('woocommerce_before_add_to_cart_form', 'installments_mini');
+}
 function installments_mini() {
     global $product;
     $price = $product->get_price();
@@ -225,8 +231,11 @@ function installments_mini() {
     <?php
 }
 
+
+if(get_option('woocommerce_payuinstallments_settings')['credit_widget_on_cart_page'] === 'yes') {
+    add_action('woocommerce_cart_totals_after_order_total', 'installments_mini_cart');
+}
 //TODO: check why widgets dissapears after clicking "zaktualizuj koszyk"
-add_action('woocommerce_cart_totals_after_order_total', 'installments_mini_cart');
 function installments_mini_cart() {
     $price = WC()->cart->total;
 
@@ -255,7 +264,9 @@ function installments_mini_cart() {
     <?php
 }
 
-add_filter( 'woocommerce_blocks_product_grid_item_html', 'installments_mini_aware_product_block', 10, 3);
+if(get_option('woocommerce_payuinstallments_settings')['credit_widget_on_listings'] === 'yes') {
+    add_filter('woocommerce_blocks_product_grid_item_html', 'installments_mini_aware_product_block', 10, 3);
+}
 function installments_mini_aware_product_block( $html, $data, $product ) {
     $price = $product->get_price();
     $productId = $product->get_id();
