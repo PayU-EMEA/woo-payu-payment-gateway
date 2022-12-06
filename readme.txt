@@ -46,6 +46,9 @@ Upon plugin update from version 1.X to version 2.X the existing config data will
 Yes, it does. For card payment we used [PayU Secure Form](https://developers.payu.com/en/card_tokenization.html#secureform) and for proper working it is necessary to load Secure Form JS SDK from the * .payu.com domain. As a result, you do not need to have PCI DSS, PayU does it for you.
 
 == Changelog ==
+= 2.0.19 =
+* Added installment widget integration
+* PayU address update
 = 2.0.18 =
 * Fixed link to repay in email
 * The shorter product name

@@ -132,6 +132,20 @@ Ponowienie płatności umożliwia zakładanie wielu płatności w PayU do jedneg
 * z listy zamówień po kliknięciu w link "Zapłać z PayU" w kolumnie Akcje
 * w szczegółach zamówienia poprzez kliknięcie w link "Zapłać z PayU" znajdujący się nad "Szczegóły zamówienia"
 
+## Widget raty
+Plugin dostarcza integrację [widgetu ratalnego][ext2], który prezentuje minimalną kwotę raty, na którą można zakupić dany towar przy użyciu metody płatności PayU Raty.
+Funkcjonalność jest domyślnie włączona. Można ją dezaktywować poprzez przełączniki w panelu administracyjnym (WooCommerce->Ustawienia->Płatności->PayU - raty).
+Konkretne punkty integracji widgetu przedstawione zostało w poniższej tabeli.
+
+| Przełącznik Widget Raty | Opis | Prezentacja |
+| --- | --- | --- |
+| Włączony na listingach | <div style="max-width:200px">Prezentowanie widgetu "rata już od" na wszystkich listingach produktowych.</div> |<div style="max-width:500px">![Prezentacja widgetu](readme_images/credit_widget_listings.jpg)</div>|
+| Włączony na stronie produktu | <div style="max-width:200px">Dodaje widget na stronie produktu.</div> |<div style="max-width:500px">![Prezentacja widgetu](readme_images/credit_widget_product_page.jpg)</div>|
+| Włączony na stronie koszyka | <div style="max-width:200px">Dodaje widge na stronie koszyka - wyliczona rata dotyczy całej wartości koszyka wraz z kosztami wysyłki.</div> |<div style="max-width:500px">![Prezentacja widgetu](readme_images/credit_widget_cart_page.jpg)</div>|
+| Włączony na stronie wyboru metody płatności | <div style="max-width:200px">Dodaje widget na stronie wyboru metody płatności  - wyliczona rata dotyczy całej wartości koszyka wraz z kosztami wysyłki.</div> |<div style="max-width:500px">![Prezentacja widgetu](readme_images/credit_widget_checkout_page.jpg)</div>|
+
+Widget prezentowany jest tylko dla waluty PLN.
+
 ## Maile
 Plugin nie wysyła żadnych dodatkowych maili. Nie ingeruje również w proces, kiedy maile są wysyłane.
 
@@ -144,3 +158,4 @@ W przypadku włączonego ponownienia płatności do maila potwierdzajacego zamó
 [ext5]: https://secure.snd.payu.com/boarding/#/registerSandbox/?lang=pl
 [ext6]: http://developers.payu.com/pl/overview.html#paymethods
 [ext13]: https://www.payu.pl/pomoc
+[ext14]: https://developers.payu.com/pl/installments.html#installments_best_practices_mini

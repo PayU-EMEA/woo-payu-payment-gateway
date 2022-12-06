@@ -1,4 +1,8 @@
 # 2.0.18
+* Added installment widget integration
+* PayU address update
+
+# 2.0.18
 * Fixed link to repay in email
 * The shorter product name
 * Changed plugin url on github
