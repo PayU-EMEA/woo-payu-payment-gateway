@@ -214,7 +214,11 @@ if(get_option('woocommerce_payuinstallments_settings')['credit_widget_on_listing
 if(get_option('woocommerce_payuinstallments_settings')['credit_widget_on_product_page'] === 'yes') {
     add_action('woocommerce_before_add_to_cart_form', 'installments_mini');
 }
+
 function installments_mini() {
+    if(get_woocommerce_currency() !== 'PLN') {
+        return;
+    }
     global $product;
     $price = $product->get_price();
     $productId = $product->get_id();
@@ -249,8 +253,11 @@ function installments_mini() {
 if(get_option('woocommerce_payuinstallments_settings')['credit_widget_on_cart_page'] === 'yes') {
     add_action('woocommerce_cart_totals_after_order_total', 'installments_mini_cart');
 }
-//TODO: check why widgets dissapears after clicking "zaktualizuj koszyk"
+
 function installments_mini_cart() {
+    if(get_woocommerce_currency() !== 'PLN') {
+        return;
+    }
     $price = WC()->cart->total;
 
     $posId = get_installment_option('pos_id');
@@ -286,6 +293,9 @@ if(get_option('woocommerce_payuinstallments_settings')['credit_widget_on_listing
     add_filter('woocommerce_blocks_product_grid_item_html', 'installments_mini_aware_product_block', 10, 3);
 }
 function installments_mini_aware_product_block( $html, $data, $product ) {
+    if(get_woocommerce_currency() !== 'PLN') {
+        return;
+    }
     $price = $product->get_price();
     $productId = $product->get_id();
 

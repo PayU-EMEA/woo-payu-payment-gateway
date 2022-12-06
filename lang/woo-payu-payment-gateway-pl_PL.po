@@ -518,3 +518,23 @@ msgstr ""
 "Twoje dane osobowe będą przetwarzane w celu realizacji transakcji płatniczej,"
 " powiadamiania Cię o statusie realizacji Twojej płatności, rozpatrywania "
 "reklamacji, a także w celu wypełnienia obowiązków prawnych ciążących na PayU."
+
+#: includes/WC_Gateway_PayuInstallments.php:67
+msgid "Installments widget"
+msgstr "Widget Raty"
+
+#: includes/WC_Gateway_PayuInstallments.php:69
+msgid "Enabled on product listings"
+msgstr "Włączony na listingach"
+
+#: includes/WC_Gateway_PayuInstallments.php:69
+msgid "Enabled on product page"
+msgstr "Włączony na stronie produktu"
+
+#: includes/WC_Gateway_PayuInstallments.php:69
+msgid "Enabled on cart page"
+msgstr "Włączony na stronie koszyka"
+
+#: includes/WC_Gateway_PayuInstallments.php:69
+msgid "Enabled on checkout page"
+msgstr "Włączony na stronie wyboru metody płatności"
