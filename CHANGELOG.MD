@@ -1,4 +1,4 @@
-# 2.0.18
+# 2.0.19
 * Added installment widget integration
 * PayU address update
 
