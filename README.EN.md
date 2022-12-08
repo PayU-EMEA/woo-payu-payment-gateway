@@ -144,7 +144,7 @@ Integration points of a widget have been described in a table below.
 | Enabled on cart page | <div style="max-width:200px">Presents widget on cart page - relates to a total cart amount and shipping costs.</div> |<div style="max-width:500px">![Prezentacja widgetu](readme_images/credit_widget_cart_page.jpg)</div>|
 | Enabled on checkout page | <div style="max-width:200px">Presents widget on checkout page - relates to a total cart amount and shipping costs.</div> |<div style="max-width:500px">![Prezentacja widgetu](readme_images/credit_widget_checkout_page.jpg)</div>|
 
-Widget is presented only for PLN currency.
+Widget is presented only for PLN currency and products or carts with amount in allowed installment amount range.
 
 ## Emails
 The plugin does not send any additional emails and does not interfere with any mailing process.

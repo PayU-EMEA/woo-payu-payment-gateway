@@ -139,12 +139,12 @@ Konkretne punkty integracji widgetu przedstawione zostało w poniższej tabeli.
 
 | Przełącznik Widget Raty | Opis | Prezentacja |
 | --- | --- | --- |
-| Włączony na listingach | <div style="max-width:200px">Prezentowanie widgetu "rata już od" na wszystkich listingach produktowych.</div> |<div style="max-width:500px">![Prezentacja widgetu](readme_images/credit_widget_listings.jpg)</div>|
+| Włączony na listingach | <div style="max-width:200px">Dodaje widget na wszystkich listingach produktowych.</div> |<div style="max-width:500px">![Prezentacja widgetu](readme_images/credit_widget_listings.jpg)</div>|
 | Włączony na stronie produktu | <div style="max-width:200px">Dodaje widget na stronie produktu.</div> |<div style="max-width:500px">![Prezentacja widgetu](readme_images/credit_widget_product_page.jpg)</div>|
-| Włączony na stronie koszyka | <div style="max-width:200px">Dodaje widge na stronie koszyka - wyliczona rata dotyczy całej wartości koszyka wraz z kosztami wysyłki.</div> |<div style="max-width:500px">![Prezentacja widgetu](readme_images/credit_widget_cart_page.jpg)</div>|
+| Włączony na stronie koszyka | <div style="max-width:200px">Dodaje widget na stronie koszyka - wyliczona rata dotyczy całej wartości koszyka wraz z kosztami wysyłki.</div> |<div style="max-width:500px">![Prezentacja widgetu](readme_images/credit_widget_cart_page.jpg)</div>|
 | Włączony na stronie wyboru metody płatności | <div style="max-width:200px">Dodaje widget na stronie wyboru metody płatności  - wyliczona rata dotyczy całej wartości koszyka wraz z kosztami wysyłki.</div> |<div style="max-width:500px">![Prezentacja widgetu](readme_images/credit_widget_checkout_page.jpg)</div>|
 
-Widget prezentowany jest tylko dla waluty PLN.
+Widget prezentowany jest tylko dla waluty PLN oraz dla produktów i koszyków, których wartość znajduje się w zakresie wspieranych kwot płatności ratalnych.
 
 ## Maile
 Plugin nie wysyła żadnych dodatkowych maili. Nie ingeruje również w proces, kiedy maile są wysyłane.
