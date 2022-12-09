@@ -1,5 +1,4 @@
 # Moduł płatności PayU dla WooCommerce
-``Moduł jest wydawany na licencji GPL.``
 
 **If you have any questions or want to report a bug please [contact our technical support][ext13].**
 

@@ -3,8 +3,7 @@
 /**
  * OpenPayU Standard Library
  *
- * @copyright  Copyright (c) 2011-2016 PayU
- * @license    http://opensource.org/licenses/LGPL-3.0  Open Software License (LGPL 3.0)
+ * @copyright Copyright (c) PayU
  * http://www.payu.com
  * http://developers.payu.com
  */
@@ -135,7 +134,7 @@ class OpenPayU_Util
 
         $data = self::setSenderProperty($data);
 
-        return json_encode($data);
+        return json_encode($data, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES);
     }
 
     /**
@@ -227,7 +226,8 @@ class OpenPayU_Util
             if (is_array($value)) {
                 $htmlOutput .= self::convertArrayToHtmlForm($value, $key, $outputFields);
             } else {
-                $htmlOutput .= sprintf("<input type=\"hidden\" name=\"%s\" value=\"%s\" />\n", $key, htmlspecialchars($value));
+                $htmlOutput .= sprintf("<input type=\"hidden\" name=\"%s\" value=\"%s\" />\n", htmlspecialchars($key)
+                , htmlspecialchars($value));
                 $outputFields[$key] = $value;
             }
         }
@@ -270,11 +270,11 @@ class OpenPayU_Util
             case 'DATA_NOT_FOUND':
                 $msg = 'Data indicated in the request is not available in the PayU system.';
                 break;
-            case 'WARNING_CONTINUE_3_DS':
-                $msg = '3DS authorization required.Redirect the Buyer to PayU to continue the 3DS process by calling OpenPayU.authorize3DS().';
+            case 'WARNING_CONTINUE_3DS':
+                $msg = '3DS authorization required. Redirect the Buyer to PayU to continue the 3DS process.';
                 break;
             case 'WARNING_CONTINUE_CVV':
-                $msg = 'CVV/CVC authorization required. Call OpenPayU.authorizeCVV() method.';
+                $msg = 'CVV/CVC authorization required.';
                 break;
             case 'ERROR_SYNTAX':
                 $msg = 'BIncorrect request syntax. Supported formats are JSON or XML.';
@@ -286,8 +286,6 @@ class OpenPayU_Util
                 $msg = 'One or more required values are missing.';
                 break;
             case 'BUSINESS_ERROR':
-                $msg = 'PayU system is unavailable. Try again later.';
-                break;
             case 'ERROR_INTERNAL':
                 $msg = 'PayU system is unavailable. Try again later.';
                 break;

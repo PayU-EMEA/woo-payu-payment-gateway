@@ -5,7 +5,7 @@ Requires at least: 4.4
 Tested up to: 6.0.1
 Stable tag: 2.0.19
 Requires PHP: 7.0
-License: GPLv2
+License: Apache License 2.0
 
 == Description ==
 **PayU payment module for WooCommerce**
