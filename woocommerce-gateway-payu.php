@@ -80,14 +80,19 @@ add_action('plugins_loaded', 'handle_plugin_update');
 function handle_plugin_update() {
     if (PAYU_PLUGIN_VERSION !== get_option('_payu_plugin_version')) {
         update_option('_payu_plugin_version', PAYU_PLUGIN_VERSION);
-        if(empty(get_option('woocommerce_payuinstallments_settings'))) {
-            add_option('woocommerce_payuinstallments_settings', [
-                'enabled' => 'no',
-                'credit_widget_on_listings' => 'yes',
-                'credit_widget_on_product_page' => 'yes',
-                'credit_widget_on_cart_page' => 'yes',
-                'credit_widget_on_checkout_page' => 'yes'
-            ]);
+        $defaultInstallmentsSettings = [
+            'enabled' => 'no',
+            'credit_widget_on_listings' => 'yes',
+            'credit_widget_on_product_page' => 'yes',
+            'credit_widget_on_cart_page' => 'yes',
+            'credit_widget_on_checkout_page' => 'yes'
+        ];
+        $payuInstallmentsSettings = get_option('woocommerce_payuinstallments_settings');
+        if(empty($payuInstallmentsSettings)) {
+            add_option('woocommerce_payuinstallments_settings', $defaultInstallmentsSettings);
+        } else {
+            $mergedInstallmentsSettings = array_merge($defaultInstallmentsSettings, $payuInstallmentsSettings);
+            update_option('woocommerce_payuinstallments_settings', $mergedInstallmentsSettings);
         }
     }
 }
@@ -288,10 +293,10 @@ if(is_installments_widget_available_for_feature('credit_widget_on_cart_page')) {
 }
 
 function is_shipping_method_in_supported_methods_set($chosenShippingMethod, $availableShippingMethods) {
-    if((empty($chosenShippingMethod) && get_installment_option('enable_for_virtual') === 'no')) {
-      return false;
+    if(empty($availableShippingMethods)) {
+        return true;
     }
-    if(!empty($chosenShippingMethod) && !empty($availableShippingMethods)) {
+    if(!empty($chosenShippingMethod)) {
         foreach($availableShippingMethods as $supportedShippingMethod) {
             if(strpos($chosenShippingMethod, $supportedShippingMethod) === 0) {
                 return true;
