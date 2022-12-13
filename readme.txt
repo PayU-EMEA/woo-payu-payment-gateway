@@ -41,9 +41,11 @@ Upon plugin update from version 1.X to version 2.X the existing config data will
 
 == Frequently Asked Questions ==
 
-= Does this load external javacript resources ? =
+= Does this load external javascript resources ? =
 
-Yes, it does. For card payment we used [PayU Secure Form](https://developers.payu.com/en/card_tokenization.html#secureform) and for proper working it is necessary to load Secure Form JS SDK from the * .payu.com domain. As a result, you do not need to have PCI DSS, PayU does it for you.
+Yes, it does.
+* For card payment we used [PayU Secure Form](https://developers.payu.com/en/card_tokenization.html#secureform) and for proper working it is necessary to load Secure Form JS SDK from the secure.payu.com domain. As a result, you do not need to have PCI DSS, PayU does it for you.
+* For presenting minimal installment amount we used [Widget Installments](https://developers.payu.com/en/installments.html#installments_best_practices_mini) and plugin loads the script from the static.payu.com domain.
 
 == Changelog ==
 = 2.0.19 =
