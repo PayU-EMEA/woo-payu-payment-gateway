@@ -2,7 +2,7 @@
 Contributors: payusa
 Tags: PayU, payment, payment gateway, platnosci, PayU Poland, PayU EU
 Requires at least: 4.4
-Tested up to: 6.0.1
+Tested up to: 6.1.1
 Stable tag: 2.0.19
 Requires PHP: 7.0
 License: Apache License 2.0

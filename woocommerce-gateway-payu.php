@@ -11,7 +11,7 @@
  * Text Domain: woo-payu-payment-gateway
  * Domain Path: /lang
  * WC requires at least: 3.0
- * WC tested up to: 6.8.1
+ * WC tested up to: 7.1.1
  */
 
 define('PAYU_PLUGIN_VERSION', '2.0.19');
@@ -27,6 +27,7 @@ add_action('admin_init', 'move_old_payu_settings');
 
 function init_gateway_payu()
 {
+    handle_plugin_update();
     if (!class_exists('WC_Payment_Gateway')) {
         return;
     }
@@ -74,8 +75,6 @@ function payu_plugin_on_activate()
         ]);
     }
 }
-
-add_action('plugins_loaded', 'handle_plugin_update');
 
 function handle_plugin_update() {
     if (PAYU_PLUGIN_VERSION !== get_option('_payu_plugin_version')) {
