@@ -22,11 +22,11 @@ class WC_Gateway_PayuInstallments extends WC_PayUGateways
 
     public function installments_filter_gateway_title( $title, $id )
     {
-        wp_enqueue_script('payu-installments-widget', 'https://static.payu.com/res/v2/widget-mini-installments.js', ['jquery'], PAYU_PLUGIN_VERSION);
-
         if ($id === 'payuinstallments' &&
             get_option('woocommerce_payuinstallments_settings')['credit_widget_on_checkout_page'] === 'yes' &&
             get_woocommerce_currency() === 'PLN') {
+            wp_enqueue_script('payu-installments-widget', 'https://static.payu.com/res/v2/widget-mini-installments.js', [], PAYU_PLUGIN_VERSION);
+
             $posId = $this->pos_id;
             $widgetKey = $this->pos_widget_key;
             $priceTotal = WC()->cart->total;
@@ -34,18 +34,20 @@ class WC_Gateway_PayuInstallments extends WC_PayUGateways
                 '<div class="wc-payu-installments-widget-cart">'.$title.
                 '<div id="installment-mini-cart"></div>'.
                 '<script type="text/javascript">'.
-                '(function ($) {'.
-                '    $(document).ready(function(){'.
-                '        var value = '.$priceTotal.';'.
-                '        var options = {'.
-                '            creditAmount: value,'.
-                '            posId: \''.$posId.'\','.
-                '            key: \''.$widgetKey.'\','.
-                '            showLongDescription: true'.
-                '        };'.
-                '        OpenPayU.Installments.miniInstallment(\'#installment-mini-cart\', options);'.
-                '    });'.
-                '})(jQuery);'.
+                'function showInstallmentsWidget() {'.
+                '   if(window.OpenPayU && document.getElementById(\'installment-mini-cart\').childNodes.length === 0) {'.
+                '       var value = '.$priceTotal.';'.
+                '       var options = {'.
+                '           creditAmount: value,'.
+                '           posId: \''.$posId.'\','.
+                '           key: \''.$widgetKey.'\','.
+                '           showLongDescription: true'.
+                '       };'.
+                '   OpenPayU.Installments.miniInstallment(\'#installment-mini-cart\', options);'.
+                '   }'.
+                '}'.
+                'document.addEventListener("DOMContentLoaded", showInstallmentsWidget);'.
+                'showInstallmentsWidget();'.
                 '</script>'.
                 '</div>';
             return $transformedTitle;

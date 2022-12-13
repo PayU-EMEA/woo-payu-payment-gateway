@@ -132,7 +132,7 @@ Ponowienie płatności umożliwia zakładanie wielu płatności w PayU do jedneg
 * w szczegółach zamówienia poprzez kliknięcie w link "Zapłać z PayU" znajdujący się nad "Szczegóły zamówienia"
 
 ## Widget raty
-Plugin dostarcza integrację [widgetu ratalnego][ext2], który prezentuje minimalną kwotę raty, na którą można zakupić dany towar przy użyciu metody płatności PayU Raty.
+Plugin dostarcza integrację [widgetu ratalnego][ext14], który prezentuje minimalną kwotę raty, na którą można zakupić dany towar przy użyciu metody płatności PayU Raty.
 Funkcjonalność jest domyślnie włączona. Można ją dezaktywować poprzez przełączniki w panelu administracyjnym (WooCommerce->Ustawienia->Płatności->PayU - raty).
 Konkretne punkty integracji widgetu przedstawione zostało w poniższej tabeli.
 
@@ -157,4 +157,4 @@ W przypadku włączonego ponownienia płatności do maila potwierdzajacego zamó
 [ext5]: https://secure.snd.payu.com/boarding/#/registerSandbox/?lang=pl
 [ext6]: http://developers.payu.com/pl/overview.html#paymethods
 [ext13]: https://www.payu.pl/pomoc
-[ext14]: https://developers.payu.com/pl/installments.html#installments_best_practices_mini
+[ext14]: https://developers.payu.com/pl/installments.html#installment_best_practices_mini

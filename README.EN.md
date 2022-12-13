@@ -132,7 +132,7 @@ From user point of view, repayment is possible:
 * by clicking "Pay with PayU" link over order details section
 
 ## Credit widget
-Plugin provides seamless integration of [installments widget][ext2], responsible for presenting minimal installment amount for a given product.
+Plugin provides seamless integration of [installments widget][ext14], responsible for presenting minimal installment amount for a given product.
 Functionality is enabled by default. It can be deactivated in administration panel (WooCommerce->Settings->Payments->PayU - installments).
 Integration points of a widget have been described in a table below.
 

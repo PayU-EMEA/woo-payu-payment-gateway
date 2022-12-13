@@ -6,15 +6,17 @@ abstract class WC_PayUGateways extends WC_Payment_Gateway
 {
     public static $paymethods = [];
 
-    protected $enable_for_shipping;
-    protected $enable_for_virtual;
-    protected $paytype;
-
     public $pos_id;
     public $pos_widget_key;
     public $selected_method;
     public $show_terms_info;
+    public $enable_for_shipping;
+    public $enable_for_virtual;
+
+    protected $paytype;
+
     private $order_total = null;
+
     const CONDITION_PL = 'http://static.payu.com/sites/terms/files/payu_terms_of_service_single_transaction_pl_pl.pdf';
     const CONDITION_EN = 'http://static.payu.com/sites/terms/files/payu_terms_of_service_single_transaction_pl_en.pdf';
     const CONDITION_CS = 'http://static.payu.com/sites/terms/files/Podmínky pro provedení jednorázové platební transakce v PayU.pdf';
