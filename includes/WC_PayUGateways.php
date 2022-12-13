@@ -6,14 +6,17 @@ abstract class WC_PayUGateways extends WC_Payment_Gateway
 {
     public static $paymethods = [];
 
-    protected $enable_for_shipping;
-    protected $enable_for_virtual;
-    protected $paytype;
-
     public $pos_id;
+    public $pos_widget_key;
     public $selected_method;
     public $show_terms_info;
+    public $enable_for_shipping;
+    public $enable_for_virtual;
+
+    protected $paytype;
+
     private $order_total = null;
+
     const CONDITION_PL = 'http://static.payu.com/sites/terms/files/payu_terms_of_service_single_transaction_pl_pl.pdf';
     const CONDITION_EN = 'http://static.payu.com/sites/terms/files/payu_terms_of_service_single_transaction_pl_en.pdf';
     const CONDITION_CS = 'http://static.payu.com/sites/terms/files/Podmínky pro provedení jednorázové platební transakce v PayU.pdf';
@@ -150,7 +153,7 @@ abstract class WC_PayUGateways extends WC_Payment_Gateway
                 'woo-payu-payment-gateway'),
                 esc_url($this->get_condition_url()));
             echo '</div><div>';
-            echo __('The controller of your personal data is PayU S.A. with its registered office in Poznan (60-166), at Grunwaldzka Street 182 ("PayU").',
+            echo __('The controller of your personal data is PayU S.A. with its registered office in Poznan (60-166), at Grunwaldzka Street 186 ("PayU").',
                     'woo-payu-payment-gateway') . ' <span class="payu-read-more">' . __('read more',
                     'woo-payu-payment-gateway') . '</span> <span class="payu-more-hidden">';
             echo __('Your personal data will be processed for purposes of processing  payment transaction, notifying You about the status of this payment, dealing with complaints and also in order to fulfill the legal obligations imposed on PayU.',
@@ -264,8 +267,13 @@ abstract class WC_PayUGateways extends WC_Payment_Gateway
             $this->get_form_fields_basic(),
             $this->get_form_field_config($currencies),
             $this->get_form_field_info(),
+            $this->get_additional_gateway_fields(),
             $custom_order ? $this->get_form_custom_order() : []
         );
+    }
+
+    protected function get_additional_gateway_fields() {
+        return [];
     }
 
     /**
@@ -531,6 +539,11 @@ abstract class WC_PayUGateways extends WC_Payment_Gateway
                 'payu_settings_option_name',
                 'global_' . $optionPrefix . 'pos_id' . $optionSuffix
             ]);
+            $client_secret = $this->get_payu_option([
+                'payu_settings_option_name',
+                'global_' . $optionPrefix . 'client_secret' . $optionSuffix
+            ]);
+            $this->pos_widget_key = substr($client_secret, 0, 2);
             OpenPayU_Configuration::setMerchantPosId($this->pos_id);
             OpenPayU_Configuration::setSignatureKey($this->get_payu_option([
                 'payu_settings_option_name',
@@ -540,16 +553,15 @@ abstract class WC_PayUGateways extends WC_Payment_Gateway
                 'payu_settings_option_name',
                 'global_' . $optionPrefix . 'client_id' . $optionSuffix
             ]));
-            OpenPayU_Configuration::setOauthClientSecret($this->get_payu_option([
-                'payu_settings_option_name',
-                'global_' . $optionPrefix . 'client_secret' . $optionSuffix
-            ]));
+            OpenPayU_Configuration::setOauthClientSecret($client_secret);
         } else {
             $this->pos_id = $this->get_option($optionPrefix . 'pos_id' . $optionSuffix);
+            $client_secret = $this->get_option($optionPrefix . 'client_secret' . $optionSuffix);
+            $this->pos_widget_key = substr($client_secret, 0, 2);
             OpenPayU_Configuration::setMerchantPosId($this->pos_id);
             OpenPayU_Configuration::setSignatureKey($this->get_option($optionPrefix . 'md5' . $optionSuffix));
             OpenPayU_Configuration::setOauthClientId($this->get_option($optionPrefix . 'client_id' . $optionSuffix));
-            OpenPayU_Configuration::setOauthClientSecret($this->get_option($optionPrefix . 'client_secret' . $optionSuffix));
+            OpenPayU_Configuration::setOauthClientSecret($client_secret);
         }
 
 

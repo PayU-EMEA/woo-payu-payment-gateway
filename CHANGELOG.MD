@@ -1,3 +1,7 @@
+# 2.0.19
+* Added installment widget integration
+* PayU address update
+
 # 2.0.18
 * Fixed link to repay in email
 * The shorter product name

@@ -131,6 +131,20 @@ From user point of view, repayment is possible:
 * by clicking "Pay with PayU" link in Actions column in order list
 * by clicking "Pay with PayU" link over order details section
 
+## Credit widget
+Plugin provides seamless integration of [installments widget][ext14], responsible for presenting minimal installment amount for a given product.
+Functionality is enabled by default. It can be deactivated in administration panel (WooCommerce->Settings->Payments->PayU - installments).
+Integration points of a widget have been described in a table below.
+
+| Checkbox Installments widget | Description | Presentation |
+| --- | --- | --- |
+| Enabled on product listings | <div style="max-width:200px">Presents "installment from" widget on all product listings.</div> |<div style="max-width:500px">![Prezentacja widgetu](readme_images/credit_widget_listings.jpg)</div>|
+| Enabled on product page | <div style="max-width:200px">Presents widget on product page.</div> |<div style="max-width:500px">![Prezentacja widgetu](readme_images/credit_widget_product_page.jpg)</div>|
+| Enabled on cart page | <div style="max-width:200px">Presents widget on cart page - relates to a total cart amount and shipping costs.</div> |<div style="max-width:500px">![Prezentacja widgetu](readme_images/credit_widget_cart_page.jpg)</div>|
+| Enabled on checkout page | <div style="max-width:200px">Presents widget on checkout page - relates to a total cart amount and shipping costs.</div> |<div style="max-width:500px">![Prezentacja widgetu](readme_images/credit_widget_checkout_page.jpg)</div>|
+
+Widget is presented only for PLN currency and products or carts with amount in allowed installment amount range.
+
 ## Emails
 The plugin does not send any additional emails and does not interfere with any mailing process.
 
@@ -143,3 +157,4 @@ In case repayment is configured, the mail confirming order placement is enhanced
 [ext5]: https://secure.snd.payu.com/boarding/#/registerSandbox/?lang=en
 [ext6]: http://developers.payu.com/en/overview.html#paymethods
 [ext13]: https://poland.payu.com/en/support/
+[ext14]: https://developers.payu.com/en/installments.html#installments_best_practices_mini

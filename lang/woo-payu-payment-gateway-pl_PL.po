@@ -405,7 +405,7 @@ msgstr "Nie udało się przesłać karty"
 #: includes/WC_PayUGateways.php:153
 msgid ""
 "The controller of your personal data is PayU S.A. with its registered office "
-"in Poznan (60-166), at Grunwaldzka Street 182 (\"PayU\")."
+"in Poznan (60-166), at Grunwaldzka Street 186 (\"PayU\")."
 msgstr ""
 "Administratorem Twoich danych osobowych jest PayU S.A. z siedzibą w Poznaniu "
 "(60-166), przy ul. Grunwaldzkiej 186."
@@ -518,3 +518,23 @@ msgstr ""
 "Twoje dane osobowe będą przetwarzane w celu realizacji transakcji płatniczej,"
 " powiadamiania Cię o statusie realizacji Twojej płatności, rozpatrywania "
 "reklamacji, a także w celu wypełnienia obowiązków prawnych ciążących na PayU."
+
+#: includes/WC_Gateway_PayuInstallments.php:67
+msgid "Installments widget"
+msgstr "Widget Raty"
+
+#: includes/WC_Gateway_PayuInstallments.php:69
+msgid "Enabled on product listings"
+msgstr "Włączony na listingach"
+
+#: includes/WC_Gateway_PayuInstallments.php:69
+msgid "Enabled on product page"
+msgstr "Włączony na stronie produktu"
+
+#: includes/WC_Gateway_PayuInstallments.php:69
+msgid "Enabled on cart page"
+msgstr "Włączony na stronie koszyka"
+
+#: includes/WC_Gateway_PayuInstallments.php:69
+msgid "Enabled on checkout page"
+msgstr "Włączony na stronie wyboru metody płatności"
