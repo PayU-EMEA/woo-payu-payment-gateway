@@ -14,46 +14,39 @@ class WC_Gateway_PayuInstallments extends WC_PayUGateways
                     add_filter('woocommerce_available_payment_gateways', [$this, 'unset_gateway']);
                 } else {
                     wp_enqueue_style('payu-installments-widget', plugins_url( '/assets/css/payu-installments-widget.css', PAYU_PLUGIN_FILE ), [], PAYU_PLUGIN_VERSION);
-                    add_filter( 'woocommerce_gateway_title', [ $this, 'installments_filter_gateway_title' ], 10, 2);
+                    add_filter('woocommerce_gateway_title', [$this, 'installments_filter_gateway_title'], 10, 2);
                 }
             }
         }
     }
 
-    public function installments_filter_gateway_title( $title, $id )
+    public function installments_filter_gateway_title($title, $id)
     {
-        if ($id === 'payuinstallments' &&
-            get_option('woocommerce_payuinstallments_settings')['credit_widget_on_checkout_page'] === 'yes' &&
-            get_woocommerce_currency() === 'PLN') {
+        if ($this->should_display_installments_widget($id)) {
             wp_enqueue_script('payu-installments-widget', 'https://static.payu.com/res/v2/widget-mini-installments.js', [], PAYU_PLUGIN_VERSION);
-
+            wp_enqueue_script('payu-installments-widget-checkout', plugins_url( '/assets/js/payu-installments-widget-checkout.js', PAYU_PLUGIN_FILE ), ['jquery', 'payu-installments-widget'], PAYU_PLUGIN_VERSION);
             $posId = $this->pos_id;
             $widgetKey = $this->pos_widget_key;
             $priceTotal = WC()->cart->total;
             $transformedTitle =
                 '<div class="wc-payu-installments-widget-cart">'.$title.
-                '<div id="installment-mini-cart"></div>'.
-                '<script type="text/javascript">'.
-                'function showInstallmentsWidget() {'.
-                '   if(window.OpenPayU && document.getElementById(\'installment-mini-cart\').childNodes.length === 0) {'.
-                '       var value = '.$priceTotal.';'.
-                '       var options = {'.
-                '           creditAmount: value,'.
-                '           posId: \''.$posId.'\','.
-                '           key: \''.$widgetKey.'\','.
-                '           showLongDescription: true'.
-                '       };'.
-                '   OpenPayU.Installments.miniInstallment(\'#installment-mini-cart\', options);'.
-                '   }'.
-                '}'.
-                'document.addEventListener("DOMContentLoaded", showInstallmentsWidget);'.
-                'showInstallmentsWidget();'.
-                '</script>'.
+                '<div id="installment-mini-cart"'.
+                ' data-pos-id="'.$posId.'"'.
+                ' data-widget-key="'.$widgetKey.'"'.
+                ' data-price-total="'.$priceTotal.'">'.
+                '</div>'.
                 '</div>';
             return $transformedTitle;
         }
 
         return $title;
+    }
+
+    function should_display_installments_widget($id)
+    {
+        return $id === 'payuinstallments' &&
+            get_option('woocommerce_payuinstallments_settings')['credit_widget_on_checkout_page'] === 'yes' &&
+            get_woocommerce_currency() === 'PLN';
     }
 
     public function payment_fields()

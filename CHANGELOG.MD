@@ -1,3 +1,6 @@
+# 2.0.20
+* Fixed installment payment method name in emails
+
 # 2.0.19
 * Added installment widget integration
 * PayU address update
