@@ -2,7 +2,6 @@ function showInstallmentsWidgetInCart() {
     if (window.OpenPayU && !document.getElementById('installment-mini-cart')) {
         jQuery(document).find("label[for='payment_method_payuinstallments']")
             .append(("<div id='installment-mini-cart'>"));
-        showInstallmentsWidgetInCart();
         var options = {
             creditAmount: Number(PayUInstallmentsWidgetCartData.priceTotal),
             posId: PayUInstallmentsWidgetCartData.posId,
