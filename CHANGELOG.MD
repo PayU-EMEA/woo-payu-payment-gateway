@@ -1,3 +1,6 @@
+# 2.0.21
+* Fixed installment payment method name in order summary page
+
 # 2.0.20
 * Fixed installment payment method name in emails
 

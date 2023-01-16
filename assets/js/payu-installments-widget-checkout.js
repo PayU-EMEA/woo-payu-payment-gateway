@@ -1,10 +1,11 @@
 function showInstallmentsWidgetInCart() {
-    if (window.OpenPayU && document.getElementById('installment-mini-cart').childNodes.length === 0) {
-        var widgetData = document.getElementById("installment-mini-cart").dataset;
+    if (window.OpenPayU && !document.getElementById('installment-mini-cart')) {
+        jQuery(document).find("label[for='payment_method_payuinstallments']")
+            .append(("<div id='installment-mini-cart'>"));
         var options = {
-            creditAmount: Number(widgetData.priceTotal),
-            posId: widgetData.posId,
-            key: widgetData.widgetKey,
+            creditAmount: Number(PayUInstallmentsWidgetCartData.priceTotal),
+            posId: PayUInstallmentsWidgetCartData.posId,
+            key: PayUInstallmentsWidgetCartData.widgetKey,
             showLongDescription: true
         };
         OpenPayU.Installments.miniInstallment('#installment-mini-cart', options);
