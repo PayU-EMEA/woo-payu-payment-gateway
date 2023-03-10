@@ -1,3 +1,6 @@
+# 2.0.22
+* Fixed getTotal
+
 # 2.0.21
 * Fixed installment payment method name in order summary page
 
