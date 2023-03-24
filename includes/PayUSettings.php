@@ -154,6 +154,23 @@ class PayUSettings
             'payu-settings-admin', // page
             'payu_settings_setting_section' // section
         );
+        add_settings_field(
+            'global_return_url', // id
+            __('Override continueUrl base', 'woo-payu-payment-gateway'), // title
+            [$this, 'global_return_url_callback'], // callback
+            'payu-settings-admin', // page
+            'payu_settings_setting_section' // section
+        );
+    }
+
+    /**
+     * @return void
+     */
+    public function global_return_url_callback()
+    {
+        $value = isset($this->payu_settings_options['global_return_url']) ? esc_url($this->payu_settings_options['global_return_url']) : '';
+        printf('<input type="text" class="regular-text" value="%s" name="payu_settings_option_name[global_return_url]" id="global_return_url" />',
+            $value);
     }
 
     /**
@@ -195,6 +212,11 @@ class PayUSettings
 
         if (isset($input['global_repayment'])) {
             $sanitary_values['global_repayment'] = sanitize_text_field($input['global_repayment']);
+        }
+
+        if (isset($input['global_return_url'])) {
+            $returnUrl = sanitize_text_field($input['global_return_url']);
+            $sanitary_values['global_return_url'] = rtrim($returnUrl, "/");
         }
 
         return $sanitary_values;

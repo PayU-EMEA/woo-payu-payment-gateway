@@ -719,10 +719,12 @@ abstract class WC_PayUGateways extends WC_Payment_Gateway
     function process_payment($order_id)
     {
         $order = wc_get_order($order_id);
+        $customContinue = get_option('payu_settings_option_name')['global_return_url'];
+        $continueUrl = $customContinue ? $customContinue.'/'.$order_id : $this->get_return_url($order);
         $this->init_OpenPayU();
         $billingData = $order->get_address();
         $orderData = [
-            'continueUrl' => $this->get_return_url($order),
+            'continueUrl' => $continueUrl,
             'notifyUrl' => add_query_arg('wc-api', $this->gateway_data('api'), home_url('/')),
             'customerIp' => $this->getIP(),
             'merchantPosId' => OpenPayU_Configuration::getMerchantPosId(),
