@@ -43,9 +43,8 @@ abstract class WC_PayUGateways extends WC_Payment_Gateway
         $this->enable_for_virtual = $this->get_option( 'enable_for_virtual', 'no' ) === 'yes';
 
         if (!is_admin() && isset($_GET['pay_for_order'], $_GET['key'])) {
-            $order_id = $this->get_post_id_by_meta_key_and_value('_order_key',
-                filter_input_array(INPUT_GET, FILTER_SANITIZE_STRING)['key']);
-            if ($order_id) {
+            $order_id = wc_get_order_id_by_order_key($_GET['key']);
+            if ($order_id !== 0) {
                 $order = wc_get_order($order_id);
                 $this->order_total = $order->get_total();
             }
@@ -73,26 +72,6 @@ abstract class WC_PayUGateways extends WC_Payment_Gateway
      */
     protected function is_enabled() {
         return 'yes' === $this->enabled;
-    }
-
-    /**
-     * Get post id from meta key and value
-     * @param string $key
-     * @param mixed $value
-     * @return int|bool
-     */
-    protected function get_post_id_by_meta_key_and_value($key, $value)
-    {
-        global $wpdb;
-        $meta = $wpdb->get_results("SELECT * FROM `" . $wpdb->postmeta . "` WHERE meta_key='" . esc_sql($key) . "' AND meta_value='" . esc_sql($value) . "'");
-        if (is_array($meta) && !empty($meta) && isset($meta[0])) {
-            $meta = $meta[0];
-        }
-        if (is_object($meta)) {
-            return $meta->post_id;
-        } else {
-            return false;
-        }
     }
 
     /**
@@ -760,12 +739,10 @@ abstract class WC_PayUGateways extends WC_Payment_Gateway
                 if (isset(get_option('payu_settings_option_name')['global_repayment'])) {
                     add_action('woocommerce_email_before_order_table', [$this, 'email_instructions'], 10, 3);
                 }
-
+                $order->set_transaction_id($response->getResponse()->orderId);
                 $order->update_status(get_option('payu_settings_option_name')['global_default_on_hold_status'],
                     __('Awaiting PayU payment.', 'woo-payu-payment-gateway'));
 
-                update_post_meta($order_id, '_transaction_id', $response->getResponse()->orderId);
-                update_post_meta($order_id, '_payu_payment_method', $this->selected_method, true);
                 $redirect = $this->get_return_url($order);
                 if ($response->getResponse()->redirectUri) {
                     $redirect = $response->getResponse()->redirectUri;
@@ -823,7 +800,8 @@ abstract class WC_PayUGateways extends WC_Payment_Gateway
      */
     protected function completed_transaction_id($order_id)
     {
-        $payu_statuses = get_post_meta($order_id, '_payu_order_status');
+        $order = wc_get_order($order_id);
+        $payu_statuses = $order->get_meta('_payu_order_status');
         foreach ($payu_statuses as $payu_status) {
             $ps = explode('|', $payu_status);
             if ($ps[0] === OpenPayuOrderStatus::STATUS_COMPLETED) {
@@ -998,8 +976,7 @@ abstract class WC_PayUGateways extends WC_Payment_Gateway
                 $order = wc_get_order($order_id);
 
                 $reportOutput .= 'WC AS: ' . $order->get_status() . '|';
-                add_post_meta($order_id, '_payu_order_status',
-                    $status . '|' . $response->getResponse()->order->orderId);
+                $order->add_meta_data('_payu_order_status', $status . '|' . $response->getResponse()->order->orderId);
                 if ($order->get_status() !== 'completed' && $order->get_status() !== 'processing') {
                     switch ($status) {
                         case OpenPayuOrderStatus::STATUS_CANCELED:
@@ -1023,7 +1000,7 @@ abstract class WC_PayUGateways extends WC_Payment_Gateway
                                         'woo-payu-payment-gateway')
                                 );
                                 if (isset(get_option('payu_settings_option_name')['global_repayment'])) {
-                                    $payu_statuses = get_post_meta($order_id, '_payu_order_status');
+                                    $payu_statuses = $order->get_meta('_payu_order_status');
 
                                     if (in_array(OpenPayuOrderStatus::STATUS_COMPLETED,
                                         $this->clean_payu_statuses($payu_statuses))) {

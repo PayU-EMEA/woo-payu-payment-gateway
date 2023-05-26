@@ -21,6 +21,14 @@ define('PAYU_PLUGIN_STATUS_WAITING', 'payu-waiting');
 add_action('plugins_loaded', 'init_gateway_payu');
 add_action('admin_init', 'move_old_payu_settings');
 
+add_action(
+    'before_woocommerce_init',
+    function() {
+        if ( class_exists( '\Automattic\WooCommerce\Utilities\FeaturesUtil' ) ) {
+            \Automattic\WooCommerce\Utilities\FeaturesUtil::declare_compatibility( 'custom_order_tables', __FILE__, true );
+        }
+    }
+);
 /**
  * Init function that runs after plugin install.
  */
@@ -516,9 +524,10 @@ add_action('woocommerce_order_item_add_action_buttons', 'wc_order_item_add_actio
 function wc_order_item_add_action_buttons_callback($order)
 {
     $payu_gateways = WC_PayUGateways::gateways_list();
-    if (@$payu_gateways[$order->get_payment_method()] && !isset(get_option('payu_settings_option_name')['global_repayment']) && get_post_meta($order->get_id(),
-            '_payu_order_status')) {
-        $payu_statuses = WC_PayUGateways::clean_payu_statuses(get_post_meta($order->get_id(), '_payu_order_status'));
+    $payuOrderStatus = $order->get_meta('_payu_order_status');
+
+    if (@$payu_gateways[$order->get_payment_method()] && !isset(get_option('payu_settings_option_name')['global_repayment']) && $payuOrderStatus) {
+        $payu_statuses = WC_PayUGateways::clean_payu_statuses($payuOrderStatus);
         if ((!in_array(OpenPayuOrderStatus::STATUS_COMPLETED,
                     $payu_statuses) && !in_array(OpenPayuOrderStatus::STATUS_CANCELED,
                     $payu_statuses)) && in_array(OpenPayuOrderStatus::STATUS_WAITING_FOR_CONFIRMATION,
