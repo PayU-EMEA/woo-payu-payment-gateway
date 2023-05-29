@@ -1,3 +1,7 @@
+# 2.0.23
+* Added compatibility with HPOS (High-Performance Order Storage)
+* Sends more data for better detected frauds
+
 # 2.0.22
 * Fixed getTotal
 
