@@ -31,9 +31,9 @@ jQuery('body').on('click', '.payu-list-banks li.payu-active label', function () 
 
     function validate_payu_checkout(form, e) {
         var $payment_method = $(form).find('input[name="payment_method"]:checked').val();
-
+        var payuTokenElement = document.getElementsByName('payu_sf_token')[0];
         if ($payment_method === 'payusecureform') {
-            if ($('#response-tokenize').val() === '') {
+            if (payuTokenElement.value === '') {
                 try {
                     window.payuSdkForms.tokenize()
                         .then(function (result) {
@@ -41,7 +41,14 @@ jQuery('body').on('click', '.payu-list-banks li.payu-active label', function () 
                                 .html('')
                                 .slideUp(250);
                             if (result.status === 'SUCCESS') {
-                                $('#response-tokenize').val(result.body.token);
+                                payuTokenElement.value = result.body.token;
+                                document.getElementsByName('payu_browser[screenWidth]')[0].value = screen.width;
+                                document.getElementsByName('payu_browser[javaEnabled]')[0].value = navigator.javaEnabled();
+                                document.getElementsByName('payu_browser[timezoneOffset]')[0].value = new Date().getTimezoneOffset();
+                                document.getElementsByName('payu_browser[screenHeight]')[0].value = screen.height;
+                                document.getElementsByName('payu_browser[userAgent]')[0].value = navigator.userAgent;
+                                document.getElementsByName('payu_browser[colorDepth]')[0].value = screen.colorDepth;
+                                document.getElementsByName('payu_browser[language]')[0].value = navigator.language;
                                 $(form).submit();
                             } else {
                                 $(result.error.messages).each(function (i, error) {

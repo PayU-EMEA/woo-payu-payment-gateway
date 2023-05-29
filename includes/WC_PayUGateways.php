@@ -1,4 +1,7 @@
 <?php
+
+use Automattic\WooCommerce\Utilities\NumberUtil;
+
 require_once 'lib/openpayu.php';
 require_once 'OauthCacheWP.php';
 
@@ -699,7 +702,7 @@ abstract class WC_PayUGateways extends WC_Payment_Gateway
     {
         $order = wc_get_order($order_id);
         $this->init_OpenPayU();
-        $billingData = $order->get_address();
+
         $orderData = [
             'continueUrl' => $this->get_return_url($order),
             'notifyUrl' => add_query_arg('wc-api', $this->gateway_data('api'), home_url('/')),
@@ -709,23 +712,17 @@ abstract class WC_PayUGateways extends WC_Payment_Gateway
             'currencyCode' => get_woocommerce_currency(),
             'totalAmount' => $this->toAmount($order->get_total()),
             'extOrderId' => uniqid($order_id . '_', true),
-            'products' => [
-                [
-                    'name' => '#' . $order->get_order_number(),
-                    'unitPrice' => $this->toAmount($order->get_total()),
-                    'quantity' => 1
-                ]
-            ],
-            'buyer' => [
-                'email' => $billingData['email'],
-                'phone' => $billingData['phone'],
-                'firstName' => $billingData['first_name'],
-                'lastName' => $billingData['last_name'],
-                'language' => $this->getLanguage()
-            ]
+            'products' => $this->getProducts($order),
+            'buyer' => $this->getBuyer($order),
         ];
+
         if ($this->id !== 'payustandard') {
             $orderData['payMethods'] = $this->get_payu_pay_method();
+        }
+
+        $threeDsAuthentication = $this->getThreeDsAuthentication($order, $orderData);
+        if ($threeDsAuthentication !== false) {
+            $orderData['threeDsAuthentication'] = $threeDsAuthentication;
         }
 
         try {
@@ -751,7 +748,6 @@ abstract class WC_PayUGateways extends WC_Payment_Gateway
                     'result' => 'success',
                     'redirect' => $redirect
                 ];
-
                 return $result;
             } else {
                 wc_add_notice(__('Payment error. Status code: ', 'woo-payu-payment-gateway') . $response->getStatus(), 'error');
@@ -763,6 +759,140 @@ abstract class WC_PayUGateways extends WC_Payment_Gateway
 
             return false;
         }
+    }
+
+    /**
+     * @param WC_Order $order
+     *
+     * @return array
+     */
+    private function getProducts($order)
+    {
+        $products = [];
+        $i = 0;
+        /** @var WC_Order_Item_Product $item */
+        foreach ($order->get_items() as $item) {
+            $products[$i] = [
+                'name' => $item->get_name(),
+                'unitPrice' => $this->toAmount($order->get_item_total($item, true)),
+                'quantity' => $item->get_quantity(),
+            ];
+
+            if ($item->get_product()->is_virtual()) {
+                $products[$i]['virtual'] = true;
+            }
+
+            $i++;
+        }
+
+        if (!empty($order->get_shipping_methods())) {
+            $products[] = [
+                'name' => 'Shipment' . ' [' . $order->get_shipping_method() . ']',
+                'unitPrice' => $this->toAmount(NumberUtil::round($order->get_shipping_total(), WC_ROUNDING_PRECISION) + NumberUtil::round($order->get_shipping_tax(), WC_ROUNDING_PRECISION)),
+                'quantity' => 1,
+            ];
+        }
+
+        if ($order->get_total_discount(false) !== 0.0) {
+            $products[] = [
+                'name' => 'Discount',
+                'unitPrice' => $this->toAmount($order->get_total_discount(false)) * -1,
+                'quantity' => 1,
+            ];
+        }
+
+        return $products;
+    }
+
+    /**
+     * @param WC_Order $order
+     *
+     * @return array
+     */
+    private function getBuyer($order)
+    {
+        $billingData = $order->get_address('billing');
+
+        $buyer = [
+            'email' => $billingData['email'],
+            'phone' => $billingData['phone'],
+            'firstName' => $billingData['first_name'],
+            'lastName' => $billingData['last_name'],
+            'language' => $this->getLanguage(),
+        ];
+
+        if (!empty($order->get_shipping_methods())) {
+            $shippingData = $order->get_address('shipping');
+
+            $buyer['delivery'] = [
+                'street' => $shippingData['address_1'] . ($shippingData['address_2'] ? ' ' . $shippingData['address_2'] : ''),
+                'postalCode' => $shippingData['postcode'],
+                'city' => $shippingData['city'],
+                'countryCode' => $shippingData['country']
+            ];
+
+        }
+        return $buyer;
+    }
+
+    /**
+     * @param WC_Order $order
+     * @param array $orderData
+     *
+     * @return array | false
+     */
+    private function getThreeDsAuthentication($order, $orderData)
+    {
+        if (!isset($orderData['payMethods'])
+            || $orderData['payMethods']['payMethod']['type'] === 'CARD_TOKEN'
+            || $orderData['payMethods']['payMethod']['value'] === 'c'
+            || $orderData['payMethods']['payMethod']['value'] === 'ap'
+            || $orderData['payMethods']['payMethod']['value'] === 'jp'
+            || $orderData['payMethods']['payMethod']['value'] === 'ma'
+            || $orderData['payMethods']['payMethod']['value'] === 'vc'
+        ) {
+
+            $billingData = $order->get_address('billing');
+
+            $threeDsAuthentication = [
+                'cardholder' => [
+                    "name" => $order->get_formatted_billing_full_name(),
+                    'billingAddress' => [
+                        'street' => $billingData['address_1'] . ($billingData['address_2'] ? ' ' . $billingData['address_2'] : ''),
+                        'postalCode' => $billingData['postcode'],
+                        'city' => $billingData['city'],
+                        'countryCode'=> $billingData['country']
+                    ]
+                ]
+            ];
+
+            if ($orderData['payMethods']['payMethod']['type'] === 'CARD_TOKEN'
+                && isset($_POST['payu_browser'])
+                && is_array($_POST['payu_browser'])
+            ) {
+                $possibleBrowserData = ['screenWidth', 'javaEnabled', 'timezoneOffset', 'screenHeight', 'userAgent', 'colorDepth', 'language'];
+                $browserData = [
+                    'requestIP' => $this->getIP()
+                ];
+
+                foreach ($possibleBrowserData as $bd) {
+                    $browserData[$bd] = isset($_POST['payu_browser'][$bd]) ? sanitize_text_field($_POST['payu_browser'][$bd]) : '';
+                }
+
+                if (empty($browserData['userAgent'])) {
+                    $headers = array_change_key_case(getallheaders(), CASE_LOWER);
+                    if ($headers['user-agent']) {
+                        $browserData['userAgent'] = $headers['user-agent'];
+                    }
+                }
+
+                $threeDsAuthentication['browser'] = $browserData;
+            }
+
+            return $threeDsAuthentication;
+        }
+
+        return false;
     }
 
     /**

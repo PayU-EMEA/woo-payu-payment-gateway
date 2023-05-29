@@ -96,7 +96,14 @@ class WC_Gateway_PayuSecureForm extends WC_PayUGateways
                     </div>
                 </div>
 
-                <input type="hidden" name="response-tokenize" id="response-tokenize"/>
+                <input type="hidden" name="payu_sf_token" value=""/>
+                <input type="hidden" name="payu_browser[screenWidth]" value=""/>
+                <input type="hidden" name="payu_browser[javaEnabled]" value=""/>
+                <input type="hidden" name="payu_browser[timezoneOffset]" value=""/>
+                <input type="hidden" name="payu_browser[screenHeight]" value=""/>
+                <input type="hidden" name="payu_browser[userAgent]" value=""/>
+                <input type="hidden" name="payu_browser[colorDepth]" value=""/>
+                <input type="hidden" name="payu_browser[language]" value=""/>
                 <?php
             }
         }
@@ -107,7 +114,7 @@ class WC_Gateway_PayuSecureForm extends WC_PayUGateways
      */
     protected function get_payu_pay_method()
     {
-        $token = sanitize_text_field($_POST['response-tokenize']);
+        $token = sanitize_text_field($_POST['payu_sf_token']);
 
         return $this->get_payu_pay_method_array('CARD_TOKEN', $token ? $token : -1, $this->paytype);
     }
