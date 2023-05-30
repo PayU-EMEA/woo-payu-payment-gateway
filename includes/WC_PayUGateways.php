@@ -772,17 +772,21 @@ abstract class WC_PayUGateways extends WC_Payment_Gateway
         $i = 0;
         /** @var WC_Order_Item_Product $item */
         foreach ($order->get_items() as $item) {
-            $products[$i] = [
-                'name' => substr($item->get_name(), 0, 256),
-                'unitPrice' => $this->toAmount($order->get_item_total($item, true)),
-                'quantity' => $item->get_quantity(),
-            ];
+            $name = substr($item->get_name(), 0, 256);
 
-            if ($item->get_product()->is_virtual()) {
-                $products[$i]['virtual'] = true;
+            if (!empty($name)) {
+                $products[$i] = [
+                    'name' => substr($item->get_name(), 0, 256),
+                    'unitPrice' => $this->toAmount($order->get_item_total($item, true)),
+                    'quantity' => $item->get_quantity(),
+                ];
+
+                if ($item->get_product()->is_virtual()) {
+                    $products[$i]['virtual'] = true;
+                }
+
+                $i++;
             }
-
-            $i++;
         }
 
         if (!empty($order->get_shipping_methods())) {
@@ -827,9 +831,12 @@ abstract class WC_PayUGateways extends WC_Payment_Gateway
             $buyer['delivery'] = [
                 'street' => $shippingData['address_1'] . ($shippingData['address_2'] ? ' ' . $shippingData['address_2'] : ''),
                 'postalCode' => $shippingData['postcode'],
-                'city' => $shippingData['city'],
-                'countryCode' => $shippingData['country']
+                'city' => $shippingData['city']
             ];
+
+            if (strlen($shippingData['country']) === 2) {
+                $buyer['delivery']['countryCode'] = $shippingData['country'];
+            }
 
         }
         return $buyer;
@@ -854,17 +861,45 @@ abstract class WC_PayUGateways extends WC_Payment_Gateway
 
             $billingData = $order->get_address('billing');
 
-            $threeDsAuthentication = [
-                'cardholder' => [
-                    "name" => $order->get_formatted_billing_full_name(),
-                    'billingAddress' => [
-                        'street' => $billingData['address_1'] . ($billingData['address_2'] ? ' ' . $billingData['address_2'] : ''),
-                        'postalCode' => $billingData['postcode'],
-                        'city' => $billingData['city'],
-                        'countryCode'=> $billingData['country']
-                    ]
-                ]
-            ];
+            $threeDsAuthentication = [];
+
+            $name = $order->get_formatted_billing_full_name();
+            $address = $billingData['address_1'] . ($billingData['address_2'] ? ' ' . $billingData['address_2'] : '');
+            $postalCode = $billingData['postcode'];
+            $city = $billingData['city'];
+            $countryCode = $billingData['countryCode'];
+
+            $isBillingAddress = !empty($address) || !empty($postalCode) || !empty($city) || (!empty($countryCode) && strlen($countryCode) === 2);
+
+            if (!empty($name) || $isBillingAddress) {
+                $threeDsAuthentication = [
+                    'cardholder' => []
+                ];
+
+                if (!empty($name)) {
+                    $threeDsAuthentication['cardholder']['name'] = substr($order->get_formatted_billing_full_name(), 0, 50);
+                }
+
+                if ($isBillingAddress) {
+                    $threeDsAuthentication['cardholder']['billingAddress'] = [];
+                }
+
+                if (!empty($countryCode) && strlen($countryCode) === 2) {
+                    $threeDsAuthentication['cardholder']['billingAddress']['countryCode'] = $countryCode;
+                }
+
+                if (!empty($address)) {
+                    $threeDsAuthentication['cardholder']['billingAddress']['street'] = substr($address, 0, 50);
+                }
+
+                if (!empty($city)) {
+                    $threeDsAuthentication['cardholder']['billingAddress']['city'] = substr($city, 0, 50);
+                }
+
+                if (!empty($postalCode)) {
+                    $threeDsAuthentication['cardholder']['billingAddress']['postalCode'] = substr($postalCode, 0, 16);
+                }
+            }
 
             if ($orderData['payMethods']['payMethod']['type'] === 'CARD_TOKEN'
                 && isset($_POST['payu_browser'])
