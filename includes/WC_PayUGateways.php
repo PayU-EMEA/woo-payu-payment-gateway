@@ -773,7 +773,7 @@ abstract class WC_PayUGateways extends WC_Payment_Gateway
         /** @var WC_Order_Item_Product $item */
         foreach ($order->get_items() as $item) {
             $products[$i] = [
-                'name' => $item->get_name(),
+                'name' => mb_substr($item->get_name(), 0, 256),
                 'unitPrice' => $this->toAmount($order->get_item_total($item, true)),
                 'quantity' => $item->get_quantity(),
             ];
@@ -787,7 +787,7 @@ abstract class WC_PayUGateways extends WC_Payment_Gateway
 
         if (!empty($order->get_shipping_methods())) {
             $products[] = [
-                'name' => 'Shipment' . ' [' . $order->get_shipping_method() . ']',
+                'name' => mb_substr('Shipment' . ' [' . $order->get_shipping_method() . ']', 0, 256),
                 'unitPrice' => $this->toAmount(NumberUtil::round($order->get_shipping_total(), WC_ROUNDING_PRECISION) + NumberUtil::round($order->get_shipping_tax(), WC_ROUNDING_PRECISION)),
                 'quantity' => 1,
             ];
