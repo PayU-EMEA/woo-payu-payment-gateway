@@ -1,7 +1,4 @@
-# 2.0.24
-* Fixed product name
-
-# 2.0.23
+# 2.0.23 - 2.0.25
 * Added compatibility with HPOS (High-Performance Order Storage)
 * Sends more data for better detected frauds
 
