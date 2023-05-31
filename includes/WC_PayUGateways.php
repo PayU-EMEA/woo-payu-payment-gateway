@@ -861,7 +861,7 @@ abstract class WC_PayUGateways extends WC_Payment_Gateway
 
             $billingData = $order->get_address('billing');
 
-            $threeDsAuthentication = [];
+            $threeDsAuthentication = false;
 
             $name = $order->get_formatted_billing_full_name();
             $address = $billingData['address_1'] . ($billingData['address_2'] ? ' ' . $billingData['address_2'] : '');
