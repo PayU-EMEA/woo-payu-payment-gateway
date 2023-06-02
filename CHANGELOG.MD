@@ -1,3 +1,6 @@
+# 2.0.26
+*  Better use of checkout_place_order hook
+
 # 2.0.23 - 2.0.25
 * Added compatibility with HPOS (High-Performance Order Storage)
 * Sends more data for better detected frauds
