@@ -1,3 +1,6 @@
+# 2.0.27
+*  Fixed for decimal quantity
+
 # 2.0.26
 *  Better use of checkout_place_order hook
 
