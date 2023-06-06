@@ -27,7 +27,7 @@ class WC_Gateway_PayuInstallments extends WC_PayUGateways
             wp_enqueue_script('payu-installments-widget-checkout', plugins_url( '/assets/js/payu-installments-widget-checkout.js', PAYU_PLUGIN_FILE ), ['jquery', 'payu-installments-widget'], PAYU_PLUGIN_VERSION);
             $posId = $this->pos_id;
             $widgetKey = $this->pos_widget_key;
-            $priceTotal = WC()->cart->total;
+            $priceTotal = WC()->cart->get_total('');
             $transformedDescription =
                 $description.
                 '<script type="text/javascript">'.

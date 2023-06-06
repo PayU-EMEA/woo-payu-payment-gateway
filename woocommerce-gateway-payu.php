@@ -313,9 +313,9 @@ function is_shipping_method_in_supported_methods_set($chosenShippingMethod, $ava
     return false;
 }
 
-add_action( 'wp_ajax_installments_get_cart_total', 'installments_get_cart_total' );
+add_action('wc_ajax_payu_installments_get_cart_total', 'installments_get_cart_total' );
 function installments_get_cart_total() {
-    $price = WC()->cart->total;
+    $price = WC()->cart->get_total('');
     echo $price;
     wp_die();
 }
@@ -330,7 +330,7 @@ function installments_mini_cart() {
         return;
     }
 
-    $price = WC()->cart->total;
+    $price = WC()->cart->get_total('');
 
     $posId = get_installment_option('pos_id');
     $widgetKey = get_installment_option('widget_key');
@@ -360,7 +360,7 @@ function installments_mini_cart() {
                     var data = {
                         'action': 'installments_get_cart_total'
                     };
-                    jQuery.post(woocommerce_params.ajax_url, data, function(response) {
+                    jQuery.post(woocommerce_params.wc_ajax_url.toString().replace('%%endpoint%%', 'payu_installments_get_cart_total'), data, function(response) {
                         priceTotal = Number(response);
                         showInstallmentsWidget();
                     });
