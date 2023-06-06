@@ -773,8 +773,9 @@ abstract class WC_PayUGateways extends WC_Payment_Gateway
         /** @var WC_Order_Item_Product $item */
         foreach ($order->get_items() as $item) {
             $name = substr($item->get_name(), 0, 256);
+            $quantity = $item->get_quantity();
 
-            if (!empty($name)) {
+            if (is_int($quantity) && $quantity > 0 && !empty($name)) {
                 $products[$i] = [
                     'name' => substr($item->get_name(), 0, 256),
                     'unitPrice' => $this->toAmount($order->get_item_total($item, true)),
