@@ -267,7 +267,7 @@ function installments_mini() {
         return;
     }
     global $product;
-    $price = $product->get_price();
+    $price = wc_get_price_including_tax($product);
     $productId = $product->get_id();
 
     $posId = get_installment_option('pos_id');
@@ -313,6 +313,12 @@ function is_shipping_method_in_supported_methods_set($chosenShippingMethod, $ava
     return false;
 }
 
+add_action( 'wp_ajax_installments_get_cart_total', 'installments_get_cart_total' );
+function installments_get_cart_total() {
+    $price = WC()->cart->total;
+    echo $price;
+    wp_die();
+}
 function installments_mini_cart() {
     if(get_woocommerce_currency() !== 'PLN') {
         return;
@@ -337,11 +343,11 @@ function installments_mini_cart() {
         <td>
             <span id="installment-mini-cart"></span>
             <script type="text/javascript">
+                var priceTotal = <?php echo esc_html($price)?>;
                 function showInstallmentsWidget() {
-                    if (window.OpenPayU && document.getElementById('installment-mini-cart').childNodes.length === 0) {
-                        var value = <?php echo esc_html($price)?>;
+                    if (window.OpenPayU) {
                         var options = {
-                            creditAmount: value,
+                            creditAmount: priceTotal,
                             posId: '<?php echo esc_html($posId)?>',
                             key: '<?php echo esc_html($widgetKey)?>',
                             showLongDescription: true
@@ -350,6 +356,16 @@ function installments_mini_cart() {
                     }
                 }
                 document.addEventListener("DOMContentLoaded", showInstallmentsWidget);
+                jQuery(document.body).on('updated_cart_totals', function(){
+                    var data = {
+                        'action': 'installments_get_cart_total'
+                    };
+                    jQuery.post(woocommerce_params.ajax_url, data, function(response) {
+                        priceTotal = Number(response);
+                        showInstallmentsWidget();
+                    });
+                });
+
                 showInstallmentsWidget();
             </script>
         </td>
@@ -364,7 +380,7 @@ function installments_mini_aware_product_block( $html, $data, $product ) {
     if(get_woocommerce_currency() !== 'PLN') {
         return;
     }
-    $price = $product->get_price();
+    $price = wc_get_price_including_tax($product);
     $productId = $product->get_id();
 
     $posId = get_installment_option('pos_id');
