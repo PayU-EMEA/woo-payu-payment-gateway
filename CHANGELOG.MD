@@ -1,3 +1,7 @@
+# 2.0.28
+* Fixed installment widget to use taxed product price
+* Fixed installment widget not refreshing after product quantity changes in cart details
+
 # 2.0.27
 *  Fixed for decimal quantity
 
