@@ -540,7 +540,7 @@ add_action('woocommerce_order_item_add_action_buttons', 'wc_order_item_add_actio
 function wc_order_item_add_action_buttons_callback($order)
 {
     $payu_gateways = WC_PayUGateways::gateways_list();
-    $payuOrderStatus = $order->get_meta('_payu_order_status');
+    $payuOrderStatus = $order->get_meta('_payu_order_status', false, '');
 
     if (@$payu_gateways[$order->get_payment_method()] && !isset(get_option('payu_settings_option_name')['global_repayment']) && $payuOrderStatus) {
         $payu_statuses = WC_PayUGateways::clean_payu_statuses($payuOrderStatus);

@@ -967,9 +967,9 @@ abstract class WC_PayUGateways extends WC_Payment_Gateway
     protected function completed_transaction_id($order_id)
     {
         $order = wc_get_order($order_id);
-        $payu_statuses = $order->get_meta('_payu_order_status');
+        $payu_statuses = $order->get_meta('_payu_order_status', false ,'');
         foreach ($payu_statuses as $payu_status) {
-            $ps = explode('|', $payu_status);
+            $ps = explode('|', $payu_status->value);
             if ($ps[0] === OpenPayuOrderStatus::STATUS_COMPLETED) {
                 return $ps[1];
             }
@@ -1166,7 +1166,7 @@ abstract class WC_PayUGateways extends WC_Payment_Gateway
                                         'woo-payu-payment-gateway')
                                 );
                                 if (isset(get_option('payu_settings_option_name')['global_repayment'])) {
-                                    $payu_statuses = $order->get_meta('_payu_order_status');
+                                    $payu_statuses = $order->get_meta('_payu_order_status', false);
 
                                     if (in_array(OpenPayuOrderStatus::STATUS_COMPLETED,
                                         $this->clean_payu_statuses($payu_statuses))) {
@@ -1215,7 +1215,7 @@ abstract class WC_PayUGateways extends WC_Payment_Gateway
         $result = [];
         if (is_array($payu_statuses)) {
             foreach ($payu_statuses as $payu_status) {
-                $status = explode('|', $payu_status)[0];
+                $status = explode('|', $payu_status->value)[0];
                 array_push($result, $status);
             }
         }
