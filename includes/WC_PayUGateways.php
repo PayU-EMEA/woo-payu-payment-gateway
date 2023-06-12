@@ -770,24 +770,34 @@ abstract class WC_PayUGateways extends WC_Payment_Gateway
     {
         $products = [];
         $i = 0;
+
         /** @var WC_Order_Item_Product $item */
         foreach ($order->get_items() as $item) {
-            $name = substr($item->get_name(), 0, 256);
             $quantity = $item->get_quantity();
+            $name = $item->get_name();
 
-            if (is_int($quantity) && $quantity > 0 && !empty($name)) {
-                $products[$i] = [
-                    'name' => substr($item->get_name(), 0, 256),
-                    'unitPrice' => $this->toAmount($order->get_item_total($item, true)),
-                    'quantity' => $item->get_quantity(),
-                ];
-
-                if ($item->get_product()->is_virtual()) {
-                    $products[$i]['virtual'] = true;
-                }
-
-                $i++;
+            if (fmod($quantity, 1) !== 0.0) {
+                $quantity = ceil($quantity);
+                $name = '['. NumberUtil::round($item->get_quantity(), WC_ROUNDING_PRECISION) .'] ' . $name;
             }
+
+            if ($quantity === 0) {
+                $quantity = 1;
+            }
+
+            $name = substr($name, 0, 256);
+
+            $products[$i] = [
+                'name' => $name,
+                'unitPrice' => $this->toAmount($order->get_item_total($item, true)),
+                'quantity' => $quantity,
+            ];
+
+            if ($item->get_product()->is_virtual()) {
+                $products[$i]['virtual'] = true;
+            }
+
+            $i++;
         }
 
         if (!empty($order->get_shipping_methods())) {
