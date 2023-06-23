@@ -1,4 +1,7 @@
-# 2.0.28
+# 2.0.30
+* Removed use of the NumberUtil class
+
+# 2.0.29
 * Decimal quantity in products
 
 # 2.0.28
