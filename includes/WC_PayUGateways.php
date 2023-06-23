@@ -1,7 +1,5 @@
 <?php
 
-use Automattic\WooCommerce\Utilities\NumberUtil;
-
 require_once 'lib/openpayu.php';
 require_once 'OauthCacheWP.php';
 
@@ -778,7 +776,7 @@ abstract class WC_PayUGateways extends WC_Payment_Gateway
 
             if (fmod($quantity, 1) !== 0.0) {
                 $quantity = ceil($quantity);
-                $name = '['. NumberUtil::round($item->get_quantity(), WC_ROUNDING_PRECISION) .'] ' . $name;
+                $name = '['. round($item->get_quantity(), wc_get_rounding_precision()) .'] ' . $name;
             }
 
             if ($quantity === 0) {
@@ -803,7 +801,7 @@ abstract class WC_PayUGateways extends WC_Payment_Gateway
         if (!empty($order->get_shipping_methods())) {
             $products[] = [
                 'name' => substr('Shipment' . ' [' . $order->get_shipping_method() . ']', 0, 256),
-                'unitPrice' => $this->toAmount(NumberUtil::round($order->get_shipping_total(), WC_ROUNDING_PRECISION) + NumberUtil::round($order->get_shipping_tax(), WC_ROUNDING_PRECISION)),
+                'unitPrice' => $this->toAmount(round($order->get_shipping_total(), wc_get_rounding_precision()) + round($order->get_shipping_tax(), wc_get_rounding_precision())),
                 'quantity' => 1,
             ];
         }
