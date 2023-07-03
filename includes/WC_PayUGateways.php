@@ -869,14 +869,13 @@ abstract class WC_PayUGateways extends WC_Payment_Gateway
         ) {
 
             $billingData = $order->get_address('billing');
-
             $threeDsAuthentication = false;
 
             $name = $order->get_formatted_billing_full_name();
             $address = $billingData['address_1'] . ($billingData['address_2'] ? ' ' . $billingData['address_2'] : '');
             $postalCode = $billingData['postcode'];
             $city = $billingData['city'];
-            $countryCode = $billingData['countryCode'];
+            $countryCode = $billingData['countryCode'] ?? '';
 
             $isBillingAddress = !empty($address) || !empty($postalCode) || !empty($city) || (!empty($countryCode) && strlen($countryCode) === 2);
 
@@ -910,7 +909,7 @@ abstract class WC_PayUGateways extends WC_Payment_Gateway
                 }
             }
 
-            if ($orderData['payMethods']['payMethod']['type'] === 'CARD_TOKEN'
+            if (isset($orderData['payMethods']['payMethod']['type']) && $orderData['payMethods']['payMethod']['type'] === 'CARD_TOKEN'
                 && isset($_POST['payu_browser'])
                 && is_array($_POST['payu_browser'])
             ) {
