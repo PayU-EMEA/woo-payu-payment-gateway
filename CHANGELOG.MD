@@ -1,3 +1,7 @@
+# 2.0.31
+* Fixed warnings
+* SDK update
+
 # 2.0.30
 * Removed use of the NumberUtil class
 
