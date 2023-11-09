@@ -323,8 +323,9 @@ function installments_mini_cart() {
     if(get_woocommerce_currency() !== 'PLN') {
         return;
     }
-
-    $chosenShippingMethod = WC()->session->get('chosen_shipping_methods')[0];
+    $chosen_shipping_methods = WC()->session->get('chosen_shipping_methods');
+    $chosenShippingMethod = is_array($chosen_shipping_methods) && count($chosen_shipping_methods) > 0
+        ? $chosen_shipping_methods[0] : null;
     $supportedInstallmentShippingMethods = get_installment_option('enable_for_shipping');
     if(!is_shipping_method_in_supported_methods_set($chosenShippingMethod, $supportedInstallmentShippingMethods)) {
         return;

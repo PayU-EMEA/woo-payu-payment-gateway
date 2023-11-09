@@ -1097,9 +1097,9 @@ abstract class WC_PayUGateways extends WC_Payment_Gateway
     {
         $notification = json_decode($notification);
 
-        if (is_object($notification) && $notification->order && $notification->order->currencyCode) {
+        if (is_object($notification) && isset($notification->order->currencyCode)) {
             return $notification->order->currencyCode;
-        } elseif (is_object($notification) && $notification->refund && $notification->refund->currencyCode) {
+        } elseif (is_object($notification) && isset($notification->refund->currencyCode)) {
             return $notification->refund->currencyCode;
         }
         return null;
