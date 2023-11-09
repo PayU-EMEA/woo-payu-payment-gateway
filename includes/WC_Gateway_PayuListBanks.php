@@ -57,10 +57,9 @@ class WC_Gateway_PayuListBanks extends WC_PayUGateways
     private function retrieve_methods($response)
     {
         $payMethods = $response->getResponse();
-        $custom_order = '';
-        if (get_option('woocommerce_' . $this->id . '_settings')['custom_order']) {
-            $custom_order = get_option('woocommerce_' . $this->id . '_settings')['custom_order'];
-        }
+        $custom_order = isset(get_option('woocommerce_' . $this->id . '_settings')['custom_order'])
+            ? get_option('woocommerce_' . $this->id . '_settings')['custom_order']
+            : '';
         ?>
         <script>
             jQuery(document).ready(function () {
