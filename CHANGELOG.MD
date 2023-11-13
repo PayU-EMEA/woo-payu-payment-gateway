@@ -1,3 +1,7 @@
+# 2.0.32
+* Fixed php notices
+* Fixed getTotal for min/max
+
 # 2.0.31
 * Fixed warnings
 * SDK update
