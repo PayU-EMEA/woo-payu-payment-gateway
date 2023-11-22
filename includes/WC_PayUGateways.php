@@ -1082,7 +1082,7 @@ abstract class WC_PayUGateways extends WC_Payment_Gateway
         if ($this->order_total !== null) {
             return $this->order_total;
         } elseif (WC()->cart && !WC()->cart->is_empty()) {
-            return WC()->cart->get_total('');
+            return WC()->cart->get_cart_contents_total() + WC()->cart->get_cart_contents_tax() + WC()->cart->get_shipping_total() + WC()->cart->get_shipping_tax();
         }
 
         return 0;
