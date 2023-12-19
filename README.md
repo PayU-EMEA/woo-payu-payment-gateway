@@ -150,6 +150,11 @@ Plugin nie wysyła żadnych dodatkowych maili. Nie ingeruje również w proces, 
 
 W przypadku włączonego ponownienia płatności do maila potwierdzajacego zamówienia dodawana jest informacja o możliwości wykonania płatności: `Jeżeli jeszcze nie opłaciłeś zamówienia możesz to zrobić przechodząc na stronę.`
 
+## Znane problemy
+### WooCommerce Blocks
+Jeżeli sklep korzysta z WooCommerce w wersji 8.3 lub nowszych, lub też sklep używa motywu korzystający z WooCommerce Blocks na stronie Checkout należy sprawdzić czy sklep/motyw korzysta z modułu Blokowego w części strony Checkout dotyczącej metod płatności-> moduł PayU nie wspiera obecnie sklepów korzystających z WooCommerce blocks w tej sekcji.
+Opis w jaki sposób wycofać korzystanie z WooCommerce Blocks na stronie Checkout dostępny jest w dokumentacji WooCommerce na stronie https://woo.com/document/cart-checkout-blocks-status/#section-6
+
 <!--external links:-->
 [ext1]: http://php.net/manual/en/book.curl.php
 [ext2]: http://php.net/manual/en/book.hash.php
