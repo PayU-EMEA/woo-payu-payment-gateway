@@ -829,10 +829,16 @@ abstract class WC_PayUGateways extends WC_Payment_Gateway
         $buyer = [
             'email' => $billingData['email'],
             'phone' => $billingData['phone'],
-            'firstName' => $billingData['first_name'],
-            'lastName' => $billingData['last_name'],
             'language' => $this->getLanguage(),
         ];
+
+        if ($order->get_billing_first_name()) {
+            $buyer['firstName'] = $order->get_billing_first_name();
+        }
+
+        if ($order->get_billing_last_name()) {
+            $buyer['lastName'] = $order->get_billing_last_name();
+        }
 
         if (!empty($order->get_shipping_methods())) {
             $shippingData = $order->get_address('shipping');
@@ -871,7 +877,15 @@ abstract class WC_PayUGateways extends WC_Payment_Gateway
             $billingData = $order->get_address('billing');
             $threeDsAuthentication = false;
 
-            $name = $order->get_formatted_billing_full_name();
+            $names = [];
+            if (!empty($order->get_billing_first_name())) {
+                $names[] = $order->get_billing_first_name();
+            }
+            if (!empty($order->get_billing_last_name())) {
+                $names[] = $order->get_billing_last_name();
+            }
+            $name = trim(implode(' ', $names));
+
             $address = $billingData['address_1'] . ($billingData['address_2'] ? ' ' . $billingData['address_2'] : '');
             $postalCode = $billingData['postcode'];
             $city = $billingData['city'];
@@ -885,7 +899,7 @@ abstract class WC_PayUGateways extends WC_Payment_Gateway
                 ];
 
                 if (!empty($name)) {
-                    $threeDsAuthentication['cardholder']['name'] = substr($order->get_formatted_billing_full_name(), 0, 50);
+                    $threeDsAuthentication['cardholder']['name'] = substr($name, 0, 50);
                 }
 
                 if ($isBillingAddress) {
