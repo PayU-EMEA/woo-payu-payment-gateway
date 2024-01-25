@@ -150,6 +150,11 @@ The plugin does not send any additional emails and does not interfere with any m
 
 In case repayment is configured, the mail confirming order placement is enhanced with information about the possibility to pay the order.
 
+## Known issues
+### WooCommerce Blocks
+If shop is using WooCommerce version 8.3 or newer, or is using theme utilising WooCommerce Blocks on Checkout page you need to check if shop/theme uses the "block" mode in Checkout page part regarding payment methods -> PayU plugin currently do not support WooCommerce blocks in this section
+Information how to revert Checkout page shortcode from WooCommerce Blocks to classic version of Checkout page is availabe in WooCommerce documentation at https://woo.com/document/cart-checkout-blocks-status/#section-6
+
 <!--external links:-->
 [ext1]: http://php.net/manual/en/book.curl.php
 [ext2]: http://php.net/manual/en/book.hash.php
