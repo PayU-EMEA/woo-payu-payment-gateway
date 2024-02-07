@@ -18,7 +18,7 @@ define('PAYU_PLUGIN_VERSION', '2.0.33');
 define('PAYU_PLUGIN_FILE', __FILE__);
 define('PAYU_PLUGIN_STATUS_WAITING', 'payu-waiting');
 
-addd_action('plugins_loaded', 'init_gateway_payu');
+add_action('plugins_loaded', 'init_gateway_payu');
 add_action('admin_init', 'move_old_payu_settings');
 
 add_action(
