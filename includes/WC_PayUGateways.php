@@ -783,7 +783,7 @@ abstract class WC_PayUGateways extends WC_Payment_Gateway
                 $quantity = 1;
             }
 
-            $name = substr($name, 0, 256);
+            $name = mb_substr($name, 0, 256);
 
             $products[$i] = [
                 'name' => $name,
@@ -800,7 +800,7 @@ abstract class WC_PayUGateways extends WC_Payment_Gateway
 
         if (!empty($order->get_shipping_methods())) {
             $products[] = [
-                'name' => substr('Shipment' . ' [' . $order->get_shipping_method() . ']', 0, 256),
+                'name' => mb_substr('Shipment' . ' [' . $order->get_shipping_method() . ']', 0, 256),
                 'unitPrice' => $this->toAmount(round($order->get_shipping_total(), wc_get_rounding_precision()) + round($order->get_shipping_tax(), wc_get_rounding_precision())),
                 'quantity' => 1,
             ];
@@ -899,7 +899,7 @@ abstract class WC_PayUGateways extends WC_Payment_Gateway
                 ];
 
                 if (!empty($name)) {
-                    $threeDsAuthentication['cardholder']['name'] = substr($name, 0, 50);
+                    $threeDsAuthentication['cardholder']['name'] = mb_substr($name, 0, 45);
                 }
 
                 if ($isBillingAddress) {
@@ -911,15 +911,15 @@ abstract class WC_PayUGateways extends WC_Payment_Gateway
                 }
 
                 if (!empty($address)) {
-                    $threeDsAuthentication['cardholder']['billingAddress']['street'] = substr($address, 0, 50);
+                    $threeDsAuthentication['cardholder']['billingAddress']['street'] = mb_substr($address, 0, 50);
                 }
 
                 if (!empty($city)) {
-                    $threeDsAuthentication['cardholder']['billingAddress']['city'] = substr($city, 0, 50);
+                    $threeDsAuthentication['cardholder']['billingAddress']['city'] = mb_substr($city, 0, 50);
                 }
 
                 if (!empty($postalCode)) {
-                    $threeDsAuthentication['cardholder']['billingAddress']['postalCode'] = substr($postalCode, 0, 16);
+                    $threeDsAuthentication['cardholder']['billingAddress']['postalCode'] = mb_substr($postalCode, 0, 16);
                 }
             }
 
