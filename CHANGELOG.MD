@@ -1,3 +1,7 @@
+# 2.0.34
+* Fixed card holder name
+* Fixed substring for multi-byte characters
+
 # 2.0.33
 * Fixed getTotal for min/max
 
