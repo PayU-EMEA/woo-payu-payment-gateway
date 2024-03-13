@@ -783,7 +783,7 @@ abstract class WC_PayUGateways extends WC_Payment_Gateway
                 $quantity = 1;
             }
 
-            $name = mb_substr($name, 0, 256);
+            $name = mb_substr($name, 0, 255);
 
             $products[$i] = [
                 'name' => $name,
@@ -800,7 +800,7 @@ abstract class WC_PayUGateways extends WC_Payment_Gateway
 
         if (!empty($order->get_shipping_methods())) {
             $products[] = [
-                'name' => mb_substr('Shipment' . ' [' . $order->get_shipping_method() . ']', 0, 256),
+                'name' => mb_substr('Shipment' . ' [' . $order->get_shipping_method() . ']', 0, 255),
                 'unitPrice' => $this->toAmount(round($order->get_shipping_total(), wc_get_rounding_precision()) + round($order->get_shipping_tax(), wc_get_rounding_precision())),
                 'quantity' => 1,
             ];
