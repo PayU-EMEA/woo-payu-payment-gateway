@@ -16,24 +16,25 @@ Skorzystaj z [automatycznej instalacji oraz aktywacji](https://wordpress.org/sup
 ## Metody płatności
 Wtyczka udostępnia następujące metody płatności:
 
-| Lp | Metoda | Opis
-|:--:| ------ | ---
-|  1 | PayU - standard         | Płacący zostanie przekierowany na stronę PayU gdzie wybierze typ płatności (z listy typów dostępnych na punkcie płatności)
-|  2 | PayU - lista banków     | Wyświetlana jest lista typów płatności, a płacący w zależności od wybranego typu zostanie przekierowany do banku lub na stronę PayU
-|  3 | PayU - karta płatnicza  | Płacący zostanie przekierowany na stronę PayU gdzie wprowadzi dane karty (kredytowej, debetowej lub prepaid)
-|  4 | PayU - secure form      | Wyświetlany jest formularz wprowadzania danych karty
-|  5 | PayU - Blik             | Płacący zostanie przekierowany na stronę Blik
-|  6 | PayU - raty             | Płacący zostanie przekierowany na stronę formularza płatności ratalnej
-|  7 | PayU - Twisto             | Płacący zostanie przekierowany na stronę formularza płatności Twisto
-|  7  | PayU - PayPo            | Płacący zostanie przekierowany na stronę formularza płatności PayPo
+| Lp | Metoda                 | Opis
+|:--:|------------------------| ---
+| 1  | PayU - standard        | Płacący zostanie przekierowany na stronę PayU gdzie wybierze typ płatności (z listy typów dostępnych na punkcie płatności)
+| 2  | PayU - lista banków    | Wyświetlana jest lista typów płatności, a płacący w zależności od wybranego typu zostanie przekierowany do banku lub na stronę PayU
+| 3  | PayU - karta płatnicza | Płacący zostanie przekierowany na stronę PayU gdzie wprowadzi dane karty (kredytowej, debetowej lub prepaid)
+| 4  | PayU - secure form     | Wyświetlany jest formularz wprowadzania danych karty
+| 5  | PayU - Blik            | Płacący zostanie przekierowany na stronę Blik
+| 6  | PayU - raty            | Płacący zostanie przekierowany na stronę formularza płatności ratalnej
+| 7  | PayU - Klarna          | Płacący zostanie przekierowany na stronę formularza płatności Klarna
+| 8  | PayU - Twisto          | Płacący zostanie przekierowany na stronę formularza płatności Twisto
+| 9  | PayU - PayPo           | Płacący zostanie przekierowany na stronę formularza płatności PayPo
 
 #### Uwagi do metod płatności
 
 * Metody `PayU - standard` i `PayU - lista banków` umożliwiają płatność dowolnym typem płatności, a różnią się tylko miejscem jego wyboru. **Nie powinny być razem włączone**.
 * Metody `PayU - karta płatnicza` i `PayU - secure form` umożliwiają płatność kartą, a różnią się tylko miejscem wprowadzenia danych karty. **Nie powinny być razem włączone**.
-* W przypadku gdy jest włączona metoda `PayU - lista banków` z listy dostępnych typów płatności usuwane są: karty, gdy włączona jest metoda `PayU - karta kredytowa` lub `PayU - secure form`, Blik, gdy włączona jest metoda `PayU - blik`, raty gdy włączona jest metoda `PayU - raty`, Twisto gdy włączona jest metoda `PayU - Twisto`, PayPo gdy włączona jest metoda `PayU - PayPo`.
+* W przypadku gdy jest włączona metoda `PayU - lista banków` z listy dostępnych typów płatności usuwane są: karty, gdy włączona jest metoda `PayU - karta kredytowa` lub `PayU - secure form`, Blik, gdy włączona jest metoda `PayU - blik`, raty gdy włączona jest metoda `PayU - raty`, Klarna gdy włączona jest metoda `PayU - Klarna`, Twisto gdy włączona jest metoda `PayU - Twisto`, PayPo gdy włączona jest metoda `PayU - PayPo`.
 * Metoda `PayU - secure form` wymaga aby sklep był dostępny za pomocą połączenia HTTPS (przy testach lokalnych adres strony powinien być http://localhost)
-* Pomimo włączenia metod  `PayU - karta kredytowa`, `PayU - secure form`, `PayU - blik`, `PayU - raty`, `PayU - Twisto` i `PayU - PayPo` mogą się one nie pokazać płacącemu, jeśli dany typ płatności nie jest włączony na punkcie płatności lub jeśli kwota nie mieści się między kwotą minimalną i maksymalną dla danego typu.
+* Pomimo włączenia metod  `PayU - karta kredytowa`, `PayU - secure form`, `PayU - blik`, `PayU - raty`, `PayU - Klarna`, `PayU - Twisto` i `PayU - PayPo` mogą się one nie pokazać płacącemu, jeśli dany typ płatności nie jest włączony na punkcie płatności lub jeśli kwota nie mieści się między kwotą minimalną i maksymalną dla danego typu.
 
 ## Konfiguracja
 #### Konfiguracja globalna

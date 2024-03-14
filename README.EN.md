@@ -22,17 +22,18 @@ The plugin offers the following payment methods:
 | 3     | PayU - payment card | payer will be redirected to PayU's hosted card form where credit, debit or prepaid card data can be securely entered 
 | 4     | PayU - secure form | a secure form collecting credit, debit or prepaid card data will be displayed
 | 5     | PayU - Blik | payer will be redirected to Blik's page
-| 6     | PayU - installments | payer will be redirected to installment payment form 
-| 7     | PayU - Twisto | payer will be redirected to Twisto payment form
-| 8     | PayU - PayPo | payer will be redirected to PayPo payment form
+| 6     | PayU - installments | payer will be redirected to installment payment form
+| 7     | PayU - Klarna | payer will be redirected to Klarna payment form
+| 8     | PayU - Twisto | payer will be redirected to Twisto payment form
+| 9     | PayU - PayPo | payer will be redirected to PayPo payment form
 
 #### Payment method remarks
 
 * Methods `PayU - standard` and `PayU - bank list` enable payments of any type and differ only with the way the payment type is chosen. **Should not be configured both at once**.
 * Methods `PayU - payment card` and `PayU - secure form` enable card payments and differ only with the way the card data is entered. **Should not be configured both at once**.
-* In case `PayU - bank list` method is switched on, the following payment types are removed from the list: cards if `PayU - payment card` or `PayU - secure form` is on, Blik if  `PayU - Blik` is on, installments if `PayU - installments` is on, installments if `PayU - Twisto` is on, PayPo if `PayU - PayPo` is on.
+* In case `PayU - bank list` method is switched on, the following payment types are removed from the list: cards if `PayU - payment card` or `PayU - secure form` is on, Blik if  `PayU - Blik` is on, installments if `PayU - installments` is on, Klarna if `Payu - Klarna` is on, Twisto if `PayU - Twisto` is on, PayPo if `PayU - PayPo` is on.
 * `PayU - secure form` method requires the shop to be available via HTTPS (for local tests, the address should be http://localhost)
-* Even if  `PayU - payment card`, `PayU - secure form`, `PayU - Blik`, `PayU - installments`, `PayU - Twisto` and `PayU - PayPo` are on, they may be not visible in case they are not configured on your POS in PayU system or if the amount is outside min-max range for the given payment type.
+* Even if  `PayU - payment card`, `PayU - secure form`, `PayU - Blik`, `PayU - installments`, `PayU - Klarna`, `PayU - Twisto` and `PayU - PayPo` are on, they may be not visible in case they are not configured on your POS in PayU system or if the amount is outside min-max range for the given payment type.
 
 ## Configuration
 #### Global configuration 

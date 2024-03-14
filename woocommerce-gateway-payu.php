@@ -49,6 +49,7 @@ function init_gateway_payu()
     require_once('includes/WC_Gateway_PayuSecureForm.php');
     require_once('includes/WC_Gateway_PayuBlik.php');
     require_once('includes/WC_Gateway_PayuInstallments.php');
+    require_once('includes/WC_Gateway_PayuKlarna.php');
     require_once('includes/WC_Gateway_PayuPaypo.php');
     require_once('includes/WC_Gateway_PayuTwistoPl.php');
 
@@ -163,6 +164,7 @@ function add_payu_gateways($gateways)
     $gateways[] = 'WC_Gateway_PayuSecureForm';
     $gateways[] = 'WC_Gateway_PayuBlik';
     $gateways[] = 'WC_Gateway_PayuInstallments';
+    $gateways[] = 'WC_Gateway_PayuKlarna';
     $gateways[] = 'WC_Gateway_PayuPaypo';
     $gateways[] = 'WC_Gateway_PayuTwistoPl';
     return $gateways;
