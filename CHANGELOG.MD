@@ -1,3 +1,6 @@
+# 2.1.0
+* Added Klarna as a separate payment method
+
 # 2.0.35
 * Fixed product name length
 * Fixed php notice/warning (#67)
