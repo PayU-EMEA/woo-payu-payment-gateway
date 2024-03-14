@@ -190,7 +190,7 @@ class WC_Gateway_PayuListBanks extends WC_PayUGateways
     {
         $extracted = [];
         foreach ($paytypes as $item) {
-            if (@$result_methods[$item]) {
+            if (array_key_exists($item, $result_methods)) {
                 $extracted[$item] = [
                     'brandImageUrl' => $result_methods[$item]['brandImageUrl'],
                     'name' => $result_methods[$item]['name'],
