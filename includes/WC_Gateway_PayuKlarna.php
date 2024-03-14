@@ -10,8 +10,7 @@ class WC_Gateway_PayuKlarna extends WC_PayUGateways
 
         if ($this->is_enabled()) {
             $this->show_terms_info = false;
-            $this->icon = apply_filters('woocommerce_payu_icon', plugins_url( '/assets/images/klarna.svg',
-            PAYU_PLUGIN_FILE ));
+            $this->icon = apply_filters('woocommerce_payu_icon', plugins_url( '/assets/images/klarna.svg', PAYU_PLUGIN_FILE ));
 
             if (!is_admin()) {
                 if (!$this->try_retrieve_banks()) {

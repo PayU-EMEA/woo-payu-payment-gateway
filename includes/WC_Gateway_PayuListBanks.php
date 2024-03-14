@@ -122,6 +122,9 @@ class WC_Gateway_PayuListBanks extends WC_PayUGateways
                 if ($available_gateway === 'payuinstallments' && $data->enabled === 'yes') {
                     array_push($this->unset_banks, 'ai');
                 }
+                if ($available_gateway === 'payuklarna' && $data->enabled === 'yes') {
+                    array_push($this->unset_banks, 'dpkl');
+                }
                 if ($available_gateway === 'payupaypo' && $data->enabled === 'yes') {
                     array_push($this->unset_banks, 'dpp');
                 }
