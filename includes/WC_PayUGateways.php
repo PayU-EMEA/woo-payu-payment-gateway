@@ -205,16 +205,22 @@ abstract class WC_PayUGateways extends WC_Payment_Gateway
                 'default_description' => __('You will be redirected to an installment payment application.', 'woo-payu-payment-gateway'),
                 'api' => 'WC_Gateway_PayuInstallments'
             ],
+            'payuklarna' => [
+                'name' => __('PayU - Klarna', 'woo-payu-payment-gateway'),
+                'front_name' => __('Pay later with Klarna', 'woo-payu-payment-gateway'),
+                'default_description' => __('You will be redirected to the payment method page.', 'woo-payu-payment-gateway'),
+                'api' => 'WC_Gateway_PayuKlarna'
+            ],
             'payupaypo' => [
                 'name' => __('PayU - PayPo', 'woo-payu-payment-gateway'),
-                'front_name' => __('Pay letter with PayPo', 'woo-payu-payment-gateway'),
-                'default_description' => __('Buy now, pay in 30 days.', 'woo-payu-payment-gateway'),
+                'front_name' => __('Pay later with PayPo', 'woo-payu-payment-gateway'),
+                'default_description' => __('You will be redirected to the payment method page.', 'woo-payu-payment-gateway'),
                 'api' => 'WC_Gateway_PayuPaypo'
             ],
             'payutwistopl' => [
                 'name' => __('PayU - Twisto', 'woo-payu-payment-gateway'),
-                'front_name' => __('Pay letter with Twisto', 'woo-payu-payment-gateway'),
-                'default_description' => __('Buy now, pay in 30 days.', 'woo-payu-payment-gateway'),
+                'front_name' => __('Pay later with Twisto', 'woo-payu-payment-gateway'),
+                'default_description' => __('You will be redirected to the payment method page.', 'woo-payu-payment-gateway'),
                 'api' => 'WC_Gateway_PayuTwistoPl'
             ],
         ];

@@ -18,6 +18,7 @@ The plugin offers the following payment methods:
 * PayU - secure form - a secure form collecting credit, debit or prepaid card data will be displayed
 * PayU - Blik - payer will be redirected to Blik's page
 * PayU - installments - payer will be redirected to installment payment form
+* PayU - Klarna - payer will be redirected to Klarna payment form
 * PayU - PayPo - payer will be redirected to PayPo payment form
 * PayU - Twisto - payer will be redirected to Twisto payment form
 
