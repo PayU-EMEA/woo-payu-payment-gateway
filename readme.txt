@@ -1,10 +1,10 @@
 ﻿=== PayU EU Payment Gateway for WooCommerce ===
 Contributors: payusa
 Tags: PayU, payment, payment gateway, platnosci, PayU Poland, PayU EU
-Requires at least: 4.4
+Requires at least: 5.0
 Tested up to: 6.4.3
-Stable tag: 2.0.34
-Requires PHP: 7.0
+Stable tag: 2.0.35
+Requires PHP: 7.4
 License: Apache License 2.0
 
 == Description ==
@@ -48,6 +48,10 @@ Yes, it does.
 * For presenting minimal installment amount we used [Widget Installments](https://developers.payu.com/en/installments.html#installments_best_practices_mini) and plugin loads the script from the static.payu.com domain.
 
 == Changelog ==
+= 2.0.35 =
+* Fixed product name length
+* Fixed php notice/warning
+* Increased requirements: PHP >= 7.4, Wordpress >= 5.0, WooCommerce: 4.0
 = 2.0.34 =
 * Fixed card holder name
 * Fixed substring for multi-byte characters
