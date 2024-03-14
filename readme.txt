@@ -51,7 +51,7 @@ Yes, it does.
 = 2.0.35 =
 * Fixed product name length
 * Fixed php notice/warning
-* Increased requirements: PHP >= 7.4, Wordpress >= 5.0, WooCommerce: 4.0
+* Increased requirements: PHP >= 7.4, Wordpress >= 5.0, WooCommerce >= 4.0
 = 2.0.34 =
 * Fixed card holder name
 * Fixed substring for multi-byte characters
