@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: PayU Payment Gateway\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-03-26 10:13+0000\n"
-"PO-Revision-Date: 2024-03-14 12:31+0000\n"
+"PO-Revision-Date: 2024-03-14 14:41+0000\n"
 "Last-Translator: \n"
 "Language-Team: Polski\n"
 "Language: pl-PL\n"
@@ -13,7 +13,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: Loco https://localise.biz/\n"
-"X-Loco-Version: 2.5.8; wp-5.9\n"
+"X-Loco-Version: 2.6.6; wp-6.4.3\n"
 "X-Domain: woo-payu-payment-gateway"
 
 #: includes/WC_PayUGateways.php:1028 includes/WC_PayUGateways.php:1201
@@ -241,7 +241,7 @@ msgstr "Płatność online z PayU"
 
 #: includes/WC_PayUGateways.php:210
 msgid "Pay later with Klarna"
-msgstr "Płacę później z Klarna"
+msgstr "Płacę później z Klarną"
 
 #: includes/WC_PayUGateways.php:216
 #| msgid "Pay letter with PayPo"
