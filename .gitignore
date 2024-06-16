@@ -1,2 +1,8 @@
 .DS_store
 .idea
+
+/node_modules
+/vendor
+/build
+/assets/**/*.map
+_dist

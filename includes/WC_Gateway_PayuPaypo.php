@@ -1,28 +1,26 @@
 <?php
 
-class WC_Gateway_PayuPaypo extends WC_PayUGateways
-{
-    protected $paytype = 'dpp';
+use Payu\PaymentGateway\Gateways\WC_Payu_Gateways;
 
-    function __construct()
-    {
-        parent::__construct('payupaypo');
+class WC_Gateway_PayuPaypo extends WC_Payu_Gateways {
+	protected $paytype = 'dpp';
 
-        if ($this->is_enabled()) {
-            $this->show_terms_info = false;
-            $this->icon = apply_filters('woocommerce_payu_icon', plugins_url( '/assets/images/paypo.svg', PAYU_PLUGIN_FILE ));
+	function __construct() {
+		parent::__construct( 'payupaypo' );
 
-            if (!is_admin()) {
-                if (!$this->try_retrieve_banks()) {
-                    add_filter('woocommerce_available_payment_gateways', [$this, 'unset_gateway']);
-                }
-            }
-        }
-    }
+		if ( $this->is_enabled() ) {
+			$this->icon = apply_filters( 'woocommerce_payu_icon', plugins_url( '/assets/images/paypo.svg', PAYU_PLUGIN_FILE ) );
 
-    public function payment_fields()
-    {
-        parent::payment_fields();
-        $this->agreements_field();
-    }
+			if ( ! is_admin() ) {
+				if ( ! $this->try_retrieve_banks() ) {
+					add_filter( 'woocommerce_available_payment_gateways', [ $this, 'unset_gateway' ] );
+				}
+			}
+		}
+	}
+
+	public function payment_fields() {
+		parent::payment_fields();
+		$this->agreements_field();
+	}
 }

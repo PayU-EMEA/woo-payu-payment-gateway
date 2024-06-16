@@ -1,66 +1,60 @@
 <?php
 
-class WC_Gateway_PayuListBanks extends WC_PayUGateways
-{
-    private $unset_banks = [];
+use Payu\PaymentGateway\Gateways\WC_Payu_Gateways;
 
-    function __construct()
-    {
-        parent::__construct('payulistbanks');
+class WC_Gateway_PayuListBanks extends WC_Payu_Gateways {
+	private $unset_banks = [];
 
-        if ($this->is_enabled()) {
-            $this->show_terms_info = true;
+	function __construct() {
+		parent::__construct( 'payulistbanks' );
 
-            if (!is_admin()) {
-                if (!$this->try_retrieve_banks()) {
-                    add_filter('woocommerce_available_payment_gateways', [$this, 'unset_gateway']);
-                }
-            }
-        }
-    }
+		if ( $this->is_enabled() ) {
+			$this->show_terms_info = true;
 
-    function init_form_fields() {
-        parent::payu_init_form_fields(true);
-    }
+			if ( ! is_admin() ) {
+				if ( ! $this->try_retrieve_banks() ) {
+					add_filter( 'woocommerce_available_payment_gateways', [ $this, 'unset_gateway' ] );
+				}
+			}
+		}
+	}
 
-    /**
-     * @return bool
-     */
-    protected function try_retrieve_banks()
-    {
-        $response = $this->get_payu_response();
-        if (isset($response) && $response->getStatus() === 'SUCCESS') {
-            $payMethods = $response->getResponse();
+	function init_form_fields() {
+		parent::payu_init_form_fields( true );
+	}
 
-            return $payMethods->payByLinks;
-        }
+	protected function try_retrieve_banks(): bool {
+		$response = $this->get_payu_response();
+		if ( isset( $response ) && $response->getStatus() === 'SUCCESS' ) {
+			$payMethods = $response->getResponse();
 
-        return false;
-    }
+			return ! empty( $payMethods->payByLinks );
+		}
 
-    public function payment_fields()
-    {
-        parent::payment_fields();
+		return false;
+	}
 
-        $response = $this->get_payu_response();
-        if (isset($response) && $response->getStatus() === 'SUCCESS') {
-            $this->retrieve_methods($response);
-            $this->agreements_field();
-        }
-    }
+	public function payment_fields() {
+		parent::payment_fields();
 
-    /**
-     * @param OpenPayU_Result $response
-     *
-     * @return null
-     */
-    private function retrieve_methods($response)
-    {
-        $payMethods = $response->getResponse();
-        $custom_order = isset(get_option('woocommerce_' . $this->id . '_settings')['custom_order'])
-            ? get_option('woocommerce_' . $this->id . '_settings')['custom_order']
-            : '';
-        ?>
+		$response = $this->get_payu_response();
+		if ( isset( $response ) && $response->getStatus() === 'SUCCESS' ) {
+			$this->retrieve_methods( $response );
+			$this->agreements_field();
+		}
+	}
+
+	/**
+	 * @param OpenPayU_Result $response
+	 *
+	 * @return null
+	 */
+	private function retrieve_methods( $response ) {
+		$payMethods   = $response->getResponse();
+		$custom_order = isset( get_option( 'woocommerce_' . $this->id . '_settings' )['custom_order'] )
+			? get_option( 'woocommerce_' . $this->id . '_settings' )['custom_order']
+			: '';
+		?>
         <script>
             jQuery(document).ready(function () {
                 if (!window.ApplePaySession || !window.ApplePaySession.canMakePayments() && jQuery(".payu-list-banks").is(":visible")) {
@@ -70,150 +64,146 @@ class WC_Gateway_PayuListBanks extends WC_PayUGateways
         </script>
         <div class="pbl-container">
             <ul class="payu-list-banks">
-                <?php if ($payMethods->payByLinks):
-                    $payByLinks = $this->process_pay_methods($payMethods->payByLinks, $custom_order);
-                    if ($payByLinks):
-                        foreach ($payByLinks as $key => $value):
-                            ?>
-                            <li class="payu-bank payu-bank-<?php echo esc_attr($key . ' ' . $value['active']) ?>"
-                                title="<?php echo esc_attr($value['name']) ?>">
+				<?php if ( $payMethods->payByLinks ):
+					$payByLinks = $this->process_pay_methods( $payMethods->payByLinks, $custom_order );
+					if ( $payByLinks ):
+						foreach ( $payByLinks as $key => $value ):
+							?>
+                            <li class="payu-bank payu-bank-<?php echo esc_attr( $key . ' ' . $value['active'] ) ?>"
+                                title="<?php echo esc_attr( $value['name'] ) ?>">
                                 <label>
                                     <input type="radio"
-                                           value="<?php if ($value['active'] === 'payu-active') echo esc_attr($key) ?>"
+                                           value="<?php if ( $value['active'] === 'payu-active' )
+										       echo esc_attr( $key ) ?>"
                                            name="selected-bank"/>
-                                    <div><img src="<?php echo esc_url($value['brandImageUrl']); ?>"></div>
+                                    <div><img src="<?php echo esc_url( $value['brandImageUrl'] ); ?>"></div>
                                 </label>
                             </li>
-                        <?php
-                        endforeach;
-                    endif;
-                endif;
-                ?>
+						<?php
+						endforeach;
+					endif;
+				endif;
+				?>
             </ul>
             <ul class="pbl-error woocommerce-error" role="alert">
-                <li><?php esc_html_e('Choose payment method.', 'woo-payu-payment-gateway') ?></li>
+                <li><?php esc_html_e( 'Choose payment method.', 'woo-payu-payment-gateway' ) ?></li>
             </ul>
         </div>
 
-        <?php
-    }
+		<?php
+	}
 
-    /**
-     * @param array $payMethods
-     * @param string|null $sort
-     *
-     * @return array
-     */
-    function process_pay_methods($payMethods, $sort = null)
-    {
-        $result_methods = [];
-        $available_gateways = WC()->payment_gateways->get_available_payment_gateways();
-        if ($available_gateways) {
-            foreach ($available_gateways as $available_gateway => $data) {
-                if ($available_gateway === 'payucreditcard' && $data->enabled === 'yes') {
-                    array_push($this->unset_banks, 'c');
-                }
-                if ($available_gateway === 'payusecureform' && $data->enabled === 'yes') {
-                    array_push($this->unset_banks, 'c');
-                }
-                if ($available_gateway === 'payublik' && $data->enabled === 'yes') {
-                    array_push($this->unset_banks, 'blik');
-                }
-                if ($available_gateway === 'payuinstallments' && $data->enabled === 'yes') {
-                    array_push($this->unset_banks, 'ai');
-                }
-                if ($available_gateway === 'payuklarna' && $data->enabled === 'yes') {
-                    array_push($this->unset_banks, 'dpkl');
-                }
-                if ($available_gateway === 'payupaypo' && $data->enabled === 'yes') {
-                    array_push($this->unset_banks, 'dpp');
-                }
-                if ($available_gateway === 'payutwistopl' && $data->enabled === 'yes') {
-                    array_push($this->unset_banks, 'dpt');
-                }
-            }
-        }
-        $show_inactive = @get_option('woocommerce_' . $this->id . '_settings')['show_inactive_methods'];
-        foreach ($payMethods as $payMethod) {
-            if (!in_array($payMethod->value, $this->unset_banks)) {
-                if ($show_inactive === 'yes' && $payMethod->value != 't') {
-                    $show_method = true;
-                    if ($payMethod->status !== 'ENABLED') {
-                        $show_method = false;
-                    } else {
-                        if (!$this->check_min_max($payMethod)) {
-                            $show_method = false;
-                        }
-                    }
-                    $result_methods[$payMethod->value] = [
-                        'brandImageUrl' => $payMethod->brandImageUrl,
-                        'name' => $payMethod->name,
-                        'active' => $show_method ? 'payu-active' : 'payu-inactive'
-                    ];
-                } else {
-                    if ($payMethod->status === 'ENABLED') {
-                        $can_be_use = true;
-                        if (!$this->check_min_max($payMethod)) {
-                            $can_be_use = false;
-                        }
-                        if ($can_be_use) {
-                            $result_methods[$payMethod->value] = [
-                                'brandImageUrl' => $payMethod->brandImageUrl,
-                                'name' => $payMethod->name,
-                                'active' => 'payu-active'
-                            ];
-                        }
-                    }
-                }
-            }
-        }
+	/**
+	 * @param array $payMethods
+	 * @param string|null $sort
+	 *
+	 * @return array
+	 */
+	function process_pay_methods( $payMethods, $sort = null ) {
+		$result_methods     = [];
+		$available_gateways = WC()->payment_gateways->get_available_payment_gateways();
+		if ( $available_gateways ) {
+			foreach ( $available_gateways as $available_gateway => $data ) {
+				if ( $available_gateway === 'payucreditcard' && $data->enabled === 'yes' ) {
+					array_push( $this->unset_banks, 'c' );
+				}
+				if ( $available_gateway === 'payusecureform' && $data->enabled === 'yes' ) {
+					array_push( $this->unset_banks, 'c' );
+				}
+				if ( $available_gateway === 'payublik' && $data->enabled === 'yes' ) {
+					array_push( $this->unset_banks, 'blik' );
+				}
+				if ( $available_gateway === 'payuinstallments' && $data->enabled === 'yes' ) {
+					array_push( $this->unset_banks, 'ai' );
+				}
+				if ( $available_gateway === 'payuklarna' && $data->enabled === 'yes' ) {
+					array_push( $this->unset_banks, 'dpkl' );
+				}
+				if ( $available_gateway === 'payupaypo' && $data->enabled === 'yes' ) {
+					array_push( $this->unset_banks, 'dpp' );
+				}
+				if ( $available_gateway === 'payutwistopl' && $data->enabled === 'yes' ) {
+					array_push( $this->unset_banks, 'dpt' );
+				}
+			}
+		}
+		$show_inactive = @get_option( 'woocommerce_' . $this->id . '_settings' )['show_inactive_methods'];
+		foreach ( $payMethods as $payMethod ) {
+			if ( ! in_array( $payMethod->value, $this->unset_banks ) ) {
+				if ( $show_inactive === 'yes' && $payMethod->value != 't' ) {
+					$show_method = true;
+					if ( $payMethod->status !== 'ENABLED' ) {
+						$show_method = false;
+					} else {
+						if ( ! $this->check_min_max( $payMethod ) ) {
+							$show_method = false;
+						}
+					}
+					$result_methods[ $payMethod->value ] = [
+						'brandImageUrl' => $payMethod->brandImageUrl,
+						'name'          => $payMethod->name,
+						'active'        => $show_method ? 'payu-active' : 'payu-inactive'
+					];
+				} else {
+					if ( $payMethod->status === 'ENABLED' ) {
+						$can_be_use = true;
+						if ( ! $this->check_min_max( $payMethod ) ) {
+							$can_be_use = false;
+						}
+						if ( $can_be_use ) {
+							$result_methods[ $payMethod->value ] = [
+								'brandImageUrl' => $payMethod->brandImageUrl,
+								'name'          => $payMethod->name,
+								'active'        => 'payu-active'
+							];
+						}
+					}
+				}
+			}
+		}
 
-        if (!$sort) {
-            $first_paytypes = ['c','ap','jp','vc'];
-            $last_paytypes = ['b', 'pt', 'bt'];
-        } else {
-            $first_paytypes = explode(',', str_replace(' ', '', $sort));
-            $last_paytypes = [];
-        }
+		if ( ! $sort ) {
+			$first_paytypes = [ 'c', 'ap', 'jp', 'vc' ];
+			$last_paytypes  = [ 'b', 'pt', 'bt' ];
+		} else {
+			$first_paytypes = explode( ',', str_replace( ' ', '', $sort ) );
+			$last_paytypes  = [];
+		}
 
-        list($first, $result_methods) = $this->extract_paytypes($result_methods, $first_paytypes);
-        list($last, $result_methods) = $this->extract_paytypes($result_methods, $last_paytypes);
+		list( $first, $result_methods ) = $this->extract_paytypes( $result_methods, $first_paytypes );
+		list( $last, $result_methods ) = $this->extract_paytypes( $result_methods, $last_paytypes );
 
-        $result_methods = array_merge($first, $result_methods, $last);
+		$result_methods = array_merge( $first, $result_methods, $last );
 
-        return $result_methods;
-    }
+		return $result_methods;
+	}
 
-    /**
-     * @param $result_methods
-     * @param $paytypes
-     * @return array
-     */
-    private function extract_paytypes($result_methods, $paytypes)
-    {
-        $extracted = [];
-        foreach ($paytypes as $item) {
-            if (array_key_exists($item, $result_methods)) {
-                $extracted[$item] = [
-                    'brandImageUrl' => $result_methods[$item]['brandImageUrl'],
-                    'name' => $result_methods[$item]['name'],
-                    'active' => $result_methods[$item]['active'],
-                ];
-                unset($result_methods[$item]);
-            }
-        }
+	/**
+	 * @param $result_methods
+	 * @param $paytypes
+	 *
+	 * @return array
+	 */
+	private function extract_paytypes( $result_methods, $paytypes ) {
+		$extracted = [];
+		foreach ( $paytypes as $item ) {
+			if ( array_key_exists( $item, $result_methods ) ) {
+				$extracted[ $item ] = [
+					'brandImageUrl' => $result_methods[ $item ]['brandImageUrl'],
+					'name'          => $result_methods[ $item ]['name'],
+					'active'        => $result_methods[ $item ]['active'],
+				];
+				unset( $result_methods[ $item ] );
+			}
+		}
 
-        return [$extracted, $result_methods];
-    }
+		return [ $extracted, $result_methods ];
+	}
 
 
-    /**
-     * @return array
-     */
-    protected function get_payu_pay_method()
-    {
-        $selected_method = sanitize_text_field($_POST['selected-bank']);
+	protected function get_payu_pay_method(): array {
+		$selected_method = sanitize_text_field( $_POST['selected-bank'] );
 
-        return $this->get_payu_pay_method_array('PBL', $selected_method ? $selected_method : -1, $selected_method);
-    }
+		return $this->get_payu_pay_method_array( 'PBL', $selected_method ?: - 1, $selected_method );
+	}
 }
