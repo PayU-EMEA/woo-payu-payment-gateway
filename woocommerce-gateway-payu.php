@@ -62,7 +62,8 @@ function init_gateway_payu() {
 	if ( ! class_exists( 'WC_Payment_Gateway' ) ) {
 		return;
 	}
-	load_plugin_textdomain( 'woo-payu-payment-gateway', false, WC_PAYU_PLUGIN_PATH . '/lang' );
+
+	load_plugin_textdomain( 'woo-payu-payment-gateway', false, dirname(plugin_basename(__FILE__)) . '/lang' );
 	require_once( 'includes/WC_Gateway_PayuStandard.php' );
 	require_once( 'includes/WC_Gateway_PayuCreditCard.php' );
 	require_once( 'includes/WC_Gateway_PayuListBanks.php' );
