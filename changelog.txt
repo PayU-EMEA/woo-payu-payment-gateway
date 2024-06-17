@@ -1,6 +1,6 @@
 *** Changelog ***
 
-= 2.2.0 - 2024-06-XX =
+= 2.2.0 - 2024-06-17 =
 * Add - PayU – standard via WooCommerce Blocks
 * Add - PayU – payment card via WooCommerce Blocks
 

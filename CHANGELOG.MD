@@ -1,3 +1,7 @@
+# 2.2.0
+* Add - PayU – standard via WooCommerce Blocks
+* Add - PayU – payment card via WooCommerce Blocks
+
 # 2.1.0
 * Added Klarna as a separate payment method
 
