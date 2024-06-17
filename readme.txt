@@ -3,7 +3,7 @@ Contributors: payusa
 Tags: PayU, payment, payment gateway, platnosci, PayU Poland, PayU EU, PayU GPO
 Requires at least: 5.0
 Tested up to: 6.5.4
-Stable tag: 2.2.0
+Stable tag: 2.2.1
 Requires PHP: 7.4
 License: Apache License 2.0
 
@@ -50,9 +50,13 @@ Yes, it does.
 
 == Changelog ==
 
+= 2.2.1 - 2024-06-17 =
+* [Fix] Some methods were not showing up
+* [Fix] PHP Deprecated: Creation of dynamic property
+
 = 2.2.0 - 2024-06-17 =
-* Add - PayU – standard via WooCommerce Blocks
-* Add - PayU – payment card via WooCommerce Blocks
+* [Add] PayU – standard via WooCommerce Blocks
+* [Add] PayU – payment card via WooCommerce Blocks
 
 = 2.1.0 =
 * Added Klarna as a separate payment method

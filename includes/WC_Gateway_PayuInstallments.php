@@ -7,20 +7,20 @@ class WC_Gateway_PayuInstallments extends WC_Payu_Gateways {
 
 	function __construct() {
 		parent::__construct( 'payuinstallments' );
+	}
 
-		if ( $this->is_enabled() ) {
-			if ( ! is_admin() ) {
-				if ( ! $this->try_retrieve_banks() ) {
-					add_filter( 'woocommerce_available_payment_gateways', [ $this, 'unset_gateway' ] );
-				} else {
-					wp_enqueue_style( 'payu-installments-widget', plugins_url( '/assets/css/payu-installments-widget.css', PAYU_PLUGIN_FILE ), [], PAYU_PLUGIN_VERSION );
-					add_filter( 'woocommerce_gateway_description', [
-						$this,
-						'installments_filter_gateway_description'
-					], 10, 2 );
-				}
-			}
+	public function is_available() {
+		if ( ! $this->try_retrieve_banks() ) {
+			return false;
 		}
+
+		wp_enqueue_style( 'payu-installments-widget', plugins_url( '/assets/css/payu-installments-widget.css', PAYU_PLUGIN_FILE ), [], PAYU_PLUGIN_VERSION );
+		add_filter( 'woocommerce_gateway_description', [
+			$this,
+			'installments_filter_gateway_description'
+		], 10, 2 );
+
+		return parent::is_available();
 	}
 
 	public function installments_filter_gateway_description( $description, $id ) {

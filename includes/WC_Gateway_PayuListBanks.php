@@ -10,15 +10,16 @@ class WC_Gateway_PayuListBanks extends WC_Payu_Gateways {
 
 		if ( $this->is_enabled() ) {
 			$this->show_terms_info = true;
-
-			if ( ! is_admin() ) {
-				if ( ! $this->try_retrieve_banks() ) {
-					add_filter( 'woocommerce_available_payment_gateways', [ $this, 'unset_gateway' ] );
-				}
-			}
 		}
 	}
 
+	public function is_available() {
+		if ( ! $this->try_retrieve_banks() ) {
+			return false;
+		}
+
+		return parent::is_available();
+	}
 	function init_form_fields() {
 		parent::payu_init_form_fields( true );
 	}

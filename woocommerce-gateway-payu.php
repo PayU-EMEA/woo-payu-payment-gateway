@@ -21,7 +21,7 @@ use Payu\PaymentGateway\Gateways\WC_Payu_Gateways;
 
 require __DIR__ . '/vendor/autoload.php';
 
-define( 'PAYU_PLUGIN_VERSION', '2.2.0' );
+define( 'PAYU_PLUGIN_VERSION', '2.2.1' );
 define( 'PAYU_PLUGIN_FILE', __FILE__ );
 define( 'PAYU_PLUGIN_STATUS_WAITING', 'payu-waiting' );
 

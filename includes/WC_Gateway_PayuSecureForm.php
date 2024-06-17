@@ -17,11 +17,16 @@ class WC_Gateway_PayuSecureForm extends WC_Payu_Gateways {
 			//refresh card iframe after checkout change
 			if ( ! is_admin() ) {
 				add_action( 'wp_footer', [ $this, 'minicart_checkout_refresh_script' ] );
-				if ( ! $this->try_retrieve_banks() ) {
-					add_filter( 'woocommerce_available_payment_gateways', [ $this, 'unset_gateway' ] );
-				}
 			}
 		}
+	}
+
+	public function is_available() {
+		if ( ! $this->try_retrieve_banks() ) {
+			return false;
+		}
+
+		return parent::is_available();
 	}
 
 	/**

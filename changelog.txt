@@ -1,8 +1,12 @@
 *** Changelog ***
 
+= 2.2.1 - 2024-06-17 =
+* [Fix] Some methods were not showing up
+* [Fix] PHP Deprecated: Creation of dynamic property
+
 = 2.2.0 - 2024-06-17 =
-* Add - PayU – standard via WooCommerce Blocks
-* Add - PayU – payment card via WooCommerce Blocks
+* [Add] PayU – standard via WooCommerce Blocks
+* [Add] PayU – payment card via WooCommerce Blocks
 
 = 2.1.0 =
 * Added Klarna as a separate payment method
