@@ -15,17 +15,17 @@ Use [automatic installation and activation](https://wordpress.org/support/articl
 
 ## Payment methods
 The plugin offers the following payment methods:
-| No.    | Method | Description
-| :---: | ------ | ---
-| 1     | PayU - standard | payer will be redirected to PayU's hosted payment page where any available payment type configured on your POS can be chosen
-| 2     | PayU - bank list | payment type list will be displayed, depending on chosen type the payer will be either redirected directly to the bank or to PayU's hosted payment page
-| 3     | PayU - payment card | payer will be redirected to PayU's hosted card form where credit, debit or prepaid card data can be securely entered 
-| 4     | PayU - secure form | a secure form collecting credit, debit or prepaid card data will be displayed
-| 5     | PayU - Blik | payer will be redirected to Blik's page
-| 6     | PayU - installments | payer will be redirected to installment payment form
-| 7     | PayU - Klarna | payer will be redirected to Klarna payment form
-| 8     | PayU - Twisto | payer will be redirected to Twisto payment form
-| 9     | PayU - PayPo | payer will be redirected to PayPo payment form
+| No.| Method              | Blocks | Description
+|:--:|---------------------|:-----------------:|--------------------------------------------------------------------------------------------------------------------------------------------------------
+| 1  | PayU - standard     | :white_check_mark:| payer will be redirected to PayU's hosted payment page where any available payment type configured on your POS can be chosen
+| 2  | PayU - bank list    |        :x:        | payment type list will be displayed, depending on chosen type the payer will be either redirected directly to the bank or to PayU's hosted payment page
+| 3  | PayU - payment card | :white_check_mark:| payer will be redirected to PayU's hosted card form where credit, debit or prepaid card data can be securely entered
+| 4  | PayU - secure form  |        :x:        | a secure form collecting credit, debit or prepaid card data will be displayed
+| 5  | PayU - Blik         |        :x:        | payer will be redirected to Blik's page
+| 6  | PayU - installments |        :x:        | payer will be redirected to installment payment form
+| 7  | PayU - Klarna       |        :x:        | payer will be redirected to Klarna payment form
+| 8  | PayU - Twisto       |        :x:        | payer will be redirected to Twisto payment form
+| 9  | PayU - PayPo        |        :x:        | payer will be redirected to PayPo payment form
 
 #### Payment method remarks
 
@@ -153,8 +153,8 @@ In case repayment is configured, the mail confirming order placement is enhanced
 
 ## Known issues
 ### WooCommerce Blocks
-If shop is using WooCommerce version 8.3 or newer, or is using theme utilising WooCommerce Blocks on Checkout page you need to check if shop/theme uses the "block" mode in Checkout page part regarding payment methods -> PayU plugin currently do not support WooCommerce blocks in this section
-Information how to revert Checkout page shortcode from WooCommerce Blocks to classic version of Checkout page is availabe in WooCommerce documentation at https://woo.com/document/cart-checkout-blocks-status/#section-6
+
+Currently supported payment methods for blocks are: "PayU - standard" and "PayU - payment card".
 
 <!--external links:-->
 [ext1]: http://php.net/manual/en/book.curl.php

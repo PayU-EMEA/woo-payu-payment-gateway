@@ -16,12 +16,7 @@
 
       &.payu-inactive {
         opacity: 0.5;
-        -webkit-filter: grayscale(1);
-        -moz-filter: grayscale(1);
-        -ms-filter: grayscale(1);
-        -o-filter: grayscale(1);
         filter: grayscale(1);
-        filter: gray;
       }
 
       &:not(.payu-inactive) {
@@ -70,6 +65,7 @@
     margin-top: 0.5em;
     margin-bottom: 0.5em;
     display: none;
+
     &:before {
       top: 0.5em
     }
@@ -78,6 +74,7 @@
 
 .payu-accept-conditions {
   margin-top: 15px;
+
   .payu-conditions-description {
     margin-top: 8px;
     font-size: 12px;
@@ -187,7 +184,16 @@
 }
 
 label[for*="payment_method_payu"] {
-   img {
-     border-radius: 0;
-   }
+  img {
+    border-radius: 0;
+  }
+}
+
+// blocks
+.payu-block-method {
+  gap: 10px;
+}
+
+.payu-block-method-logo {
+  margin-left: 5px;
 }

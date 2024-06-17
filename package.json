@@ -1,0 +1,17 @@
+{
+  "name": "woo-payu-payment-gateway",
+  "version": "1.0.0",
+  "description": "PayU Payment Gateway for WooCommerce",
+  "scripts": {
+    "start": "wp-scripts start",
+    "build": "wp-scripts build",
+    "packages-update": "wp-scripts packages-update",
+    "check-engines": "wp-scripts check-engines"
+  },
+  "author": "PayU GPO",
+  "license": "Apache-2.0",
+  "devDependencies": {
+    "@woocommerce/dependency-extraction-webpack-plugin": "^3.0.1",
+    "@wordpress/scripts": "^28.0.0"
+  }
+}

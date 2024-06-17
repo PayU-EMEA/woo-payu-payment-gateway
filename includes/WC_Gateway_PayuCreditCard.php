@@ -1,28 +1,28 @@
 <?php
 
-class WC_Gateway_PayuCreditCard extends WC_PayUGateways
-{
-    protected $paytype = 'c';
+use Payu\PaymentGateway\Gateways\WC_Payu_Gateways;
 
-    function __construct()
-    {
-        parent::__construct('payucreditcard');
+class WC_Gateway_PayuCreditCard extends WC_Payu_Gateways {
+	protected $paytype = 'c';
 
-        if ($this->is_enabled()) {
-            $this->show_terms_info = false;
-            $this->icon = apply_filters('woocommerce_payu_icon', plugins_url( '/assets/images/card-visa-mc.svg', PAYU_PLUGIN_FILE ));
+	function __construct() {
+		parent::__construct( 'payucreditcard' );
 
-            if (!is_admin()) {
-                if (!$this->try_retrieve_banks()) {
-                    add_filter('woocommerce_available_payment_gateways', [$this, 'unset_gateway']);
-                }
-            }
-        }
-    }
+		if ( $this->is_enabled() ) {
+			$this->icon = apply_filters( 'woocommerce_payu_icon', plugins_url( '/assets/images/card-visa-mc.svg', PAYU_PLUGIN_FILE ) );
+		}
+	}
 
-    public function payment_fields()
-    {
-        parent::payment_fields();
-        $this->agreements_field();
-    }
+	public function is_available() {
+		if ( ! $this->try_retrieve_banks() ) {
+			return false;
+		}
+
+		return parent::is_available();
+	}
+
+	public function payment_fields() {
+		parent::payment_fields();
+		$this->agreements_field();
+	}
 }
