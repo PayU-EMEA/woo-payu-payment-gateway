@@ -728,7 +728,7 @@ abstract class WC_Payu_Gateways extends WC_Payment_Gateway implements WC_PayuGat
 			'buyer'         => $this->getBuyer( $order ),
 		];
 
-		if ($this->id !== 'payustandard') {
+		if ( $this->id !== 'payustandard' ) {
 			$orderData['payMethods'] = $this->get_payu_pay_method();
 		}
 
@@ -1076,7 +1076,7 @@ abstract class WC_Payu_Gateways extends WC_Payment_Gateway implements WC_PayuGat
 	 */
 	protected function check_min_max( $payMethod, $paytype = null ) {
 		if ( ( $paytype === null || $payMethod->value === $paytype ) && $payMethod->status === 'ENABLED' ) {
-			$total = $this->getTotal() * 100;
+			$total = $this->get_order_total() * 100;
 
 			if ( isset( $payMethod->minAmount ) && $total < $payMethod->minAmount ) {
 				return false;
@@ -1089,19 +1089,6 @@ abstract class WC_Payu_Gateways extends WC_Payment_Gateway implements WC_PayuGat
 		}
 
 		return false;
-	}
-
-	/**
-	 * @return float
-	 */
-	private function getTotal() {
-		if ( $this->order_total !== null ) {
-			return $this->order_total;
-		} elseif ( WC()->cart && ! WC()->cart->is_empty() ) {
-			return WC()->cart->get_cart_contents_total() + WC()->cart->get_cart_contents_tax() + WC()->cart->get_shipping_total() + WC()->cart->get_shipping_tax();
-		}
-
-		return 0;
 	}
 
 	/**
