@@ -31,6 +31,8 @@ abstract class WC_Payu_Gateways extends WC_Payment_Gateway implements WC_PayuGat
 
 	protected $paytype;
 
+	protected bool $sandbox;
+
 	private $order_total = null;
 
 	const CONDITION_PL = 'http://static.payu.com/sites/terms/files/payu_terms_of_service_single_transaction_pl_pl.pdf';
@@ -54,7 +56,7 @@ abstract class WC_Payu_Gateways extends WC_Payment_Gateway implements WC_PayuGat
 		$this->icon                = apply_filters( 'woocommerce_payu_icon', plugins_url( '/assets/images/logo-payu.svg', PAYU_PLUGIN_FILE ) );
 		$this->title               = $this->get_option( 'title' );
 		$this->description         = $this->get_option( 'description', ' ' );
-		$this->sandbox             = $this->get_option( 'sandbox', false );
+		$this->sandbox             = filter_var( $this->get_option( 'sandbox', false ), FILTER_VALIDATE_BOOLEAN );
 		$this->enable_for_shipping = $this->get_option( 'enable_for_shipping', [] );
 		$this->enable_for_virtual  = $this->get_option( 'enable_for_virtual', 'no' ) === 'yes';
 
