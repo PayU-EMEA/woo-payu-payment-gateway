@@ -1078,7 +1078,7 @@ abstract class WC_Payu_Gateways extends WC_Payment_Gateway implements WC_PayuGat
 	 */
 	protected function check_min_max( $payMethod, $paytype = null ) {
 		if ( ( $paytype === null || $payMethod->value === $paytype ) && $payMethod->status === 'ENABLED' ) {
-			$total = $this->get_order_total() * 100;
+			$total = $this->getTotal() * 100;
 
 			if ( isset( $payMethod->minAmount ) && $total < $payMethod->minAmount ) {
 				return false;
@@ -1091,6 +1091,16 @@ abstract class WC_Payu_Gateways extends WC_Payment_Gateway implements WC_PayuGat
 		}
 
 		return false;
+	}
+
+	private function getTotal(): float {
+		if ( $this->order_total !== null ) {
+			return $this->order_total;
+		} elseif ( WC()->cart && 0 !== count( WC()->cart->get_cart_contents() ) ) {
+			return WC()->cart->get_cart_contents_total() + WC()->cart->get_cart_contents_tax() + WC()->cart->get_shipping_total() + WC()->cart->get_shipping_tax();
+		}
+
+		return 0;
 	}
 
 	/**
