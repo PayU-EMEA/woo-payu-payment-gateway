@@ -1,4 +1,6 @@
 *** Changelog ***
+= 2.2.2 - 2024-06-18 =
+* [Fix] Warning: Attempt to read property "total" on null
 
 = 2.2.1 - 2024-06-17 =
 * [Fix] Some methods were not showing up

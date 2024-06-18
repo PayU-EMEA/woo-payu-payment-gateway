@@ -3,7 +3,7 @@ Contributors: payusa
 Tags: PayU, payment, payment gateway, platnosci, PayU Poland, PayU EU, PayU GPO
 Requires at least: 5.0
 Tested up to: 6.5.4
-Stable tag: 2.2.1
+Stable tag: 2.2.2
 Requires PHP: 7.4
 License: Apache License 2.0
 
@@ -49,6 +49,9 @@ Yes, it does.
 * For presenting minimal installment amount we used [Widget Installments](https://developers.payu.com/en/installments.html#installments_best_practices_mini) and plugin loads the script from the static.payu.com domain.
 
 == Changelog ==
+
+= 2.2.2 - 2024-06-18 =
+* [Fix] Warning: Attempt to read property "total" on null
 
 = 2.2.1 - 2024-06-17 =
 * [Fix] Some methods were not showing up
