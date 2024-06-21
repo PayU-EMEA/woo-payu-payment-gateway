@@ -1,4 +1,11 @@
 *** Changelog ***
+= 2.3.0 - 2024-06-21 =
+* [Add] PayU - installments via WooCommerce Blocks
+* [Add] PayU - Klarna via WooCommerce Blocks
+* [Add] PayU - Twisto via WooCommerce Blocks
+* [Add] PayU - PayPo via WooCommerce Blocks
+* [Fix] Not showing Installments Mini Widget on product and products list page
+
 = 2.2.2 - 2024-06-18 =
 * [Fix] Warning: Attempt to read property "total" on null
 

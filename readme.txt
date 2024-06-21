@@ -3,7 +3,7 @@ Contributors: payusa
 Tags: PayU, payment, payment gateway, platnosci, PayU Poland, PayU EU, PayU GPO
 Requires at least: 5.0
 Tested up to: 6.5.4
-Stable tag: 2.2.2
+Stable tag: 2.3.0
 Requires PHP: 7.4
 License: Apache License 2.0
 
@@ -49,6 +49,13 @@ Yes, it does.
 * For presenting minimal installment amount we used [Widget Installments](https://developers.payu.com/en/installments.html#installments_best_practices_mini) and plugin loads the script from the static.payu.com domain.
 
 == Changelog ==
+
+= 2.3.0 - 2024-06-21 =
+* [Add] PayU - installments via WooCommerce Blocks
+* [Add] PayU - Klarna via WooCommerce Blocks
+* [Add] PayU - Twisto via WooCommerce Blocks
+* [Add] PayU - PayPo via WooCommerce Blocks
+* [Fix] Not showing Installments Mini Widget on product and products list page
 
 = 2.2.2 - 2024-06-18 =
 * [Fix] Warning: Attempt to read property "total" on null
