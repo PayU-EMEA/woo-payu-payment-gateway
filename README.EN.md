@@ -22,10 +22,10 @@ The plugin offers the following payment methods:
 | 3  | PayU - payment card | :white_check_mark:| payer will be redirected to PayU's hosted card form where credit, debit or prepaid card data can be securely entered
 | 4  | PayU - secure form  |        :x:        | a secure form collecting credit, debit or prepaid card data will be displayed
 | 5  | PayU - Blik         |        :x:        | payer will be redirected to Blik's page
-| 6  | PayU - installments |        :x:        | payer will be redirected to installment payment form
-| 7  | PayU - Klarna       |        :x:        | payer will be redirected to Klarna payment form
-| 8  | PayU - Twisto       |        :x:        | payer will be redirected to Twisto payment form
-| 9  | PayU - PayPo        |        :x:        | payer will be redirected to PayPo payment form
+| 6  | PayU - installments | :white_check_mark:| payer will be redirected to installment payment form
+| 7  | PayU - Klarna       | :white_check_mark:| payer will be redirected to Klarna payment form
+| 8  | PayU - Twisto       | :white_check_mark:| payer will be redirected to Twisto payment form
+| 9  | PayU - PayPo        | :white_check_mark:| payer will be redirected to PayPo payment form
 
 #### Payment method remarks
 
@@ -150,11 +150,6 @@ Widget is presented only for PLN currency and products or carts with amount in a
 The plugin does not send any additional emails and does not interfere with any mailing process.
 
 In case repayment is configured, the mail confirming order placement is enhanced with information about the possibility to pay the order.
-
-## Known issues
-### WooCommerce Blocks
-
-Currently supported payment methods for blocks are: "PayU - standard" and "PayU - payment card".
 
 <!--external links:-->
 [ext1]: http://php.net/manual/en/book.curl.php

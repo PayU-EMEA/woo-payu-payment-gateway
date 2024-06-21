@@ -24,10 +24,10 @@ Wtyczka udostępnia następujące metody płatności:
 | 3  | PayU - karta płatnicza | :white_check_mark: |Płacący zostanie przekierowany na stronę PayU gdzie wprowadzi dane karty (kredytowej, debetowej lub prepaid)
 | 4  | PayU - secure form     |        :x:         |Wyświetlany jest formularz wprowadzania danych karty
 | 5  | PayU - Blik            |        :x:         |Płacący zostanie przekierowany na stronę Blik
-| 6  | PayU - raty            |        :x:         |Płacący zostanie przekierowany na stronę formularza płatności ratalnej
-| 7  | PayU - Klarna          |        :x:         |Płacący zostanie przekierowany na stronę formularza płatności Klarna
-| 8  | PayU - Twisto          |        :x:         |Płacący zostanie przekierowany na stronę formularza płatności Twisto
-| 9  | PayU - PayPo           |        :x:         |Płacący zostanie przekierowany na stronę formularza płatności PayPo
+| 6  | PayU - raty            | :white_check_mark: |Płacący zostanie przekierowany na stronę formularza płatności ratalnej
+| 7  | PayU - Klarna          | :white_check_mark: |Płacący zostanie przekierowany na stronę formularza płatności Klarna
+| 8  | PayU - Twisto          | :white_check_mark: |Płacący zostanie przekierowany na stronę formularza płatności Twisto
+| 9  | PayU - PayPo           | :white_check_mark: |Płacący zostanie przekierowany na stronę formularza płatności PayPo
 
 #### Uwagi do metod płatności
 
@@ -162,12 +162,6 @@ Widget prezentowany jest tylko dla waluty PLN oraz dla produktów i koszyków, k
 Plugin nie wysyła żadnych dodatkowych maili. Nie ingeruje również w proces, kiedy maile są wysyłane.
 
 W przypadku włączonego ponownienia płatności do maila potwierdzajacego zamówienia dodawana jest informacja o możliwości wykonania płatności: `Jeżeli jeszcze nie opłaciłeś zamówienia możesz to zrobić przechodząc na stronę.`
-
-## Znane problemy
-
-### WooCommerce Blocks
-
-Aktualnie wspierane metody płatności dla bloków to: "PayU - standard" i "PayU - karta płatnicza".
 
 <!--external links:-->
 
