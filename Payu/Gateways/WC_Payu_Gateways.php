@@ -68,6 +68,10 @@ abstract class WC_Payu_Gateways extends WC_Payment_Gateway implements WC_PayuGat
 			}
 		}
 
+		if ( ! is_admin() ) {
+			$this->init_OpenPayU();
+		}
+
 		add_action( 'wp_enqueue_scripts', [ $this, 'enqueue_payu_gateway_assets' ] );
 
 		// Saving hook
