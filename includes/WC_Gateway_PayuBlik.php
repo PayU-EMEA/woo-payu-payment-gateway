@@ -15,7 +15,7 @@ class WC_Gateway_PayuBlik extends WC_Payu_Gateways {
 		}
 	}
 
-	public function is_available() {
+	public function is_available(): bool {
 		if ( ! $this->try_retrieve_banks() ) {
 			return false;
 		}
@@ -23,8 +23,4 @@ class WC_Gateway_PayuBlik extends WC_Payu_Gateways {
 		return parent::is_available();
 	}
 
-	public function payment_fields() {
-		parent::payment_fields();
-		$this->agreements_field();
-	}
 }
