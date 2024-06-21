@@ -5,17 +5,19 @@ namespace Payu\PaymentGateway\Gateways;
 class WC_Gateway_PayuInstallments extends WC_Payu_Gateways {
 	protected $paytype = 'ai';
 
+	private $options;
+
 	function __construct() {
 		parent::__construct( 'payuinstallments' );
+		$this->options = get_option( 'woocommerce_payuinstallments_settings', [] );
 	}
 
 	public function is_available(): bool {
 		if ( ! $this->try_retrieve_banks() || ! parent::is_available() ) {
 			return false;
 		}
-		$options = get_option( 'woocommerce_payuinstallments_settings', [] );
 
-		if ( $options['credit_widget_on_checkout_page'] === 'yes' &&
+		if ( $this->options['credit_widget_on_checkout_page'] === 'yes' &&
 		     get_woocommerce_currency() === 'PLN' &&
 		     $this->is_checkout_page()
 		) {
@@ -28,9 +30,10 @@ class WC_Gateway_PayuInstallments extends WC_Payu_Gateways {
 	// Additional data for Blocks
 	public function get_additional_data(): array {
 		return [
-			'posId'     => $this->pos_id,
-			'widgetKey' => $this->pos_widget_key,
-			'total'     => WC()->cart->get_total( '' )
+			'widgetOnCheckout' => $this->options['credit_widget_on_checkout_page'] === 'yes',
+			'posId'            => $this->pos_id,
+			'widgetKey'        => $this->pos_widget_key,
+			'total'            => WC()->cart->get_total( '' )
 		];
 	}
 
