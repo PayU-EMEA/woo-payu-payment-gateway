@@ -13,7 +13,7 @@ class WC_Gateway_PayuListBanks extends WC_Payu_Gateways {
 		}
 	}
 
-	public function is_available() {
+	public function is_available(): bool {
 		if ( ! $this->try_retrieve_banks() ) {
 			return false;
 		}
@@ -35,7 +35,7 @@ class WC_Gateway_PayuListBanks extends WC_Payu_Gateways {
 		return false;
 	}
 
-	public function payment_fields() {
+	public function payment_fields(): void {
 		parent::payment_fields();
 
 		$response = $this->get_payu_response();

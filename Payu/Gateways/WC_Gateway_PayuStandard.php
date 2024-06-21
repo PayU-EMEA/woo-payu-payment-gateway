@@ -1,6 +1,6 @@
 <?php
 
-use Payu\PaymentGateway\Gateways\WC_Payu_Gateways;
+namespace Payu\PaymentGateway\Gateways;
 
 class WC_Gateway_PayuStandard extends WC_Payu_Gateways {
 
@@ -8,7 +8,7 @@ class WC_Gateway_PayuStandard extends WC_Payu_Gateways {
 		parent::__construct( 'payustandard' );
 	}
 
-	public function is_available() {
+	public function is_available(): bool {
 		if ( ! $this->try_retrieve_banks() ) {
 			return false;
 		}
@@ -25,10 +25,5 @@ class WC_Gateway_PayuStandard extends WC_Payu_Gateways {
 		}
 
 		return false;
-	}
-
-	public function payment_fields() {
-		parent::payment_fields();
-		$this->agreements_field();
 	}
 }

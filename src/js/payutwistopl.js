@@ -2,12 +2,12 @@ import { decodeEntities } from '@wordpress/html-entities';
 import { getSetting } from '@woocommerce/settings';
 import { registerPaymentMethod } from '@woocommerce/blocks-registry';
 
-const name = 'payustandard';
+const name = 'payutwistopl';
 
 const settings = getSetting( `${name}_data`, {} );
 
 const available = decodeEntities(settings.available || false);
-const title = decodeEntities(settings.title || 'PayU');
+const title = decodeEntities(settings.title || 'Twisto');
 const description = decodeEntities(settings.description || '');
 const iconUrl = settings.icon;
 
@@ -25,7 +25,7 @@ const Label = ( props ) => {
     return (
         <>
             <PaymentMethodLabel text={ title } className="payu-block-method" />
-            <span className="payu-block-method-logo"><img src={iconUrl} alt="PayU" name={title}/></span>
+            <span className="payu-block-method-logo"><img src={iconUrl} alt="Twisto" name={title}/></span>
         </>
     );
 };

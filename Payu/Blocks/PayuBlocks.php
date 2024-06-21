@@ -54,11 +54,12 @@ abstract class PayuBlocks extends AbstractPaymentMethodType {
 
 	public function get_payment_method_data(): array {
 		return [
-			'available'     => $this->is_active(),
-			'showTermsInfo' => $this->payment_method->is_payu_show_terms_info(),
-			'title'         => $this->payment_method->get_payu_method_title(),
-			'description'   => $this->payment_method->get_payu_method_description(),
-			'icon'          => $this->payment_method->get_payu_method_icon()
+			'available'      => $this->is_active(),
+			'showTermsInfo'  => $this->payment_method->is_payu_show_terms_info(),
+			'title'          => $this->payment_method->get_payu_method_title(),
+			'description'    => $this->payment_method->get_payu_method_description(),
+			'icon'           => $this->payment_method->get_payu_method_icon(),
+			'additionalData' => $this->payment_method->get_additional_data()
 		];
 	}
 }

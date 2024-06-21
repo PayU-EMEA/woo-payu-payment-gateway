@@ -4,12 +4,12 @@ const path = require('path');
 
 const wcDepMap = {
     '@woocommerce/blocks-registry': ['wc', 'wcBlocksRegistry'],
-    '@woocommerce/settings'       : ['wc', 'wcSettings']
+    '@woocommerce/settings': ['wc', 'wcSettings']
 };
 
 const wcHandleMap = {
     '@woocommerce/blocks-registry': 'wc-blocks-registry',
-    '@woocommerce/settings'       : 'wc-settings'
+    '@woocommerce/settings': 'wc-settings'
 };
 
 const requestToExternal = (request) => {
@@ -29,9 +29,13 @@ module.exports = {
     entry: {
         'payustandard': '/src/js/payustandard.js',
         'payucreditcard': '/src/js/payucreditcard.js',
+        'payupaypo': '/src/js/payupaypo.js',
+        'payuklarna': '/src/js/payuklarna.js',
+        'payutwistopl': '/src/js/payutwistopl.js',
+        'payuinstallments': '/src/js/payuinstallments.js',
     },
     output: {
-        path: path.resolve( __dirname, 'build/js/' ),
+        path: path.resolve(__dirname, 'build/js/'),
         filename: '[name].js'
     },
     plugins: [

@@ -2,7 +2,6 @@
 
 namespace Payu\PaymentGateway\Blocks;
 
-class PayuStandardBlock extends PayuBlocks
-{
+class PayuStandardBlock extends PayuBlocks {
 	protected $name = 'payustandard';
 }

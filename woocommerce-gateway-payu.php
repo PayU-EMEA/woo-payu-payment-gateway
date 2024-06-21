@@ -16,7 +16,17 @@
 
 use Automattic\WooCommerce\Blocks\Payments\PaymentMethodRegistry;
 use Payu\PaymentGateway\Blocks\PayuCreditCardBlock;
+use Payu\PaymentGateway\Blocks\PayuInstallmentsBlock;
+use Payu\PaymentGateway\Blocks\PayuKlarnaBlock;
+use Payu\PaymentGateway\Blocks\PayuPaypoBlock;
 use Payu\PaymentGateway\Blocks\PayuStandardBlock;
+use Payu\PaymentGateway\Blocks\PayuTwistoPlBlock;
+use Payu\PaymentGateway\Gateways\WC_Gateway_PayuCreditCard;
+use Payu\PaymentGateway\Gateways\WC_Gateway_PayuInstallments;
+use Payu\PaymentGateway\Gateways\WC_Gateway_PayuKlarna;
+use Payu\PaymentGateway\Gateways\WC_Gateway_PayuPaypo;
+use Payu\PaymentGateway\Gateways\WC_Gateway_PayuStandard;
+use Payu\PaymentGateway\Gateways\WC_Gateway_PayuTwistoPl;
 use Payu\PaymentGateway\Gateways\WC_Payu_Gateways;
 
 require __DIR__ . '/vendor/autoload.php';
@@ -49,6 +59,10 @@ function init_payu_blocks() {
 			function ( PaymentMethodRegistry $payment_method_registry ) {
 				$payment_method_registry->register( new PayuStandardBlock() );
 				$payment_method_registry->register( new PayuCreditCardBlock() );
+				$payment_method_registry->register( new PayuPaypoBlock() );
+				$payment_method_registry->register( new PayuKlarnaBlock() );
+				$payment_method_registry->register( new PayuTwistoPlBlock() );
+				$payment_method_registry->register( new PayuInstallmentsBlock() );
 			}
 		);
 	}
@@ -63,16 +77,10 @@ function init_gateway_payu() {
 		return;
 	}
 
-	load_plugin_textdomain( 'woo-payu-payment-gateway', false, dirname(plugin_basename(__FILE__)) . '/lang' );
-	require_once( 'includes/WC_Gateway_PayuStandard.php' );
-	require_once( 'includes/WC_Gateway_PayuCreditCard.php' );
+	load_plugin_textdomain( 'woo-payu-payment-gateway', false, dirname( plugin_basename( __FILE__ ) ) . '/lang' );
 	require_once( 'includes/WC_Gateway_PayuListBanks.php' );
 	require_once( 'includes/WC_Gateway_PayuSecureForm.php' );
 	require_once( 'includes/WC_Gateway_PayuBlik.php' );
-	require_once( 'includes/WC_Gateway_PayuInstallments.php' );
-	require_once( 'includes/WC_Gateway_PayuKlarna.php' );
-	require_once( 'includes/WC_Gateway_PayuPaypo.php' );
-	require_once( 'includes/WC_Gateway_PayuTwistoPl.php' );
 
 	add_filter( 'woocommerce_payment_gateways', 'add_payu_gateways' );
 	add_filter( 'woocommerce_valid_order_statuses_for_payment_complete', 'payu_filter_woocommerce_valid_order_statuses_for_payment_complete', 10, 2 );
@@ -176,15 +184,15 @@ function payu_filter_woocommerce_valid_order_statuses_for_payment_complete( $sta
  * @return array
  */
 function add_payu_gateways( $gateways ) {
-	$gateways[] = 'WC_Gateway_PayuCreditCard';
+	$gateways[] = WC_Gateway_PayuStandard::class;
+	$gateways[] = WC_Gateway_PayuCreditCard::class;
+	$gateways[] = WC_Gateway_PayuPaypo::class;
+	$gateways[] = WC_Gateway_PayuKlarna::class;
+	$gateways[] = WC_Gateway_PayuTwistoPl::class;
+	$gateways[] = WC_Gateway_PayuInstallments::class;
 	$gateways[] = 'WC_Gateway_PayuListBanks';
-	$gateways[] = 'WC_Gateway_PayUStandard';
 	$gateways[] = 'WC_Gateway_PayuSecureForm';
 	$gateways[] = 'WC_Gateway_PayuBlik';
-	$gateways[] = 'WC_Gateway_PayuInstallments';
-	$gateways[] = 'WC_Gateway_PayuKlarna';
-	$gateways[] = 'WC_Gateway_PayuPaypo';
-	$gateways[] = 'WC_Gateway_PayuTwistoPl';
 
 	return $gateways;
 }
@@ -239,7 +247,7 @@ if ( is_admin() ) {
 
 function get_installment_option( $option ) {
 
-	$paymentGateways = WC()->payment_gateways->payment_gateways();
+	$paymentGateways = WC()->payment_gateways()->payment_gateways();
 	$result          = null;
 
 	if ( array_key_exists( 'payuinstallments', $paymentGateways ) ) {
@@ -286,7 +294,11 @@ function installments_mini() {
 	if ( get_woocommerce_currency() !== 'PLN' ) {
 		return;
 	}
-	global $product;
+	$product = wc_get_product();
+	if ( ! $product ) {
+		return;
+	}
+
 	$price     = wc_get_price_including_tax( $product );
 	$productId = $product->get_id();
 

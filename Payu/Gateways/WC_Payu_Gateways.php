@@ -86,7 +86,7 @@ abstract class WC_Payu_Gateways extends WC_Payment_Gateway implements WC_PayuGat
 	}
 
 	public function get_payu_method_description(): string {
-		return $this->get_description();
+		return $this->description;
 	}
 
 	public function get_payu_method_icon(): string {
@@ -95,6 +95,10 @@ abstract class WC_Payu_Gateways extends WC_Payment_Gateway implements WC_PayuGat
 
 	public function is_payu_show_terms_info(): bool {
 		return $this->show_terms_info;
+	}
+
+	public function get_additional_data(): array {
+		return [];
 	}
 
 	public function enqueue_payu_gateway_assets() {
@@ -142,6 +146,11 @@ abstract class WC_Payu_Gateways extends WC_Payment_Gateway implements WC_PayuGat
 	 */
 	protected function get_privacy_policy_url() {
 		return get_locale() === 'pl_PL' ? self::PRIVACY_PL : self::PRIVACY_EN;
+	}
+
+	public function payment_fields(): void {
+		parent::payment_fields();
+		$this->agreements_field();
 	}
 
 	/**
@@ -580,7 +589,7 @@ abstract class WC_Payu_Gateways extends WC_Payment_Gateway implements WC_PayuGat
 	 *
 	 * @return bool
 	 */
-	public function is_available() {
+	public function is_available(): bool {
 		$order          = null;
 		$needs_shipping = false;
 

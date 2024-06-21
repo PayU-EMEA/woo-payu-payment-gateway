@@ -20,7 +20,7 @@ const Content = () => {
 };
 
 const Label = ( props ) => {
-    const { PaymentMethodLabel, PaymentMethodIcons } = props.components
+    const { PaymentMethodLabel } = props.components
 
     return (
         <>

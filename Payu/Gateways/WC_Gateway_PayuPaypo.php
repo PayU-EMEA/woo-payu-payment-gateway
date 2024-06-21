@@ -1,6 +1,6 @@
 <?php
 
-use Payu\PaymentGateway\Gateways\WC_Payu_Gateways;
+namespace Payu\PaymentGateway\Gateways;
 
 class WC_Gateway_PayuPaypo extends WC_Payu_Gateways {
 	protected $paytype = 'dpp';
@@ -13,15 +13,11 @@ class WC_Gateway_PayuPaypo extends WC_Payu_Gateways {
 		}
 	}
 
-	public function is_available() {
+	public function is_available(): bool {
 		if ( ! $this->try_retrieve_banks() ) {
 			return false;
 		}
 
 		return parent::is_available();
-	}
-	public function payment_fields() {
-		parent::payment_fields();
-		$this->agreements_field();
 	}
 }
