@@ -1,4 +1,7 @@
 *** Changelog ***
+= 2.3.1 - 2024-06-241 =
+* [Fix] "Call to a member function get_total() on null" for Installments
+
 = 2.3.0 - 2024-06-21 =
 * [Add] PayU - installments via WooCommerce Blocks
 * [Add] PayU - Klarna via WooCommerce Blocks

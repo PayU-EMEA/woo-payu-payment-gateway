@@ -1106,7 +1106,7 @@ abstract class WC_Payu_Gateways extends WC_Payment_Gateway implements WC_PayuGat
 		return false;
 	}
 
-	private function getTotal(): float {
+	protected function getTotal(): float {
 		if ( $this->order_total !== null ) {
 			return $this->order_total;
 		} elseif ( WC()->cart && 0 !== count( WC()->cart->get_cart_contents() ) ) {

@@ -33,7 +33,7 @@ class WC_Gateway_PayuInstallments extends WC_Payu_Gateways {
 			'widgetOnCheckout' => $this->options['credit_widget_on_checkout_page'] === 'yes',
 			'posId'            => $this->pos_id,
 			'widgetKey'        => $this->pos_widget_key,
-			'total'            => WC()->cart->get_total( '' )
+			'total'            => $this->getTotal()
 		];
 	}
 
