@@ -1,11 +1,13 @@
-﻿=== PayU GPO Payment Gateway for WooCommerce ===
+﻿=== PayU GPO Payment for WooCommerce ===
 Contributors: payusa
-Tags: PayU, payment, payment gateway, platnosci, PayU Poland, PayU EU, PayU GPO
+Tags: PayU, payment, payment gateway, płatności, credit card
 Requires at least: 5.0
-Tested up to: 6.5.4
-Stable tag: 2.3.1
+Tested up to: 6.5.5
+Stable tag: 2.4.0
 Requires PHP: 7.4
 License: Apache License 2.0
+
+PayU fast online payments for WooCommerce. Banks, BLIK, credit or debit cards, Installments, Apple Pay, Google Pay.
 
 == Description ==
 **PayU payment module for WooCommerce**
@@ -49,7 +51,10 @@ Yes, it does.
 * For presenting minimal installment amount we used [Widget Installments](https://developers.payu.com/en/installments.html#installments_best_practices_mini) and plugin loads the script from the static.payu.com domain.
 
 == Changelog ==
-= 2.3.1 - 2024-06-241 =
+= 2.4.0 - 2024-07-07 =
+* [Add] PayU - installments via WooCommerce Blocks
+
+= 2.3.1 - 2024-06-24 =
 * [Fix] "Call to a member function get_total() on null" for Installments
 
 = 2.3.0 - 2024-06-21 =
