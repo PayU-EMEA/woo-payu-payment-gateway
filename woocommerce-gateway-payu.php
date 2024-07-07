@@ -1,6 +1,7 @@
 <?php
 /**
  * Plugin Name: PayU Payment Gateway
+ * Requires Plugins: woocommerce
  * Plugin URI: https://github.com/PayU/woo-payu-payment-gateway
  * GitHub Plugin URI: https://github.com/PayU-EMEA/woo-payu-payment-gateway
  * Description: PayU payment gateway for WooCommerce
@@ -15,12 +16,14 @@
  */
 
 use Automattic\WooCommerce\Blocks\Payments\PaymentMethodRegistry;
+use Payu\PaymentGateway\Blocks\PayuBlikBlock;
 use Payu\PaymentGateway\Blocks\PayuCreditCardBlock;
 use Payu\PaymentGateway\Blocks\PayuInstallmentsBlock;
 use Payu\PaymentGateway\Blocks\PayuKlarnaBlock;
 use Payu\PaymentGateway\Blocks\PayuPaypoBlock;
 use Payu\PaymentGateway\Blocks\PayuStandardBlock;
 use Payu\PaymentGateway\Blocks\PayuTwistoPlBlock;
+use Payu\PaymentGateway\Gateways\WC_Gateway_PayuBlik;
 use Payu\PaymentGateway\Gateways\WC_Gateway_PayuCreditCard;
 use Payu\PaymentGateway\Gateways\WC_Gateway_PayuInstallments;
 use Payu\PaymentGateway\Gateways\WC_Gateway_PayuKlarna;
@@ -63,6 +66,7 @@ function init_payu_blocks() {
 				$payment_method_registry->register( new PayuKlarnaBlock() );
 				$payment_method_registry->register( new PayuTwistoPlBlock() );
 				$payment_method_registry->register( new PayuInstallmentsBlock() );
+				$payment_method_registry->register( new PayuBlikBlock() );
 			}
 		);
 	}
@@ -80,7 +84,6 @@ function init_gateway_payu() {
 	load_plugin_textdomain( 'woo-payu-payment-gateway', false, dirname( plugin_basename( __FILE__ ) ) . '/lang' );
 	require_once( 'includes/WC_Gateway_PayuListBanks.php' );
 	require_once( 'includes/WC_Gateway_PayuSecureForm.php' );
-	require_once( 'includes/WC_Gateway_PayuBlik.php' );
 
 	add_filter( 'woocommerce_payment_gateways', 'add_payu_gateways' );
 	add_filter( 'woocommerce_valid_order_statuses_for_payment_complete', 'payu_filter_woocommerce_valid_order_statuses_for_payment_complete', 10, 2 );
@@ -190,9 +193,9 @@ function add_payu_gateways( $gateways ) {
 	$gateways[] = WC_Gateway_PayuKlarna::class;
 	$gateways[] = WC_Gateway_PayuTwistoPl::class;
 	$gateways[] = WC_Gateway_PayuInstallments::class;
+	$gateways[] = WC_Gateway_PayuBlik::class;
 	$gateways[] = 'WC_Gateway_PayuListBanks';
 	$gateways[] = 'WC_Gateway_PayuSecureForm';
-	$gateways[] = 'WC_Gateway_PayuBlik';
 
 	return $gateways;
 }

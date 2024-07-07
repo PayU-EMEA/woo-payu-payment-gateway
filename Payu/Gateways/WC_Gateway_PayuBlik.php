@@ -1,7 +1,6 @@
 <?php
 
-use Payu\PaymentGateway\Gateways\WC_Payu_Gateways;
-
+namespace Payu\PaymentGateway\Gateways;
 
 class WC_Gateway_PayuBlik extends WC_Payu_Gateways {
 	protected $paytype = 'blik';

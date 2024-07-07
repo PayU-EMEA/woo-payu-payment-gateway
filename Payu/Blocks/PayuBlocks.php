@@ -8,6 +8,11 @@ use Payu\PaymentGateway\Gateways\WC_PayuGateway;
 abstract class PayuBlocks extends AbstractPaymentMethodType {
 
 	protected WC_PayuGateway $payment_method;
+	protected bool $with_translate  = false;
+
+	public function __construct($with_translate = false) {
+		$this->with_translate = $with_translate;
+	}
 
 	public function initialize(): void {
 		$payment_gateways = WC()->payment_gateways();
@@ -47,13 +52,15 @@ abstract class PayuBlocks extends AbstractPaymentMethodType {
 			true
 		);
 
-		wp_set_script_translations( $handle, 'woo-payu-payment-gateway' );
+		if ( $this->with_translate ) {
+			wp_set_script_translations( $handle, 'woo-payu-payment-gateway', WC_PAYU_PLUGIN_PATH . 'lang' );
+		}
 
 		return [ $handle ];
 	}
 
 	public function get_payment_method_data(): array {
-		return [
+		$data = [
 			'available'      => $this->is_active(),
 			'showTermsInfo'  => $this->payment_method->is_payu_show_terms_info(),
 			'title'          => $this->payment_method->get_payu_method_title(),
@@ -61,5 +68,11 @@ abstract class PayuBlocks extends AbstractPaymentMethodType {
 			'icon'           => $this->payment_method->get_payu_method_icon(),
 			'additionalData' => $this->payment_method->get_additional_data()
 		];
+
+		if ($this->payment_method->is_payu_show_terms_info()) {
+			$data['termsLinks'] = $this->payment_method->get_terms_links();
+		}
+
+		return $data;
 	}
 }

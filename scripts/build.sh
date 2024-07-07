@@ -1,6 +1,7 @@
 #!/usr/bin/env sh
+set -e
 
-REQUIRED=("composer" "npm" "sass" "zip")
+REQUIRED=("composer" "npm" "sass" "zip" "wp")
 
 for i in ${REQUIRED[@]}
 do
@@ -26,6 +27,10 @@ sass ./assets/css:./assets/css --no-source-map --style=compressed
 # Build BLocks
 npm run build
 
+# Blocks translates
+rm ./lang/*.json
+wp i18n make-json lang --no-purge --use-map=blocks_translates_map.json
+
 # Create folder
 mkdir -p ${DIST_PLUGIN}
 
@@ -36,7 +41,8 @@ cp -R assets/js ${DIST_PLUGIN}/assets/
 cp -R assets/images ${DIST_PLUGIN}/assets/
 cp -R build ${DIST_PLUGIN}
 cp -R includes ${DIST_PLUGIN}
-cp -R lang ${DIST_PLUGIN}
+mkdir ${DIST_PLUGIN}/lang/
+cp lang/${PLUGIN_SLUG}*.{json,php,po,mo,pot} ${DIST_PLUGIN}/lang/
 cp -R Payu ${DIST_PLUGIN}
 cp -R vendor ${DIST_PLUGIN}
 cp changelog.txt ${DIST_PLUGIN}

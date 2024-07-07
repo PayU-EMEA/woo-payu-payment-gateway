@@ -37,9 +37,10 @@ abstract class WC_Payu_Gateways extends WC_Payment_Gateway implements WC_PayuGat
 
 	const CONDITION_PL = 'http://static.payu.com/sites/terms/files/payu_terms_of_service_single_transaction_pl_pl.pdf';
 	const CONDITION_EN = 'http://static.payu.com/sites/terms/files/payu_terms_of_service_single_transaction_pl_en.pdf';
-	const CONDITION_CS = 'http://static.payu.com/sites/terms/files/Podmínky pro provedení jednorázové platební transakce v PayU.pdf';
+	const CONDITION_CS = 'http://static.payu.com/sites/terms/files/payu_terms_of_service_single_transaction_cs.pdf';
 	const PRIVACY_PL = 'https://static.payu.com/sites/terms/files/payu_privacy_policy_pl_pl.pdf';
 	const PRIVACY_EN = 'https://static.payu.com/sites/terms/files/payu_privacy_policy_en_en.pdf';
+	const PRIVACY_CS = 'https://static.payu.com/sites/terms/files/payu_privacy_policy_cs.pdf';
 
 	/**
 	 * Setup general properties for the gateway.
@@ -105,6 +106,13 @@ abstract class WC_Payu_Gateways extends WC_Payment_Gateway implements WC_PayuGat
 		return [];
 	}
 
+	public function get_terms_links(): array {
+		return [
+			'condition' => $this->get_condition_url(),
+			'privacy' => $this->get_privacy_policy_url()
+		];
+	}
+
 	public function enqueue_payu_gateway_assets() {
 		wp_enqueue_script( 'payu-gateway', plugins_url( '/assets/js/payu-gateway.js', PAYU_PLUGIN_FILE ),
 			[ 'jquery' ], PAYU_PLUGIN_VERSION, true );
@@ -130,10 +138,7 @@ abstract class WC_Payu_Gateways extends WC_Payment_Gateway implements WC_PayuGat
 		}
 	}
 
-	/**
-	 * @return string
-	 */
-	protected function get_condition_url() {
+	protected function get_condition_url(): string {
 		$language = get_locale();
 		switch ( $language ) {
 			case 'pl_PL':
@@ -145,11 +150,16 @@ abstract class WC_Payu_Gateways extends WC_Payment_Gateway implements WC_PayuGat
 		}
 	}
 
-	/**
-	 * @return string
-	 */
-	protected function get_privacy_policy_url() {
-		return get_locale() === 'pl_PL' ? self::PRIVACY_PL : self::PRIVACY_EN;
+	protected function get_privacy_policy_url(): string {
+		$language = get_locale();
+		switch ( $language ) {
+			case 'pl_PL':
+				return self::PRIVACY_PL;
+			case 'cs_CZ':
+				return self::PRIVACY_CS;
+			default:
+				return self::PRIVACY_EN;
+		}
 	}
 
 	public function payment_fields(): void {

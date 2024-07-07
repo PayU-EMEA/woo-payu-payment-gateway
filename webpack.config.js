@@ -33,6 +33,7 @@ module.exports = {
         'payuklarna': '/src/js/payuklarna.js',
         'payutwistopl': '/src/js/payutwistopl.js',
         'payuinstallments': '/src/js/payuinstallments.js',
+        'payublik': '/src/js/payublik.js',
     },
     output: {
         path: path.resolve(__dirname, 'build/js/'),

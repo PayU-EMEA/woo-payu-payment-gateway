@@ -12,6 +12,6 @@
   "license": "Apache-2.0",
   "devDependencies": {
     "@woocommerce/dependency-extraction-webpack-plugin": "^3.0.1",
-    "@wordpress/scripts": "^28.1.0"
+    "@wordpress/scripts": "^28.2.0"
   }
 }
