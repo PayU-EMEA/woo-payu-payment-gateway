@@ -1,5 +1,5 @@
 # 2.4.0 - 2024-07-07
-* [Add] PayU - Blocks via WooCommerce Blocks
+* [Add] PayU - BLIK via WooCommerce Blocks
 
 # 2.3.1 - 2024-06-24
 * [Fix] "Call to a member function get_total() on null" for Installments

@@ -23,7 +23,7 @@ Wtyczka udostępnia następujące metody płatności:
 | 2  | PayU - lista banków    |        :x:         |Wyświetlana jest lista typów płatności, a płacący w zależności od wybranego typu zostanie przekierowany do banku lub na stronę PayU
 | 3  | PayU - karta płatnicza | :white_check_mark: |Płacący zostanie przekierowany na stronę PayU gdzie wprowadzi dane karty (kredytowej, debetowej lub prepaid)
 | 4  | PayU - secure form     |        :x:         |Wyświetlany jest formularz wprowadzania danych karty
-| 5  | PayU - Blik            |        :x:         |Płacący zostanie przekierowany na stronę Blik
+| 5  | PayU - Blik            | :white_check_mark: |Płacący zostanie przekierowany na stronę Blik
 | 6  | PayU - raty            | :white_check_mark: |Płacący zostanie przekierowany na stronę formularza płatności ratalnej
 | 7  | PayU - Klarna          | :white_check_mark: |Płacący zostanie przekierowany na stronę formularza płatności Klarna
 | 8  | PayU - Twisto          | :white_check_mark: |Płacący zostanie przekierowany na stronę formularza płatności Twisto
