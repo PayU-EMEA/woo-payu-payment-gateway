@@ -88,7 +88,7 @@ function init_gateway_payu() {
 	add_filter( 'woocommerce_payment_gateways', 'add_payu_gateways' );
 	add_filter( 'woocommerce_valid_order_statuses_for_payment_complete', 'payu_filter_woocommerce_valid_order_statuses_for_payment_complete', 10, 2 );
 	add_filter( 'woocommerce_email_actions', 'add_payu_order_status_to_email_notifications' );
-	add_filter( 'woocommerce_email_classes', 'add_payu_order_status_to_email_notifications_triger' );
+	add_filter( 'woocommerce_email_classes', 'add_payu_order_status_to_email_notifications_trigger' );
 
 	if ( ! is_admin() && isset( $_GET['pay_for_order'], $_GET['key'] ) ) {
 		add_filter( 'woocommerce_valid_order_statuses_for_payment',
@@ -163,30 +163,17 @@ function move_old_payu_settings() {
 	}
 }
 
-/**
- * @return array
- */
-function payu_filter_woocommerce_valid_order_statuses_for_payment() {
+function payu_filter_woocommerce_valid_order_statuses_for_payment(): array {
 	return [ 'pending', 'failed', 'on-hold', PAYU_PLUGIN_STATUS_WAITING ];
 }
 
-/**
- * @param array $statuses
- *
- * @return array
- */
-function payu_filter_woocommerce_valid_order_statuses_for_payment_complete( $statuses ) {
-	$statuses[] = 'payu-waiting';
+function payu_filter_woocommerce_valid_order_statuses_for_payment_complete( array $statuses ): array {
+	$statuses[] = PAYU_PLUGIN_STATUS_WAITING;
 
 	return $statuses;
 }
 
-/**
- * @param array $gateways
- *
- * @return array
- */
-function add_payu_gateways( $gateways ) {
+function add_payu_gateways( array $gateways ): array {
 	$gateways[] = WC_Gateway_PayuStandard::class;
 	$gateways[] = WC_Gateway_PayuCreditCard::class;
 	$gateways[] = WC_Gateway_PayuPaypo::class;
@@ -200,31 +187,27 @@ function add_payu_gateways( $gateways ) {
 	return $gateways;
 }
 
-/**
- * @param array $actions
- *
- * @return array
- */
-function add_payu_order_status_to_email_notifications( $actions ) {
+function add_payu_order_status_to_email_notifications( array $actions ): array {
 	$actions[] = 'woocommerce_order_status_' . PAYU_PLUGIN_STATUS_WAITING . '_to_processing';
+	$actions[] = 'woocommerce_order_status_pending_to_' . PAYU_PLUGIN_STATUS_WAITING ;
+	$actions[] = 'woocommerce_order_status_failed_to_' . PAYU_PLUGIN_STATUS_WAITING ;
+	$actions[] = 'woocommerce_order_status_cancelled_to_' . PAYU_PLUGIN_STATUS_WAITING ;
 
 	return $actions;
 }
 
-/**
- * @param array $clases
- *
- * @return array
- */
-function add_payu_order_status_to_email_notifications_triger( $clases ) {
-	if ( $clases['WC_Email_Customer_Processing_Order'] ) {
-		add_action( 'woocommerce_order_status_' . PAYU_PLUGIN_STATUS_WAITING . '_to_processing_notification', array(
-			$clases['WC_Email_Customer_Processing_Order'],
-			'trigger'
-		), 10, 2 );
+function add_payu_order_status_to_email_notifications_trigger( array $classes ): array {
+	if ( isset($classes['WC_Email_Customer_Processing_Order']) ) {
+		add_action( 'woocommerce_order_status_' . PAYU_PLUGIN_STATUS_WAITING . '_to_processing_notification', [ $classes['WC_Email_Customer_Processing_Order'],'trigger' ], 10, 2 );
 	}
 
-	return $clases;
+	if ( isset($classes['WC_Email_New_Order']) ) {
+		add_action( 'woocommerce_order_status_pending_to_' . PAYU_PLUGIN_STATUS_WAITING . '_notification', [ $classes['WC_Email_New_Order'], 'trigger' ], 10, 2 );
+		add_action( 'woocommerce_order_status_failed_to_' . PAYU_PLUGIN_STATUS_WAITING . '_notification', [ $classes['WC_Email_New_Order'], 'trigger' ], 10, 2 );
+		add_action( 'woocommerce_order_status_cancelled_to_' . PAYU_PLUGIN_STATUS_WAITING . '_notification', [ $classes['WC_Email_New_Order'], 'trigger' ], 10, 2 );
+	}
+
+	return $classes;
 }
 
 function plugin_row_meta( $links, $plugin_file ) {
