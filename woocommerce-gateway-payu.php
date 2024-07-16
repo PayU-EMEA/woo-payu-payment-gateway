@@ -399,9 +399,10 @@ function installments_mini_cart() {
 if ( is_installments_widget_available_for_feature( 'credit_widget_on_listings' ) ) {
 	add_filter( 'woocommerce_blocks_product_grid_item_html', 'installments_mini_aware_product_block', 10, 3 );
 }
+
 function installments_mini_aware_product_block( $html, $data, $product ) {
-	if ( get_woocommerce_currency() !== 'PLN' ) {
-		return;
+	if ( has_block( 'woocommerce/cart' ) || get_woocommerce_currency() !== 'PLN' ) {
+		return $html;
 	}
 	$price     = wc_get_price_including_tax( $product );
 	$productId = $product->get_id();
