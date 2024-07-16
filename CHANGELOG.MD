@@ -1,3 +1,7 @@
+# 2.4.1 - 2024-07-16
+* [Fix] #73 - Not send e-mail to administrator about a new order
+* [Fix] Showing error in empty cart (blocks) when installments are active
+
 # 2.4.0 - 2024-07-07
 * [Add] PayU - BLIK via WooCommerce Blocks
 

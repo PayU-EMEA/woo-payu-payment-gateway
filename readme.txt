@@ -3,7 +3,7 @@ Contributors: payusa
 Tags: PayU, payment, payment gateway, płatności, credit card
 Requires at least: 5.0
 Tested up to: 6.5.5
-Stable tag: 2.4.0
+Stable tag: 2.4.1
 Requires PHP: 7.4
 License: Apache License 2.0
 
@@ -51,6 +51,10 @@ Yes, it does.
 * For presenting minimal installment amount we used [Widget Installments](https://developers.payu.com/en/installments.html#installments_best_practices_mini) and plugin loads the script from the static.payu.com domain.
 
 == Changelog ==
+= 2.4.1 - 2024-07-16 =
+* [Fix] #73 - Not send e-mail to administrator about a new order
+* [Fix] Showing error in empty cart (blocks) when installments are active
+
 = 2.4.0 - 2024-07-07 =
 * [Add] PayU - BLIK via WooCommerce Blocks
 
