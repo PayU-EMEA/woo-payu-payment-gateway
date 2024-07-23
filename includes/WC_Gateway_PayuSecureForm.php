@@ -3,14 +3,13 @@
 use Payu\PaymentGateway\Gateways\WC_Payu_Gateways;
 
 class WC_Gateway_PayuSecureForm extends WC_Payu_Gateways {
-	protected $paytype = 'c';
+	protected string $paytype = 'c';
 
 	function __construct() {
 		parent::__construct( 'payusecureform' );
 
 		if ( $this->is_enabled() ) {
-			$this->show_terms_info = true;
-			$this->icon            = apply_filters( 'woocommerce_payu_icon', plugins_url( '/assets/images/card-visa-mc.svg', PAYU_PLUGIN_FILE ) );
+			$this->icon = apply_filters( 'woocommerce_payu_icon', plugins_url( '/assets/images/card-visa-mc.svg', PAYU_PLUGIN_FILE ) );
 
 			add_action( 'wp_enqueue_scripts', [ $this, 'include_payu_sf_scripts' ] );
 
@@ -56,7 +55,7 @@ class WC_Gateway_PayuSecureForm extends WC_Payu_Gateways {
 	public function payment_fields(): void {
 		parent::payment_fields();
 
-		$response = $this->get_payu_response();
+		$response = $this->payu_get_paymethods();
 		if ( isset( $response ) && $response->getStatus() === 'SUCCESS' ) {
 			$this->retrieve_methods( $response );
 			$this->agreements_field();

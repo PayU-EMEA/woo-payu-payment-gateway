@@ -3,7 +3,7 @@
 namespace Payu\PaymentGateway\Gateways;
 
 class WC_Gateway_PayuPaypo extends WC_Payu_Gateways {
-	protected $paytype = 'dpp';
+	protected string $paytype = 'dpp';
 
 	function __construct() {
 		parent::__construct( 'payupaypo' );

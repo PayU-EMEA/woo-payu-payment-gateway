@@ -20,6 +20,7 @@ use Payu\PaymentGateway\Blocks\PayuBlikBlock;
 use Payu\PaymentGateway\Blocks\PayuCreditCardBlock;
 use Payu\PaymentGateway\Blocks\PayuInstallmentsBlock;
 use Payu\PaymentGateway\Blocks\PayuKlarnaBlock;
+use Payu\PaymentGateway\Blocks\PayuListBanksBlock;
 use Payu\PaymentGateway\Blocks\PayuPaypoBlock;
 use Payu\PaymentGateway\Blocks\PayuStandardBlock;
 use Payu\PaymentGateway\Blocks\PayuTwistoPlBlock;
@@ -27,6 +28,7 @@ use Payu\PaymentGateway\Gateways\WC_Gateway_PayuBlik;
 use Payu\PaymentGateway\Gateways\WC_Gateway_PayuCreditCard;
 use Payu\PaymentGateway\Gateways\WC_Gateway_PayuInstallments;
 use Payu\PaymentGateway\Gateways\WC_Gateway_PayuKlarna;
+use Payu\PaymentGateway\Gateways\WC_Gateway_PayuListBanks;
 use Payu\PaymentGateway\Gateways\WC_Gateway_PayuPaypo;
 use Payu\PaymentGateway\Gateways\WC_Gateway_PayuStandard;
 use Payu\PaymentGateway\Gateways\WC_Gateway_PayuTwistoPl;
@@ -61,6 +63,7 @@ function init_payu_blocks() {
 			'woocommerce_blocks_payment_method_type_registration',
 			function ( PaymentMethodRegistry $payment_method_registry ) {
 				$payment_method_registry->register( new PayuStandardBlock() );
+				$payment_method_registry->register( new PayuListBanksBlock() );
 				$payment_method_registry->register( new PayuCreditCardBlock() );
 				$payment_method_registry->register( new PayuPaypoBlock() );
 				$payment_method_registry->register( new PayuKlarnaBlock() );
@@ -82,7 +85,6 @@ function init_gateway_payu() {
 	}
 
 	load_plugin_textdomain( 'woo-payu-payment-gateway', false, dirname( plugin_basename( __FILE__ ) ) . '/lang' );
-	require_once( 'includes/WC_Gateway_PayuListBanks.php' );
 	require_once( 'includes/WC_Gateway_PayuSecureForm.php' );
 
 	add_filter( 'woocommerce_payment_gateways', 'add_payu_gateways' );
@@ -181,7 +183,7 @@ function add_payu_gateways( array $gateways ): array {
 	$gateways[] = WC_Gateway_PayuTwistoPl::class;
 	$gateways[] = WC_Gateway_PayuInstallments::class;
 	$gateways[] = WC_Gateway_PayuBlik::class;
-	$gateways[] = 'WC_Gateway_PayuListBanks';
+	$gateways[] = WC_Gateway_PayuListBanks::class;
 	$gateways[] = 'WC_Gateway_PayuSecureForm';
 
 	return $gateways;
@@ -189,22 +191,34 @@ function add_payu_gateways( array $gateways ): array {
 
 function add_payu_order_status_to_email_notifications( array $actions ): array {
 	$actions[] = 'woocommerce_order_status_' . PAYU_PLUGIN_STATUS_WAITING . '_to_processing';
-	$actions[] = 'woocommerce_order_status_pending_to_' . PAYU_PLUGIN_STATUS_WAITING ;
-	$actions[] = 'woocommerce_order_status_failed_to_' . PAYU_PLUGIN_STATUS_WAITING ;
-	$actions[] = 'woocommerce_order_status_cancelled_to_' . PAYU_PLUGIN_STATUS_WAITING ;
+	$actions[] = 'woocommerce_order_status_pending_to_' . PAYU_PLUGIN_STATUS_WAITING;
+	$actions[] = 'woocommerce_order_status_failed_to_' . PAYU_PLUGIN_STATUS_WAITING;
+	$actions[] = 'woocommerce_order_status_cancelled_to_' . PAYU_PLUGIN_STATUS_WAITING;
 
 	return $actions;
 }
 
 function add_payu_order_status_to_email_notifications_trigger( array $classes ): array {
-	if ( isset($classes['WC_Email_Customer_Processing_Order']) ) {
-		add_action( 'woocommerce_order_status_' . PAYU_PLUGIN_STATUS_WAITING . '_to_processing_notification', [ $classes['WC_Email_Customer_Processing_Order'],'trigger' ], 10, 2 );
+	if ( isset( $classes['WC_Email_Customer_Processing_Order'] ) ) {
+		add_action( 'woocommerce_order_status_' . PAYU_PLUGIN_STATUS_WAITING . '_to_processing_notification', [
+			$classes['WC_Email_Customer_Processing_Order'],
+			'trigger'
+		], 10, 2 );
 	}
 
-	if ( isset($classes['WC_Email_New_Order']) ) {
-		add_action( 'woocommerce_order_status_pending_to_' . PAYU_PLUGIN_STATUS_WAITING . '_notification', [ $classes['WC_Email_New_Order'], 'trigger' ], 10, 2 );
-		add_action( 'woocommerce_order_status_failed_to_' . PAYU_PLUGIN_STATUS_WAITING . '_notification', [ $classes['WC_Email_New_Order'], 'trigger' ], 10, 2 );
-		add_action( 'woocommerce_order_status_cancelled_to_' . PAYU_PLUGIN_STATUS_WAITING . '_notification', [ $classes['WC_Email_New_Order'], 'trigger' ], 10, 2 );
+	if ( isset( $classes['WC_Email_New_Order'] ) ) {
+		add_action( 'woocommerce_order_status_pending_to_' . PAYU_PLUGIN_STATUS_WAITING . '_notification', [
+			$classes['WC_Email_New_Order'],
+			'trigger'
+		], 10, 2 );
+		add_action( 'woocommerce_order_status_failed_to_' . PAYU_PLUGIN_STATUS_WAITING . '_notification', [
+			$classes['WC_Email_New_Order'],
+			'trigger'
+		], 10, 2 );
+		add_action( 'woocommerce_order_status_cancelled_to_' . PAYU_PLUGIN_STATUS_WAITING . '_notification', [
+			$classes['WC_Email_New_Order'],
+			'trigger'
+		], 10, 2 );
 	}
 
 	return $classes;
@@ -479,10 +493,7 @@ function register_waiting_payu_order_status() {
 	);
 }
 
-/**
- * @return bool
- */
-function woocommerce_payu_is_wmpl_active_and_configure() {
+function woocommerce_payu_is_wmpl_active_and_configure(): bool {
 	global $woocommerce_wpml;
 
 	return $woocommerce_wpml
@@ -491,18 +502,12 @@ function woocommerce_payu_is_wmpl_active_and_configure() {
 	       && count( $woocommerce_wpml->multi_currency->get_currency_codes() ) > 1;
 }
 
-/**
- * @return bool
- */
-function woocommerce_payu_is_currency_custom_config() {
+function woocommerce_payu_is_currency_custom_config(): bool {
 	return apply_filters( 'woocommerce_payu_multicurrency_active', false )
 	       && count( apply_filters( 'woocommerce_payu_get_currency_codes', [] ) ) > 1;
 }
 
-/**
- * @return array
- */
-function woocommerce_payu_get_currencies() {
+function woocommerce_payu_get_currencies(): array {
 	global $woocommerce_wpml;
 
 	$currencies = [];

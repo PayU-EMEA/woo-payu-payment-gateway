@@ -8,9 +8,9 @@ use Payu\PaymentGateway\Gateways\WC_PayuGateway;
 abstract class PayuBlocks extends AbstractPaymentMethodType {
 
 	protected WC_PayuGateway $payment_method;
-	protected bool $with_translate  = false;
+	protected bool $with_translate = false;
 
-	public function __construct($with_translate = false) {
+	public function __construct( $with_translate = false ) {
 		$this->with_translate = $with_translate;
 	}
 
@@ -60,19 +60,15 @@ abstract class PayuBlocks extends AbstractPaymentMethodType {
 	}
 
 	public function get_payment_method_data(): array {
-		$data = [
-			'available'      => $this->is_active(),
-			'showTermsInfo'  => $this->payment_method->is_payu_show_terms_info(),
-			'title'          => $this->payment_method->get_payu_method_title(),
-			'description'    => $this->payment_method->get_payu_method_description(),
-			'icon'           => $this->payment_method->get_payu_method_icon(),
-			'additionalData' => $this->payment_method->get_additional_data()
-		];
-
-		if ($this->payment_method->is_payu_show_terms_info()) {
-			$data['termsLinks'] = $this->payment_method->get_terms_links();
-		}
-
-		return $data;
+		return array_merge(
+			[
+				'available'      => $this->is_active(),
+				'termsLinks'     => $this->payment_method->get_terms_links(),
+				'title'          => $this->payment_method->get_payu_method_title(),
+				'description'    => $this->payment_method->get_payu_method_description(),
+				'icon'           => $this->payment_method->get_payu_method_icon(),
+				'additionalData' => $this->payment_method->get_additional_data()
+			]
+		);
 	}
 }

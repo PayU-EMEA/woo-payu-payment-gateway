@@ -1,16 +1,14 @@
 <?php
 
-use Payu\PaymentGateway\Gateways\WC_Payu_Gateways;
+namespace Payu\PaymentGateway\Gateways;
+
+use OpenPayU_Result;
 
 class WC_Gateway_PayuListBanks extends WC_Payu_Gateways {
-	private $unset_banks = [];
+	private array $unset_banks = [];
 
 	function __construct() {
 		parent::__construct( 'payulistbanks' );
-
-		if ( $this->is_enabled() ) {
-			$this->show_terms_info = true;
-		}
 	}
 
 	public function is_available(): bool {
@@ -20,12 +18,9 @@ class WC_Gateway_PayuListBanks extends WC_Payu_Gateways {
 
 		return parent::is_available();
 	}
-	function init_form_fields() {
-		parent::payu_init_form_fields( true );
-	}
 
 	protected function try_retrieve_banks(): bool {
-		$response = $this->get_payu_response();
+		$response = $this->payu_get_paymethods();
 		if ( isset( $response ) && $response->getStatus() === 'SUCCESS' ) {
 			$payMethods = $response->getResponse();
 
@@ -38,23 +33,29 @@ class WC_Gateway_PayuListBanks extends WC_Payu_Gateways {
 	public function payment_fields(): void {
 		parent::payment_fields();
 
-		$response = $this->get_payu_response();
+		$response = $this->payu_get_paymethods();
 		if ( isset( $response ) && $response->getStatus() === 'SUCCESS' ) {
 			$this->retrieve_methods( $response );
 			$this->agreements_field();
 		}
 	}
 
-	/**
-	 * @param OpenPayU_Result $response
-	 *
-	 * @return null
-	 */
-	private function retrieve_methods( $response ) {
-		$payMethods   = $response->getResponse();
-		$custom_order = isset( get_option( 'woocommerce_' . $this->id . '_settings' )['custom_order'] )
-			? get_option( 'woocommerce_' . $this->id . '_settings' )['custom_order']
-			: '';
+	public function get_additional_data(): array {
+		$paymethods = [];
+
+		$response = $this->payu_get_paymethods();
+
+		if ( isset( $response ) && $response->getStatus() === 'SUCCESS' && $response->getResponse()->payByLinks ) {
+			$paymethods = $this->get_pay_methods( $response->getResponse()->payByLinks );
+		}
+
+		return [
+			'paymethods' => $paymethods
+		];
+	}
+
+	private function retrieve_methods( OpenPayU_Result $response ): void {
+		$payMethods = $response->getResponse();
 		?>
         <script>
             jQuery(document).ready(function () {
@@ -66,7 +67,7 @@ class WC_Gateway_PayuListBanks extends WC_Payu_Gateways {
         <div class="pbl-container">
             <ul class="payu-list-banks">
 				<?php if ( $payMethods->payByLinks ):
-					$payByLinks = $this->process_pay_methods( $payMethods->payByLinks, $custom_order );
+					$payByLinks = $this->get_pay_methods( $payMethods->payByLinks );
 					if ( $payByLinks ):
 						foreach ( $payByLinks as $key => $value ):
 							?>
@@ -94,44 +95,46 @@ class WC_Gateway_PayuListBanks extends WC_Payu_Gateways {
 		<?php
 	}
 
-	/**
-	 * @param array $payMethods
-	 * @param string|null $sort
-	 *
-	 * @return array
-	 */
-	function process_pay_methods( $payMethods, $sort = null ) {
+	function get_pay_methods( array $payMethods ): array {
+		$sort               = $this->get_option( 'custom_order', '' );
 		$result_methods     = [];
-		$available_gateways = WC()->payment_gateways->get_available_payment_gateways();
+		$available_gateways = WC()->payment_gateways()->get_available_payment_gateways();
+
 		if ( $available_gateways ) {
 			foreach ( $available_gateways as $available_gateway => $data ) {
-				if ( $available_gateway === 'payucreditcard' && $data->enabled === 'yes' ) {
-					array_push( $this->unset_banks, 'c' );
+				if ( $data->enabled !== 'yes' ) {
+					continue;
 				}
-				if ( $available_gateway === 'payusecureform' && $data->enabled === 'yes' ) {
-					array_push( $this->unset_banks, 'c' );
-				}
-				if ( $available_gateway === 'payublik' && $data->enabled === 'yes' ) {
-					array_push( $this->unset_banks, 'blik' );
-				}
-				if ( $available_gateway === 'payuinstallments' && $data->enabled === 'yes' ) {
-					array_push( $this->unset_banks, 'ai' );
-				}
-				if ( $available_gateway === 'payuklarna' && $data->enabled === 'yes' ) {
-					array_push( $this->unset_banks, 'dpkl' );
-				}
-				if ( $available_gateway === 'payupaypo' && $data->enabled === 'yes' ) {
-					array_push( $this->unset_banks, 'dpp' );
-				}
-				if ( $available_gateway === 'payutwistopl' && $data->enabled === 'yes' ) {
-					array_push( $this->unset_banks, 'dpt' );
+
+				switch ( $available_gateway ) {
+					case 'payucreditcard':
+					case 'payusecureform':
+						$this->unset_banks[] = 'c';
+						break;
+					case 'payublik':
+						$this->unset_banks[] = 'blik';
+						break;
+					case 'payuinstallments':
+						$this->unset_banks[] = 'ai';
+						break;
+					case 'payuklarna':
+						$this->unset_banks[] = 'dpkl';
+						break;
+					case 'payupaypo':
+						$this->unset_banks[] = 'dpp';
+						break;
+					case 'payutwistopl':
+						$this->unset_banks[] = 'dpt';
+						break;
 				}
 			}
 		}
-		$show_inactive = @get_option( 'woocommerce_' . $this->id . '_settings' )['show_inactive_methods'];
+
+		$show_inactive = $this->get_option( 'show_inactive_methods', 'no' ) === 'yes';
+
 		foreach ( $payMethods as $payMethod ) {
 			if ( ! in_array( $payMethod->value, $this->unset_banks ) ) {
-				if ( $show_inactive === 'yes' && $payMethod->value != 't' ) {
+				if ( $show_inactive && $payMethod->value !== 't' ) {
 					$show_method = true;
 					if ( $payMethod->status !== 'ENABLED' ) {
 						$show_method = false;
@@ -141,7 +144,8 @@ class WC_Gateway_PayuListBanks extends WC_Payu_Gateways {
 						}
 					}
 					$result_methods[ $payMethod->value ] = [
-						'brandImageUrl' => $payMethod->brandImageUrl,
+						'paytype'       => $payMethod->value,
+                        'brandImageUrl' => $payMethod->brandImageUrl,
 						'name'          => $payMethod->name,
 						'active'        => $show_method ? 'payu-active' : 'payu-inactive'
 					];
@@ -153,9 +157,10 @@ class WC_Gateway_PayuListBanks extends WC_Payu_Gateways {
 						}
 						if ( $can_be_use ) {
 							$result_methods[ $payMethod->value ] = [
+								'paytype'       => $payMethod->value,
 								'brandImageUrl' => $payMethod->brandImageUrl,
 								'name'          => $payMethod->name,
-								'active'        => 'payu-active'
+								'active'        => 'payu-active',
 							];
 						}
 					}
@@ -174,22 +179,15 @@ class WC_Gateway_PayuListBanks extends WC_Payu_Gateways {
 		list( $first, $result_methods ) = $this->extract_paytypes( $result_methods, $first_paytypes );
 		list( $last, $result_methods ) = $this->extract_paytypes( $result_methods, $last_paytypes );
 
-		$result_methods = array_merge( $first, $result_methods, $last );
-
-		return $result_methods;
+		return array_merge( $first, $result_methods, $last );
 	}
 
-	/**
-	 * @param $result_methods
-	 * @param $paytypes
-	 *
-	 * @return array
-	 */
-	private function extract_paytypes( $result_methods, $paytypes ) {
+	private function extract_paytypes( array $result_methods, array $paytypes ): array {
 		$extracted = [];
 		foreach ( $paytypes as $item ) {
 			if ( array_key_exists( $item, $result_methods ) ) {
 				$extracted[ $item ] = [
+					'paytype'       => $result_methods[ $item ]['paytype'],
 					'brandImageUrl' => $result_methods[ $item ]['brandImageUrl'],
 					'name'          => $result_methods[ $item ]['name'],
 					'active'        => $result_methods[ $item ]['active'],
@@ -205,6 +203,25 @@ class WC_Gateway_PayuListBanks extends WC_Payu_Gateways {
 	protected function get_payu_pay_method(): array {
 		$selected_method = sanitize_text_field( $_POST['selected-bank'] );
 
-		return $this->get_payu_pay_method_array( 'PBL', $selected_method ?: - 1, $selected_method );
+		return $this->get_payu_pay_method_array( 'PBL', $selected_method );
+	}
+
+	protected function get_additional_gateway_fields(): array {
+		return [
+			'custom_order'          => [
+				'title'       => __( 'Custom order:', 'woo-payu-payment-gateway' ),
+				'type'        => 'text',
+				'description' => __( 'Custom order, separate payment methods with commas', 'woo-payu-payment-gateway' ),
+				'placeholder' => __( 'Custom order, separate payment methods with commas', 'woo-payu-payment-gateway' ),
+				'desc_tip'    => true
+			],
+			'show_inactive_methods' => [
+				'title'       => __( 'Inactive methods', 'woo-payu-payment-gateway' ),
+				'type'        => 'checkbox',
+				'description' => __( 'Show inactive payment methods as grayed out', 'woo-payu-payment-gateway' ),
+				'label'       => __( 'Show as grayed out', 'woo-payu-payment-gateway' ),
+				'desc_tip'    => true
+			]
+		];
 	}
 }

@@ -1,19 +1,21 @@
 import {decodeEntities} from '@wordpress/html-entities';
 import {getSetting} from '@woocommerce/settings';
 import {registerPaymentMethod} from '@woocommerce/blocks-registry';
+import { StoreNotice } from '@woocommerce/blocks-components';
 import {__} from '@wordpress/i18n';
-import {useState} from '@wordpress/element';
+import {useCallback, useEffect, useState} from '@wordpress/element';
+import { clsx } from 'clsx';
 
-
-const name = 'payublik';
+const name = 'payulistbanks';
 
 const settings = getSetting(`${name}_data`, {});
 
 const available = decodeEntities(settings.available || false);
-const title = decodeEntities(settings.title || 'Blik');
+const title = decodeEntities(settings.title || 'PayU');
 const description = decodeEntities(settings.description || '');
 const iconUrl = settings.icon;
 const termsLinks = settings.termsLinks;
+const paymethods = settings.additionalData?.paymethods ?? {};
 
 const TermInfo = ({termsLinks}) => {
     const [showMore1, setShowMore1] = useState(false);
@@ -58,30 +60,109 @@ const TermInfo = ({termsLinks}) => {
         </div>
     )
 };
+
 const canMakePayment = () => {
     return available;
 };
-const Content = () => {
+
+const Content = ({eventRegistration, emitResponse}) => {
+    const {onPaymentSetup} = eventRegistration;
+    const [selectedPaymethod, setSelectedPaymethod] = useState(null);
+    const [errorMessage, setErrorMessage] = useState('');
+
+    useEffect(() => {
+        const unsubscribe = onPaymentSetup(() => {
+            if (!selectedPaymethod) {
+                setErrorMessage(__('Choose payment method.', 'woo-payu-payment-gateway'));
+
+                document.getElementById(`payu_description_${name}`).scrollIntoView({
+                    behavior: 'smooth'
+                });
+                return {
+                    type: emitResponse.responseTypes.ERROR
+                };
+            }
+
+            return {
+                type: emitResponse.responseTypes.SUCCESS,
+                meta: {
+                    paymentMethodData: {
+                        'selected-bank': selectedPaymethod
+                    }
+                }
+            };
+        });
+        return unsubscribe;
+    }, [onPaymentSetup, emitResponse.responseTypes.ERROR, emitResponse.responseTypes.SUCCESS, selectedPaymethod]);
+
+    const isApplePayAvailable = useCallback(() => {
+        try {
+            const isApplePay = window.ApplePaySession?.canMakePayments();
+
+            if (!isApplePay) {
+                return false;
+            }
+        } catch (error) {
+            return false;
+        }
+
+        return true;
+    }, []);
+
     return (
         <>
-            <div>{description}</div>
-            <TermInfo termsLinks={termsLinks} />
+            <div id={`payu_description_${name}`}>{description}</div>
+            <div className="payu-block-list-banks">
+                {Object.values(paymethods).map(({paytype, name, brandImageUrl, active}) => {
+                    if (paytype === 'jp' && !isApplePayAvailable()) {
+                        return null;
+                    }
+                    const isActive = active !== 'payu-inactive';
+                    const bankClass = clsx({
+                        'payu-bank': true,
+                        [`payu-bank-${paytype}`]: true,
+                        'disabled': !isActive,
+                        'active': selectedPaymethod === paytype
+                    });
+
+                    return (
+                        <div
+                            className={bankClass}
+                            key={paytype}
+                            title={name}
+                            onClick={() => {
+                                if (isActive) {
+                                    setErrorMessage('');
+                                    setSelectedPaymethod(paytype);
+                                }
+                            }}
+                        >
+                            <img src={brandImageUrl} alt={name}/>
+                        </div>
+                    )
+                })}
+            </div>
+            { errorMessage &&
+                <StoreNotice status="error" isDismissible={ false }>{ errorMessage }</StoreNotice>
+            }
+            <TermInfo termsLinks={termsLinks}/>
         </>
     );
 };
+
 
 const Label = (props) => {
     const {PaymentMethodLabel} = props.components
 
     return (
         <>
-            <PaymentMethodLabel text={title} className="payu-block-method"/>
-            <span className="payu-block-method-logo"><img src={iconUrl} alt={title} name={title}/></span>
+            <PaymentMethodLabel text={title} />
+            <span className="payu-block-method-logo"><img src={iconUrl} alt="PayU" name={title}/></span>
         </>
     );
 };
 
-const PayuStandardOptions = {
+const PayuListBanksOptions = {
     name: name,
     label: <Label/>,
     content: <Content/>,
@@ -90,4 +171,4 @@ const PayuStandardOptions = {
     ariaLabel: title
 };
 
-registerPaymentMethod(PayuStandardOptions);
+registerPaymentMethod(PayuListBanksOptions);

@@ -28,6 +28,7 @@ module.exports = {
     ...defaultConfig,
     entry: {
         'payustandard': '/src/js/payustandard.js',
+        'payulistbanks': '/src/js/payulistbanks.js',
         'payucreditcard': '/src/js/payucreditcard.js',
         'payupaypo': '/src/js/payupaypo.js',
         'payuklarna': '/src/js/payuklarna.js',

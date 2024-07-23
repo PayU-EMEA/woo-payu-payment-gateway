@@ -24,12 +24,10 @@ abstract class WC_Payu_Gateways extends WC_Payment_Gateway implements WC_PayuGat
 
 	public $pos_id;
 	public $pos_widget_key;
-	public $selected_method;
-	public bool $show_terms_info = false;
 	public $enable_for_shipping;
 	public $enable_for_virtual;
 
-	protected $paytype;
+	protected string $paytype = '';
 
 	protected bool $sandbox;
 
@@ -42,15 +40,13 @@ abstract class WC_Payu_Gateways extends WC_Payment_Gateway implements WC_PayuGat
 	const PRIVACY_EN = 'https://static.payu.com/sites/terms/files/payu_privacy_policy_en_en.pdf';
 	const PRIVACY_CS = 'https://static.payu.com/sites/terms/files/payu_privacy_policy_cs.pdf';
 
-	/**
-	 * Setup general properties for the gateway.
-	 *
-	 * @param string $id
-	 */
-	function __construct( $id ) {
-		$this->id = $id;
+	function __construct( string $id ) {
+		$this->id                 = $id;
+		$this->method_title       = $this->gateway_data( 'name' );
+		$this->method_description = __( 'Official PayU payment gateway for WooCommerce.', 'woo-payu-payment-gateway' );
+		$this->has_fields         = false;
+		$this->supports           = [ 'products', 'refunds' ];
 
-		$this->setup_properties( $id );
 		$this->init_form_fields();
 		$this->init_settings();
 
@@ -98,10 +94,6 @@ abstract class WC_Payu_Gateways extends WC_Payment_Gateway implements WC_PayuGat
 		return $this->icon;
 	}
 
-	public function is_payu_show_terms_info(): bool {
-		return $this->show_terms_info;
-	}
-
 	public function get_additional_data(): array {
 		return [];
 	}
@@ -109,7 +101,7 @@ abstract class WC_Payu_Gateways extends WC_Payment_Gateway implements WC_PayuGat
 	public function get_terms_links(): array {
 		return [
 			'condition' => $this->get_condition_url(),
-			'privacy' => $this->get_privacy_policy_url()
+			'privacy'   => $this->get_privacy_policy_url()
 		];
 	}
 
@@ -123,7 +115,7 @@ abstract class WC_Payu_Gateways extends WC_Payment_Gateway implements WC_PayuGat
 	/**
 	 * @return OpenPayU_Result
 	 */
-	protected function get_payu_response() {
+	protected function payu_get_paymethods() {
 		$this->init_OpenPayU();
 		if ( isset( static::$paymethods[ $this->pos_id ] ) ) {
 			return static::$paymethods[ $this->pos_id ];
@@ -162,59 +154,36 @@ abstract class WC_Payu_Gateways extends WC_Payment_Gateway implements WC_PayuGat
 		}
 	}
 
-	public function payment_fields(): void {
-		parent::payment_fields();
-		$this->agreements_field();
-	}
-
 	/**
 	 * @return void
 	 */
-	protected function agreements_field() {
-		if ( $this->show_terms_info ) {
-			echo '<div class="payu-accept-conditions">';
-			echo '<div class="payu-conditions-description"><div>' . __( 'Payment is processed by PayU SA; The recipient\'s data, the payment title and the amount are provided to PayU SA by the recipient;',
-					'woo-payu-payment-gateway' ) . ' <span class="payu-read-more">' . __( 'read more',
-					'woo-payu-payment-gateway' ) . '</span> <span class="payu-more-hidden">' . __( 'The order is sent for processing when PayU SA receives your payment. The payment is transferred to the recipient within 1 hour, not later than until the end of the next business day; PayU SA does not charge any service fees.',
-					'woo-payu-payment-gateway' ) . '</span>';
-			echo '</div><div>';
-			printf( __( 'By paying you accept <a href="%s" target="_blank">"PayU Payment Terms".</a>',
-				'woo-payu-payment-gateway' ),
-				esc_url( $this->get_condition_url() ) );
-			echo '</div><div>';
-			echo __( 'The controller of your personal data is PayU S.A. with its registered office in Poznan (60-166), at Grunwaldzka Street 186 ("PayU").',
-					'woo-payu-payment-gateway' ) . ' <span class="payu-read-more">' . __( 'read more',
-					'woo-payu-payment-gateway' ) . '</span> <span class="payu-more-hidden">';
-			echo __( 'Your personal data will be processed for purposes of processing  payment transaction, notifying You about the status of this payment, dealing with complaints and also in order to fulfill the legal obligations imposed on PayU.',
-					'woo-payu-payment-gateway' ) . '<br />';
-			echo __( 'The recipients of your personal data may be entities cooperating with PayU during processing the payment. Depending on the payment method you choose, these may include: banks, payment institutions, loan institutions, payment card organizations, payment schemes), as well as suppliers supporting PayU’s activity providing: IT infrastructure, payment risk analysis tools and also entities that are authorised to receive it under the applicable provisions of law, including relevant judicial authorities. Your personal data may be shared with merchants to inform them about the status of the payment.',
-					'woo-payu-payment-gateway' ) . '<br />';
-			echo __( 'You have the right to access, rectify, restrict or oppose the processing of data, not to be subject to automated decision making, including profiling, or to transfer and erase Your personal data. Providing personal data is voluntary however necessary for the processing the payment and failure to provide the data may result in the rejection of the payment. For more information on how PayU processes your personal data, please click ',
-				'woo-payu-payment-gateway' );
-			printf( __( '<a href="%s" target="_blank">PayU privacy policy</a>', 'woo-payu-payment-gateway' ), esc_url( $this->get_privacy_policy_url() ) );
-			echo '</span></div>';
-			echo '</div>';
-			echo '</div>';
-		}
+	protected function agreements_field(): void {
+		echo '<div class="payu-accept-conditions">';
+		echo '<div class="payu-conditions-description"><div>' . __( 'Payment is processed by PayU SA; The recipient\'s data, the payment title and the amount are provided to PayU SA by the recipient;',
+				'woo-payu-payment-gateway' ) . ' <span class="payu-read-more">' . __( 'read more',
+				'woo-payu-payment-gateway' ) . '</span> <span class="payu-more-hidden">' . __( 'The order is sent for processing when PayU SA receives your payment. The payment is transferred to the recipient within 1 hour, not later than until the end of the next business day; PayU SA does not charge any service fees.',
+				'woo-payu-payment-gateway' ) . '</span>';
+		echo '</div><div>';
+		printf( __( 'By paying you accept <a href="%s" target="_blank">"PayU Payment Terms".</a>',
+			'woo-payu-payment-gateway' ),
+			esc_url( $this->get_condition_url() ) );
+		echo '</div><div>';
+		echo __( 'The controller of your personal data is PayU S.A. with its registered office in Poznan (60-166), at Grunwaldzka Street 186 ("PayU").',
+				'woo-payu-payment-gateway' ) . ' <span class="payu-read-more">' . __( 'read more',
+				'woo-payu-payment-gateway' ) . '</span> <span class="payu-more-hidden">';
+		echo __( 'Your personal data will be processed for purposes of processing  payment transaction, notifying You about the status of this payment, dealing with complaints and also in order to fulfill the legal obligations imposed on PayU.',
+				'woo-payu-payment-gateway' ) . '<br />';
+		echo __( 'The recipients of your personal data may be entities cooperating with PayU during processing the payment. Depending on the payment method you choose, these may include: banks, payment institutions, loan institutions, payment card organizations, payment schemes), as well as suppliers supporting PayU’s activity providing: IT infrastructure, payment risk analysis tools and also entities that are authorised to receive it under the applicable provisions of law, including relevant judicial authorities. Your personal data may be shared with merchants to inform them about the status of the payment.',
+				'woo-payu-payment-gateway' ) . '<br />';
+		echo __( 'You have the right to access, rectify, restrict or oppose the processing of data, not to be subject to automated decision making, including profiling, or to transfer and erase Your personal data. Providing personal data is voluntary however necessary for the processing the payment and failure to provide the data may result in the rejection of the payment. For more information on how PayU processes your personal data, please click ',
+			'woo-payu-payment-gateway' );
+		printf( __( '<a href="%s" target="_blank">PayU privacy policy</a>', 'woo-payu-payment-gateway' ), esc_url( $this->get_privacy_policy_url() ) );
+		echo '</span></div>';
+		echo '</div>';
+		echo '</div>';
 	}
 
-	/**
-	 * @param string $id
-	 *
-	 * @return void
-	 */
-	protected function setup_properties( $id ) {
-		$this->id                 = $id;
-		$this->method_title       = $this->gateway_data( 'name' );
-		$this->method_description = __( 'Official PayU payment gateway for WooCommerce.', 'woo-payu-payment-gateway' );
-		$this->has_fields         = false;
-		$this->supports           = [ 'products', 'refunds' ];
-	}
-
-	/**
-	 * @return array
-	 */
-	public static function gateways_list() {
+	public static function gateways_list(): array {
 		return [
 			'payustandard'     => [
 				'name'                => __( 'PayU - standard', 'woo-payu-payment-gateway' ),
@@ -285,34 +254,21 @@ abstract class WC_Payu_Gateways extends WC_Payment_Gateway implements WC_PayuGat
 	}
 
 	function init_form_fields() {
-		$this->payu_init_form_fields();
-	}
-
-	/**
-	 * @param bool $custom_order
-	 *
-	 * @return void
-	 */
-	function payu_init_form_fields( $custom_order = false ) {
 		$currencies = woocommerce_payu_get_currencies();
 
 		$this->form_fields = array_merge(
 			$this->get_form_fields_basic(),
 			$this->get_form_field_config( $currencies ),
 			$this->get_form_field_info(),
-			$this->get_additional_gateway_fields(),
-			$custom_order ? $this->get_form_custom_order() : []
+			$this->get_additional_gateway_fields()
 		);
 	}
 
-	protected function get_additional_gateway_fields() {
+	protected function get_additional_gateway_fields(): array {
 		return [];
 	}
 
-	/**
-	 * @return array
-	 */
-	private function get_form_fields_basic() {
+	private function get_form_fields_basic(): array {
 		return [
 			'enabled'    => [
 				'title'       => __( 'Enable/Disable', 'woocommerce' ),
@@ -323,20 +279,20 @@ abstract class WC_Payu_Gateways extends WC_Payment_Gateway implements WC_PayuGat
 				'default'     => 'no',
 			],
 			'title'      => [
-				'title'       => __( 'Title:', 'woo-payu-payment-gateway' ),
+				'title'       => __( 'Title', 'woo-payu-payment-gateway' ),
 				'type'        => 'text',
 				'description' => __( 'Title of PayU Payment Gateway that users sees on Checkout page.', 'woo-payu-payment-gateway' ),
 				'default'     => self::gateways_list()[ $this->id ]['front_name'],
 				'desc_tip'    => true
 			],
 			'sandbox'    => [
-				'title'   => __( 'Sandbox mode:', 'woo-payu-payment-gateway' ),
+				'title'   => __( 'Sandbox mode', 'woo-payu-payment-gateway' ),
 				'type'    => 'checkbox',
 				'label'   => __( 'Use sandbox environment.', 'woo-payu-payment-gateway' ),
 				'default' => 'no'
 			],
 			'use_global' => [
-				'title'             => __( 'Use global values:', 'woo-payu-payment-gateway' ),
+				'title'             => __( 'Use global values', 'woo-payu-payment-gateway' ),
 				'type'              => 'checkbox',
 				'label'             => __( 'Use global values.', 'woo-payu-payment-gateway' ),
 				'default'           => 'yes',
@@ -345,34 +301,7 @@ abstract class WC_Payu_Gateways extends WC_Payment_Gateway implements WC_PayuGat
 		];
 	}
 
-	/**
-	 * @return array
-	 */
-	private function get_form_custom_order() {
-		return [
-			'custom_order'          => [
-				'title'       => __( 'Custom order:', 'woo-payu-payment-gateway' ),
-				'type'        => 'text',
-				'description' => __( 'Custom order, separate payment methods with commas', 'woo-payu-payment-gateway' ),
-				'placeholder' => __( 'Custom order, separate payment methods with commas', 'woo-payu-payment-gateway' ),
-				'desc_tip'    => true
-			],
-			'show_inactive_methods' => [
-				'title'       => __( 'Show inactive methods:', 'woo-payu-payment-gateway' ),
-				'type'        => 'checkbox',
-				'description' => __( 'Show inactive payment methods as grayed out', 'woo-payu-payment-gateway' ),
-				'label'       => __( 'show', 'woo-payu-payment-gateway' ),
-				'desc_tip'    => true
-			]
-		];
-	}
-
-	/**
-	 * @param array $currencies
-	 *
-	 * @return array
-	 */
-	private function get_form_field_config( $currencies = [] ) {
+	private function get_form_field_config( array $currencies = [] ): array {
 		if ( count( $currencies ) < 2 ) {
 			$currencies = [ '' ];
 		}
@@ -422,13 +351,10 @@ abstract class WC_Payu_Gateways extends WC_Payment_Gateway implements WC_PayuGat
 		return $option[ $key[1] ];
 	}
 
-	/**
-	 * @return array
-	 */
-	private function get_form_field_info() {
+	private function get_form_field_info(): array {
 		return [
 			'description'         => [
-				'title'       => __( 'Description:', 'woo-payu-payment-gateway' ),
+				'title'       => __( 'Description', 'woo-payu-payment-gateway' ),
 				'type'        => 'text',
 				'description' => __( 'Description of PayU Payment Gateway that users sees on Checkout page.', 'woo-payu-payment-gateway' ),
 				'default'     => self::gateways_list()[ $this->id ]['default_description'],
@@ -644,12 +570,7 @@ abstract class WC_Payu_Gateways extends WC_Payment_Gateway implements WC_PayuGat
 		return parent::is_available();
 	}
 
-	/**
-	 * @param array $payMethods
-	 *
-	 * @return bool
-	 */
-	protected function process_pay_methods( $payMethods ) {
+	protected function process_pay_methods( array $payMethods ): bool {
 		foreach ( $payMethods as $payMethod ) {
 			if ( $this->check_min_max( $payMethod, $this->paytype ) ) {
 				return true;
@@ -660,7 +581,7 @@ abstract class WC_Payu_Gateways extends WC_Payment_Gateway implements WC_PayuGat
 	}
 
 	protected function try_retrieve_banks(): bool {
-		$response = $this->get_payu_response();
+		$response = $this->payu_get_paymethods();
 		if ( isset( $response ) && $response->getStatus() === 'SUCCESS' ) {
 			$payMethods = $response->getResponse();
 
@@ -1082,9 +1003,7 @@ abstract class WC_Payu_Gateways extends WC_Payment_Gateway implements WC_PayuGat
 		return $this->get_payu_pay_method_array( 'PBL', $this->paytype );
 	}
 
-	protected function get_payu_pay_method_array( string $type, string $value, ?string $paymethod = null ): array {
-		$this->selected_method = $paymethod ?: $value;
-
+	protected function get_payu_pay_method_array( string $type, string $value ): array {
 		return [
 			'payMethod' => [
 				'type'  => $type,

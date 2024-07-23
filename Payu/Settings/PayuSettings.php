@@ -2,20 +2,18 @@
 
 namespace Payu\PaymentGateway\Settings;
 class PayuSettings {
-	private $payu_settings_options;
-	private $fields;
+	private array $payu_settings_options;
+	private array $fields;
 
 	public function __construct() {
 		$this->fields = $this->payu_fields();
+		$this->payu_settings_options = get_option( 'payu_settings_option_name', [] );
+
 		add_action( 'admin_menu', [ $this, 'payu_settings_add_plugin_page' ] );
 		add_action( 'admin_init', [ $this, 'payu_settings_page_init' ] );
-
 	}
 
-	/**
-	 * @return array
-	 */
-	public static function payu_fields() {
+	public static function payu_fields(): array {
 		return [
 			'pos_id'                => [
 				'label'       => __( 'Id point of sales', 'woo-payu-payment-gateway' ),
@@ -41,25 +39,22 @@ class PayuSettings {
 					'woo-payu-payment-gateway' ),
 			],
 			'sandbox_md5'           => [
-				'label'       => __( 'Sandbox - Second key (MD5):', 'woo-payu-payment-gateway' ),
+				'label'       => __( 'Sandbox - Second key (MD5)', 'woo-payu-payment-gateway' ),
 				'description' => __( 'Second key from "Configuration Keys" section of PayU management panel.', 'woo-payu-payment-gateway' ),
 			],
 			'sandbox_client_id'     => [
-				'label'       => __( 'Sandbox - OAuth - client_id:', 'woo-payu-payment-gateway' ),
+				'label'       => __( 'Sandbox - OAuth - client_id', 'woo-payu-payment-gateway' ),
 				'description' => __( 'Client Id for OAuth identifier  from "Configuration Keys" section of PayU management panel.',
 					'woo-payu-payment-gateway' ),
 			],
 			'sandbox_client_secret' => [
-				'label'       => __( 'Sandbox - OAuth - client_secret:', 'woo-payu-payment-gateway' ),
+				'label'       => __( 'Sandbox - OAuth - client_secret', 'woo-payu-payment-gateway' ),
 				'description' => __( 'First key from "Configuration Keys" section of PayU management panel.', 'woo-payu-payment-gateway' ),
 			],
 		];
 	}
 
-	/**
-	 * @return null
-	 */
-	public function payu_settings_add_plugin_page() {
+	public function payu_settings_add_plugin_page(): void {
 		add_submenu_page(
 			'woocommerce',
 			__( 'PayU settings', 'woo-payu-payment-gateway' ), // page_title
@@ -71,11 +66,8 @@ class PayuSettings {
 		);
 	}
 
-	/**
-	 * @return void
-	 */
-	public function payu_settings_create_admin_page() {
-		$this->payu_settings_options = get_option( 'payu_settings_option_name' ); ?>
+	public function payu_settings_create_admin_page(): void {
+		 ?>
 
         <div class="wrap">
             <h2><?php esc_html_e( 'PayU settings', 'woo-payu-payment-gateway' ) ?></h2>
@@ -93,10 +85,7 @@ class PayuSettings {
 		<?php
 	}
 
-	/**
-	 * @return void
-	 */
-	public function payu_settings_page_init() {
+	public function payu_settings_page_init(): void {
 		global $woocommerce_wpml;
 		register_setting(
 			'payu_settings_option_group', // option_group
@@ -151,24 +140,14 @@ class PayuSettings {
 		);
 	}
 
-	/**
-	 * @param array $args
-	 *
-	 * @return void
-	 */
-	public function global_callback( $args ) {
+	public function global_callback(array $args ): void {
 		$id    = $args['id'];
 		$value = isset( $this->payu_settings_options[ $id ] ) ? esc_attr( $this->payu_settings_options[ $id ] ) : '';
 		printf( '<input type="text" class="regular-text" value="%s" name="payu_settings_option_name[%s]" id="%s" />',
 			$value, $id, $id );
 	}
 
-	/**
-	 * @param array $input
-	 *
-	 * @return array
-	 */
-	public function payu_settings_sanitize( $input ) {
+	public function payu_settings_sanitize( array $input ): array {
 		$sanitary_values = [];
 		$currencies      = woocommerce_payu_get_currencies();
 		if ( count( $currencies ) < 2 ) {
@@ -195,10 +174,7 @@ class PayuSettings {
 		return $sanitary_values;
 	}
 
-	/**
-	 * @return null
-	 */
-	public function global_repayment_callback() {
+	public function global_repayment_callback(): void {
 		printf(
 			'<input type="checkbox" name="payu_settings_option_name[global_repayment]" id="global_repayment" value="global_repayment" %s>',
 			( isset( $this->payu_settings_options['global_repayment'] ) && $this->payu_settings_options['global_repayment'] === 'global_repayment' ) ? 'checked' : ''
@@ -216,10 +192,7 @@ class PayuSettings {
 		<?php
 	}
 
-	/**
-	 * @return null
-	 */
-	public function global_default_on_hold_status_callback() {
+	public function global_default_on_hold_status_callback(): void {
 		?>
         <select class="regular-text" type="text" name="payu_settings_option_name[global_default_on_hold_status]"
                 id="global_default_on_hold_status">
@@ -232,10 +205,7 @@ class PayuSettings {
 		<?php
 	}
 
-	/**
-	 * @return array
-	 */
-	public function before_payment_statuses() {
+	public function before_payment_statuses(): array {
 		$statuses  = wc_get_order_statuses();
 		$available = [];
 		foreach ( $statuses as $key => $value ) {

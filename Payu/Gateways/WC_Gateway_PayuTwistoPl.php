@@ -3,7 +3,7 @@
 namespace Payu\PaymentGateway\Gateways;
 
 class WC_Gateway_PayuTwistoPl extends WC_Payu_Gateways {
-	protected $paytype = 'dpt';
+	protected string $paytype = 'dpt';
 
 	function __construct() {
 		parent::__construct( 'payutwistopl' );

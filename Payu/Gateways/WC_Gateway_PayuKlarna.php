@@ -3,7 +3,7 @@
 namespace Payu\PaymentGateway\Gateways;
 
 class WC_Gateway_PayuKlarna extends WC_Payu_Gateways {
-	protected $paytype = 'dpkl';
+	protected string $paytype = 'dpkl';
 
 	function __construct() {
 		parent::__construct( 'payuklarna' );

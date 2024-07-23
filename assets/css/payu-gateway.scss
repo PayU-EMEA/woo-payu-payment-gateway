@@ -76,9 +76,10 @@
   margin-top: 15px;
 
   .payu-conditions-description {
-    margin-top: 8px;
     font-size: 12px;
     line-height: 120%;
+    margin-top: 8px;
+    text-align: justify;
 
     > div {
       margin: 5px 0;
@@ -196,4 +197,58 @@ label[for*="payment_method_payu"] {
 
 .payu-block-method-logo {
   margin-left: 5px;
+}
+.payu-block-installments-label {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  > div {
+    align-items: center;
+    display: flex;
+  }
+}
+
+.payu-block-list-banks {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  gap: 5px;
+  justify-content: center;
+  margin-top: 10px;
+
+  > .payu-bank {
+    align-items: center;
+    background-color: #ffffff;
+    border: 1px solid #ccc;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    padding: 8px;
+    transition: all 250ms;
+    width: 82px;
+
+    &.disabled {
+      cursor: not-allowed;
+      filter: grayscale(1);
+      opacity: 0.5;
+
+    }
+    &:not(.disabled) {
+      &:hover {
+        background: #eee;
+        border-color: #13100D;
+      }
+    }
+    &.active {
+      background: #eee;
+      border-color: #13100D;
+    }
+
+    > img {
+      border-radius: 0;
+      height: 28px;
+      object-fit: contain;
+      width: auto;
+    }
+  }
 }

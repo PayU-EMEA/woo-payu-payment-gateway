@@ -3,7 +3,7 @@
 namespace Payu\PaymentGateway\Gateways;
 
 class WC_Gateway_PayuCreditCard extends WC_Payu_Gateways {
-	protected $paytype = 'c';
+	protected string $paytype = 'c';
 
 	function __construct() {
 		parent::__construct( 'payucreditcard' );

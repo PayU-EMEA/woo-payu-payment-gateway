@@ -38,8 +38,8 @@ const Label = (props) => {
 
     return (
         widgetOnCheckout && posId && widgetKey && total ? (
-            <div style={{display: 'flex', justifyContent: 'space-between', width: '100%'}}>
-                <div style={{display: 'flex', alignItems: 'center'}}>
+            <div className="payu-block-installments-label">
+                <div>
                     <PaymentMethodLabel text={title} className="payu-block-method"/>
                     <span className="payu-block-method-logo"><img src={iconUrl} alt="PayU" name={title}/></span>
                 </div>

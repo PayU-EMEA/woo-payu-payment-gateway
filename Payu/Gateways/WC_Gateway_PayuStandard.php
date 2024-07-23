@@ -17,7 +17,7 @@ class WC_Gateway_PayuStandard extends WC_Payu_Gateways {
 	}
 
 	public function try_retrieve_banks(): bool {
-		$response = $this->get_payu_response();
+		$response = $this->payu_get_paymethods();
 		if ( isset( $response ) && $response->getStatus() === 'SUCCESS' ) {
 			$payMethods = $response->getResponse();
 
