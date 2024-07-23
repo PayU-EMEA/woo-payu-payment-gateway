@@ -1,6 +1,6 @@
 {
   "name": "woo-payu-payment-gateway",
-  "version": "2.4.1",
+  "version": "2.5.0",
   "description": "PayU Payment Gateway for WooCommerce",
   "scripts": {
     "start": "wp-scripts start",
