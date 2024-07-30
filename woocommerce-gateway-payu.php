@@ -464,7 +464,7 @@ function view_order( $order_id ) {
 	$order         = wc_get_order( $order_id );
 	$payu_gateways = WC_Payu_Gateways::gateways_list();
 	if ( in_array( $order->get_status(), [ 'on-hold', 'pending', 'failed' ] ) ) {
-		if ( @$payu_gateways[ $order->get_payment_method() ] && isset( get_option( 'payu_settings_option_name' )['global_repayment'] ) ) {
+		if ( isset($payu_gateways[ $order->get_payment_method() ]) && isset( get_option( 'payu_settings_option_name' )['global_repayment'] ) ) {
 			$pay_now_url = add_query_arg( [
 				'pay_for_order' => 'true',
 				'key'           => $order->get_order_key()
@@ -544,7 +544,7 @@ function filter_woocommerce_my_account_my_orders_actions( $actions, $order ) {
 			get_option( 'payu_settings_option_name' )['global_default_on_hold_status']
 		] ) ) {
 		$payu_gateways = WC_Payu_Gateways::gateways_list();
-		if ( @$payu_gateways[ $order->get_payment_method() ] && isset( get_option( 'payu_settings_option_name' )['global_repayment'] ) ) {
+		if ( isset($payu_gateways[ $order->get_payment_method() ]) && isset( get_option( 'payu_settings_option_name' )['global_repayment'] ) ) {
 			$actions['repayu'] = [
 				'name' => __( 'Pay with PayU', 'woo-payu-payment-gateway' ),
 				'url'  => wc_get_endpoint_url( 'order-pay', $order->get_id(),
@@ -565,7 +565,7 @@ function wc_order_item_add_action_buttons_callback( $order ) {
 	$payu_gateways   = WC_Payu_Gateways::gateways_list();
 	$payuOrderStatus = $order->get_meta( '_payu_order_status', false, '' );
 
-	if ( @$payu_gateways[ $order->get_payment_method() ] && ! isset( get_option( 'payu_settings_option_name' )['global_repayment'] ) && $payuOrderStatus ) {
+	if ( isset($payu_gateways[ $order->get_payment_method() ]) && ! isset( get_option( 'payu_settings_option_name' )['global_repayment'] ) && $payuOrderStatus ) {
 		$payu_statuses = WC_Payu_Gateways::clean_payu_statuses( $payuOrderStatus );
 		if ( ( ! in_array( OpenPayuOrderStatus::STATUS_COMPLETED,
 					$payu_statuses ) && ! in_array( OpenPayuOrderStatus::STATUS_CANCELED,
