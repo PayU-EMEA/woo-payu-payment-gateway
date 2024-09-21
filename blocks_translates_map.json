@@ -1,4 +1,5 @@
 {
-  "src/js/payublik.js": "build/js/payublik.js",
-  "src/js/payulistbanks.js": "build/js/payulistbanks.js"
+	"src/js/payublik.js": "build/js/payublik.js",
+	"src/js/payulistbanks.js": "build/js/payulistbanks.js",
+	"src/js/payusecureform.js": "build/js/payusecureform.js"
 }

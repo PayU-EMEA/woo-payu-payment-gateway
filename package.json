@@ -5,6 +5,8 @@
   "scripts": {
     "start": "wp-scripts start",
     "build": "wp-scripts build",
+    "format": "wp-scripts format src",
+    "lint:js": "wp-scripts lint-js src/js",
     "packages-update": "wp-scripts packages-update",
     "check-engines": "wp-scripts check-engines"
   },

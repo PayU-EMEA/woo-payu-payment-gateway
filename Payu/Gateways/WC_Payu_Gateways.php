@@ -17,13 +17,11 @@ use WC_Order_Item_Product;
 use WC_Payment_Gateway;
 use WC_Shipping_Zone;
 
-require_once WC_PAYU_PLUGIN_PATH . 'includes/lib/openpayu.php';
-
 abstract class WC_Payu_Gateways extends WC_Payment_Gateway implements WC_PayuGateway {
 	public static $paymethods = [];
 
-	public $pos_id;
-	public $pos_widget_key;
+	public string $pos_id;
+	public string $pos_widget_key;
 	public $enable_for_shipping;
 	public $enable_for_virtual;
 
@@ -305,7 +303,8 @@ abstract class WC_Payu_Gateways extends WC_Payment_Gateway implements WC_PayuGat
 		if ( count( $currencies ) < 2 ) {
 			$currencies = [ '' ];
 		}
-		$config = [];
+		$config       = [];
+		$payuSettings = get_option( 'payu_settings_option_name', [] );
 
 		foreach ( $currencies as $code ) {
 			$idSuffix   = ( $code ? '_' : '' ) . $code;
@@ -321,8 +320,8 @@ abstract class WC_Payu_Gateways extends WC_Payment_Gateway implements WC_PayuGat
 					'desc_tip'          => true,
 					'custom_attributes' => [
 						'data-global'  => 'can-be-global',
-						'global-value' => $this->get_payu_option( [ 'payu_settings_option_name', 'global_' . $field ] ),
-						'local-value'  => $this->get_payu_option( [ 'woocommerce_' . $this->id . '_settings', $field ] )
+						'global-value' => $payuSettings[ 'global_' . $field ] ?? '',
+						'local-value'  => $payuSettings[ $field ] ?? ''
 					],
 				];
 			}
@@ -330,25 +329,6 @@ abstract class WC_Payu_Gateways extends WC_Payment_Gateway implements WC_PayuGat
 		}
 
 		return $config;
-	}
-
-	/**
-	 * @param array $key
-	 *
-	 * @return string|false
-	 */
-	public function get_payu_option( $key ) {
-		if ( ! is_array( $key ) ) {
-			return false;
-		}
-
-		$option = get_option( $key[0] );
-
-		if ( ! is_array( $option ) || ! array_key_exists( $key[1], $option ) ) {
-			return false;
-		}
-
-		return $option[ $key[1] ];
 	}
 
 	private function get_form_field_info(): array {
@@ -470,13 +450,9 @@ abstract class WC_Payu_Gateways extends WC_Payment_Gateway implements WC_PayuGat
 	}
 
 	/**
-	 * @param string|null $currency
-	 *
-	 * @return void
 	 * @throws
-	 *
 	 */
-	public function init_OpenPayU( $currency = null ) {
+	public function init_OpenPayU( string $currency = null ): void {
 		$isSandbox = 'yes' === $this->get_option( 'sandbox' );
 
 		if ( woocommerce_payu_is_wmpl_active_and_configure() || woocommerce_payu_is_currency_custom_config() ) {
@@ -486,38 +462,26 @@ abstract class WC_Payu_Gateways extends WC_Payment_Gateway implements WC_PayuGat
 		}
 
 		$optionPrefix = $isSandbox ? 'sandbox_' : '';
+		$payuSettings = get_option( 'payu_settings_option_name', [] );
 
 		OpenPayU_Configuration::setEnvironment( $isSandbox ? 'sandbox' : 'secure' );
-		if ( $this->get_option( 'use_global' ) === 'yes' || ! $this->get_option( 'use_global' ) ) {
-			$this->pos_id         = $this->get_payu_option( [
-				'payu_settings_option_name',
-				'global_' . $optionPrefix . 'pos_id' . $optionSuffix
-			] );
-			$client_secret        = $this->get_payu_option( [
-				'payu_settings_option_name',
-				'global_' . $optionPrefix . 'client_secret' . $optionSuffix
-			] );
+		if ( $this->get_option( 'use_global', 'yes' ) === 'yes' ) {
+			$this->pos_id         = $payuSettings[ 'global_' . $optionPrefix . 'pos_id' . $optionSuffix ] ?? '';
+			$client_secret        = $payuSettings[ 'global_' . $optionPrefix . 'client_secret' . $optionSuffix ] ?? '';
 			$this->pos_widget_key = substr( $client_secret, 0, 2 );
 			OpenPayU_Configuration::setMerchantPosId( $this->pos_id );
-			OpenPayU_Configuration::setSignatureKey( $this->get_payu_option( [
-				'payu_settings_option_name',
-				'global_' . $optionPrefix . 'md5' . $optionSuffix
-			] ) );
-			OpenPayU_Configuration::setOauthClientId( $this->get_payu_option( [
-				'payu_settings_option_name',
-				'global_' . $optionPrefix . 'client_id' . $optionSuffix
-			] ) );
+			OpenPayU_Configuration::setSignatureKey( $payuSettings[ 'global_' . $optionPrefix . 'md5' . $optionSuffix ] ?? '' );
+			OpenPayU_Configuration::setOauthClientId( $payuSettings[ 'global_' . $optionPrefix . 'client_id' . $optionSuffix ] ?? '' );
 			OpenPayU_Configuration::setOauthClientSecret( $client_secret );
 		} else {
-			$this->pos_id         = $this->get_option( $optionPrefix . 'pos_id' . $optionSuffix );
-			$client_secret        = $this->get_option( $optionPrefix . 'client_secret' . $optionSuffix );
+			$this->pos_id         = $this->get_option( $optionPrefix . 'pos_id' . $optionSuffix, '' );
+			$client_secret        = $this->get_option( $optionPrefix . 'client_secret' . $optionSuffix, '' );
 			$this->pos_widget_key = substr( $client_secret, 0, 2 );
 			OpenPayU_Configuration::setMerchantPosId( $this->pos_id );
-			OpenPayU_Configuration::setSignatureKey( $this->get_option( $optionPrefix . 'md5' . $optionSuffix ) );
-			OpenPayU_Configuration::setOauthClientId( $this->get_option( $optionPrefix . 'client_id' . $optionSuffix ) );
+			OpenPayU_Configuration::setSignatureKey( $this->get_option( $optionPrefix . 'md5' . $optionSuffix, '' ) );
+			OpenPayU_Configuration::setOauthClientId( $this->get_option( $optionPrefix . 'client_id' . $optionSuffix, '' ) );
 			OpenPayU_Configuration::setOauthClientSecret( $client_secret );
 		}
-
 
 		OpenPayU_Configuration::setOauthTokenCache( new OauthCache() );
 		OpenPayU_Configuration::setSender( 'Wordpress ver ' . get_bloginfo( 'version' ) . ' / WooCommerce ver ' . WC()->version . ' / Plugin ver ' . PAYU_PLUGIN_VERSION );
@@ -878,10 +842,7 @@ abstract class WC_Payu_Gateways extends WC_Payment_Gateway implements WC_PayuGat
 				}
 			}
 
-			if ( isset( $orderData['payMethods']['payMethod']['type'] ) && $orderData['payMethods']['payMethod']['type'] === 'CARD_TOKEN'
-			     && isset( $_POST['payu_browser'] )
-			     && is_array( $_POST['payu_browser'] )
-			) {
+			if ( isset( $orderData['payMethods']['payMethod']['type'] ) && $orderData['payMethods']['payMethod']['type'] === 'CARD_TOKEN' ) {
 				$possibleBrowserData = [
 					'screenWidth',
 					'javaEnabled',
@@ -891,22 +852,35 @@ abstract class WC_Payu_Gateways extends WC_Payment_Gateway implements WC_PayuGat
 					'colorDepth',
 					'language'
 				];
-				$browserData         = [
-					'requestIP' => $this->getIP()
-				];
 
-				foreach ( $possibleBrowserData as $bd ) {
-					$browserData[ $bd ] = isset( $_POST['payu_browser'][ $bd ] ) ? sanitize_text_field( $_POST['payu_browser'][ $bd ] ) : '';
-				}
+				$browserData = [];
 
-				if ( empty( $browserData['userAgent'] ) ) {
-					$headers = array_change_key_case( getallheaders(), CASE_LOWER );
-					if ( $headers['user-agent'] ) {
-						$browserData['userAgent'] = $headers['user-agent'];
+				if ( isset( $_POST['payu_browser'] ) && is_array( $_POST['payu_browser'] ) ) {
+					foreach ( $possibleBrowserData as $bd ) {
+						$browserData[ $bd ] = isset( $_POST['payu_browser'][ $bd ] ) ? sanitize_text_field( $_POST['payu_browser'][ $bd ] ) : '';
+					}
+				} else {
+					foreach ( $possibleBrowserData as $bd ) {
+						$name = strtolower( 'payuBrowser_' . $bd );
+						if ( isset( $_POST[ $name ] ) ) {
+							$browserData[ $bd ] = sanitize_text_field( $_POST[ $name ] );
+						}
 					}
 				}
 
-				$threeDsAuthentication['browser'] = $browserData;
+				if ( count( $browserData ) > 0 ) {
+					$browserData['requestIP'] = $this->getIP();
+
+
+					if ( empty( $browserData['userAgent'] ) ) {
+						$headers = array_change_key_case( getallheaders(), CASE_LOWER );
+						if ( $headers['user-agent'] ) {
+							$browserData['userAgent'] = $headers['user-agent'];
+						}
+					}
+
+					$threeDsAuthentication['browser'] = $browserData;
+				}
 			}
 
 			return $threeDsAuthentication;

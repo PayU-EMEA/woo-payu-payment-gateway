@@ -2,8 +2,8 @@
 Contributors: payusa
 Tags: PayU, payment, payment gateway, płatności, credit card
 Requires at least: 5.0
-Tested up to: 6.6.0
-Stable tag: 2.5.0
+Tested up to: 6.6.2
+Stable tag: 2.6.0
 Requires PHP: 7.4
 License: Apache License 2.0
 
@@ -51,6 +51,9 @@ Yes, it does.
 * For presenting minimal installment amount we used [Widget Installments](https://developers.payu.com/en/installments.html#installments_best_practices_mini) and plugin loads the script from the static.payu.com domain.
 
 == Changelog ==
+= 2.6.0 - 2024-09-21 =
+* [Add] PayU - secure form via WooCommerce Blocks
+
 = 2.5.0 - 2024-07-23 =
 * [Add] PayU - bank list via WooCommerce Blocks
 

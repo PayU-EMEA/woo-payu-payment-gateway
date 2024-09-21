@@ -252,3 +252,40 @@ label[for*="payment_method_payu"] {
     }
   }
 }
+
+.block-payu-card {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0 10px;
+  margin: 10px 0;
+  padding: 10px;
+
+  .payu-sf-validation-error {
+    color: #b21b0f;
+    font-size: 13px;
+  }
+
+  > .block-payu-card-number {
+    flex: 1 0 100%;
+  }
+
+  > .block-payu-card-date, .block-payu-card-cvv {
+    flex: 1 0 calc(50% - 10px);
+  }
+
+  .payu-card-form {
+    background-color: #FFFFFF;
+    border: 1px solid #999999;
+    border-radius: 5px;
+    padding: 8px 6px;
+
+    &.payu-secure-form-focus {
+      border-color: #666666;
+      box-shadow: 0 0 0 1px #666666;
+    }
+
+    &.payu-secure-form-invalid:not(.payu-secure-form-focus) {
+      border-color: #cc1818;
+    }
+  }
+}

@@ -5,14 +5,14 @@
  * Plugin URI: https://github.com/PayU/woo-payu-payment-gateway
  * GitHub Plugin URI: https://github.com/PayU-EMEA/woo-payu-payment-gateway
  * Description: PayU fast online payments for WooCommerce. Banks, BLIK, credit or debit cards, Installments, Apple Pay, Google Pay.
- * Version: 2.5.0
+ * Version: 2.6.0
  * Author: PayU SA
  * Author URI: http://www.payu.com
  * License: Apache License 2.0
  * Text Domain: woo-payu-payment-gateway
  * Domain Path: /lang
  * WC requires at least: 4.0
- * WC tested up to: 9.1.2
+ * WC tested up to: 9.3.2
  */
 
 use Automattic\WooCommerce\Blocks\Payments\PaymentMethodRegistry;
@@ -22,6 +22,7 @@ use Payu\PaymentGateway\Blocks\PayuInstallmentsBlock;
 use Payu\PaymentGateway\Blocks\PayuKlarnaBlock;
 use Payu\PaymentGateway\Blocks\PayuListBanksBlock;
 use Payu\PaymentGateway\Blocks\PayuPaypoBlock;
+use Payu\PaymentGateway\Blocks\PayuSecureFormBlock;
 use Payu\PaymentGateway\Blocks\PayuStandardBlock;
 use Payu\PaymentGateway\Blocks\PayuTwistoPlBlock;
 use Payu\PaymentGateway\Gateways\WC_Gateway_PayuBlik;
@@ -30,13 +31,14 @@ use Payu\PaymentGateway\Gateways\WC_Gateway_PayuInstallments;
 use Payu\PaymentGateway\Gateways\WC_Gateway_PayuKlarna;
 use Payu\PaymentGateway\Gateways\WC_Gateway_PayuListBanks;
 use Payu\PaymentGateway\Gateways\WC_Gateway_PayuPaypo;
+use Payu\PaymentGateway\Gateways\WC_Gateway_PayuSecureForm;
 use Payu\PaymentGateway\Gateways\WC_Gateway_PayuStandard;
 use Payu\PaymentGateway\Gateways\WC_Gateway_PayuTwistoPl;
 use Payu\PaymentGateway\Gateways\WC_Payu_Gateways;
 
 require __DIR__ . '/vendor/autoload.php';
 
-define( 'PAYU_PLUGIN_VERSION', '2.5.0' );
+define( 'PAYU_PLUGIN_VERSION', '2.6.0' );
 define( 'PAYU_PLUGIN_FILE', __FILE__ );
 define( 'PAYU_PLUGIN_STATUS_WAITING', 'payu-waiting' );
 
@@ -65,6 +67,7 @@ function init_payu_blocks() {
 				$payment_method_registry->register( new PayuStandardBlock() );
 				$payment_method_registry->register( new PayuListBanksBlock() );
 				$payment_method_registry->register( new PayuCreditCardBlock() );
+				$payment_method_registry->register( new PayuSecureFormBlock() );
 				$payment_method_registry->register( new PayuPaypoBlock() );
 				$payment_method_registry->register( new PayuKlarnaBlock() );
 				$payment_method_registry->register( new PayuTwistoPlBlock() );
@@ -85,7 +88,6 @@ function init_gateway_payu() {
 	}
 
 	load_plugin_textdomain( 'woo-payu-payment-gateway', false, dirname( plugin_basename( __FILE__ ) ) . '/lang' );
-	require_once( 'includes/WC_Gateway_PayuSecureForm.php' );
 
 	add_filter( 'woocommerce_payment_gateways', 'add_payu_gateways' );
 	add_filter( 'woocommerce_valid_order_statuses_for_payment_complete', 'payu_filter_woocommerce_valid_order_statuses_for_payment_complete', 10, 2 );
@@ -184,7 +186,7 @@ function add_payu_gateways( array $gateways ): array {
 	$gateways[] = WC_Gateway_PayuInstallments::class;
 	$gateways[] = WC_Gateway_PayuBlik::class;
 	$gateways[] = WC_Gateway_PayuListBanks::class;
-	$gateways[] = 'WC_Gateway_PayuSecureForm';
+	$gateways[] = WC_Gateway_PayuSecureForm::class;
 
 	return $gateways;
 }

@@ -1,12 +1,17 @@
 <?php
 
-use Payu\PaymentGateway\Gateways\WC_Payu_Gateways;
+namespace Payu\PaymentGateway\Gateways;
+
+use OpenPayU_Result;
 
 class WC_Gateway_PayuSecureForm extends WC_Payu_Gateways {
 	protected string $paytype = 'c';
+	private string $payu_sdk_url;
 
 	function __construct() {
 		parent::__construct( 'payusecureform' );
+
+		$this->payu_sdk_url = $this->sandbox ? 'https://secure.snd.payu.com/javascript/sdk' : 'https://secure.payu.com/javascript/sdk';
 
 		if ( $this->is_enabled() ) {
 			$this->icon = apply_filters( 'woocommerce_payu_icon', plugins_url( '/assets/images/card-visa-mc.svg', PAYU_PLUGIN_FILE ) );
@@ -28,10 +33,16 @@ class WC_Gateway_PayuSecureForm extends WC_Payu_Gateways {
 		return parent::is_available();
 	}
 
-	/**
-	 * @return null
-	 */
-	function minicart_checkout_refresh_script() {
+	// Additional data for Blocks
+	public function get_additional_data(): array {
+		return [
+			'posId'  => $this->pos_id,
+			'sdkUrl' => $this->payu_sdk_url,
+			'lang'   => explode( '_', get_locale() )[0]
+		];
+	}
+
+	function minicart_checkout_refresh_script(): void {
 		if ( is_checkout() || is_wc_endpoint_url() ) :
 			?>
             <script type="text/javascript">
@@ -63,12 +74,7 @@ class WC_Gateway_PayuSecureForm extends WC_Payu_Gateways {
 		}
 	}
 
-	/**
-	 * @param OpenPayU_Result $response
-	 *
-	 * @return null
-	 */
-	private function retrieve_methods( $response ) {
+	private function retrieve_methods( OpenPayU_Result $response ): void {
 		$payMethods = $response->getResponse();
 		if ( $payMethods->payByLinks ) {
 			$payByLinks = $this->process_pay_methods( $payMethods->payByLinks );
@@ -114,13 +120,10 @@ class WC_Gateway_PayuSecureForm extends WC_Payu_Gateways {
 	protected function get_payu_pay_method(): array {
 		$token = sanitize_text_field( $_POST['payu_sf_token'] );
 
-		return $this->get_payu_pay_method_array( 'CARD_TOKEN', $token ? $token : - 1, $this->paytype );
+		return $this->get_payu_pay_method_array( 'CARD_TOKEN', $token );
 	}
 
-	/**
-	 * @return void
-	 */
-	public function include_payu_sf_scripts() {
+	public function include_payu_sf_scripts(): void {
 		$payu_sdk_url = $this->sandbox ? 'https://secure.snd.payu.com/javascript/sdk' : 'https://secure.payu.com/javascript/sdk';
 		wp_enqueue_script( 'payu-sfsdk', $payu_sdk_url, [], null );
 		wp_enqueue_script( 'payu-promise-polyfill', plugins_url( '/assets/js/es6-promise.auto.min.js', PAYU_PLUGIN_FILE ), [], null );
