@@ -40,7 +40,6 @@ cp -R assets/css/*.css ${DIST_PLUGIN}/assets/css/
 cp -R assets/js ${DIST_PLUGIN}/assets/
 cp -R assets/images ${DIST_PLUGIN}/assets/
 cp -R build ${DIST_PLUGIN}
-cp -R includes ${DIST_PLUGIN}
 mkdir ${DIST_PLUGIN}/lang/
 cp lang/${PLUGIN_SLUG}*.{json,php,po,mo,pot} ${DIST_PLUGIN}/lang/
 cp -R Payu ${DIST_PLUGIN}
