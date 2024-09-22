@@ -1,3 +1,6 @@
+# 2.6.0 - 2024-09-21
+* [Add] PayU - secure form via WooCommerce Blocks
+
 # 2.5.0 - 2024-07-23
 * [Add] PayU - bank list via WooCommerce Blocks
 

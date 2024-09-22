@@ -20,7 +20,7 @@ The plugin offers the following payment methods:
 | 1  | PayU - standard     | :white_check_mark:| payer will be redirected to PayU's hosted payment page where any available payment type configured on your POS can be chosen
 | 2  | PayU - bank list    | :white_check_mark:| payment type list will be displayed, depending on chosen type the payer will be either redirected directly to the bank or to PayU's hosted payment page
 | 3  | PayU - payment card | :white_check_mark:| payer will be redirected to PayU's hosted card form where credit, debit or prepaid card data can be securely entered
-| 4  | PayU - secure form  |        :x:        | a secure form collecting credit, debit or prepaid card data will be displayed
+| 4  | PayU - secure form  | :white_check_mark:| a secure form collecting credit, debit or prepaid card data will be displayed
 | 5  | PayU - Blik         | :white_check_mark:| payer will be redirected to Blik's page
 | 6  | PayU - installments | :white_check_mark:| payer will be redirected to installment payment form
 | 7  | PayU - Klarna       | :white_check_mark:| payer will be redirected to Klarna payment form
