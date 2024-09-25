@@ -15,61 +15,55 @@ const posId = decodeEntities( settings.additionalData?.posId ) || '';
 const widgetKey = decodeEntities( settings.additionalData?.widgetKey ) || '';
 const total = decodeEntities( settings.additionalData?.total ) || '';
 const widgetOnCheckout =
-	decodeEntities( settings.additionalData?.widgetOnCheckout ) || false;
+  decodeEntities( settings.additionalData?.widgetOnCheckout ) || false;
 
 const canMakePayment = () => {
-	return available;
+  return available;
 };
 
 const Content = () => {
-	return <div>{ description }</div>;
+  return <div>{ description }</div>;
 };
 
 const Label = ( props ) => {
-	const { PaymentMethodLabel } = props.components;
+  const { PaymentMethodLabel } = props.components;
 
-	useEffect( () => {
-		window.OpenPayU?.Installments?.miniInstallment(
-			'#installment-mini-cart',
-			{
-				creditAmount: Number( total ),
-				posId,
-				key: widgetKey,
-				showLongDescription: true,
-			}
-		);
-	}, [] );
+  useEffect( () => {
+    window.OpenPayU?.Installments?.miniInstallment( '#installment-mini-cart', {
+      creditAmount: Number( total ),
+      posId,
+      key: widgetKey,
+      showLongDescription: true,
+    } );
+  }, [] );
 
-	return widgetOnCheckout && posId && widgetKey && total ? (
-		<div className="payu-block-installments-label">
-			<div>
-				<PaymentMethodLabel
-					text={ title }
-					className="payu-block-method"
-				/>
-				<span className="payu-block-method-logo">
-					<img src={ iconUrl } alt="PayU" name={ title } />
-				</span>
-			</div>
-			<div id="installment-mini-cart"></div>
-		</div>
-	) : (
-		<>
-			<PaymentMethodLabel text={ title } className="payu-block-method" />
-			<span className="payu-block-method-logo">
-				<img src={ iconUrl } alt="PayU" name={ title } />
-			</span>
-		</>
-	);
+  return widgetOnCheckout && posId && widgetKey && total ? (
+    <div className="payu-block-installments-label">
+      <div>
+        <PaymentMethodLabel text={ title } className="payu-block-method" />
+        <span className="payu-block-method-logo">
+          <img src={ iconUrl } alt="PayU" name={ title } />
+        </span>
+      </div>
+      <div id="installment-mini-cart"></div>
+    </div>
+  ) : (
+    <>
+      <PaymentMethodLabel text={ title } className="payu-block-method" />
+      <span className="payu-block-method-logo">
+        <img src={ iconUrl } alt="PayU" name={ title } />
+      </span>
+    </>
+  );
 };
 
 const PayuStandardOptions = {
-	name,
-	label: <Label />,
-	content: <Content />,
-	edit: <Content />,
-	canMakePayment,
-	ariaLabel: title,
+  name,
+  label: <Label />,
+  content: <Content />,
+  edit: <Content />,
+  canMakePayment,
+  ariaLabel: title,
 };
 
 registerPaymentMethod( PayuStandardOptions );

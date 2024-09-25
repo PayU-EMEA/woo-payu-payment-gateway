@@ -5,18 +5,16 @@
   "scripts": {
     "start": "wp-scripts start",
     "build": "wp-scripts build",
-    "format": "wp-scripts format src",
-    "lint:js": "wp-scripts lint-js src/js",
-    "packages-update": "wp-scripts packages-update",
-    "check-engines": "wp-scripts check-engines"
+    "format": "wp-scripts format ./src",
+    "lint:js": "wp-scripts lint-js ./src/js"
   },
   "author": "PayU GPO",
   "license": "Apache-2.0",
   "dependencies": {
-    "clsx": "2.1.1"
+    "clsx": "2.1.1",
   },
   "devDependencies": {
-    "@woocommerce/dependency-extraction-webpack-plugin": "^3.0.1",
-    "@wordpress/scripts": "^28.3.0"
+    "@woocommerce/dependency-extraction-webpack-plugin": "3.0.1",
+    "@wordpress/scripts": "^30.0.2"
   }
 }

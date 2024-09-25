@@ -1,53 +1,53 @@
 const scriptUtil = ( src ) => {
-	let script = null;
+  let script = null;
 
-	const remove = () => {
-		script?.parentNode?.removeChild( script );
-	};
+  const remove = () => {
+    script?.parentNode?.removeChild( script );
+  };
 
-	const load = () => {
-		return new Promise( ( resolve, reject ) => {
-			const handleOnLoad = () => {
-				script?.setAttribute( 'data-loaded', 'true' );
-				resolve();
-			};
+  const load = () => {
+    return new Promise( ( resolve, reject ) => {
+      const handleOnLoad = () => {
+        script?.setAttribute( 'data-loaded', 'true' );
+        resolve();
+      };
 
-			const handleOnError = () => {
-				remove();
-				reject( new Error( `Unable to load script [${ src }]` ) );
-			};
+      const handleOnError = () => {
+        remove();
+        reject( new Error( `Unable to load script [${ src }]` ) );
+      };
 
-			const bodyContainer = document.querySelector( 'body' );
+      const bodyContainer = document.querySelector( 'body' );
 
-			if ( ! bodyContainer ) {
-				reject( new Error( 'Missing <body>' ) );
+      if ( ! bodyContainer ) {
+        reject( new Error( 'Missing <body>' ) );
 
-				return;
-			}
+        return;
+      }
 
-			script = bodyContainer.querySelector( `script[src="${ src }"]` );
+      script = bodyContainer.querySelector( `script[src="${ src }"]` );
 
-			if ( script?.getAttribute( 'data-loaded' ) ) {
-				resolve();
+      if ( script?.getAttribute( 'data-loaded' ) ) {
+        resolve();
 
-				return;
-			}
+        return;
+      }
 
-			script = document.createElement( 'script' );
-			script.src = src;
-			script.async = true;
+      script = document.createElement( 'script' );
+      script.src = src;
+      script.async = true;
 
-			script.addEventListener( 'load', handleOnLoad );
-			script.addEventListener( 'error', handleOnError );
+      script.addEventListener( 'load', handleOnLoad );
+      script.addEventListener( 'error', handleOnError );
 
-			bodyContainer.appendChild( script );
-		} );
-	};
+      bodyContainer.appendChild( script );
+    } );
+  };
 
-	return {
-		load,
-		remove,
-	};
+  return {
+    load,
+    remove,
+  };
 };
 
 export { scriptUtil };
