@@ -20,8 +20,8 @@ use WC_Shipping_Zone;
 abstract class WC_Payu_Gateways extends WC_Payment_Gateway implements WC_PayuGateway {
 	public static $paymethods = [];
 
-	public string $pos_id;
-	public string $pos_widget_key;
+	public string $pos_id = '';
+	public string $pos_widget_key = '';
 	public $enable_for_shipping;
 	public $enable_for_virtual;
 
