@@ -3,6 +3,7 @@ import { getSetting } from '@woocommerce/settings';
 import { registerPaymentMethod } from '@woocommerce/blocks-registry';
 import { __ } from '@wordpress/i18n';
 import { useState } from '@wordpress/element';
+import ReadMore from './read-more';
 
 const name = 'payublik';
 
@@ -29,12 +30,9 @@ const TermInfo = () => {
             'woo-payu-payment-gateway'
           ) }{ ' ' }
           { ! showMore1 && (
-            <span
-              className="payu-read-more"
-              onClick={ () => setShowMore1( true ) }
-            >
+            <ReadMore onCLick={ () => setShowMore1( true ) }>
               { __( 'read more', 'woo-payu-payment-gateway' ) }
-            </span>
+            </ReadMore>
           ) }
           { showMore1 && (
             <>
@@ -58,12 +56,9 @@ const TermInfo = () => {
             'woo-payu-payment-gateway'
           ) }{ ' ' }
           { ! showMore2 && (
-            <span
-              className="payu-read-more"
-              onClick={ () => setShowMore2( true ) }
-            >
+            <ReadMore onCLick={ () => setShowMore2( true ) }>
               { __( 'read more', 'woo-payu-payment-gateway' ) }
-            </span>
+            </ReadMore>
           ) }
           { showMore2 && (
             <>

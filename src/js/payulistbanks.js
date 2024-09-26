@@ -5,6 +5,7 @@ import { StoreNotice } from '@woocommerce/blocks-components';
 import { __ } from '@wordpress/i18n';
 import { useCallback, useEffect, useState } from '@wordpress/element';
 import { clsx } from 'clsx';
+import ReadMore from './read-more';
 
 const name = 'payulistbanks';
 
@@ -32,12 +33,9 @@ const TermInfo = () => {
             'woo-payu-payment-gateway'
           ) }{ ' ' }
           { ! showMore1 && (
-            <span
-              className="payu-read-more"
-              onClick={ () => setShowMore1( true ) }
-            >
+            <ReadMore onCLick={ () => setShowMore1( true ) }>
               { __( 'read more', 'woo-payu-payment-gateway' ) }
-            </span>
+            </ReadMore>
           ) }
           { showMore1 && (
             <>
@@ -61,12 +59,9 @@ const TermInfo = () => {
             'woo-payu-payment-gateway'
           ) }{ ' ' }
           { ! showMore2 && (
-            <span
-              className="payu-read-more"
-              onClick={ () => setShowMore2( true ) }
-            >
+            <ReadMore onCLick={ () => setShowMore2( true ) }>
               { __( 'read more', 'woo-payu-payment-gateway' ) }
-            </span>
+            </ReadMore>
           ) }
           { showMore2 && (
             <>
@@ -181,6 +176,8 @@ const Content = ( { eventRegistration, emitResponse } ) => {
                     setSelectedPaymethod( paytype );
                   }
                 } }
+                role="button"
+                tabIndex={ 0 }
               >
                 <img src={ brandImageUrl } alt={ paytypeName } />
               </div>

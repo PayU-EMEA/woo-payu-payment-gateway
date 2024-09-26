@@ -9,6 +9,7 @@ import CardNumber from './SecureForm/cardnumber';
 import CardExpire from './SecureForm/cardexpire';
 import CardCvv from './SecureForm/cardcvv';
 import { options } from './SecureForm/options';
+import ReadMore from './read-more';
 
 const name = 'payusecureform';
 
@@ -41,12 +42,9 @@ const TermInfo = () => {
             'woo-payu-payment-gateway'
           ) }{ ' ' }
           { ! showMore1 && (
-            <span
-              className="payu-read-more"
-              onClick={ () => setShowMore1( true ) }
-            >
+            <ReadMore onCLick={ () => setShowMore1( true ) }>
               { __( 'read more', 'woo-payu-payment-gateway' ) }
-            </span>
+            </ReadMore>
           ) }
           { showMore1 && (
             <>
@@ -70,12 +68,9 @@ const TermInfo = () => {
             'woo-payu-payment-gateway'
           ) }{ ' ' }
           { ! showMore2 && (
-            <span
-              className="payu-read-more"
-              onClick={ () => setShowMore2( true ) }
-            >
+            <ReadMore onCLick={ () => setShowMore2( true ) }>
               { __( 'read more', 'woo-payu-payment-gateway' ) }
-            </span>
+            </ReadMore>
           ) }
           { showMore2 && (
             <>

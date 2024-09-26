@@ -2,40 +2,26 @@ const defaultConfig = require( '@wordpress/scripts/config/webpack.config' );
 const WooCommerceDependencyExtractionWebpackPlugin = require( '@woocommerce/dependency-extraction-webpack-plugin' );
 const path = require( 'path' );
 
-const wcDepMap = {
-	'@woocommerce/blocks-registry': [ 'wc', 'wcBlocksRegistry' ],
-	'@woocommerce/settings': [ 'wc', 'wcSettings' ],
-};
-
-const wcHandleMap = {
-	'@woocommerce/blocks-registry': 'wc-blocks-registry',
-	'@woocommerce/settings': 'wc-settings',
-};
-
-const requestToExternal = ( request ) => {
-	if ( wcDepMap[ request ] ) {
-		return wcDepMap[ request ];
-	}
-};
-
-const requestToHandle = ( request ) => {
-	if ( wcHandleMap[ request ] ) {
-		return wcHandleMap[ request ];
-	}
-};
-
 module.exports = {
 	...defaultConfig,
 	entry: {
-		payustandard: '/src/js/payustandard.js',
-		payulistbanks: '/src/js/payulistbanks.js',
-		payucreditcard: '/src/js/payucreditcard.js',
-		payusecureform: '/src/js/payusecureform.js',
-		payupaypo: '/src/js/payupaypo.js',
-		payuklarna: '/src/js/payuklarna.js',
-		payutwistopl: '/src/js/payutwistopl.js',
-		payuinstallments: '/src/js/payuinstallments.js',
-		payublik: '/src/js/payublik.js',
+		payustandard: '/src/js/payustandard',
+		payulistbanks: '/src/js/payulistbanks',
+		payucreditcard: '/src/js/payucreditcard',
+		payusecureform: '/src/js/payusecureform',
+		payupaypo: '/src/js/payupaypo',
+		payuklarna: '/src/js/payuklarna',
+		payutwistopl: '/src/js/payutwistopl',
+		payuinstallments: '/src/js/payuinstallments',
+		payublik: '/src/js/payublik',
+	},
+	resolve: {
+		extensions: [ '.js', '.jsx', '.tsx', '.ts' ],
+		fallback: {
+			stream: false,
+			path: false,
+			fs: false,
+		},
 	},
 	output: {
 		path: path.resolve( __dirname, 'build/js/' ),
@@ -46,9 +32,6 @@ module.exports = {
 			( plugin ) =>
 				plugin.constructor.name !== 'DependencyExtractionWebpackPlugin'
 		),
-		new WooCommerceDependencyExtractionWebpackPlugin( {
-			requestToExternal,
-			requestToHandle,
-		} ),
+		new WooCommerceDependencyExtractionWebpackPlugin(),
 	],
 };
