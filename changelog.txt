@@ -1,4 +1,7 @@
 *** Changelog ***
+= 2.6.1 - 2024-09-26 =
+* [Fix] Not be accessed before initialization
+
 = 2.6.0 - 2024-09-21 =
 * [Add] PayU - secure form via WooCommerce Blocks
 

@@ -1,6 +1,6 @@
 {
 	"name": "payu/payment_gateway",
-	"version": "2.6.0",
+	"version": "2.6.1",
 	"description": "PayU GPO Payment for WooCommerce",
 	"type": "woocommerce-plugin",
 	"license": "Apache License 2.0",
