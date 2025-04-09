@@ -1,3 +1,7 @@
+# 2.6.2 - 2025-04-09
+* [Update] Update Klarna and Twisto logos
+* [Fix] Manual pickup and rejection for WAITING_FOR_CONFIRMATION
+
 # 2.6.1 - 2024-09-26
 * [Fix] Not be accessed before initialization
 

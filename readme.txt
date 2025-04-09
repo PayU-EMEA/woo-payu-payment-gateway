@@ -2,8 +2,8 @@
 Contributors: payusa
 Tags: PayU, payment, payment gateway, płatności, credit card
 Requires at least: 5.0
-Tested up to: 6.6.2
-Stable tag: 2.6.1
+Tested up to: 6.7.2
+Stable tag: 2.6.2
 Requires PHP: 7.4
 License: Apache License 2.0
 
