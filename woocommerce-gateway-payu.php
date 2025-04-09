@@ -178,15 +178,9 @@ function payu_filter_woocommerce_valid_order_statuses_for_payment_complete( arra
 }
 
 function add_payu_gateways( array $gateways ): array {
-	$gateways[] = WC_Gateway_PayuStandard::class;
-	$gateways[] = WC_Gateway_PayuCreditCard::class;
-	$gateways[] = WC_Gateway_PayuPaypo::class;
-	$gateways[] = WC_Gateway_PayuKlarna::class;
-	$gateways[] = WC_Gateway_PayuTwistoPl::class;
-	$gateways[] = WC_Gateway_PayuInstallments::class;
-	$gateways[] = WC_Gateway_PayuBlik::class;
-	$gateways[] = WC_Gateway_PayuListBanks::class;
-	$gateways[] = WC_Gateway_PayuSecureForm::class;
+    foreach ( WC_Payu_Gateways::gateways_list() as $gateway ) {
+        $gateways[] = $gateway['class'];
+    }
 
 	return $gateways;
 }
@@ -604,7 +598,7 @@ function wc_order_item_add_action_buttons_callback( $order ) {
 						"orderStatus" => OpenPayuOrderStatus::STATUS_COMPLETED
 					];
 					$payment_method_name = $order->get_payment_method();
-					$payment_init        = WC_Payu_Gateways::gateways_list()[ $payment_method_name ]['api'];
+					$payment_init        = WC_Payu_Gateways::gateways_list()[ $payment_method_name ]['class'];
 					$payment             = new $payment_init;
 					$payment->init_OpenPayU( $order->get_currency() );
 					OpenPayU_Order::statusUpdate( $status_update );
@@ -614,7 +608,7 @@ function wc_order_item_add_action_buttons_callback( $order ) {
 				}
 				if ( ! isset( $_GET['receive-payment'] ) && isset( $_GET['discard-payment'] ) ) {
 					$payment_method_name = $order->get_payment_method();
-					$payment_init        = WC_Payu_Gateways::gateways_list()[ $payment_method_name ]['api'];
+					$payment_init        = WC_Payu_Gateways::gateways_list()[ $payment_method_name ]['class'];
 					$payment             = new $payment_init;
 					$payment->init_OpenPayU( $order->get_currency() );
 					$orderId = $order->get_transaction_id();
