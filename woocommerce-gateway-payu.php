@@ -372,6 +372,7 @@ function installments_mini_cart() {
 
 	$posId     = get_installment_option( 'pos_id' );
 	$widgetKey = get_installment_option( 'widget_key' );
+    $excludedPaytypes = get_installment_option( 'excluded_paytypes' );
 
 	wp_enqueue_script( 'payu-installments-widget', 'https://static.payu.com/res/v2/widget-mini-installments.js', [], PAYU_PLUGIN_VERSION );
 
@@ -389,6 +390,7 @@ function installments_mini_cart() {
                             creditAmount: priceTotal,
                             posId: '<?php echo esc_html( $posId )?>',
                             key: '<?php echo esc_html( $widgetKey )?>',
+                            excludedPaytypes: <?php echo json_encode( $excludedPaytypes ) ?>, // nieprzetestowane
                             showLongDescription: true
                         };
                         OpenPayU.Installments.miniInstallment('#installment-mini-cart', options);
@@ -426,6 +428,7 @@ function installments_mini_aware_product_block( $html, $data, $product ) {
 
 	$posId     = get_installment_option( 'pos_id' );
 	$widgetKey = get_installment_option( 'widget_key' );
+    $excludedPaytypes = get_installment_option( 'excluded_paytypes' );
 
 	wp_enqueue_script( 'payu-installments-widget', 'https://static.payu.com/res/v2/widget-mini-installments.js', [], PAYU_PLUGIN_VERSION );
 
@@ -447,6 +450,7 @@ function installments_mini_aware_product_block( $html, $data, $product ) {
                             creditAmount: value,
                             posId: '{$posId}',
                             key: '{$widgetKey}',
+                            excludedTypes: JSON.parse({$excludedPaytypes}), // nieprzetestowane
                             showLongDescription: true
                         };
                         OpenPayU.Installments.miniInstallment('#installment-mini-{$productId}', options);

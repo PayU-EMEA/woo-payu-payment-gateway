@@ -30,6 +30,7 @@ class WC_Gateway_PayuInstallments extends WC_Payu_Gateways {
 			'widgetOnCheckout' => $this->get_option('credit_widget_on_checkout_page', 'no') === 'yes',
 			'posId'            => $this->pos_id,
 			'widgetKey'        => $this->pos_widget_key,
+			'excludedPaytypes' => $this->excluded_paytypes,
 			'total'            => $this->getTotal()
 		];
 	}
@@ -43,6 +44,7 @@ class WC_Gateway_PayuInstallments extends WC_Payu_Gateways {
 		], PAYU_PLUGIN_VERSION );
 		$posId      = $this->pos_id;
 		$widgetKey  = $this->pos_widget_key;
+		$excludedPaytypes  = $this->excluded_paytypes;
 		$priceTotal = WC()->cart->get_total( '' );
 
 		return
@@ -52,6 +54,7 @@ class WC_Gateway_PayuInstallments extends WC_Payu_Gateways {
 			'	priceTotal: ' . $priceTotal . ',' .
 			'   posId: \'' . $posId . '\',' .
 			'   widgetKey: \'' . $widgetKey . '\'' .
+            '   excludedPaytypes: \'' . $excludedPaytypes . '\'' .
 			'}' .
 			'</script>';
 	}

@@ -13,6 +13,7 @@ const description = decodeEntities( settings.description ) || '';
 const iconUrl = settings.icon;
 const posId = decodeEntities( settings.additionalData?.posId ) || '';
 const widgetKey = decodeEntities( settings.additionalData?.widgetKey ) || '';
+const excludedPaytypes = decodeEntities( settings.additionalData?.excludedPaytypes ) || '';
 const total = decodeEntities( settings.additionalData?.total ) || '';
 const widgetOnCheckout =
   decodeEntities( settings.additionalData?.widgetOnCheckout ) || false;
@@ -33,6 +34,7 @@ const Label = ( props ) => {
       creditAmount: Number( total ),
       posId,
       key: widgetKey,
+      excludedPaytypes: excludedPaytypes,
       showLongDescription: true,
     } );
   }, [] );
