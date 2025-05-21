@@ -262,6 +262,9 @@ function get_installment_option( $option ) {
 			case 'widget_key':
 				$result = $installmentsGateway->pos_widget_key;
 				break;
+            case 'excluded_paytypes':
+                $result = $installmentsGateway->excluded_paytypes;
+                break;
 			case 'enable_for_shipping':
 				$result = $installmentsGateway->enable_for_shipping;
 				break;
@@ -302,6 +305,7 @@ function installments_mini() {
 
 	$posId     = get_installment_option( 'pos_id' );
 	$widgetKey = get_installment_option( 'widget_key' );
+    $excludedPaytypes = get_installment_option( 'excluded_paytypes' );
 
 	wp_enqueue_script( 'payu-installments-widget', 'https://static.payu.com/res/v2/widget-mini-installments.js', [], PAYU_PLUGIN_VERSION );
 
@@ -315,6 +319,7 @@ function installments_mini() {
                     creditAmount: value,
                     posId: '<?php echo esc_html( $posId )?>',
                     key: '<?php echo esc_html( $widgetKey )?>',
+                    excludedPaytypes: <?php echo json_encode( $excludedPaytypes ) ?>, // widget przy produkcie
                     showLongDescription: true
                 };
                 OpenPayU.Installments.miniInstallment('#installment-mini-<?php echo esc_html( $productId )?>', options);

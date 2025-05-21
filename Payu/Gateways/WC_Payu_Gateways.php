@@ -22,6 +22,7 @@ abstract class WC_Payu_Gateways extends WC_Payment_Gateway implements WC_PayuGat
 
 	public string $pos_id = '';
 	public string $pos_widget_key = '';
+    public $excluded_paytypes;
 	public $enable_for_shipping;
 	public $enable_for_virtual;
 
@@ -53,6 +54,7 @@ abstract class WC_Payu_Gateways extends WC_Payment_Gateway implements WC_PayuGat
 		$this->description         = $this->get_option( 'description', ' ' );
 		$this->sandbox             = filter_var( $this->get_option( 'sandbox', false ), FILTER_VALIDATE_BOOLEAN );
 		$this->enable_for_shipping = $this->get_option( 'enable_for_shipping', [] );
+		$this->excluded_paytypes = $this->get_option( 'excluded_paytypes', [] ); // fallback
 		$this->enable_for_virtual  = $this->get_option( 'enable_for_virtual', 'no' ) === 'yes';
 
 		if ( ! is_admin() && isset( $_GET['pay_for_order'], $_GET['key'] ) ) {

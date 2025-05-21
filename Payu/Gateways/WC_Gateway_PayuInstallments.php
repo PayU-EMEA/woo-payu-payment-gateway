@@ -82,6 +82,25 @@ class WC_Gateway_PayuInstallments extends WC_Payu_Gateways {
 				'label'   => __( 'Enabled on checkout page', 'woo-payu-payment-gateway' ),
 				'default' => 'yes'
 			],
+            'excluded_paytypes' => [
+                'title'             => __( 'Credit widget excluded payment types', 'woo-payu-payment-gateway' ),
+                'type'              => 'multiselect',
+                'class'             => 'wc-enhanced-select',
+                'css'               => 'width: 400px;',
+                'default'           => '[]',
+                'description'       => __( '\Select payment types you don\'t want to include in credit widget. Leave blank to include all available payment types.',
+                    'woo-payu-payment-gateway' ),
+                'options' => [
+                    'ai' => __( 'Installments', 'woo-payu-payment-gateway' ),
+                    'dpp'        => 'PayPo',
+                    'dpkl'        => 'Klarna',
+                    'dpt'        => 'Twisto'
+                ],
+                'desc_tip'          => true,
+                'custom_attributes' => [
+                    'data-placeholder' => __( 'Select excluded payment types', 'woo-payu-payment-gateway' ),
+                ],
+            ]
 		];
 	}
 
