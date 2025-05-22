@@ -14,6 +14,7 @@ const iconUrl = settings.icon;
 const posId = decodeEntities( settings.additionalData?.posId ) || '';
 const widgetKey = decodeEntities( settings.additionalData?.widgetKey ) || '';
 const excludedPaytypes = decodeEntities( settings.additionalData?.excludedPaytypes ) || '';
+const currency = decodeEntities( settings.additionalData?.currency) || '';
 const total = decodeEntities( settings.additionalData?.total ) || '';
 const widgetOnCheckout =
   decodeEntities( settings.additionalData?.widgetOnCheckout ) || false;
@@ -35,6 +36,7 @@ const Label = ( props ) => {
       posId,
       key: widgetKey,
       excludedPaytypes: excludedPaytypes,
+      currencySign: currency,
       showLongDescription: true,
     } );
   }, [] );

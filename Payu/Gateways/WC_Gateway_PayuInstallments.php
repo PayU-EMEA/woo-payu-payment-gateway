@@ -15,7 +15,6 @@ class WC_Gateway_PayuInstallments extends WC_Payu_Gateways {
 		}
 
 		if ( $this->get_option('credit_widget_on_checkout_page', 'no') === 'yes' &&
-		     get_woocommerce_currency() === 'PLN' &&
 		     $this->is_checkout_page()
 		) {
 			wp_enqueue_script( 'payu-installments-widget', 'https://static.payu.com/res/v2/widget-mini-installments.js', [], PAYU_PLUGIN_VERSION );
@@ -31,6 +30,7 @@ class WC_Gateway_PayuInstallments extends WC_Payu_Gateways {
 			'posId'            => $this->pos_id,
 			'widgetKey'        => $this->pos_widget_key,
 			'excludedPaytypes' => $this->excluded_paytypes,
+            'currency'         => get_woocommerce_currency(),
 			'total'            => $this->getTotal()
 		];
 	}
