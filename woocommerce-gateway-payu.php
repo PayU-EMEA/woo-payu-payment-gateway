@@ -279,7 +279,6 @@ function get_installment_option( $option ) {
 
 function is_installments_widget_available_for_feature( $featureName ) {
 	return ! empty( get_option( 'woocommerce_payuinstallments_settings' ) ) &&
-	       get_option( 'woocommerce_payuinstallments_settings' )['enabled'] === 'yes' &&
 	       get_option( 'woocommerce_payuinstallments_settings' )[ $featureName ] === 'yes';
 }
 
