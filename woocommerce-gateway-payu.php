@@ -428,6 +428,7 @@ function installments_mini_aware_product_block( $html, $data, $product ) {
 	$posId     = get_installment_option( 'pos_id' );
 	$widgetKey = get_installment_option( 'widget_key' );
     $excludedPaytypes = get_installment_option( 'excluded_paytypes' );
+    $currency = get_woocommerce_currency();
 
 	wp_enqueue_script( 'payu-installments-widget', 'https://static.payu.com/res/v2/widget-mini-installments.js', [], PAYU_PLUGIN_VERSION );
 
@@ -450,6 +451,7 @@ function installments_mini_aware_product_block( $html, $data, $product ) {
                             posId: '{$posId}',
                             key: '{$widgetKey}',
                             excludedTypes: JSON.parse({$excludedPaytypes}), // nieprzetestowane
+                            currencySign: '{$currency}',
                             showLongDescription: true
                         };
                         OpenPayU.Installments.miniInstallment('#installment-mini-{$productId}', options);

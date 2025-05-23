@@ -45,6 +45,7 @@ class WC_Gateway_PayuInstallments extends WC_Payu_Gateways {
 		$posId      = $this->pos_id;
 		$widgetKey  = $this->pos_widget_key;
 		$excludedPaytypes  = $this->excluded_paytypes;
+        $currency = get_woocommerce_currency();
 		$priceTotal = WC()->cart->get_total( '' );
 
 		return
@@ -55,6 +56,7 @@ class WC_Gateway_PayuInstallments extends WC_Payu_Gateways {
 			'   posId: \'' . $posId . '\',' .
 			'   widgetKey: \'' . $widgetKey . '\'' .
             '   excludedPaytypes: \'' . $excludedPaytypes . '\'' .
+            '   currencySign: \'' . $currency . '\'' .
 			'}' .
 			'</script>';
 	}
@@ -91,7 +93,7 @@ class WC_Gateway_PayuInstallments extends WC_Payu_Gateways {
                 'class'             => 'wc-enhanced-select',
                 'css'               => 'width: 400px;',
                 'default'           => '[]',
-                'description'       => __( '\Select payment types you don\'t want to include in credit widget. Leave blank to include all available payment types.',
+                'description'       => __( 'Select payment types you don\'t want to include in credit widget. Leave blank to include all available payment types.',
                     'woo-payu-payment-gateway' ),
                 'options' => [
                     'ai' => __( 'Installments', 'woo-payu-payment-gateway' ),

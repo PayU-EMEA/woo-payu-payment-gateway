@@ -7,6 +7,7 @@ function showInstallmentsWidgetInCart() {
             posId: PayUInstallmentsWidgetCartData.posId,
             key: PayUInstallmentsWidgetCartData.widgetKey,
             excludedPaytypes: PayUInstallmentsWidgetCartData.excludedPaytypes,
+            currencySign: PayUInstallmentsWidgetCartData.currency,
             showLongDescription: true
         };
         OpenPayU.Installments.miniInstallment('#installment-mini-cart', options);
