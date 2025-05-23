@@ -55,7 +55,7 @@ class WC_Gateway_PayuInstallments extends WC_Payu_Gateways {
 			'	priceTotal: ' . $priceTotal . ',' .
 			'   posId: \'' . $posId . '\',' .
 			'   widgetKey: \'' . $widgetKey . '\'' .
-            '   excludedPaytypes: \'' . $excludedPaytypes . '\'' .
+            '   excludedPaytypes: \'' . $excludedPaytypes . '\'' . // nie wiadomo czy działa
             '   currencySign: \'' . $currency . '\'' .
 			'}' .
 			'</script>';
@@ -64,25 +64,25 @@ class WC_Gateway_PayuInstallments extends WC_Payu_Gateways {
 	protected function get_additional_gateway_fields(): array {
 		return [
 			'credit_widget_on_listings'      => [
-				'title'   => __( 'Installments widget', 'woo-payu-payment-gateway' ),
+				'title'   => __( 'Credit widget', 'woo-payu-payment-gateway' ),
 				'type'    => 'checkbox',
 				'label'   => __( 'Enabled on product listings', 'woo-payu-payment-gateway' ),
 				'default' => 'yes'
 			],
 			'credit_widget_on_product_page'  => [
-				'title'   => __( 'Installments widget', 'woo-payu-payment-gateway' ),
+				'title'   => __( 'Credit widget', 'woo-payu-payment-gateway' ),
 				'type'    => 'checkbox',
 				'label'   => __( 'Enabled on product page', 'woo-payu-payment-gateway' ),
 				'default' => 'yes'
 			],
 			'credit_widget_on_cart_page'     => [
-				'title'   => __( 'Installments widget', 'woo-payu-payment-gateway' ),
+				'title'   => __( 'Credit widget', 'woo-payu-payment-gateway' ),
 				'type'    => 'checkbox',
 				'label'   => __( 'Enabled on cart page', 'woo-payu-payment-gateway' ),
 				'default' => 'yes'
 			],
 			'credit_widget_on_checkout_page' => [
-				'title'   => __( 'Installments widget', 'woo-payu-payment-gateway' ),
+				'title'   => __( 'Credit widget', 'woo-payu-payment-gateway' ),
 				'type'    => 'checkbox',
 				'label'   => __( 'Enabled on checkout page', 'woo-payu-payment-gateway' ),
 				'default' => 'yes'
