@@ -23,6 +23,7 @@ The plugin offers the following payment methods:
 * PayU - Klarna - payer will be redirected to Klarna payment form
 * PayU - PayPo - payer will be redirected to PayPo payment form
 * PayU - Twisto - payer will be redirected to Twisto payment form
+* PayU - Twisto pay in 3 - payer will be redirected to Twisto pay in 3 payment form
 
 Detailed information about each method and its configuration [can be found here](https://github.com/PayU-EMEA/woo-payu-payment-gateway).
 

@@ -14,6 +14,7 @@ module.exports = {
 		payutwistopl: '/src/js/payutwistopl',
 		payuinstallments: '/src/js/payuinstallments',
 		payublik: '/src/js/payublik',
+		payutwistoslice: '/src/js/payutwistoslice',
 	},
 	resolve: {
 		extensions: [ '.js', '.jsx', '.tsx', '.ts' ],

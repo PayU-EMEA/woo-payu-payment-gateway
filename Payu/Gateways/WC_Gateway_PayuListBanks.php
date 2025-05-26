@@ -118,14 +118,17 @@ class WC_Gateway_PayuListBanks extends WC_Payu_Gateways {
 						$this->unset_banks[] = 'ai';
 						break;
 					case 'payuklarna':
-						$this->unset_banks[] = 'dpkl';
+                        array_push($this->unset_banks, 'dpkl', 'dpklczk', 'dpkleur', 'dpklhuf', 'dpklron');
 						break;
 					case 'payupaypo':
-						$this->unset_banks[] = 'dpp';
+						array_push($this->unset_banks, 'dpp', 'dppron');
 						break;
 					case 'payutwistopl':
-						$this->unset_banks[] = 'dpt';
+						array_push($this->unset_banks, 'dpt', 'dpcz');
 						break;
+                    case 'payutwistoslice':
+                        $this->unset_banks[] = 'dpts';
+                        break;
 				}
 			}
 		}
