@@ -14,9 +14,7 @@ class WC_Gateway_PayuInstallments extends WC_Payu_Gateways {
 			return false;
 		}
 
-		if ( $this->get_option('credit_widget_on_checkout_page', 'no') === 'yes' &&
-		     $this->is_checkout_page()
-		) {
+		if ( $this->widget_on_checkout_enabled() && $this->is_checkout_page() ) {
 			wp_enqueue_script( 'payu-installments-widget', 'https://static.payu.com/res/v2/widget-mini-installments.js', [], PAYU_PLUGIN_VERSION );
 		}
 
@@ -26,10 +24,10 @@ class WC_Gateway_PayuInstallments extends WC_Payu_Gateways {
 	// Additional data for Blocks
 	public function get_additional_data(): array {
 		return [
-			'widgetOnCheckout' => $this->get_option('credit_widget_on_checkout_page', 'no') === 'yes',
+			'widgetOnCheckout' => $this->widget_on_checkout_enabled(),
 			'posId'            => $this->pos_id,
 			'widgetKey'        => $this->pos_widget_key,
-			'excludedPaytypes' => $this->excluded_paytypes,
+			'excludedPaytypes' => $this->get_credit_widget_excluded_paytypes(),
             'currency'         => get_woocommerce_currency(),
 			'total'            => $this->getTotal()
 		];
@@ -44,7 +42,7 @@ class WC_Gateway_PayuInstallments extends WC_Payu_Gateways {
 		], PAYU_PLUGIN_VERSION );
 		$posId      = $this->pos_id;
 		$widgetKey  = $this->pos_widget_key;
-		$excludedPaytypes  = $this->excluded_paytypes;
+		$excludedPaytypes  = $this->get_credit_widget_excluded_paytypes();
         $currency = get_woocommerce_currency();
 		$priceTotal = WC()->cart->get_total( '' );
 
@@ -61,55 +59,25 @@ class WC_Gateway_PayuInstallments extends WC_Payu_Gateways {
 			'</script>';
 	}
 
-	protected function get_additional_gateway_fields(): array {
-		return [
-			'credit_widget_on_listings'      => [
-				'title'   => __( 'Credit widget', 'woo-payu-payment-gateway' ),
-				'type'    => 'checkbox',
-				'label'   => __( 'Enabled on product listings', 'woo-payu-payment-gateway' ),
-				'default' => 'yes'
-			],
-			'credit_widget_on_product_page'  => [
-				'title'   => __( 'Credit widget', 'woo-payu-payment-gateway' ),
-				'type'    => 'checkbox',
-				'label'   => __( 'Enabled on product page', 'woo-payu-payment-gateway' ),
-				'default' => 'yes'
-			],
-			'credit_widget_on_cart_page'     => [
-				'title'   => __( 'Credit widget', 'woo-payu-payment-gateway' ),
-				'type'    => 'checkbox',
-				'label'   => __( 'Enabled on cart page', 'woo-payu-payment-gateway' ),
-				'default' => 'yes'
-			],
-			'credit_widget_on_checkout_page' => [
-				'title'   => __( 'Credit widget', 'woo-payu-payment-gateway' ),
-				'type'    => 'checkbox',
-				'label'   => __( 'Enabled on checkout page', 'woo-payu-payment-gateway' ),
-				'default' => 'yes'
-			],
-            'excluded_paytypes' => [
-                'title'             => __( 'Credit widget excluded payment types', 'woo-payu-payment-gateway' ),
-                'type'              => 'multiselect',
-                'class'             => 'wc-enhanced-select',
-                'css'               => 'width: 400px;',
-                'default'           => '[]',
-                'description'       => __( 'Select payment types you don\'t want to include in credit widget. Leave blank to include all available payment types.',
-                    'woo-payu-payment-gateway' ),
-                'options' => [
-                    'ai' => __( 'Installments', 'woo-payu-payment-gateway' ),
-                    'dpp'        => 'PayPo',
-                    'dpkl'        => 'Klarna',
-                    'dpt'        => 'Twisto'
-                ],
-                'desc_tip'          => true,
-                'custom_attributes' => [
-                    'data-placeholder' => __( 'Select excluded payment types', 'woo-payu-payment-gateway' ),
-                ],
-            ]
-		];
-	}
+    private function widget_on_checkout_enabled() {
+        $payuSettings = get_option('payu_settings_option_name');
+        if ( ! empty($payuSettings) && isset($payuSettings['credit_widget_on_checkout_page']) ) {
+            return $payuSettings['credit_widget_on_checkout_page'] === 'yes';
+        } else {
+            return false;
+        }
+    }
 
 	private function is_checkout_page(): bool {
 		return is_checkout() || has_block( 'woocommerce/checkout' );
 	}
+
+    private function get_credit_widget_excluded_paytypes(): array {
+        $payuSettings = get_option('payu_settings_option_name');
+        if ( ! empty($payuSettings) && isset($payuSettings['credit_widget_excluded_paytypes']) ) {
+            return $payuSettings['credit_widget_excluded_paytypes'];
+        } else {
+            return [];
+        }
+    }
 }
