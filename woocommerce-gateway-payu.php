@@ -291,8 +291,9 @@ function get_installment_option( $option ) {
 }
 
 function is_installments_widget_available_for_feature( $featureName ) {
-	return ! empty( get_option( 'payu_settings_option_name' ) ) &&
-	       isset(get_option( 'payu_settings_option_name' )[ $featureName ]);
+    $payuSettings = get_option('payu_settings_option_name');
+    return ! empty($payuSettings) &&
+        $payuSettings[ $featureName ] === 'yes';
 }
 
 if ( is_installments_widget_available_for_feature( 'credit_widget_on_listings' ) ) {
