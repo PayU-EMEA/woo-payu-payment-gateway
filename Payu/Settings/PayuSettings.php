@@ -228,9 +228,7 @@ class PayuSettings {
 
         foreach ( $this->creditWidgetFields as $field => $desc ) {
             $fieldName = 'credit_widget_' . $field;
-            if ( isset( $input[$fieldName] ) ) {
-                $sanitary_values[$fieldName] = $input[$fieldName];
-            }
+            $sanitary_values[$fieldName] = isset( $input[$fieldName] ) ? 'yes' : 'no';
         }
 
         if ( isset( $input[ 'credit_widget_excluded_paytypes' ] ) ) {
@@ -279,9 +277,10 @@ class PayuSettings {
 
     public function credit_widget_default_callback(array $args): void {
         $id    = $args['id'];
+        $checked = isset($this->payu_settings_options[$id]) && $this->payu_settings_options[$id] === 'yes' ? 'checked' : '';
         printf(
-            '<input type="checkbox" name="payu_settings_option_name[%s]" id="%s" %s/>', $id, $id,
-            ( isset( $this->payu_settings_options[ $id ] ) ) ? 'checked' : '');
+            '<input type="checkbox" name="payu_settings_option_name[%s]" id="%s" %s/>',
+            $id, $id, $checked);
     }
 
     public function credit_widget_excluded_paytypes_callback(): void {

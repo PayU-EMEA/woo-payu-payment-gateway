@@ -48,7 +48,7 @@ define( 'WC_PAYU_PLUGIN_URL', trailingslashit( plugins_url( basename( WC_PAYU_PL
 
 add_action( 'plugins_loaded', 'init_gateway_payu' );
 add_action( 'woocommerce_blocks_loaded', 'init_payu_blocks' );
-add_action( 'admin_init', 'move_old_payu_settings' );
+add_action( 'admin_init', 'on_admin_init' );
 
 add_action(
 	'before_woocommerce_init',
@@ -125,16 +125,18 @@ function handle_plugin_update() {
 			'credit_widget_on_checkout_page' => 'yes'
 		];
         $creditWidgetSettings    = get_option( 'payu_settings_option_name' );
-        $payuInstallmentsSettings    = get_option( 'woocommerce_payuinstallments_settings' );
 		if ( empty( $creditWidgetSettings ) ) {
 			add_option( 'payu_settings_option_name', $defaultInstallmentsSettings );
 		} else {
-            $mergedInstallmentsSettings = array_merge($defaultInstallmentsSettings,
-                array_intersect_key($payuInstallmentsSettings, $defaultInstallmentsSettings));
-			$mergedCreditWidgetSettings = array_merge( $mergedInstallmentsSettings, $creditWidgetSettings );
-			update_option( 'payu_settings_option_name', $mergedCreditWidgetSettings ); // todo przetestowac ze zmiana wersji plugina
+			$mergedCreditWidgetSettings = array_merge( $defaultInstallmentsSettings, $creditWidgetSettings );
+			update_option( 'payu_settings_option_name', $mergedCreditWidgetSettings );
 		}
 	}
+}
+
+function on_admin_init() {
+    move_old_payu_settings();
+    move_old_payu_installments_settings();
 }
 
 function move_old_payu_settings() {
@@ -162,6 +164,22 @@ function move_old_payu_settings() {
 		update_option( '_payu_plugin_version', PAYU_PLUGIN_VERSION );
 		delete_option( 'woocommerce_payu_settings' );
 	}
+}
+
+function move_old_payu_installments_settings() {
+    $installmentsSettings = get_option( 'woocommerce_payuinstallments_settings' );
+    $oldWidgetSettings = array_filter($installmentsSettings, function($key) {
+        return strpos($key, 'credit_widget') === 0;
+    }, ARRAY_FILTER_USE_KEY);
+
+    if ( !empty( $oldWidgetSettings ) ) {
+        update_option( 'payu_settings_option_name', array_merge( get_option( 'payu_settings_option_name' ), $oldWidgetSettings ) );
+
+        foreach ($oldWidgetSettings as $key => $value) {
+            unset($installmentsSettings[$key]);
+        }
+        update_option( 'woocommerce_payuinstallments_settings', $installmentsSettings );
+    }
 }
 
 function payu_filter_woocommerce_valid_order_statuses_for_payment(): array {
