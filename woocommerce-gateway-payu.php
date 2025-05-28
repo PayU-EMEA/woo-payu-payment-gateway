@@ -302,14 +302,14 @@ function is_credit_widget_available_for_feature($featureName ) {
 }
 
 if ( is_credit_widget_available_for_feature( 'credit_widget_on_listings' ) ) {
-	add_action( 'woocommerce_after_shop_loop_item', 'installments_mini' );
+	add_action( 'woocommerce_after_shop_loop_item', 'installments_mini_product' );
 }
 
 if ( is_credit_widget_available_for_feature( 'credit_widget_on_product_page' ) ) {
-	add_action( 'woocommerce_before_add_to_cart_form', 'installments_mini' );
+	add_action( 'woocommerce_before_add_to_cart_form', 'installments_mini_product' );
 }
 
-function installments_mini() {
+function installments_mini_product() {
 
 	$product = wc_get_product();
 	if ( ! $product ) {
@@ -349,6 +349,11 @@ function installments_mini() {
 
 
 if ( is_credit_widget_available_for_feature( 'credit_widget_on_cart_page' ) ) {
+    add_action( 'woocommerce_cart_totals_after_order_total', 'installments_mini_total' ); // todo hook nie działa od wersji wc 8.3 - przejscie na bloki
+}
+
+if ( is_credit_widget_available_for_feature( 'credit_widget_on_checkout_page' ) ) {
+    add_action( 'woocommerce_review_order_after_order_total', 'installments_mini_total' );
 }
 
 function is_shipping_method_in_supported_methods_set( $chosenShippingMethod, $availableShippingMethods ) {
@@ -373,7 +378,7 @@ function installments_get_cart_total() {
 	wp_die();
 }
 
-function installments_mini_cart() {
+function installments_mini_total() {
 
 	$chosen_shipping_methods             = WC()->session->get( 'chosen_shipping_methods' );
 	$chosenShippingMethod                = is_array( $chosen_shipping_methods ) && count( $chosen_shipping_methods ) > 0
