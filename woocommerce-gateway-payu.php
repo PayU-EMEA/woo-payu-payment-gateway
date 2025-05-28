@@ -256,6 +256,10 @@ if ( is_admin() ) {
 	add_action( 'admin_enqueue_scripts', 'enqueue_payu_admin_assets' );
 }
 
+function getLanguage() {
+    return substr(get_locale(), 0, 2);
+}
+
 function get_installment_option( $option ) {
 
 	$paymentGateways = WC()->payment_gateways()->payment_gateways();
@@ -322,6 +326,7 @@ function installments_mini_product() {
 	$posId     = get_installment_option( 'pos_id' );
 	$widgetKey = get_installment_option( 'widget_key' );
     $excludedPaytypes = get_credit_widget_excluded_paytypes();
+    $lang = getLanguage();
     $currency = get_woocommerce_currency();
 
 	wp_enqueue_script( 'payu-installments-widget', 'https://static.payu.com/res/v2/widget-mini-installments.js', [], PAYU_PLUGIN_VERSION );
@@ -337,6 +342,7 @@ function installments_mini_product() {
                     posId: '<?php echo esc_html( $posId )?>',
                     key: '<?php echo esc_html( $widgetKey )?>',
                     excludedPaytypes: <?php echo json_encode( $excludedPaytypes ) ?>,
+                    lang: '<?php echo esc_html( $lang )?>',
                     currencySign: '<?php echo esc_html( $currency )?>',
                     showLongDescription: true
                 };
@@ -393,6 +399,7 @@ function installments_mini_total() {
 	$posId     = get_installment_option( 'pos_id' );
 	$widgetKey = get_installment_option( 'widget_key' );
     $excludedPaytypes = get_credit_widget_excluded_paytypes();
+    $lang = getLanguage();
     $currency = get_woocommerce_currency();
 
 	wp_enqueue_script( 'payu-installments-widget', 'https://static.payu.com/res/v2/widget-mini-installments.js', [], PAYU_PLUGIN_VERSION );
@@ -412,6 +419,7 @@ function installments_mini_total() {
                             posId: '<?php echo esc_html( $posId )?>',
                             key: '<?php echo esc_html( $widgetKey )?>',
                             excludedPaytypes: <?php echo json_encode( $excludedPaytypes ) ?>,
+                            lang: '<?php echo esc_html( $lang )?>',
                             currencySign: '<?php echo esc_html( $currency )?>',
                             showLongDescription: true
                         };
@@ -451,6 +459,7 @@ function installments_mini_aware_product_block( $html, $data, $product ) {
 	$posId     = get_installment_option( 'pos_id' );
 	$widgetKey = get_installment_option( 'widget_key' );
     $excludedPaytypes = get_credit_widget_excluded_paytypes();
+    $lang = getLanguage();
     $currency = get_woocommerce_currency();
 
 	wp_enqueue_script( 'payu-installments-widget', 'https://static.payu.com/res/v2/widget-mini-installments.js', [], PAYU_PLUGIN_VERSION );
@@ -474,6 +483,7 @@ function installments_mini_aware_product_block( $html, $data, $product ) {
                             posId: '{$posId}',
                             key: '{$widgetKey}',
                             excludedTypes: JSON.parse({$excludedPaytypes}), // nieprzetestowane
+                            lang: '{$lang}',
                             currencySign: '{$currency}',
                             showLongDescription: true
                         };

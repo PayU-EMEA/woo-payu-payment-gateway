@@ -28,6 +28,7 @@ class WC_Gateway_PayuInstallments extends WC_Payu_Gateways {
 			'posId'            => $this->pos_id,
 			'widgetKey'        => $this->pos_widget_key,
 			'excludedPaytypes' => $this->get_credit_widget_excluded_paytypes(),
+			'lang'             => $this->getLanguage(),
             'currency'         => get_woocommerce_currency(),
 			'total'            => $this->getTotal()
 		];
