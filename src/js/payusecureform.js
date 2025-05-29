@@ -110,6 +110,7 @@ const Content = ( { eventRegistration, emitResponse } ) => {
   const [ error, setError ] = useState();
   const [ errorMessage, setErrorMessage ] = useState();
   const [ validationErrors, setValidationErrors ] = useState( [] );
+  const [ elementFocus, setElementFocus ] = useState( '' );
 
   useEffect( () => {
     const init = () => {
@@ -226,7 +227,6 @@ const Content = ( { eventRegistration, emitResponse } ) => {
     emitResponse.responseTypes.ERROR,
     emitResponse.responseTypes.SUCCESS,
   ] );
-
   return (
     <>
       { ! error && (
@@ -239,6 +239,7 @@ const Content = ( { eventRegistration, emitResponse } ) => {
               </label>
               { secureForms && (
                 <CardNumber
+                  setElementFocus={ setElementFocus }
                   secureForms={ secureForms }
                   formOptions={ { ...options } }
                   errors={ validationErrors.filter(
@@ -253,6 +254,8 @@ const Content = ( { eventRegistration, emitResponse } ) => {
               </label>
               { secureForms && (
                 <CardExpire
+                  setElementFocus={ setElementFocus }
+                  focus={ elementFocus === 'expire' }
                   secureForms={ secureForms }
                   formOptions={ {
                     ...options,
@@ -274,6 +277,7 @@ const Content = ( { eventRegistration, emitResponse } ) => {
               { secureForms && (
                 <CardCvv
                   secureForms={ secureForms }
+                  focus={ elementFocus === 'cvv' }
                   formOptions={ { ...options } }
                   errors={ validationErrors.filter(
                     ( e ) => e.source === 'cvv'

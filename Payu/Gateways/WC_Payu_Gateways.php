@@ -639,7 +639,7 @@ abstract class WC_Payu_Gateways extends WC_Payment_Gateway implements WC_PayuGat
 			'notifyUrl'     => add_query_arg( 'wc-api', $this->gateway_data( 'api' ), home_url( '/' ) ),
 			'customerIp'    => $this->getIP(),
 			'merchantPosId' => OpenPayU_Configuration::getMerchantPosId(),
-			'description'   => get_bloginfo( 'name' ) . ' #' . $order->get_order_number(),
+			'description'   => '# ' . $order->get_order_number() . ' ' . get_bloginfo( 'name' ),
 			'currencyCode'  => get_woocommerce_currency(),
 			'totalAmount'   => $this->toAmount( $order->get_total() ),
 			'extOrderId'    => uniqid( $order_id . '_', true ),
@@ -720,9 +720,13 @@ abstract class WC_Payu_Gateways extends WC_Payment_Gateway implements WC_PayuGat
 				'quantity'  => $quantity,
 			];
 
-			if ( $item->get_product()->is_virtual() ) {
-				$products[ $i ]['virtual'] = true;
+			$product = $item->get_product();
+			if (is_object($product)
+			    && method_exists($product, 'is_virtual')
+			    && $product->is_virtual()) {
+				$products[$i]['virtual'] = true;
 			}
+
 
 			$i ++;
 		}
