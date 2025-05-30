@@ -18,7 +18,7 @@ const currency = decodeEntities(settings.currency) || '';
 
 function Widget() {
     useEffect(() => {
-        window.OpenPayU?.Installments?.miniInstallment('#installment-mini-cart', {
+        window.OpenPayU?.Installments?.miniInstallment('#installment-mini-block', {
             creditAmount: Number(total),
             posId: posId,
             key: widgetKey,
@@ -30,7 +30,7 @@ function Widget() {
     }, []);
 
     return (
-        <div id="installment-mini-cart"></div>
+        <div id="installment-mini-block"></div>
     );
 }
 
