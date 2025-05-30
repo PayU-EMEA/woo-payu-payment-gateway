@@ -35,7 +35,7 @@ abstract class CreditWidgetBlock implements IntegrationInterface {
             $version,
             true
         );
-
+        wp_enqueue_style( 'payu-installments-widget', plugins_url( '/assets/css/payu-installments-widget-block.css', PAYU_PLUGIN_FILE ), [], PAYU_PLUGIN_VERSION );
         wp_enqueue_script( 'payu-installments-widget', 'https://static.payu.com/res/v2/widget-mini-installments.js', [], PAYU_PLUGIN_VERSION );
     }
 
@@ -68,5 +68,16 @@ abstract class CreditWidgetBlock implements IntegrationInterface {
         } else {
             return false;
         }
+    }
+
+    private function getTotal(): float {
+        if (WC()->cart && 0 !== count(WC()->cart->get_cart_contents())) {
+            return
+                WC()->cart->get_cart_contents_total() +
+                WC()->cart->get_cart_contents_tax() +
+                WC()->cart->get_shipping_total() +
+                WC()->cart->get_shipping_tax();
+        }
+        return 0;
     }
 }

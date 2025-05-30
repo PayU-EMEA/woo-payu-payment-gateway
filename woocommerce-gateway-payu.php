@@ -431,7 +431,7 @@ function installments_mini_total() {
     <tr>
         <td></td>
         <td>
-            <span id="installment-mini-cart"></span>
+            <span id="installment-mini-total"></span>
             <script type="text/javascript">
                 var priceTotal = <?php echo esc_html( $price )?>;
 
@@ -446,7 +446,7 @@ function installments_mini_total() {
                             currencySign: '<?php echo esc_html( $currency )?>',
                             showLongDescription: true
                         };
-                        OpenPayU.Installments.miniInstallment('#installment-mini-cart', options);
+                        OpenPayU.Installments.miniInstallment('#installment-mini-total', options);
                     }
                 }
 
