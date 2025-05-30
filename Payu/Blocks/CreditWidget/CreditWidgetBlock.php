@@ -55,7 +55,7 @@ abstract class CreditWidgetBlock implements IntegrationInterface {
             'excludedPaytypes' => get_credit_widget_excluded_paytypes(),
             'lang'             => getLanguage(),
             'currency'         => get_woocommerce_currency(),
-            'total'            => WC()->cart->get_total( '' )
+            'total'            => $this->getTotal()
         ];
 
     }
