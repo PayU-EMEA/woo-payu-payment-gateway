@@ -233,12 +233,8 @@ class PayuSettings {
 
         if ( isset( $input[ 'credit_widget_excluded_paytypes' ] ) ) {
             $excludedPaytypes = explode( ',', $input[ 'credit_widget_excluded_paytypes' ] );
-            if ( !is_array( $excludedPaytypes ) ) {
-                $excludedPaytypes = [];
-            } else {
-                $excludedPaytypes = array_filter(array_map('sanitize_key',array_map( 'trim', $excludedPaytypes )));
-            $sanitary_values[ 'credit_widget_excluded_paytypes' ] = $excludedPaytypes;
-            }
+            $sanitizedExcludedPaytypes = array_filter(array_map('sanitize_key',array_map( 'trim', $excludedPaytypes )));
+            $sanitary_values[ 'credit_widget_excluded_paytypes' ] = $sanitizedExcludedPaytypes;
         }
 
 		return $sanitary_values;
@@ -286,7 +282,7 @@ class PayuSettings {
     public function credit_widget_excluded_paytypes_callback(): void {
         $id    = 'credit_widget_excluded_paytypes';
         $value = isset( $this->payu_settings_options[ $id ] ) ? esc_attr( implode(',',$this->payu_settings_options[ $id ] )) : '';
-        $description = __( 'Excludes the given credit payment methods from the credit payment widget. The value must be a comma-separated list of <a href="https://developers.payu.com/europe/pl/docs/get-started/integration-overview/references/#installments-and-pay-later" target="_blank" rel="nofollow">credit payment method codes</a>, for example: dpt,dpkl,dpp.'
+        $description = __( 'Excludes the given credit payment methods from the credit payment widget. The value must be a comma-separated list of <a href="https://developers.payu.com/europe/docs/get-started/integration-overview/references/#installments-and-pay-later" target="_blank" rel="nofollow">credit payment method codes</a>, for example: dpt,dpkl,dpp.'
                 , 'woo-payu-payment-gateway' );
         printf( '<input type="text" class="regular-text" value="%s" name="payu_settings_option_name[%s]" id="%s" />
                         <p class="description">%s</p>', $value, $id, $id, $description );
