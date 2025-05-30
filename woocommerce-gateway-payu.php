@@ -16,6 +16,7 @@
  */
 
 use Automattic\WooCommerce\Blocks\Payments\PaymentMethodRegistry;
+use Automattic\WooCommerce\Blocks\Integrations\IntegrationRegistry;
 use Payu\PaymentGateway\Blocks\PayuBlikBlock;
 use Payu\PaymentGateway\Blocks\PayuCreditCardBlock;
 use Payu\PaymentGateway\Blocks\PayuInstallmentsBlock;
@@ -26,6 +27,8 @@ use Payu\PaymentGateway\Blocks\PayuSecureFormBlock;
 use Payu\PaymentGateway\Blocks\PayuStandardBlock;
 use Payu\PaymentGateway\Blocks\PayuTwistoPlBlock;
 use Payu\PaymentGateway\Blocks\PayuTwistoSliceBlock;
+use Payu\PaymentGateway\Blocks\CreditWidget\CartCreditWidgetBlock;
+use Payu\PaymentGateway\Blocks\CreditWidget\CheckoutCreditWidgetBlock;
 use Payu\PaymentGateway\Gateways\WC_Gateway_PayuBlik;
 use Payu\PaymentGateway\Gateways\WC_Gateway_PayuCreditCard;
 use Payu\PaymentGateway\Gateways\WC_Gateway_PayuInstallments;
@@ -47,7 +50,7 @@ define( 'WC_PAYU_PLUGIN_PATH', plugin_dir_path( __FILE__ ) );
 define( 'WC_PAYU_PLUGIN_URL', trailingslashit( plugins_url( basename( WC_PAYU_PLUGIN_PATH ), basename( __FILE__ ) ) ) );
 
 add_action( 'plugins_loaded', 'init_gateway_payu' );
-add_action( 'woocommerce_blocks_loaded', 'init_payu_blocks' );
+add_action( 'woocommerce_blocks_loaded', 'on_woocommerce_blocks_loaded' );
 add_action( 'admin_init', 'on_admin_init' );
 
 add_action(
@@ -59,6 +62,11 @@ add_action(
 		}
 	}
 );
+
+function on_woocommerce_blocks_loaded() {
+    init_payu_blocks();
+    init_credit_widget_blocks();
+}
 
 function init_payu_blocks() {
 	if ( class_exists( 'Automattic\WooCommerce\Blocks\Payments\Integrations\AbstractPaymentMethodType' ) ) {
@@ -78,6 +86,21 @@ function init_payu_blocks() {
 			}
 		);
 	}
+}
+
+function init_credit_widget_blocks() {
+    if ( class_exists('Payu\PaymentGateway\Blocks\CreditWidget\CreditWidgetBlock') ) {
+        add_action( 'woocommerce_blocks_cart_block_registration',
+        function ( IntegrationRegistry $integration_registry ) {
+                $integration_registry->register( new CartCreditWidgetBlock() );
+            }
+        );
+        add_action( 'woocommerce_blocks_checkout_block_registration',
+            function ( IntegrationRegistry $integration_registry ) {
+                $integration_registry->register( new CheckoutCreditWidgetBlock() );
+            }
+        );
+    }
 }
 
 /**
