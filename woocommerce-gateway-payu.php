@@ -481,7 +481,7 @@ function installments_mini_aware_product_block( $html, $data, $product ) {
 
 	$posId     = get_installment_option( 'pos_id' );
 	$widgetKey = get_installment_option( 'widget_key' );
-    $excludedPaytypes = get_credit_widget_excluded_paytypes();
+    $excludedPaytypes = json_encode(get_credit_widget_excluded_paytypes());
     $lang = getLanguage();
     $currency = get_woocommerce_currency();
 
@@ -505,7 +505,7 @@ function installments_mini_aware_product_block( $html, $data, $product ) {
                             creditAmount: value,
                             posId: '{$posId}',
                             key: '{$widgetKey}',
-                            excludedTypes: JSON.parse({$excludedPaytypes}), // nieprzetestowane
+                            excludedTypes: {$excludedPaytypes},
                             lang: '{$lang}',
                             currencySign: '{$currency}',
                             showLongDescription: true
