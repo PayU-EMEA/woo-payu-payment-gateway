@@ -27,6 +27,7 @@ Wtyczka udostępnia następujące metody płatności:
 | 6  | PayU - raty            | :white_check_mark: |Płacący zostanie przekierowany na stronę formularza płatności ratalnej
 | 7  | PayU - Klarna          | :white_check_mark: |Płacący zostanie przekierowany na stronę formularza płatności Klarna
 | 8  | PayU - Twisto          | :white_check_mark: |Płacący zostanie przekierowany na stronę formularza płatności Twisto
+| 8  | PayU - Twisto pay in 3 | :white_check_mark: |Płacący zostanie przekierowany na stronę formularza płatności Twisto pay in 3
 | 9  | PayU - PayPo           | :white_check_mark: |Płacący zostanie przekierowany na stronę formularza płatności PayPo
 
 #### Uwagi do metod płatności
