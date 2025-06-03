@@ -135,24 +135,30 @@ function payu_plugin_on_activate() {
 		add_option( 'woocommerce_payulistbanks_settings', [ 'enabled' => 'yes' ] );
 		add_option( 'woocommerce_payucreditcard_settings', [ 'enabled' => 'yes' ] );
 		add_option( 'payu_settings_option_name', [ 'global_default_on_hold_status' => 'on-hold' ] );
+        add_option( 'payu_settings_option_name', [
+            'credit_widget_on_listings'      => 'yes',
+            'credit_widget_on_product_page'  => 'yes',
+            'credit_widget_on_cart_page'     => 'yes',
+            'credit_widget_on_checkout_page' => 'yes'
+        ] );
 	}
 }
 
 function handle_plugin_update() {
 	if ( PAYU_PLUGIN_VERSION !== get_option( '_payu_plugin_version' ) ) {
 		update_option( '_payu_plugin_version', PAYU_PLUGIN_VERSION );
-		$defaultInstallmentsSettings = [
+		$defaultWidgetSettings = [
 			'credit_widget_on_listings'      => 'yes',
 			'credit_widget_on_product_page'  => 'yes',
 			'credit_widget_on_cart_page'     => 'yes',
 			'credit_widget_on_checkout_page' => 'yes'
 		];
-        $creditWidgetSettings    = get_option( 'payu_settings_option_name' );
-		if ( empty( $creditWidgetSettings ) ) {
-			add_option( 'payu_settings_option_name', $defaultInstallmentsSettings );
+        $payuSettings    = get_option( 'payu_settings_option_name' );
+		if ( empty( $payuSettings ) ) {
+			add_option( 'payu_settings_option_name', $defaultWidgetSettings );
 		} else {
-			$mergedCreditWidgetSettings = array_merge( $defaultInstallmentsSettings, $creditWidgetSettings );
-			update_option( 'payu_settings_option_name', $mergedCreditWidgetSettings );
+			$mergedSettings = array_merge( $defaultWidgetSettings, $payuSettings );
+			update_option( 'payu_settings_option_name', $mergedSettings );
 		}
 	}
 }
