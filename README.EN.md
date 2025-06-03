@@ -135,7 +135,8 @@ From user point of view, repayment is possible:
 * by clicking "Pay with PayU" link over order details section
 
 ## Credit widget
-Plugin provides seamless integration of [installments widget][ext14], responsible for presenting minimal installment amount for a given product.
+Plugin provides seamless integration of [credit widget][ext14]. It's responsible for presenting minimal installment amount for a given product.
+Additionally, after clicking on the widget, information on available repayment plans is presented, as well as a list of deferred payment methods (“buy now, pay later”).
 Functionality is enabled by default. It can be deactivated in administration panel (WooCommerce->Settings->Payments->PayU - installments).
 Integration points of a widget have been described in a table below.
 
@@ -146,7 +147,9 @@ Integration points of a widget have been described in a table below.
 | Enabled on cart page | <div style="max-width:200px">Presents widget on cart page - relates to a total cart amount and shipping costs.</div> |<div style="max-width:500px">![Prezentacja widgetu](readme_images/credit_widget_cart_page.jpg)</div>|
 | Enabled on checkout page | <div style="max-width:200px">Presents widget on checkout page - relates to a total cart amount and shipping costs.</div> |<div style="max-width:500px">![Prezentacja widgetu](readme_images/credit_widget_checkout_page.jpg)</div>|
 
-Widget is presented only for PLN currency and products or carts with amount in allowed installment amount range.
+Widget is presented only for products or carts with amount in allowed installment amount or deferred payment methods range.
+
+Additionally, in the administration panel, it is possible to limit the types of payments to be displayed in the credit widget.
 
 ## Emails
 The plugin does not send any additional emails and does not interfere with any mailing process.
@@ -160,4 +163,4 @@ In case repayment is configured, the mail confirming order placement is enhanced
 [ext5]: https://secure.snd.payu.com/boarding/#/registerSandbox/?lang=en
 [ext6]: http://developers.payu.com/en/overview.html#paymethods
 [ext13]: https://poland.payu.com/en/support/
-[ext14]: https://developers.payu.com/en/installments.html#installments_best_practices_mini
+[ext14]: https://developers.payu.com/europe/docs/payment-solutions/credit/installments/#credit-widget-installments
