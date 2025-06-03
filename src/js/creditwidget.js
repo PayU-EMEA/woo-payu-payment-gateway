@@ -9,17 +9,23 @@ const name = `credit-widget-block`;
 const settings = getSetting(`${name}_data`, {});
 
 const widgetEnabledOnPage = decodeEntities(settings.widgetEnabledOnPage) || false;
-const total = decodeEntities(settings.total) || '';
 const posId = decodeEntities(settings.posId) || '';
 const widgetKey = decodeEntities(settings.widgetKey) || '';
 const excludedPaytypes = decodeEntities(settings.excludedPaytypes) || [];
 const lang = decodeEntities(settings.lang) || 'en';
 const currency = decodeEntities(settings.currency) || '';
 
-function Widget() {
+function getTotal(cart) {
+    if (!cart || !cart.cartTotals || !cart.cartTotals.total_price) {
+        return 0;
+    }
+    return Number(cart.cartTotals.total_price / (10 ** cart.cartTotals.currency_minor_unit));
+}
+
+function Widget({ cart }) {
     useEffect(() => {
         window.OpenPayU?.Installments?.miniInstallment('#installment-mini-block', {
-            creditAmount: Number(total),
+            creditAmount: getTotal(cart),
             posId: posId,
             key: widgetKey,
             excludedPaytypes: excludedPaytypes,
@@ -27,7 +33,7 @@ function Widget() {
             currencySign: currency,
             showLongDescription: true,
         });
-    }, []);
+    }, [cart]);
 
     return (
         <div id="installment-mini-block"></div>

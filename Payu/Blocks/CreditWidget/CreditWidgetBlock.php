@@ -54,8 +54,7 @@ abstract class CreditWidgetBlock implements IntegrationInterface {
             'widgetKey'        => get_installment_option( 'widget_key' ),
             'excludedPaytypes' => get_credit_widget_excluded_paytypes(),
             'lang'             => getLanguage(),
-            'currency'         => get_woocommerce_currency(),
-            'total'            => $this->getTotal()
+            'currency'         => get_woocommerce_currency()
         ];
 
     }
@@ -68,16 +67,5 @@ abstract class CreditWidgetBlock implements IntegrationInterface {
         } else {
             return false;
         }
-    }
-
-    private function getTotal(): float {
-        if (WC()->cart && 0 !== count(WC()->cart->get_cart_contents())) {
-            return
-                WC()->cart->get_cart_contents_total() +
-                WC()->cart->get_cart_contents_tax() +
-                WC()->cart->get_shipping_total() +
-                WC()->cart->get_shipping_tax();
-        }
-        return 0;
     }
 }
