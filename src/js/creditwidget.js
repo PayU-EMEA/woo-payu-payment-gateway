@@ -41,7 +41,7 @@ function Widget({ cart }) {
 }
 
 const render = () => {
-    return posId && widgetKey && total ? (
+    return posId && widgetKey ? (
         <ExperimentalOrderMeta>
             <Widget/>
         </ExperimentalOrderMeta>
