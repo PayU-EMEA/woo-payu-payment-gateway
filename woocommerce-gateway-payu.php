@@ -145,8 +145,8 @@ function payu_plugin_on_activate() {
 }
 
 function handle_plugin_update() {
-	if ( PAYU_PLUGIN_VERSION !== get_option( '_payu_plugin_version' ) ) {
-		update_option( '_payu_plugin_version', PAYU_PLUGIN_VERSION );
+    $storedVersion = get_option('_payu_plugin_version');
+    if ( PAYU_PLUGIN_VERSION !== $storedVersion) {
 		$defaultWidgetSettings = [
 			'credit_widget_on_listings'      => 'yes',
 			'credit_widget_on_product_page'  => 'yes',
@@ -160,9 +160,28 @@ function handle_plugin_update() {
 			$mergedSettings = array_merge( $defaultWidgetSettings, $payuSettings );
 			update_option( 'payu_settings_option_name', $mergedSettings );
 		}
+
+        disable_widget_once_if_installments_disabled( $storedVersion );
+
+        update_option( '_payu_plugin_version', PAYU_PLUGIN_VERSION );
 	}
 }
 
+function disable_widget_once_if_installments_disabled( $oldVersion ) {
+    if ( version_compare($oldVersion, '2.6.2', '<=' ) ) {
+        $installmentsSettings = get_option( 'woocommerce_payuinstallments_settings' );
+        if ( isset($installmentsSettings['enabled']) && $installmentsSettings['enabled'] === 'no' ) {
+            $disabledWidgetSettings = [
+                'credit_widget_on_listings'      => 'no',
+                'credit_widget_on_product_page'  => 'no',
+                'credit_widget_on_cart_page'     => 'no',
+                'credit_widget_on_checkout_page' => 'no'
+            ];
+            $mergedSettings = array_merge( $installmentsSettings, $disabledWidgetSettings );
+            update_option( 'woocommerce_payuinstallments_settings', $mergedSettings );
+        }
+    }
+}
 function on_admin_init() {
     move_old_payu_settings();
     move_old_payu_installments_settings();
