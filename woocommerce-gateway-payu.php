@@ -134,8 +134,8 @@ function payu_plugin_on_activate() {
 		add_option( '_payu_plugin_version', PAYU_PLUGIN_VERSION );
 		add_option( 'woocommerce_payulistbanks_settings', [ 'enabled' => 'yes' ] );
 		add_option( 'woocommerce_payucreditcard_settings', [ 'enabled' => 'yes' ] );
-		add_option( 'payu_settings_option_name', [ 'global_default_on_hold_status' => 'on-hold' ] );
         add_option( 'payu_settings_option_name', [
+	        'global_default_on_hold_status' => 'on-hold',
             'credit_widget_on_listings'      => 'yes',
             'credit_widget_on_product_page'  => 'yes',
             'credit_widget_on_cart_page'     => 'yes',
@@ -215,19 +215,20 @@ function move_old_payu_settings() {
 }
 
 function move_old_payu_installments_settings() {
-    $installmentsSettings = get_option( 'woocommerce_payuinstallments_settings' );
-    $oldWidgetSettings = array_filter($installmentsSettings, function($key) {
-        return strpos($key, 'credit_widget') === 0;
-    }, ARRAY_FILTER_USE_KEY);
+	if ( $installmentsSettings = get_option( 'woocommerce_payuinstallments_settings' ) ) {
+		$oldWidgetSettings = array_filter( $installmentsSettings, function ( $key ) {
+			return strpos( $key, 'credit_widget' ) === 0;
+		}, ARRAY_FILTER_USE_KEY );
 
     if ( ! empty( $oldWidgetSettings ) ) {
         update_option( 'payu_settings_option_name', array_merge( get_option( 'payu_settings_option_name' ), $oldWidgetSettings ) );
 
-        foreach ($oldWidgetSettings as $key => $value) {
-            unset($installmentsSettings[$key]);
-        }
-        update_option( 'woocommerce_payuinstallments_settings', $installmentsSettings );
-    }
+			foreach ( $oldWidgetSettings as $key => $value ) {
+				unset( $installmentsSettings[ $key ] );
+			}
+			update_option( 'woocommerce_payuinstallments_settings', $installmentsSettings );
+		}
+	}
 }
 
 function payu_filter_woocommerce_valid_order_statuses_for_payment(): array {
