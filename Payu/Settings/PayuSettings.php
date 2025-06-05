@@ -4,11 +4,11 @@ namespace Payu\PaymentGateway\Settings;
 class PayuSettings {
 	private array $payu_settings_options;
 	private array $fields;
-	private array $creditWidgetFields;
+	private array $credit_widget_fields;
 
 	public function __construct() {
-		$this->fields = $this->payu_fields();
-		$this->creditWidgetFields = $this->credit_widget_activation_fields();
+		$this->fields                = $this->payu_fields();
+		$this->credit_widget_fields  = $this->credit_widget_activation_fields();
 		$this->payu_settings_options = get_option( 'payu_settings_option_name', [] );
 
 		add_action( 'admin_menu', [ $this, 'payu_settings_add_plugin_page' ] );
@@ -170,7 +170,7 @@ class PayuSettings {
             'payu-settings-admin' // page
         );
 
-        foreach ( $this->creditWidgetFields as $field => $desc ) {
+        foreach ( $this->credit_widget_fields as $field => $desc ) {
             $args = [
                 'id'   => 'credit_widget_' . $field,
                 'desc' => $desc['label'],
@@ -226,15 +226,15 @@ class PayuSettings {
 			$sanitary_values['global_repayment'] = sanitize_text_field( $input['global_repayment'] );
 		}
 
-        foreach ( $this->creditWidgetFields as $field => $desc ) {
-            $fieldName = 'credit_widget_' . $field;
-            $sanitary_values[$fieldName] = isset( $input[$fieldName] ) ? 'yes' : 'no';
+        foreach ( $this->credit_widget_fields as $field => $desc ) {
+            $field_name = 'credit_widget_' . $field;
+            $sanitary_values[$field_name] = isset( $input[$field_name] ) ? 'yes' : 'no';
         }
 
         if ( isset( $input[ 'credit_widget_excluded_paytypes' ] ) ) {
-            $excludedPaytypes = explode( ',', $input[ 'credit_widget_excluded_paytypes' ] );
-            $sanitizedExcludedPaytypes = array_filter(array_map('sanitize_key',array_map( 'trim', $excludedPaytypes )));
-            $sanitary_values[ 'credit_widget_excluded_paytypes' ] = $sanitizedExcludedPaytypes;
+            $excluded_paytypes = explode( ',', $input[ 'credit_widget_excluded_paytypes' ] );
+	        $sanitary_values[ 'credit_widget_excluded_paytypes' ] =
+                $this->sanitize_excluded_paytypes( $excluded_paytypes );
         }
 
 		return $sanitary_values;
@@ -299,6 +299,16 @@ class PayuSettings {
 		ksort( $available );
 
 		return $available;
+	}
+
+	private function sanitize_excluded_paytypes(array $excluded_paytypes ): array {
+		return array_filter(
+			array_map( 'sanitize_key',
+				array_map( 'trim',
+					array_map( 'sanitize_text_field', $excluded_paytypes )
+				)
+			)
+		);
 	}
 }
 

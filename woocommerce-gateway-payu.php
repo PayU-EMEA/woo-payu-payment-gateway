@@ -29,15 +29,7 @@ use Payu\PaymentGateway\Blocks\PayuTwistoPlBlock;
 use Payu\PaymentGateway\Blocks\PayuTwistoSliceBlock;
 use Payu\PaymentGateway\Blocks\CreditWidget\CartCreditWidgetBlock;
 use Payu\PaymentGateway\Blocks\CreditWidget\CheckoutCreditWidgetBlock;
-use Payu\PaymentGateway\Gateways\WC_Gateway_PayuBlik;
-use Payu\PaymentGateway\Gateways\WC_Gateway_PayuCreditCard;
 use Payu\PaymentGateway\Gateways\WC_Gateway_PayuInstallments;
-use Payu\PaymentGateway\Gateways\WC_Gateway_PayuKlarna;
-use Payu\PaymentGateway\Gateways\WC_Gateway_PayuListBanks;
-use Payu\PaymentGateway\Gateways\WC_Gateway_PayuPaypo;
-use Payu\PaymentGateway\Gateways\WC_Gateway_PayuSecureForm;
-use Payu\PaymentGateway\Gateways\WC_Gateway_PayuStandard;
-use Payu\PaymentGateway\Gateways\WC_Gateway_PayuTwistoPl;
 use Payu\PaymentGateway\Gateways\WC_Payu_Gateways;
 
 require __DIR__ . '/vendor/autoload.php';
@@ -89,7 +81,7 @@ function init_payu_blocks() {
 }
 
 function init_credit_widget_blocks() {
-    if ( class_exists('Payu\PaymentGateway\Blocks\CreditWidget\CreditWidgetBlock') ) {
+    if ( interface_exists('Automattic\WooCommerce\Blocks\Integrations\IntegrationInterface') ) {
         add_action( 'woocommerce_blocks_cart_block_registration',
         function ( IntegrationRegistry $integration_registry ) {
                 $integration_registry->register( new CartCreditWidgetBlock() );
@@ -145,40 +137,40 @@ function payu_plugin_on_activate() {
 }
 
 function handle_plugin_update() {
-    $storedVersion = get_option('_payu_plugin_version');
-    if ( PAYU_PLUGIN_VERSION !== $storedVersion) {
-		$defaultWidgetSettings = [
+    $stored_version = get_option('_payu_plugin_version');
+    if ( PAYU_PLUGIN_VERSION !== $stored_version) {
+		$default_widget_settings = [
 			'credit_widget_on_listings'      => 'yes',
 			'credit_widget_on_product_page'  => 'yes',
 			'credit_widget_on_cart_page'     => 'yes',
 			'credit_widget_on_checkout_page' => 'yes'
 		];
-        $payuSettings    = get_option( 'payu_settings_option_name' );
-		if ( empty( $payuSettings ) ) {
-			add_option( 'payu_settings_option_name', $defaultWidgetSettings );
+        $payu_settings    = get_option( 'payu_settings_option_name' );
+		if ( empty( $payu_settings ) ) {
+			add_option( 'payu_settings_option_name', $default_widget_settings );
 		} else {
-			$mergedSettings = array_merge( $defaultWidgetSettings, $payuSettings );
-			update_option( 'payu_settings_option_name', $mergedSettings );
+			$merged_settings = array_merge( $default_widget_settings, $payu_settings );
+			update_option( 'payu_settings_option_name', $merged_settings );
 		}
 
-        disable_widget_once_if_installments_disabled( $storedVersion );
+        disable_widget_once_if_installments_disabled( $stored_version );
 
         update_option( '_payu_plugin_version', PAYU_PLUGIN_VERSION );
 	}
 }
 
-function disable_widget_once_if_installments_disabled( $oldVersion ) {
-    if ( version_compare($oldVersion, '2.6.2', '<=' ) ) {
-        $installmentsSettings = get_option( 'woocommerce_payuinstallments_settings' );
-        if ( isset($installmentsSettings['enabled']) && $installmentsSettings['enabled'] === 'no' ) {
-            $disabledWidgetSettings = [
+function disable_widget_once_if_installments_disabled( $old_version ) {
+    if ( version_compare($old_version, '2.6.2', '<=' ) ) {
+        $installments_settings = get_option( 'woocommerce_payuinstallments_settings' );
+        if ( isset($installments_settings['enabled']) && $installments_settings['enabled'] === 'no' ) {
+            $disabled_widget_settings = [
                 'credit_widget_on_listings'      => 'no',
                 'credit_widget_on_product_page'  => 'no',
                 'credit_widget_on_cart_page'     => 'no',
                 'credit_widget_on_checkout_page' => 'no'
             ];
-            $mergedSettings = array_merge( $installmentsSettings, $disabledWidgetSettings );
-            update_option( 'woocommerce_payuinstallments_settings', $mergedSettings );
+            $merged_settings = array_merge( $installments_settings, $disabled_widget_settings );
+            update_option( 'woocommerce_payuinstallments_settings', $merged_settings );
         }
     }
 }
@@ -215,18 +207,18 @@ function move_old_payu_settings() {
 }
 
 function move_old_payu_installments_settings() {
-	if ( $installmentsSettings = get_option( 'woocommerce_payuinstallments_settings' ) ) {
-		$oldWidgetSettings = array_filter( $installmentsSettings, function ( $key ) {
+	if ( $installments_settings = get_option( 'woocommerce_payuinstallments_settings' ) ) {
+		$old_widget_settings = array_filter( $installments_settings, function ( $key ) {
 			return strpos( $key, 'credit_widget' ) === 0;
 		}, ARRAY_FILTER_USE_KEY );
 
-    if ( ! empty( $oldWidgetSettings ) ) {
-        update_option( 'payu_settings_option_name', array_merge( get_option( 'payu_settings_option_name' ), $oldWidgetSettings ) );
+    if ( ! empty( $old_widget_settings ) ) {
+        update_option( 'payu_settings_option_name', array_merge( get_option( 'payu_settings_option_name' ), $old_widget_settings ) );
 
-			foreach ( $oldWidgetSettings as $key => $value ) {
-				unset( $installmentsSettings[ $key ] );
+			foreach ( $old_widget_settings as $key => $value ) {
+				unset( $installments_settings[ $key ] );
 			}
-			update_option( 'woocommerce_payuinstallments_settings', $installmentsSettings );
+			update_option( 'woocommerce_payuinstallments_settings', $installments_settings );
 		}
 	}
 }
@@ -305,7 +297,7 @@ if ( is_admin() ) {
 	add_action( 'admin_enqueue_scripts', 'enqueue_payu_admin_assets' );
 }
 
-function getLanguage() {
+function get_site_language() {
     return substr(get_locale(), 0, 2);
 }
 
@@ -341,25 +333,30 @@ function get_installment_option( $option ) {
 }
 
 function get_credit_widget_excluded_paytypes(): array {
-    $payuSettings = get_option('payu_settings_option_name');
-    if ( ! empty($payuSettings) && isset($payuSettings['credit_widget_excluded_paytypes']) ) {
-            return $payuSettings['credit_widget_excluded_paytypes'];
-    } else {
-        return [];
-    }
+    $payu_settings = get_option('payu_settings_option_name', []);
+	return $payu_settings['credit_widget_excluded_paytypes'] ?? [];
 }
 
-function is_credit_widget_available_for_feature($featureName ) {
-    $payuSettings = get_option('payu_settings_option_name');
-    return ! empty($payuSettings) && $payuSettings[ $featureName ] === 'yes';
+function is_credit_widget_available_for_feature( $feature_name ) {
+    $payu_settings = get_option('payu_settings_option_name', []);
+    return isset( $payu_settings[ $feature_name ] ) && $payu_settings[ $feature_name ] === 'yes';
 }
 
 if ( is_credit_widget_available_for_feature( 'credit_widget_on_listings' ) ) {
 	add_action( 'woocommerce_after_shop_loop_item', 'installments_mini_product' );
+	add_filter( 'woocommerce_blocks_product_grid_item_html', 'installments_mini_aware_product_block', 10, 3 );
 }
 
 if ( is_credit_widget_available_for_feature( 'credit_widget_on_product_page' ) ) {
 	add_action( 'woocommerce_before_add_to_cart_form', 'installments_mini_product' );
+}
+
+if ( is_credit_widget_available_for_feature( 'credit_widget_on_cart_page' ) ) {
+	add_action( 'woocommerce_cart_totals_after_order_total', 'installments_mini_total' );
+}
+
+if ( is_credit_widget_available_for_feature( 'credit_widget_on_checkout_page' ) ) {
+	add_action( 'woocommerce_review_order_after_order_total', 'installments_mini_total' );
 }
 
 function installments_mini_product() {
@@ -375,7 +372,7 @@ function installments_mini_product() {
 	$posId     = get_installment_option( 'pos_id' );
 	$widgetKey = get_installment_option( 'widget_key' );
     $excludedPaytypes = get_credit_widget_excluded_paytypes();
-    $lang = getLanguage();
+    $lang = get_site_language();
     $currency = get_woocommerce_currency();
 
 	wp_enqueue_script( 'payu-installments-widget', 'https://static.payu.com/res/v2/widget-mini-installments.js', [], PAYU_PLUGIN_VERSION );
@@ -385,30 +382,22 @@ function installments_mini_product() {
         <span id="installment-mini-<?php echo esc_html( $productId ) ?>"></span>
         <script type="text/javascript">
             document.addEventListener("DOMContentLoaded", function () {
-                var value = <?php echo esc_html( $price )?>;
-                var options = {
-                    creditAmount: value,
-                    posId: '<?php echo esc_html( $posId )?>',
-                    key: '<?php echo esc_html( $widgetKey )?>',
-                    excludedPaytypes: <?php echo json_encode( $excludedPaytypes ) ?>,
-                    lang: '<?php echo esc_html( $lang )?>',
-                    currencySign: '<?php echo esc_html( $currency )?>',
-                    showLongDescription: true
-                };
-                OpenPayU.Installments.miniInstallment('#installment-mini-<?php echo esc_html( $productId )?>', options);
+                if (window.OpenPayU && window.OpenPayU.Installments && window.OpenPayU.Installments.miniInstallment) {
+                    var options = {
+                        creditAmount: <?php echo esc_html( $price )?>,
+                        posId: '<?php echo esc_html( $posId )?>',
+                        key: '<?php echo esc_html( $widgetKey )?>',
+                        excludedPaytypes: <?php echo json_encode( $excludedPaytypes ) ?>,
+                        lang: '<?php echo esc_html( $lang )?>',
+                        currencySign: '<?php echo esc_html( $currency )?>',
+                        showLongDescription: true
+                    };
+                    OpenPayU.Installments.miniInstallment('#installment-mini-<?php echo esc_html( $productId )?>', options);
+                }
             });
         </script>
     </div>
 	<?php
-}
-
-
-if ( is_credit_widget_available_for_feature( 'credit_widget_on_cart_page' ) ) {
-    add_action( 'woocommerce_cart_totals_after_order_total', 'installments_mini_total' ); // todo hook nie działa od wersji wc 8.3 - przejscie na bloki
-}
-
-if ( is_credit_widget_available_for_feature( 'credit_widget_on_checkout_page' ) ) {
-    add_action( 'woocommerce_review_order_after_order_total', 'installments_mini_total' );
 }
 
 function is_shipping_method_in_supported_methods_set( $chosenShippingMethod, $availableShippingMethods ) {
@@ -448,7 +437,7 @@ function installments_mini_total() {
 	$posId     = get_installment_option( 'pos_id' );
 	$widgetKey = get_installment_option( 'widget_key' );
     $excludedPaytypes = get_credit_widget_excluded_paytypes();
-    $lang = getLanguage();
+    $lang = get_site_language();
     $currency = get_woocommerce_currency();
 
 	wp_enqueue_script( 'payu-installments-widget', 'https://static.payu.com/res/v2/widget-mini-installments.js', [], PAYU_PLUGIN_VERSION );
@@ -462,7 +451,7 @@ function installments_mini_total() {
                 var priceTotal = <?php echo esc_html( $price )?>;
 
                 function showInstallmentsWidget() {
-                    if (window.OpenPayU) {
+                    if (window.OpenPayU && window.OpenPayU.Installments && window.OpenPayU.Installments.miniInstallment) {
                         var options = {
                             creditAmount: priceTotal,
                             posId: '<?php echo esc_html( $posId )?>',
@@ -472,7 +461,7 @@ function installments_mini_total() {
                             currencySign: '<?php echo esc_html( $currency )?>',
                             showLongDescription: true
                         };
-                        OpenPayU.Installments.miniInstallment('#installment-mini-total', options);
+                        window.OpenPayU.Installments.miniInstallment('#installment-mini-69', options);
                     }
                 }
 
@@ -494,10 +483,6 @@ function installments_mini_total() {
 	<?php
 }
 
-if ( is_credit_widget_available_for_feature( 'credit_widget_on_listings' ) ) {
-	add_filter( 'woocommerce_blocks_product_grid_item_html', 'installments_mini_aware_product_block', 10, 3 );
-}
-
 function installments_mini_aware_product_block( $html, $data, $product ) {
 	if ( has_block( 'woocommerce/cart' ) ) {
 		return $html;
@@ -508,7 +493,7 @@ function installments_mini_aware_product_block( $html, $data, $product ) {
 	$posId     = get_installment_option( 'pos_id' );
 	$widgetKey = get_installment_option( 'widget_key' );
     $excludedPaytypes = json_encode(get_credit_widget_excluded_paytypes());
-    $lang = getLanguage();
+    $lang = get_site_language();
     $currency = get_woocommerce_currency();
 
 	wp_enqueue_script( 'payu-installments-widget', 'https://static.payu.com/res/v2/widget-mini-installments.js', [], PAYU_PLUGIN_VERSION );
@@ -526,6 +511,7 @@ function installments_mini_aware_product_block( $html, $data, $product ) {
 				<p><span id=\"installment-mini-{$productId}\"></span></p>
 				<script type=\"text/javascript\">
 				document.addEventListener(\"DOMContentLoaded\", function () {
+				    if (window.OpenPayU && window.OpenPayU.Installments && window.OpenPayU.Installments.miniInstallment) {
                         var value = {$price};
                         var options = {
                             creditAmount: value,
@@ -537,7 +523,8 @@ function installments_mini_aware_product_block( $html, $data, $product ) {
                             showLongDescription: true
                         };
                         OpenPayU.Installments.miniInstallment('#installment-mini-{$productId}', options);
-					});
+                    }
+				});
 				</script>
 			</div>
             {$data->rating}

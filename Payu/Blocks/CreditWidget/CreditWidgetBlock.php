@@ -6,8 +6,8 @@ use Automattic\WooCommerce\Blocks\Integrations\IntegrationInterface;
 
 abstract class CreditWidgetBlock implements IntegrationInterface {
 
-    private $handle;
-    private $name = 'credit-widget-block';
+    private string $handle;
+    private string $name = 'credit-widget-block';
 
     public function get_name(): string {
         return $this->name;
@@ -26,17 +26,16 @@ abstract class CreditWidgetBlock implements IntegrationInterface {
         }
 
         $this->handle = $this->page . '-' . $this->name;
-        $scriptUrl = WC_PAYU_PLUGIN_URL . $scriptPath;
+        $script_url = WC_PAYU_PLUGIN_URL . $scriptPath;
 
         wp_register_script(
             $this->handle,
-            $scriptUrl,
+            $script_url,
             $dependencies,
             $version,
             true
         );
-        wp_enqueue_style( 'payu-installments-widget', plugins_url( '/assets/css/payu-installments-widget-block.css', PAYU_PLUGIN_FILE ), [], PAYU_PLUGIN_VERSION );
-        wp_enqueue_script( 'payu-installments-widget', 'https://static.payu.com/res/v2/widget-mini-installments.js', [], PAYU_PLUGIN_VERSION );
+        wp_enqueue_script( 'payu-installments-widget', 'https://static.payu.com/res/v2/widget-mini-installments.js' );
     }
 
     public function get_script_handles(): array {
@@ -47,25 +46,22 @@ abstract class CreditWidgetBlock implements IntegrationInterface {
         return [$this->handle];
     }
 
-    function get_script_data() {
+    function get_script_data(): array {
         return [
             'widgetEnabledOnPage' => $this->widget_on_page_enabled(),
             'posId'            => get_installment_option( 'pos_id' ),
             'widgetKey'        => get_installment_option( 'widget_key' ),
             'excludedPaytypes' => get_credit_widget_excluded_paytypes(),
-            'lang'             => getLanguage(),
+            'lang'             => get_site_language(),
             'currency'         => get_woocommerce_currency()
         ];
 
     }
 
-    private function widget_on_page_enabled() {
-        $payuSettings = get_option('payu_settings_option_name');
-        $settingName = 'credit_widget_on_' . $this->page . '_page';
-        if ( ! empty($payuSettings) && isset($payuSettings[$settingName]) ) {
-            return $payuSettings[$settingName] === 'yes';
-        } else {
-            return false;
-        }
+    private function widget_on_page_enabled(): bool {
+        $payu_settings = get_option('payu_settings_option_name', []);
+        $setting_name = 'credit_widget_on_' . $this->page . '_page';
+
+		return isset( $payu_settings[ $setting_name ] ) && $payu_settings[ $setting_name ] === 'yes';
     }
 }
