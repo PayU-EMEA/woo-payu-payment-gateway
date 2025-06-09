@@ -57,8 +57,8 @@ add_action(
 );
 
 function on_woocommerce_blocks_loaded() {
-    init_payu_blocks();
-    init_credit_widget_blocks();
+	init_payu_blocks();
+	init_credit_widget_blocks();
 }
 
 function init_payu_blocks() {
@@ -82,18 +82,18 @@ function init_payu_blocks() {
 }
 
 function init_credit_widget_blocks() {
-    if ( interface_exists('Automattic\WooCommerce\Blocks\Integrations\IntegrationInterface') ) {
-        add_action( 'woocommerce_blocks_cart_block_registration',
-        function ( IntegrationRegistry $integration_registry ) {
-                $integration_registry->register( new CartCreditWidgetBlock() );
-            }
-        );
-        add_action( 'woocommerce_blocks_checkout_block_registration',
-            function ( IntegrationRegistry $integration_registry ) {
-                $integration_registry->register( new CheckoutCreditWidgetBlock() );
-            }
-        );
-    }
+	if ( interface_exists( 'Automattic\WooCommerce\Blocks\Integrations\IntegrationInterface' ) ) {
+		add_action( 'woocommerce_blocks_cart_block_registration',
+			function ( IntegrationRegistry $integration_registry ) {
+				$integration_registry->register( new CartCreditWidgetBlock() );
+			}
+		);
+		add_action( 'woocommerce_blocks_checkout_block_registration',
+			function ( IntegrationRegistry $integration_registry ) {
+				$integration_registry->register( new CheckoutCreditWidgetBlock() );
+			}
+		);
+	}
 }
 
 /**
@@ -127,26 +127,26 @@ function payu_plugin_on_activate() {
 		add_option( '_payu_plugin_version', PAYU_PLUGIN_VERSION );
 		add_option( 'woocommerce_payulistbanks_settings', [ 'enabled' => 'yes' ] );
 		add_option( 'woocommerce_payucreditcard_settings', [ 'enabled' => 'yes' ] );
-        add_option( 'payu_settings_option_name', [
-	        'global_default_on_hold_status' => 'on-hold',
-            'credit_widget_on_listings'      => 'yes',
-            'credit_widget_on_product_page'  => 'yes',
-            'credit_widget_on_cart_page'     => 'yes',
-            'credit_widget_on_checkout_page' => 'yes'
-        ] );
+		add_option( 'payu_settings_option_name', [
+			'global_default_on_hold_status'  => 'on-hold',
+			'credit_widget_on_listings'      => 'yes',
+			'credit_widget_on_product_page'  => 'yes',
+			'credit_widget_on_cart_page'     => 'yes',
+			'credit_widget_on_checkout_page' => 'yes'
+		] );
 	}
 }
 
 function handle_plugin_update() {
-    $stored_version = get_option('_payu_plugin_version');
-    if ( PAYU_PLUGIN_VERSION !== $stored_version) {
+	$stored_version = get_option( '_payu_plugin_version' );
+	if ( PAYU_PLUGIN_VERSION !== $stored_version ) {
 		$default_widget_settings = [
 			'credit_widget_on_listings'      => 'yes',
 			'credit_widget_on_product_page'  => 'yes',
 			'credit_widget_on_cart_page'     => 'yes',
 			'credit_widget_on_checkout_page' => 'yes'
 		];
-        $payu_settings    = get_option( 'payu_settings_option_name' );
+		$payu_settings = get_option( 'payu_settings_option_name' );
 		if ( empty( $payu_settings ) ) {
 			add_option( 'payu_settings_option_name', $default_widget_settings );
 		} else {
@@ -154,30 +154,31 @@ function handle_plugin_update() {
 			update_option( 'payu_settings_option_name', $merged_settings );
 		}
 
-        disable_widget_once_if_installments_disabled( $stored_version );
+		disable_widget_once_if_installments_disabled( $stored_version );
 
-        update_option( '_payu_plugin_version', PAYU_PLUGIN_VERSION );
+		update_option( '_payu_plugin_version', PAYU_PLUGIN_VERSION );
 	}
 }
 
 function disable_widget_once_if_installments_disabled( $old_version ) {
-    if ( version_compare($old_version, '2.6.2', '<=' ) ) {
-        $installments_settings = get_option( 'woocommerce_payuinstallments_settings' );
-        if ( isset($installments_settings['enabled']) && $installments_settings['enabled'] === 'no' ) {
-            $disabled_widget_settings = [
-                'credit_widget_on_listings'      => 'no',
-                'credit_widget_on_product_page'  => 'no',
-                'credit_widget_on_cart_page'     => 'no',
-                'credit_widget_on_checkout_page' => 'no'
-            ];
-            $merged_settings = array_merge( $installments_settings, $disabled_widget_settings );
-            update_option( 'woocommerce_payuinstallments_settings', $merged_settings );
-        }
-    }
+	if ( version_compare( $old_version, '2.6.2', '<=' ) ) {
+		$installments_settings = get_option( 'woocommerce_payuinstallments_settings' );
+		if ( isset( $installments_settings['enabled'] ) && $installments_settings['enabled'] === 'no' ) {
+			$disabled_widget_settings = [
+				'credit_widget_on_listings'      => 'no',
+				'credit_widget_on_product_page'  => 'no',
+				'credit_widget_on_cart_page'     => 'no',
+				'credit_widget_on_checkout_page' => 'no'
+			];
+			$merged_settings = array_merge( $installments_settings, $disabled_widget_settings );
+			update_option( 'woocommerce_payuinstallments_settings', $merged_settings );
+		}
+	}
 }
+
 function on_admin_init() {
-    move_old_payu_settings();
-    move_old_payu_installments_settings();
+	move_old_payu_settings();
+	move_old_payu_installments_settings();
 }
 
 function move_old_payu_settings() {
@@ -213,8 +214,8 @@ function move_old_payu_installments_settings() {
 			return strpos( $key, 'credit_widget' ) === 0;
 		}, ARRAY_FILTER_USE_KEY );
 
-    if ( ! empty( $old_widget_settings ) ) {
-        update_option( 'payu_settings_option_name', array_merge( get_option( 'payu_settings_option_name' ), $old_widget_settings ) );
+		if ( ! empty( $old_widget_settings ) ) {
+			update_option( 'payu_settings_option_name', array_merge( get_option( 'payu_settings_option_name' ), $old_widget_settings ) );
 
 			foreach ( $old_widget_settings as $key => $value ) {
 				unset( $installments_settings[ $key ] );
@@ -299,7 +300,7 @@ if ( is_admin() ) {
 }
 
 function get_site_language() {
-    return substr(get_locale(), 0, 2);
+	return substr( get_locale(), 0, 2 );
 }
 
 function get_installment_option( $option ) {
@@ -327,8 +328,8 @@ function get_installment_option( $option ) {
 			case 'enable_for_virtual':
 				$result = $installmentsGateway->enable_for_virtual;
 				break;
-            case 'paymethods':
-                $result = $installmentsGateway->get_available_paymethods();
+			case 'paymethods':
+				$result = $installmentsGateway->get_available_paymethods();
 		}
 	}
 
@@ -336,8 +337,8 @@ function get_installment_option( $option ) {
 }
 
 function is_credit_widget_available_for_feature( $feature_name ): bool {
-    $payu_settings = get_option('payu_settings_option_name', []);
-    return isset( $payu_settings[ $feature_name ] ) && $payu_settings[ $feature_name ] === 'yes';
+	$payu_settings = get_option( 'payu_settings_option_name', [] );
+	return isset( $payu_settings[ $feature_name ] ) && $payu_settings[ $feature_name ] === 'yes';
 }
 
 if ( is_credit_widget_available_for_feature( 'credit_widget_on_listings' ) ) {

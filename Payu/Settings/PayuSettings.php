@@ -56,26 +56,26 @@ class PayuSettings {
 		];
 	}
 
-    public static function credit_widget_activation_fields(): array {
-        return [
-            'on_listings'      => [
-                'type'    => 'checkbox',
-                'label'   => __( 'Enabled on product listings', 'woo-payu-payment-gateway' )
-            ],
-            'on_product_page'  => [
-                'type'    => 'checkbox',
-                'label'   => __( 'Enabled on product page', 'woo-payu-payment-gateway' )
-            ],
-            'on_cart_page'     => [
-                'type'    => 'checkbox',
-                'label'   => __( 'Enabled on cart page', 'woo-payu-payment-gateway' )
-            ],
-            'on_checkout_page' => [
-                'type'    => 'checkbox',
-                'label'   => __( 'Enabled on checkout page', 'woo-payu-payment-gateway' )
-            ]
-        ];
-    }
+	public static function credit_widget_activation_fields(): array {
+		return [
+			'on_listings'      => [
+				'type'  => 'checkbox',
+				'label' => __( 'Enabled on product listings', 'woo-payu-payment-gateway' )
+			],
+			'on_product_page'  => [
+				'type'  => 'checkbox',
+				'label' => __( 'Enabled on product page', 'woo-payu-payment-gateway' )
+			],
+			'on_cart_page'     => [
+				'type'  => 'checkbox',
+				'label' => __( 'Enabled on cart page', 'woo-payu-payment-gateway' )
+			],
+			'on_checkout_page' => [
+				'type'  => 'checkbox',
+				'label' => __( 'Enabled on checkout page', 'woo-payu-payment-gateway' )
+			]
+		];
+	}
 
 	public function payu_settings_add_plugin_page(): void {
 		add_submenu_page(
@@ -162,29 +162,29 @@ class PayuSettings {
 			'payu_settings_setting_section' // section
 		);
 
-        //credit widget
-        add_settings_section(
-            'payu_settings_credit_widget_setting_section', // id
-            __( 'Credit widget', 'woo-payu-payment-gateway' ), // title
-            [], // callback
-            'payu-settings-admin' // page
-        );
+		//credit widget
+		add_settings_section(
+			'payu_settings_credit_widget_setting_section', // id
+			__( 'Credit widget', 'woo-payu-payment-gateway' ), // title
+			[], // callback
+			'payu-settings-admin' // page
+		);
 
-        foreach ( $this->credit_widget_fields as $field => $desc ) {
-            $args = [
-                'id'   => 'credit_widget_' . $field,
-                'desc' => $desc['label'],
-                'name' => 'payu_settings_option_name'
-            ];
-            add_settings_field(
-                $args['id'], // id
-                $args['desc'], // title
-                [ $this, 'credit_widget_default_callback' ], // callback
-                'payu-settings-admin', // page
-                'payu_settings_credit_widget_setting_section',
-                $args
-            );
-        }
+		foreach ( $this->credit_widget_fields as $field => $desc ) {
+			$args = [
+				'id'   => 'credit_widget_' . $field,
+				'desc' => $desc['label'],
+				'name' => 'payu_settings_option_name'
+			];
+			add_settings_field(
+				$args['id'], // id
+				$args['desc'], // title
+				[ $this, 'credit_widget_default_callback' ], // callback
+				'payu-settings-admin', // page
+				'payu_settings_credit_widget_setting_section',
+				$args
+			);
+		}
 
         add_settings_field(
             'credit_widget_excluded_paytypes', // id
@@ -226,15 +226,15 @@ class PayuSettings {
 			$sanitary_values['global_repayment'] = sanitize_text_field( $input['global_repayment'] );
 		}
 
-        foreach ( $this->credit_widget_fields as $field => $desc ) {
-            $field_name = 'credit_widget_' . $field;
-            $sanitary_values[$field_name] = isset( $input[$field_name] ) ? 'yes' : 'no';
-        }
+		foreach ( $this->credit_widget_fields as $field => $desc ) {
+			$field_name = 'credit_widget_' . $field;
+			$sanitary_values[ $field_name ] = isset( $input[ $field_name ] ) ? 'yes' : 'no';
+		}
 
-        if ( isset( $input[ 'credit_widget_excluded_paytypes' ] ) ) {
-            $excluded_paytypes = explode( ',', $input[ 'credit_widget_excluded_paytypes' ] );
-	        $sanitary_values[ 'credit_widget_excluded_paytypes' ] = $this->sanitize_excluded_paytypes( $excluded_paytypes );
-        }
+		if ( isset( $input['credit_widget_excluded_paytypes'] ) ) {
+			$excluded_paytypes = explode( ',', $input['credit_widget_excluded_paytypes'] );
+			$sanitary_values['credit_widget_excluded_paytypes'] = $this->sanitize_excluded_paytypes( $excluded_paytypes );
+		}
 
 		return $sanitary_values;
 	}
@@ -270,22 +270,22 @@ class PayuSettings {
 		<?php
 	}
 
-    public function credit_widget_default_callback(array $args): void {
-        $id    = $args['id'];
-        $checked = isset($this->payu_settings_options[$id]) && $this->payu_settings_options[$id] === 'yes' ? 'checked' : '';
-        printf(
-            '<input type="checkbox" name="payu_settings_option_name[%s]" id="%s" %s/>',
-            $id, $id, $checked);
-    }
+	public function credit_widget_default_callback( array $args ): void {
+		$id      = $args['id'];
+		$checked = isset( $this->payu_settings_options[ $id ] ) && $this->payu_settings_options[ $id ] === 'yes' ? 'checked' : '';
+		printf(
+			'<input type="checkbox" name="payu_settings_option_name[%s]" id="%s" %s/>',
+			$id, $id, $checked );
+	}
 
-    public function credit_widget_excluded_paytypes_callback(): void {
-        $id    = 'credit_widget_excluded_paytypes';
-        $value = isset( $this->payu_settings_options[ $id ] ) ? esc_attr( implode(',',$this->payu_settings_options[ $id ] )) : '';
-        $description = __( 'Excludes the given credit payment methods from the credit payment widget. The value must be a comma-separated list of <a href="https://developers.payu.com/europe/docs/get-started/integration-overview/references/#installments-and-pay-later" target="_blank" rel="nofollow">credit payment method codes</a>, for example: dpt,dpkl,dpp.'
-                , 'woo-payu-payment-gateway' );
-        printf( '<input type="text" class="regular-text" value="%s" name="payu_settings_option_name[%s]" id="%s" />
+	public function credit_widget_excluded_paytypes_callback(): void {
+		$id          = 'credit_widget_excluded_paytypes';
+		$value       = isset( $this->payu_settings_options[ $id ] ) ? esc_attr( implode( ',', $this->payu_settings_options[ $id ] ) ) : '';
+		$description = __( 'Excludes the given credit payment methods from the credit payment widget. The value must be a comma-separated list of <a href="https://developers.payu.com/europe/docs/get-started/integration-overview/references/#installments-and-pay-later" target="_blank" rel="nofollow">credit payment method codes</a>, for example: dpt,dpkl,dpp.'
+			, 'woo-payu-payment-gateway' );
+		printf( '<input type="text" class="regular-text" value="%s" name="payu_settings_option_name[%s]" id="%s" />
                         <p class="description">%s</p>', $value, $id, $id, $description );
-    }
+	}
 
 	public function before_payment_statuses(): array {
 		$statuses  = wc_get_order_statuses();
@@ -300,7 +300,7 @@ class PayuSettings {
 		return $available;
 	}
 
-	private function sanitize_excluded_paytypes(array $excluded_paytypes ): array {
+	private function sanitize_excluded_paytypes( array $excluded_paytypes ): array {
 		return array_filter(
 			array_map( 'sanitize_key',
 				array_map( 'trim',
