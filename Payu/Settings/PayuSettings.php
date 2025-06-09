@@ -233,8 +233,7 @@ class PayuSettings {
 
         if ( isset( $input[ 'credit_widget_excluded_paytypes' ] ) ) {
             $excluded_paytypes = explode( ',', $input[ 'credit_widget_excluded_paytypes' ] );
-	        $sanitary_values[ 'credit_widget_excluded_paytypes' ] =
-                $this->sanitize_excluded_paytypes( $excluded_paytypes );
+	        $sanitary_values[ 'credit_widget_excluded_paytypes' ] = $this->sanitize_excluded_paytypes( $excluded_paytypes );
         }
 
 		return $sanitary_values;

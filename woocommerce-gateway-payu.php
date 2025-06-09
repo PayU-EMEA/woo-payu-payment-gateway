@@ -382,7 +382,7 @@ function installments_mini_product() {
         <span id="installment-mini-<?php echo esc_html( $productId ) ?>"></span>
         <script type="text/javascript">
             document.addEventListener("DOMContentLoaded", function () {
-                if (window.OpenPayU && window.OpenPayU.Installments && window.OpenPayU.Installments.miniInstallment) {
+                if (window.OpenPayU?.Installments?.miniInstallment) {
                     var options = {
                         creditAmount: <?php echo esc_html( $price )?>,
                         posId: '<?php echo esc_html( $posId )?>',
@@ -451,7 +451,7 @@ function installments_mini_total() {
                 var priceTotal = <?php echo esc_html( $price )?>;
 
                 function showInstallmentsWidget() {
-                    if (window.OpenPayU && window.OpenPayU.Installments && window.OpenPayU.Installments.miniInstallment) {
+                    if (window.OpenPayU?.Installments?.miniInstallment) {
                         var options = {
                             creditAmount: priceTotal,
                             posId: '<?php echo esc_html( $posId )?>',
@@ -461,7 +461,7 @@ function installments_mini_total() {
                             currencySign: '<?php echo esc_html( $currency )?>',
                             showLongDescription: true
                         };
-                        window.OpenPayU.Installments.miniInstallment('#installment-mini-69', options);
+                        window.OpenPayU.Installments.miniInstallment('#installment-mini-total', options);
                     }
                 }
 
@@ -511,7 +511,7 @@ function installments_mini_aware_product_block( $html, $data, $product ) {
 				<p><span id=\"installment-mini-{$productId}\"></span></p>
 				<script type=\"text/javascript\">
 				document.addEventListener(\"DOMContentLoaded\", function () {
-				    if (window.OpenPayU && window.OpenPayU.Installments && window.OpenPayU.Installments.miniInstallment) {
+				    if (window.OpenPayU?.Installments?.miniInstallment) {
                         var value = {$price};
                         var options = {
                             creditAmount: value,

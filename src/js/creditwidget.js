@@ -32,10 +32,10 @@ function Widget( { cart } ) {
   useEffect( () => {
     window.OpenPayU?.Installments?.miniInstallment( '#installment-mini-block', {
       creditAmount: getTotal( cart ),
-      posId: posId,
+      posId,
       key: widgetKey,
-      excludedPaytypes: excludedPaytypes,
-      lang: lang,
+      excludedPaytypes,
+      lang,
       currencySign: currency,
       showLongDescription: true,
     } );
