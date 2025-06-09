@@ -2,7 +2,7 @@
 
 namespace Payu\PaymentGateway\Gateways;
 
-class WC_Gateway_PayuInstallments extends WC_Payu_Gateways {
+class WC_Gateway_PayuInstallments extends WC_Payu_Gateways implements WC_PayuCreditGateway {
 	protected string $paytype = 'ai';
 
 	function __construct() {
@@ -15,4 +15,20 @@ class WC_Gateway_PayuInstallments extends WC_Payu_Gateways {
 		}
 		return true;
 	}
+
+	public function get_available_paymethods() {
+		$response   = $this->payu_get_paymethods();
+		$payMethods = [];
+		if ( isset( $response ) && $response->getStatus() === 'SUCCESS' ) {
+			$pay_by_links = $response->getResponse()->payByLinks;
+			$payMethods   = array_map( fn( $paymethod ) => $paymethod->value, $pay_by_links );
+		}
+
+		return $payMethods;
+	}
+
+	public function get_related_paytypes(): array {
+		return [ $this->paytype ];
+	}
+
 }

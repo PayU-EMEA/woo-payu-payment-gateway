@@ -571,7 +571,7 @@ abstract class WC_Payu_Gateways extends WC_Payment_Gateway implements WC_PayuGat
 		return false;
 	}
 
-    protected function get_related_paytypes(array $related_paytypes): array {
+    protected function filter_available_paytypes(array $related_paytypes): array {
         $response = $this->payu_get_paymethods();
         if ( isset( $response ) && $response->getStatus() === 'SUCCESS' && $response->getResponse()->payByLinks) {
             $allPayTypeList = array_map(static fn($paymethod) => $paymethod->value, $response->getResponse()->payByLinks);

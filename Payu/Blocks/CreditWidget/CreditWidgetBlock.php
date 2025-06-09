@@ -58,10 +58,14 @@ abstract class CreditWidgetBlock implements IntegrationInterface {
 
     }
 
-    private function widget_on_page_enabled(): bool {
-        $payu_settings = get_option('payu_settings_option_name', []);
-        $setting_name = 'credit_widget_on_' . $this->page . '_page';
+	private function widget_on_page_enabled(): bool {
+		if ( ! is_any_credit_paymethod_available() ) {
+			return false;
+		}
+
+		$payu_settings = get_option( 'payu_settings_option_name', [] );
+		$setting_name  = 'credit_widget_on_' . $this->page . '_page';
 
 		return isset( $payu_settings[ $setting_name ] ) && $payu_settings[ $setting_name ] === 'yes';
-    }
+	}
 }

@@ -31,6 +31,7 @@ use Payu\PaymentGateway\Blocks\CreditWidget\CartCreditWidgetBlock;
 use Payu\PaymentGateway\Blocks\CreditWidget\CheckoutCreditWidgetBlock;
 use Payu\PaymentGateway\Gateways\WC_Gateway_PayuInstallments;
 use Payu\PaymentGateway\Gateways\WC_Payu_Gateways;
+use Payu\PaymentGateway\Gateways\WC_PayuCreditGateway;
 
 require __DIR__ . '/vendor/autoload.php';
 
@@ -326,18 +327,15 @@ function get_installment_option( $option ) {
 			case 'enable_for_virtual':
 				$result = $installmentsGateway->enable_for_virtual;
 				break;
+            case 'paymethods':
+                $result = $installmentsGateway->get_available_paymethods();
 		}
 	}
 
 	return $result;
 }
 
-function get_credit_widget_excluded_paytypes(): array {
-    $payu_settings = get_option('payu_settings_option_name', []);
-	return $payu_settings['credit_widget_excluded_paytypes'] ?? [];
-}
-
-function is_credit_widget_available_for_feature( $feature_name ) {
+function is_credit_widget_available_for_feature( $feature_name ): bool {
     $payu_settings = get_option('payu_settings_option_name', []);
     return isset( $payu_settings[ $feature_name ] ) && $payu_settings[ $feature_name ] === 'yes';
 }
@@ -359,7 +357,38 @@ if ( is_credit_widget_available_for_feature( 'credit_widget_on_checkout_page' ) 
 	add_action( 'woocommerce_review_order_after_order_total', 'installments_mini_total' );
 }
 
+function get_credit_widget_excluded_paytypes(): array {
+	$payu_settings = get_option( 'payu_settings_option_name', [] );
+	return $payu_settings['credit_widget_excluded_paytypes'] ?? [];
+}
+
+function is_any_credit_paymethod_available(): bool {
+	$available_paymethods = get_installment_option( 'paymethods' );
+
+	if ( ! empty( $available_paymethods ) ) {
+		$credit_paymethods = [];
+		$payment_gateways  = WC()->payment_gateways()->payment_gateways();
+		foreach ( $payment_gateways as $gateway ) {
+			if ( $gateway instanceof WC_PayuCreditGateway ) {
+				$credit_paymethods = array_merge( $credit_paymethods, $gateway->get_related_paytypes() );
+			}
+		}
+
+		foreach ( $credit_paymethods as $paymethod ) {
+			if ( in_array( $paymethod, $available_paymethods ) ) {
+				return true;
+			}
+		}
+	}
+
+	return false;
+}
+
 function installments_mini_product() {
+
+	if ( ! is_any_credit_paymethod_available() ) {
+		return;
+	}
 
 	$product = wc_get_product();
 	if ( ! $product ) {
@@ -424,6 +453,10 @@ function installments_get_cart_total() {
 
 function installments_mini_total() {
 
+	if ( ! is_any_credit_paymethod_available() ) {
+		return;
+	}
+
 	$chosen_shipping_methods             = WC()->session->get( 'chosen_shipping_methods' );
 	$chosenShippingMethod                = is_array( $chosen_shipping_methods ) && count( $chosen_shipping_methods ) > 0
 		? $chosen_shipping_methods[0] : null;
@@ -484,6 +517,11 @@ function installments_mini_total() {
 }
 
 function installments_mini_aware_product_block( $html, $data, $product ) {
+
+	if ( ! is_any_credit_paymethod_available() ) {
+		return $html;
+	}
+
 	if ( has_block( 'woocommerce/cart' ) ) {
 		return $html;
 	}
