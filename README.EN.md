@@ -147,7 +147,7 @@ Integration points of a widget have been described in a table below.
 | Enabled on cart page | <div style="max-width:200px">Presents widget on cart page - relates to a total cart amount and shipping costs.</div> |<div style="max-width:500px">![Prezentacja widgetu](readme_images/credit_widget_cart_page.jpg)</div>|
 | Enabled on checkout page | <div style="max-width:200px">Presents widget on checkout page - relates to a total cart amount and shipping costs.</div> |<div style="max-width:500px">![Prezentacja widgetu](readme_images/credit_widget_checkout_page.jpg)</div>|
 
-Widget is presented only for products or carts with amount in allowed installment amount or deferred payment methods range.
+Widget is presented only for supported currencies and only for products or carts, which amount is within the allowed amount range for installment or deferred payment methods.
 
 Additionally, in the administration panel, it is possible to limit the types of payments to be displayed in the credit widget.
 
