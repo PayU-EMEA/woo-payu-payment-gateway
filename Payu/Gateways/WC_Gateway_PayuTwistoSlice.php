@@ -2,10 +2,10 @@
 
 namespace Payu\PaymentGateway\Gateways;
 
-class WC_Gateway_PayuTwistoSlice extends WC_Payu_Gateways {
+class WC_Gateway_PayuTwistoSlice extends WC_Payu_Gateways implements WC_PayuCreditGateway {
     protected string $paytype = 'dpts';
 
-    function __construct() {
+		function __construct() {
         parent::__construct( 'payutwistoslice' );
 
         if ( $this->is_enabled() ) {
@@ -20,4 +20,9 @@ class WC_Gateway_PayuTwistoSlice extends WC_Payu_Gateways {
 
         return parent::is_available();
     }
+
+	public function get_related_paytypes(): array {
+		return [ $this->paytype ];
+	}
+
 }

@@ -2,8 +2,9 @@
 
 namespace Payu\PaymentGateway\Gateways;
 
-class WC_Gateway_PayuPaypo extends WC_Payu_Gateways {
+class WC_Gateway_PayuPaypo extends WC_Payu_Gateways implements WC_PayuCreditGateway {
     private $available_paypo_paytypes;
+	private array $related_paytypes = ['dpp', 'dppron'];
 
 	function __construct() {
         parent::__construct( 'payupaypo' );
@@ -29,11 +30,15 @@ class WC_Gateway_PayuPaypo extends WC_Payu_Gateways {
 	}
 
     private function get_available_paypo_paytypes(): void {
-        $related_paytypes = ['dpp', 'dppron'];
-        $this->available_paypo_paytypes = $this->get_related_paytypes($related_paytypes);
+        $this->available_paypo_paytypes = $this->filter_available_paytypes($this->related_paytypes);
     }
 
     private function contains_only_one_related_paytype(): bool {
         return count($this->available_paypo_paytypes) === 1;
     }
+
+	public function get_related_paytypes(): array {
+		return $this->related_paytypes;
+	}
+
 }

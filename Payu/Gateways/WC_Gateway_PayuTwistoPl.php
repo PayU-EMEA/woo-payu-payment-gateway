@@ -2,10 +2,11 @@
 
 namespace Payu\PaymentGateway\Gateways;
 
-class WC_Gateway_PayuTwistoPl extends WC_Payu_Gateways {
+class WC_Gateway_PayuTwistoPl extends WC_Payu_Gateways implements WC_PayuCreditGateway {
     private $available_twisto_paytypes;
+	private array $related_paytypes = ['dpt', 'dpcz'];
 
-	function __construct() {
+		function __construct() {
         parent::__construct( 'payutwistopl' );
 
         $this->get_available_twisto_paytypes();
@@ -30,11 +31,15 @@ class WC_Gateway_PayuTwistoPl extends WC_Payu_Gateways {
 	}
 
     private function get_available_twisto_paytypes(): void {
-        $related_paytypes = ['dpt', 'dpcz'];
-        $this->available_twisto_paytypes = $this->get_related_paytypes($related_paytypes);
+        $this->available_twisto_paytypes = $this->filter_available_paytypes($this->related_paytypes);
     }
 
     private function contains_only_one_related_paytype(): bool {
         return count($this->available_twisto_paytypes) === 1;
     }
+
+	public function get_related_paytypes(): array {
+		return $this->related_paytypes;
+	}
+
 }

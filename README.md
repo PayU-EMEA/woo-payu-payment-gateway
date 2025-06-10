@@ -144,9 +144,10 @@ Ponowienie płatności umożliwia zakładanie wielu płatności w PayU do jedneg
 * z listy zamówień po kliknięciu w link "Zapłać z PayU" w kolumnie Akcje
 * w szczegółach zamówienia poprzez kliknięcie w link "Zapłać z PayU" znajdujący się nad "Szczegóły zamówienia"
 
-## Widget raty
-Plugin dostarcza integrację [widgetu ratalnego][ext14], który prezentuje minimalną kwotę raty, na którą można zakupić dany towar przy użyciu metody płatności PayU Raty.
-Funkcjonalność jest domyślnie włączona. Można ją dezaktywować poprzez przełączniki w panelu administracyjnym (WooCommerce->Ustawienia->Płatności->PayU - raty).
+## Widget kredytowy
+Plugin dostarcza integrację [widgetu kredytowego][ext14]. Prezentuje on minimalną kwotę raty, na którą można zakupić dany towar przy użyciu metody płatności PayU Raty. 
+Ponadto, po klikniciu w widget prezentowana jest informacja o dostępnych planach spłaty, a także lista metod płatności odroczonych tzw. "kup teraz, zapłać później".  
+Funkcjonalność jest domyślnie włączona. Można ją dezaktywować poprzez przełączniki w panelu administracyjnym (WooCommerce->Ustawienia PayU).
 Konkretne punkty integracji widgetu przedstawione zostało w poniższej tabeli.
 
 | Przełącznik Widget Raty                     | Opis                                                                                                                                                          | Prezentacja                                                                                              |
@@ -156,7 +157,9 @@ Konkretne punkty integracji widgetu przedstawione zostało w poniższej tabeli.
 | Włączony na stronie koszyka                 | <div style="max-width:200px">Dodaje widget na stronie koszyka - wyliczona rata dotyczy całej wartości koszyka wraz z kosztami wysyłki.</div>                  | <div style="max-width:500px">![Prezentacja widgetu](readme_images/credit_widget_cart_page.jpg)</div>     |
 | Włączony na stronie wyboru metody płatności | <div style="max-width:200px">Dodaje widget na stronie wyboru metody płatności  - wyliczona rata dotyczy całej wartości koszyka wraz z kosztami wysyłki.</div> | <div style="max-width:500px">![Prezentacja widgetu](readme_images/credit_widget_checkout_page.jpg)</div> |
 
-Widget prezentowany jest tylko dla waluty PLN oraz dla produktów i koszyków, których wartość znajduje się w zakresie wspieranych kwot płatności ratalnych.
+Widget prezentowany jest tylko dla wspieranych walut i tylko dla produktów i koszyków, których wartość znajduje się w zakresie wspieranych kwot płatności ratalnych lub metod płatności odroczonych.
+
+Dodatkowo, w panelu administracyjnym istnieje możliwość ograniczenia typów płatności, jakie wyświetlane mają być w widgetcie kredytowym.
 
 ## Maile
 
@@ -178,4 +181,4 @@ W przypadku włączonego ponownienia płatności do maila potwierdzajacego zamó
 
 [ext13]: https://www.payu.pl/pomoc
 
-[ext14]: https://developers.payu.com/pl/installments.html#installment_best_practices_mini
+[ext14]: https://developers.payu.com/europe/pl/docs/payment-solutions/credit/installments/#credit-widget-installments

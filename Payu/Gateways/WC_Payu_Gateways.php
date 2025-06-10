@@ -571,7 +571,7 @@ abstract class WC_Payu_Gateways extends WC_Payment_Gateway implements WC_PayuGat
 		return false;
 	}
 
-    protected function get_related_paytypes(array $related_paytypes): array {
+    protected function filter_available_paytypes(array $related_paytypes): array {
         $response = $this->payu_get_paymethods();
         if ( isset( $response ) && $response->getStatus() === 'SUCCESS' && $response->getResponse()->payByLinks) {
             $allPayTypeList = array_map(static fn($paymethod) => $paymethod->value, $response->getResponse()->payByLinks);
@@ -786,7 +786,7 @@ abstract class WC_Payu_Gateways extends WC_Payment_Gateway implements WC_PayuGat
 		$buyer = [
 			'email'    => $billingData['email'],
 			'phone'    => $billingData['phone'],
-			'language' => $this->getLanguage(),
+			'language' => get_site_language(),
 		];
 
 		if ( $order->get_billing_first_name() ) {
@@ -934,13 +934,6 @@ abstract class WC_Payu_Gateways extends WC_Payment_Gateway implements WC_PayuGat
 		return ( $_SERVER['REMOTE_ADDR'] === '::1' || $_SERVER['REMOTE_ADDR'] === '::' ||
 		         ! preg_match( '/^((?:25[0-5]|2[0-4][0-9]|[01]?[0-9]?[0-9]).){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9]?[0-9])$/m',
 			         $_SERVER['REMOTE_ADDR'] ) ) ? '127.0.0.1' : $_SERVER['REMOTE_ADDR'];
-	}
-
-	/**
-	 * @return string
-	 */
-	protected function getLanguage() {
-		return substr( get_locale(), 0, 2 );
 	}
 
 	/**

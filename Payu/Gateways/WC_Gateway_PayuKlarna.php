@@ -2,8 +2,9 @@
 
 namespace Payu\PaymentGateway\Gateways;
 
-class WC_Gateway_PayuKlarna extends WC_Payu_Gateways {
+class WC_Gateway_PayuKlarna extends WC_Payu_Gateways implements WC_PayuCreditGateway {
     private $available_klarna_paytypes;
+	private array $related_paytypes = ['dpkl', 'dpklczk', 'dpklron', 'dpkleur', 'dpklhuf'];
 
     function __construct() {
         parent::__construct( 'payuklarna' );
@@ -29,11 +30,14 @@ class WC_Gateway_PayuKlarna extends WC_Payu_Gateways {
     }
 
     private function get_available_klarna_paytypes(): void {
-        $related_paytypes = ['dpkl', 'dpklczk', 'dpklron', 'dpkleur', 'dpklhuf'];
-        $this->available_klarna_paytypes = $this->get_related_paytypes($related_paytypes);
+        $this->available_klarna_paytypes = $this->filter_available_paytypes($this->related_paytypes);
     }
 
     private function contains_only_one_related_paytype(): bool {
         return count($this->available_klarna_paytypes) === 1;
     }
+
+	public function get_related_paytypes(): array {
+		return $this->related_paytypes;
+	}
 }
