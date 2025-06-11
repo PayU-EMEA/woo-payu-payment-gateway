@@ -2,8 +2,8 @@
 Contributors: payusa
 Tags: PayU, payment, payment gateway, płatności, credit card
 Requires at least: 5.0
-Tested up to: 6.7.2
-Stable tag: 2.6.2
+Tested up to: 6.8.1
+Stable tag: 2.7.0
 Requires PHP: 7.4
 License: Apache License 2.0
 
@@ -52,6 +52,13 @@ Yes, it does.
 * For presenting credit payment options like minimal installment amount or "buy now pay later" we used [Credit Widget](https://developers.payu.com/europe/docs/payment-solutions/credit/installments/#credit-widget-installments) and plugin loads the script from the static.payu.com domain.
 
 == Changelog ==
+= 2.7.0 - 2025-06-11 =
+* [Add] Twisto Slice as separate method
+* [Add] Support more currencies in buy now pay later payments
+* [Update] New credit widget implementation, showing widget on Blocks cart and checkout
+* [Update] Autofocus next field in Secure Form
+* [Update] The order number is at the beginning of the description in PayU
+
 = 2.6.1 - 2024-09-26 =
 * [Fix] Not be accessed before initialization
 
@@ -77,19 +84,5 @@ Yes, it does.
 * [Add] PayU - Twisto via WooCommerce Blocks
 * [Add] PayU - PayPo via WooCommerce Blocks
 * [Fix] Not showing Installments Mini Widget on product and products list page
-
-= 2.2.2 - 2024-06-18 =
-* [Fix] Warning: Attempt to read property "total" on null
-
-= 2.2.1 - 2024-06-17 =
-* [Fix] Some methods were not showing up
-* [Fix] PHP Deprecated: Creation of dynamic property
-
-= 2.2.0 - 2024-06-17 =
-* [Add] PayU – standard via WooCommerce Blocks
-* [Add] PayU – payment card via WooCommerce Blocks
-
-= 2.1.0 =
-* Added Klarna as a separate payment method
 
 [See changelog for all versions](https://raw.githubusercontent.com/PayU-EMEA/woo-payu-payment-gateway/master/changelog.txt).

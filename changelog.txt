@@ -1,4 +1,11 @@
 *** Changelog ***
+= 2.7.0 - 2025-06-11 =
+* [Add] Twisto Slice as separate method
+* [Add] Support more currencies in buy now pay later payments
+* [Update] New credit widget implementation, showing widget on Blocks cart and checkout
+* [Update] Autofocus next field in Secure Form
+* [Update] The order number is at the beginning of the description in PayU
+
 = 2.6.2 - 2025-04-09 =
 * [Update] Update Klarna and Twisto logos
 * [Fix] Manual pickup and rejection for WAITING_FOR_CONFIRMATION
