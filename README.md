@@ -1,112 +1,105 @@
-# Moduł płatności PayU dla WooCommerce
+[**Wersja polska**][ext8]
 
-**Jeżeli masz jakiekolwiek pytania lub chcesz zgłosić błąd zapraszamy do kontaktu z naszym [wsparciem technicznym][ext13].**
+# PayU Payment Module for WooCommerce
 
-## Wymagania
+**If you have any questions or want to report a bug please [contact our technical support][ext13].**
 
-**Ważne:** Moduł działa tylko z punktem płatności typu `REST API`.
+## Requirements
 
-Jeżeli nie posiadasz jeszcze konta w systemie PayU [**zarejestruj się w systemie produkcyjnym**][ext4] lub [**zarejestruj się w systemie sandbox**][ext5]
+**Note:** This module works only with `REST API` POS type.
 
-Do prawidłowego funkcjonowania modułu wymagane są następujące rozszerzenia PHP: [cURL][ext1] i [hash][ext2].
+If you do not have a PayU merchant account [**register a production account**][ext4] or [**register a sandbox account**][ext5]
 
-## Instalacja
-Skorzystaj z [automatycznej instalacji oraz aktywacji](https://wordpress.org/support/article/managing-plugins/#automatic-plugin-installation) dostępnej w panelu administracyjnym Wordpress. Nazwa wtyczki PayU w repozytorium wtyczek to `WooCommerce PayU EU Payment Gateway`
+The following PHP libraries are required: [cURL][ext1] i [hash][ext2].
 
-## Metody płatności
+## Installation
+Use [automatic installation and activation](https://wordpress.org/support/article/managing-plugins/#automatic-plugin-installation) available in the Wordpress admin panel. Look out for `WooCommerce PayU EU Payment Gateway`.
 
-Wtyczka udostępnia następujące metody płatności:
+## Payment methods
+The plugin offers the following payment methods:
 
-| Lp | Metoda                 |       Bloki        | Opis
-|:--:|------------------------|:------------------:|------------------------------------------------------------------------------------------------------------------------------------
-| 1  | PayU - standard        | :white_check_mark: |Płacący zostanie przekierowany na stronę PayU gdzie wybierze typ płatności (z listy typów dostępnych na punkcie płatności)
-| 2  | PayU - lista banków    | :white_check_mark: |Wyświetlana jest lista typów płatności, a płacący w zależności od wybranego typu zostanie przekierowany do banku lub na stronę PayU
-| 3  | PayU - karta płatnicza | :white_check_mark: |Płacący zostanie przekierowany na stronę PayU gdzie wprowadzi dane karty (kredytowej, debetowej lub prepaid)
-| 4  | PayU - secure form     | :white_check_mark: |Wyświetlany jest formularz wprowadzania danych karty
-| 5  | PayU - Blik            | :white_check_mark: |Płacący zostanie przekierowany na stronę Blik
-| 6  | PayU - raty            | :white_check_mark: |Płacący zostanie przekierowany na stronę formularza płatności ratalnej
-| 7  | PayU - Klarna          | :white_check_mark: |Płacący zostanie przekierowany na stronę formularza płatności Klarna
-| 8  | PayU - Twisto          | :white_check_mark: |Płacący zostanie przekierowany na stronę formularza płatności Twisto
-| 8  | PayU - Twisto pay in 3 | :white_check_mark: |Płacący zostanie przekierowany na stronę formularza płatności Twisto pay in 3
-| 9  | PayU - PayPo           | :white_check_mark: |Płacący zostanie przekierowany na stronę formularza płatności PayPo
+| No.| Method                 | Blocks | Description
+|:--:|------------------------|:-----------------:|--------------------------------------------------------------------------------------------------------------------------------------------------------
+| 1  | PayU - standard        | :white_check_mark:| payer will be redirected to PayU's hosted payment page where any available payment type configured on your POS can be chosen
+| 2  | PayU - bank list       | :white_check_mark:| payment type list will be displayed, depending on chosen type the payer will be either redirected directly to the bank or to PayU's hosted payment page
+| 3  | PayU - payment card    | :white_check_mark:| payer will be redirected to PayU's hosted card form where credit, debit or prepaid card data can be securely entered
+| 4  | PayU - secure form     | :white_check_mark:| a secure form collecting credit, debit or prepaid card data will be displayed
+| 5  | PayU - Blik            | :white_check_mark:| payer will be redirected to Blik's page
+| 6  | PayU - installments    | :white_check_mark:| payer will be redirected to installment payment form
+| 7  | PayU - Klarna          | :white_check_mark:| payer will be redirected to Klarna payment form
+| 8  | PayU - Twisto          | :white_check_mark:| payer will be redirected to Twisto payment form
+| 8  | PayU - Twisto pay in 3 | :white_check_mark:| payer will be redirected to Twisto pay in 3 payment form
+| 9  | PayU - PayPo           | :white_check_mark:| payer will be redirected to PayPo payment form
 
-#### Uwagi do metod płatności
+#### Payment method remarks
 
-* Metody `PayU - standard` i `PayU - lista banków` umożliwiają płatność dowolnym typem płatności, a różnią się tylko miejscem jego wyboru. **Nie powinny być razem włączone**.
-* Metody `PayU - karta płatnicza` i `PayU - secure form` umożliwiają płatność kartą, a różnią się tylko miejscem wprowadzenia danych karty. **Nie powinny być razem włączone**.
-* W przypadku gdy jest włączona metoda `PayU - lista banków` z listy dostępnych typów płatności usuwane są: karty, gdy włączona jest metoda `PayU - karta kredytowa` lub `PayU - secure form`, Blik, gdy włączona jest metoda `PayU - blik`, raty gdy włączona jest metoda `PayU - raty`, Klarna gdy włączona jest metoda `PayU - Klarna`, Twisto gdy włączona jest metoda `PayU - Twisto`, PayPo gdy włączona jest metoda `PayU - PayPo`.
-* Metoda `PayU - secure form` wymaga aby sklep był dostępny za pomocą połączenia HTTPS (przy testach lokalnych adres strony powinien być http://localhost)
-* Pomimo włączenia metod  `PayU - karta kredytowa`, `PayU - secure form`, `PayU - blik`, `PayU - raty`, `PayU - Klarna`, `PayU - Twisto` i `PayU - PayPo` mogą się one nie pokazać płacącemu, jeśli dany typ płatności nie jest włączony na punkcie płatności lub jeśli kwota nie mieści się między kwotą minimalną i maksymalną dla danego typu.
+* Methods `PayU - standard` and `PayU - bank list` enable payments of any type and differ only with the way the payment type is chosen. **Should not be configured both at once**.
+* Methods `PayU - payment card` and `PayU - secure form` enable card payments and differ only with the way the card data is entered. **Should not be configured both at once**.
+* In case `PayU - bank list` method is switched on, the following payment types are removed from the list: cards if `PayU - payment card` or `PayU - secure form` is on, Blik if  `PayU - Blik` is on, installments if `PayU - installments` is on, Klarna if `Payu - Klarna` is on, Twisto if `PayU - Twisto` is on, PayPo if `PayU - PayPo` is on.
+* `PayU - secure form` method requires the shop to be available via HTTPS (for local tests, the address should be http://localhost)
+* Even though  `PayU - payment card`, `PayU - secure form`, `PayU - Blik`, `PayU - installments`, `PayU - Klarna`, `PayU - Twisto` and `PayU - PayPo` are on, they may be not visible in case they are not configured on your POS in PayU system or the amount is outside min-max range for the given payment type.
 
-## Konfiguracja
+## Configuration
+#### Global configuration 
+Global configuration is available in the main menu as `PayU Settings`
 
-#### Konfiguracja globalna
+POS parameters:
 
-Jest dostępna w głównym menu WooCommerce jako `Ustawienia PayU`
+| Parameter | Opis
+| --------- | ----
+| POS ID| POS (point of sale) ID in PayU system
+| Second key MD5 | Second key (MD5) in PayU system
+| OAuth - client_id | OAuth protocol - client_id in PayU system
+| OAuth - client_secret | client_secret for OAuth in PayU system
+| Sandbox - POS ID| POS (point of sale) ID in Sandbox
+| Sandbox - Second key MD5 | Second key (MD5) in Sandbox
+| Sandbox - OAuth - client_id | OAuth protocol - client_id in Sandbox
+| Sandbox - OAuth - client_secret | client_secret for OAuth in Sandbox
 
-Parametry punktu płatności:
 
-| Parametr                        | Opis
-|---------------------------------|---------------------------------------------------------
-| Id punktu płatności             | Identyfikator punktu płatności z systemu PayU
-| Drugi klucz MD5                 | Drugi klucz MD5 z systemu PayU
-| OAuth - client_id               | client_id dla protokołu OAuth z systemu PayU
-| OAuth - client_secret           | client_secret dla protokołu OAuth z systemu PayU
-| Sandbox - Id punktu płatności   | Identyfikator punktu płatności z systemu Sandbox PayU
-| Sandbox - Drugi klucz MD5       | Drugi klucz MD5 z systemu Sandbox Sandbox PayU
-| Sandbox - OAuth - client_id     | client_id dla protokołu OAuth z systemu Sandbox PayU
-| Sandbox - OAuth - client_secret | client_secret dla protokołu OAuth z systemu Sandbox PayU
+* In case of using more than one currency, there will be a separate configuration for each available currency - more information in [Multicurrency](#multicurrency) section
+* By default, each payment method uses global POS parameters
 
-* W przypadku wielu walut dla każdej waluty będzie dostępna osobna konfiguracja punktu płatności - więcej informacji w sekcji [Wielowalutowość](#wielowalutowość).
-* Domyślnie każda z metod płatności korzysta z globalnych parametrów punktu płatności.
+Other parameters - applicable to all modules:
 
-Inne parametry - mają zastosowanie do wszystkich modułów:
+| Parameter | Description
+| --------- | ----
+| Default order status | Status set after payment is started. Possible values  `on-hold` or `pending`.< br/>According to the WooCommerce documentation, when warehouse management is enabled for `on-hold` status, the number of products in the warehouse will be reduced and restored when the order changes to `canceled` status, for `pending` status, the inventory levels will not be changed.
+| Enable repayment | Allows the payer to try again after failed payment. Before using this option please check [Repayment](#repayment).
 
-| Parametr                   | Opis
-|----------------------------|--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-| Domyślny status zamówienia | Status w jaki przejdzie zamówienie po rozpoczęciu płatności. Możliwe wartości to: `Wstrzymane (oczekujące na płatność) - on-hold` i `Oczekujące na płatność - pending`.<br />Zgodnie z dokomentacją WooCommerce w przypadku kontroli stanów magazynowych dla statusu `on-hold` nastąpi zmniejszenie ilości prduktów na magazynie oraz ich przywrócenie gdy zamówienie zmieni status na `canceled`, natomiast przy statusie `pending` stany magazynowe nie będę zmieniane.
-| Włącz ponawianie płatności | Umożliwia płacącemu ponowienie nieudanej płatności. Przed włączeniem proszę o zapoznanie się z rozdziałem [Ponawianie płatności](#ponawianie-płatności).
+#### Payment method configuration
+Parameters available for every payment method:
 
-#### Konfiguracja metod płatności
+| Parameter | Description
+| --------- | ----
+| Enable / Disable  | Enables payment method.
+| Name | Name displayed during checkout.
+| Sandbox mode | If enabled, payments are done in Sandbox environment using Sandbox settings.
+| Use global settings | If not enabled, you need to provide specific settings for given payment method.
+| Description | Payment method description displayed during checkout.
+| Enable for shipping method | Payment method may be enabled only for specific shipping methods. In case no shipping method is provided, the payment method is enabled for every shipping method.
+| Virtual orders | Payment method will be enabled for virtual orders
 
-Parametry, które są dostępne dla każdej metody płatności:
+Parameters available for `PayU - bank list`:
 
-| Parametr                 | Opis
-|--------------------------|-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-| Włącz / Wyłącz           | Włącza metodę płatności
-| Nazwa                    | Nazwa metody wyświetlana na stronie wyboru metody płatności
-| Tryb sandbox             | W przypadku włączenia konfiguracja oraz płatności wykonywane są na środowisku Sandbox
-| Użyj wartości globalnych | W przypadku włączenia używane są globalne parametry punktu płatności, w przeciwnym wypadku należy wprowadzić parametry
-| Opis                     | Opis metody wyświetlany po wybraniu jej na stronie wyboru metody płatności
-| Włącz dla metod wysyłki  | Możliwość wyboru dla jakich metod wysyłki będzie dostępna metoda płatności. W przypadku gdy nie wybierzemy żadnej metody wysyłki to metoda płatności jest dostępna dla wszystkich metod wysyłki.
-| Wirtualne zamówienia     | Metoda płatności będzie dostępna dla zamówień wirtualnych
+| Parameter | Description |
+| --------- | ---- |
+| Own ordering | To use your own ordering of payment types, you need to provide a comma-separated list of payment types codes from PayU system. [Payment types list][ext6].
+| Show inactive payment methods | In case a given payment type is not active it is still displayed, but greyed out, otherwise not displayed.
 
-Parametry, które są dodatkowo dostępne dla metody płatności `PayU - lista banków`:
+## Multicurrency
+There are two ways to handle multicurrency:
+### `WMPL` Plugin
+For every currency added to `WPML` plugin you can find separate point of sale configuration.
+### Filters
+The plugin provides two filters, that allow to add support for multiple currencies during payment
 
-| Parametr                          | Opis
-|-----------------------------------|-----------------------------------------------------------------------------------------------------------------------------------------------------
-| Własna kolejność                  | W celu ustalenia kolejności wyświetlanych ikon typów płatności należy podać ich symbole oddzielając je przecinkiem. [Lista typów płatności][ext6].
-| Pokaż nieaktywne metody płatności | W przypadku włączenia, gdy dany typ płatności jest nieaktywny pokazuje się na liście jako wyszarzony, w przeciwnym razie nie jest w ogóle pokazywany
+| Filter name | Description | Type
+| --------- | ---- | ----
+| `woocommerce_payu_multicurrency_active` | Should multicurrency service be enabled | bool
+| `woocommerce_payu_get_currency_codes` | List of currencies ISO codes in ISO 4217 standard e.g. "PLN". | array
 
-## Wielowalutowość
-
-Są dwie możliwości uzyskania wielowalutowości:
-
-### Pluginu `WMPL`
-
-Dla walut dodanych w pluginie `WPML` automatycznie pojawia się osobna konfiguracja punktu płatności dla każdej z walut.
-
-### Filtry
-
-Plugin dostarcza dwa filtry, które umożliwiają dodanie obsługi wielu walut podczas płatności
-
-| Nazwa filtra                            | Opis                                                       | Typ
-|-----------------------------------------|------------------------------------------------------------|------
-| `woocommerce_payu_multicurrency_active` | Czy ma być włączona obsługa wielowalutowości               | bool
-| `woocommerce_payu_get_currency_codes`   | Lista walut w kodów ISO w standardzie ISO 4217, np. "PLN". | array
-
-Przykład:
-
+Example:
 ```php
 function payu_activate_multicurrency($active)
 {
@@ -122,63 +115,55 @@ add_filter('woocommerce_payu_multicurrency_active', 'payu_activate_multicurrency
 add_filter('woocommerce_payu_get_currency_codes', 'payu_set_currency_list');
 ```
 
-Uwagi:
-* W przypadku gdy zainstalowany jest plugin `WMPL` i są skonfigurowane filtry najpierw następuje sprawdzenie dostępności walut w `WMPL` a następnie poprzez filtry.
-* Osobne konfiguracje punktu płatności dla walut będą dostępny gdy liczba walut jest większa od 1.
+Notes:
+*  When the `WMPL` plugin is installed and filters are configured, the availability of currencies is checked in `WMPL` then through the filters. 
+* Seperate point of sale configurations are available when number of currencies is greater than 1.
 
-## Hooki - Filtry
+## Filter hooks
 
-### Zmiana statusu zamówienia
+### Change order status
+| Filter Name                         | Description                              | Type   | Parameters
+|-------------------------------------|------------------------------------------|--------| ----
+| `woocommerce_payu_status_cancelled` | Order status for `CANCELED` notification | string | Order
 
-| Nazwa filtra                        | Opis                                         | Typ    | Parametry
-|-------------------------------------|----------------------------------------------|--------|----------
-| `woocommerce_payu_status_cancelled` | Status zamówienia dla notyfikacji `CANCELED` | string | Order
+## Repayment
+This feature enables the payer to create a new payment for the same order if the previous payment was not successful.
+To use the feature it is necessary to properly configure your POS in PayU, by disabling "Automatic collection" (it is enabled by default). This option is available in PayU panel. You need to go to Online payments then My shops and then POS. "Automatic collection is configured for every payment type, but to disable all at once you can use button at the very bottom, under the payment type list.
 
-## Ponawianie płatności
-Dzięki tej opcji kupujący otrzymuje możliwość skutecznego opłacenia zamówienia, nawet jeśli pierwsza płatność była nieudana (np. brak środków na karcie, problemy z logowaniem do banku itp.).
+Repayment allows to create many payments in PayU for a single WooCommerce order. The plugin will automatically collect the first successful payment, all other will be canceled.
+From user point of view, repayment is possible:
+* by clicking a link in the order confirmation email
+* by clicking "Pay with PayU" link in Actions column in order list
+* by clicking "Pay with PayU" link over order details section
 
-Aby użyć tej opcji, należy również odpowiednio skonfigurować punkt płatności w PayU i wyłączyć automatycznie odbieranie płatności (domyślnie auto-odbiór jest włączony). W tym celu należy zalogować się do panelu PayU, wejść do zakładki "Płatności elektroniczne", następnie wybrać "Moje sklepy" i punkt płatności na danym sklepie. Opcja "Automatyczny odbiór płatności" znajduje się na samym dole, pod listą typów płatności.
+## Credit widget
+Plugin provides seamless integration of [credit widget][ext14]. It's responsible for presenting minimal installment amount for a given product.
+Additionally, after clicking on the widget, information on available repayment plans is presented, as well as a list of deferred payment methods (“buy now, pay later”).
+Functionality is enabled by default. It can be deactivated in administration panel (WooCommerce->Settings->Payments->PayU - installments).
+Integration points of a widget have been described in a table below.
 
-Ponowienie płatności umożliwia zakładanie wielu płatności w PayU do jednego zamówienia w WooCommerce. Wtyczka automatycznie odbierze pierwszą udaną płatność, a pozostałe zostaną anulowane. Ponowienie płatności przez kupującego jest możliwe:
-* poprzez kliknięcie w link znajdujący się w mailu potwierdzającym zamówienie
-* z listy zamówień po kliknięciu w link "Zapłać z PayU" w kolumnie Akcje
-* w szczegółach zamówienia poprzez kliknięcie w link "Zapłać z PayU" znajdujący się nad "Szczegóły zamówienia"
+| Checkbox Installments widget | Description | Presentation |
+| --- | --- | --- |
+| Enabled on product listings | <div style="max-width:200px">Presents "installment from" widget on all product listings.</div> |<div style="max-width:500px">![Prezentacja widgetu](readme_images/credit_widget_listings.jpg)</div>|
+| Enabled on product page | <div style="max-width:200px">Presents widget on product page.</div> |<div style="max-width:500px">![Prezentacja widgetu](readme_images/credit_widget_product_page.jpg)</div>|
+| Enabled on cart page | <div style="max-width:200px">Presents widget on cart page - relates to a total cart amount and shipping costs.</div> |<div style="max-width:500px">![Prezentacja widgetu](readme_images/credit_widget_cart_page.jpg)</div>|
+| Enabled on checkout page | <div style="max-width:200px">Presents widget on checkout page - relates to a total cart amount and shipping costs.</div> |<div style="max-width:500px">![Prezentacja widgetu](readme_images/credit_widget_checkout_page.jpg)</div>|
 
-## Widget kredytowy
-Plugin dostarcza integrację [widgetu kredytowego][ext14]. Prezentuje on minimalną kwotę raty, na którą można zakupić dany towar przy użyciu metody płatności PayU Raty. 
-Ponadto, po klikniciu w widget prezentowana jest informacja o dostępnych planach spłaty, a także lista metod płatności odroczonych tzw. "kup teraz, zapłać później".  
-Funkcjonalność jest domyślnie włączona. Można ją dezaktywować poprzez przełączniki w panelu administracyjnym (WooCommerce->Ustawienia PayU).
-Konkretne punkty integracji widgetu przedstawione zostało w poniższej tabeli.
+Widget is presented only for supported currencies and only for products or carts, which amount is within the allowed amount range for installment or deferred payment methods.
 
-| Przełącznik Widget Raty                     | Opis                                                                                                                                                          | Prezentacja                                                                                              |
-|---------------------------------------------|---------------------------------------------------------------------------------------------------------------------------------------------------------------|----------------------------------------------------------------------------------------------------------|
-| Włączony na listingach                      | <div style="max-width:200px">Dodaje widget na wszystkich listingach produktowych.</div>                                                                       | <div style="max-width:500px">![Prezentacja widgetu](readme_images/credit_widget_listings.jpg)</div>      |
-| Włączony na stronie produktu                | <div style="max-width:200px">Dodaje widget na stronie produktu.</div>                                                                                         | <div style="max-width:500px">![Prezentacja widgetu](readme_images/credit_widget_product_page.jpg)</div>  |
-| Włączony na stronie koszyka                 | <div style="max-width:200px">Dodaje widget na stronie koszyka - wyliczona rata dotyczy całej wartości koszyka wraz z kosztami wysyłki.</div>                  | <div style="max-width:500px">![Prezentacja widgetu](readme_images/credit_widget_cart_page.jpg)</div>     |
-| Włączony na stronie wyboru metody płatności | <div style="max-width:200px">Dodaje widget na stronie wyboru metody płatności  - wyliczona rata dotyczy całej wartości koszyka wraz z kosztami wysyłki.</div> | <div style="max-width:500px">![Prezentacja widgetu](readme_images/credit_widget_checkout_page.jpg)</div> |
+Additionally, in the administration panel, it is possible to limit the types of payments to be displayed in the credit widget.
 
-Widget prezentowany jest tylko dla wspieranych walut i tylko dla produktów i koszyków, których wartość znajduje się w zakresie wspieranych kwot płatności ratalnych lub metod płatności odroczonych.
+## Emails
+The plugin does not send any additional emails and does not interfere with any mailing process.
 
-Dodatkowo, w panelu administracyjnym istnieje możliwość ograniczenia typów płatności, jakie wyświetlane mają być w widgetcie kredytowym.
-
-## Maile
-
-Plugin nie wysyła żadnych dodatkowych maili. Nie ingeruje również w proces, kiedy maile są wysyłane.
-
-W przypadku włączonego ponownienia płatności do maila potwierdzajacego zamówienia dodawana jest informacja o możliwości wykonania płatności: `Jeżeli jeszcze nie opłaciłeś zamówienia możesz to zrobić przechodząc na stronę.`
+In case repayment is configured, the mail confirming order placement is enhanced with information about the possibility to pay the order.
 
 <!--external links:-->
-
 [ext1]: http://php.net/manual/en/book.curl.php
-
 [ext2]: http://php.net/manual/en/book.hash.php
-
-[ext4]: https://www.payu.pl/oferta-handlowa
-
-[ext5]: https://secure.snd.payu.com/boarding/#/registerSandbox/?lang=pl
-
-[ext6]: http://developers.payu.com/pl/overview.html#paymethods
-
-[ext13]: https://www.payu.pl/pomoc
-
-[ext14]: https://developers.payu.com/europe/pl/docs/payment-solutions/credit/installments/#credit-widget-installments
+[ext4]: https://poland.payu.com/en/how-to-activate-payu/
+[ext5]: https://secure.snd.payu.com/boarding/#/registerSandbox/?lang=en
+[ext6]: http://developers.payu.com/en/overview.html#paymethods
+[ext8]: README.PL.md
+[ext13]: https://poland.payu.com/en/support/
+[ext14]: https://developers.payu.com/europe/docs/payment-solutions/credit/installments/#credit-widget-installments
