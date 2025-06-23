@@ -5,7 +5,7 @@
  * Plugin URI: https://github.com/PayU/woo-payu-payment-gateway
  * GitHub Plugin URI: https://github.com/PayU-EMEA/woo-payu-payment-gateway
  * Description: PayU fast online payments for WooCommerce. Banks, BLIK, credit or debit cards, Installments, Apple Pay, Google Pay.
- * Version: 2.7.0
+ * Version: 2.7.1
  * Author: PayU SA
  * Author URI: http://www.payu.com
  * License: Apache License 2.0
@@ -35,7 +35,7 @@ use Payu\PaymentGateway\Gateways\WC_PayuCreditGateway;
 
 require __DIR__ . '/vendor/autoload.php';
 
-define( 'PAYU_PLUGIN_VERSION', '2.7.0' );
+define( 'PAYU_PLUGIN_VERSION', '2.7.1' );
 define( 'PAYU_PLUGIN_FILE', __FILE__ );
 define( 'PAYU_PLUGIN_STATUS_WAITING', 'payu-waiting' );
 

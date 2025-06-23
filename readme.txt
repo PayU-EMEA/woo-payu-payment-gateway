@@ -3,7 +3,7 @@ Contributors: payusa
 Tags: PayU, payment, payment gateway, płatności, credit card
 Requires at least: 5.0
 Tested up to: 6.8.1
-Stable tag: 2.7.0
+Stable tag: 2.7.1
 Requires PHP: 7.4
 License: Apache License 2.0
 
@@ -52,6 +52,9 @@ Yes, it does.
 * For presenting credit payment options like minimal installment amount or "buy now pay later" we used [Credit Widget](https://developers.payu.com/europe/docs/payment-solutions/credit/installments/#credit-widget-installments) and plugin loads the script from the static.payu.com domain.
 
 == Changelog ==
+= 2.7.1 - 2025-06-23 =
+* [Fix] Add missing check for payByLinks array in PayU Installments
+
 = 2.7.0 - 2025-06-11 =
 * [Add] Twisto Slice as separate method
 * [Add] Support more currencies in buy now pay later payments

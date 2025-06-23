@@ -1,3 +1,6 @@
+# 2.7.1 - 2025-06-23
+* [Fix] Add missing check for payByLinks array in PayU Installments
+
 # 2.7.0 - 2025-06-11
 * [Add] Twisto Slice as separate method
 * [Add] Support more currencies in buy now pay later payments
