@@ -19,7 +19,7 @@ class WC_Gateway_PayuInstallments extends WC_Payu_Gateways implements WC_PayuCre
 	public function get_available_paymethods() {
 		$response   = $this->payu_get_paymethods();
 		$payMethods = [];
-		if ( isset( $response ) && $response->getStatus() === 'SUCCESS' ) {
+		if ( isset( $response ) && $response->getStatus() === 'SUCCESS' && $response->getResponse()->payByLinks ) {
 			$pay_by_links = $response->getResponse()->payByLinks;
 			$payMethods   = array_map( fn( $paymethod ) => $paymethod->value, $pay_by_links );
 		}
