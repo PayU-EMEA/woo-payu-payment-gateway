@@ -35,7 +35,6 @@ abstract class CreditWidgetBlock implements IntegrationInterface {
 			$version,
 			true
 		);
-		wp_enqueue_script( 'payu-installments-widget', 'https://static.payu.com/res/v2/widget-mini-installments.js' );
 	}
 
 	public function get_script_handles(): array {
@@ -59,13 +58,18 @@ abstract class CreditWidgetBlock implements IntegrationInterface {
 	}
 
 	private function widget_on_page_enabled(): bool {
-		if ( ! is_any_credit_paymethod_available() ) {
-			return false;
-		}
+        if ( ! $this->is_widget_enabled_in_settings() || ! is_any_credit_paymethod_available() ) {
+            return false;
+        }
+        wp_enqueue_script( 'payu-installments-widget', 'https://static.payu.com/res/v2/widget-mini-installments.js' );
 
-		$payu_settings = get_option( 'payu_settings_option_name', [] );
-		$setting_name  = 'credit_widget_on_' . $this->page . '_page';
-
-		return isset( $payu_settings[ $setting_name ] ) && $payu_settings[ $setting_name ] === 'yes';
+        return true;
 	}
+
+    private function is_widget_enabled_in_settings(): bool {
+        $payu_settings = get_option( 'payu_settings_option_name', [] );
+        $setting_name  = 'credit_widget_on_' . $this->page . '_page';
+
+        return isset( $payu_settings[ $setting_name ] ) && $payu_settings[ $setting_name ] === 'yes';
+    }
 }

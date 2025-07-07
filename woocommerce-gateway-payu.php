@@ -405,7 +405,7 @@ function installments_mini_product() {
     $lang = get_site_language();
     $currency = get_woocommerce_currency();
 
-	wp_enqueue_script( 'payu-installments-widget', 'https://static.payu.com/res/v2/widget-mini-installments.js', [], PAYU_PLUGIN_VERSION );
+	wp_enqueue_script( 'payu-installments-widget', 'https://static.payu.com/res/v2/widget-mini-installments.js' );
 
 	?>
     <div>
@@ -474,7 +474,7 @@ function installments_mini_total() {
     $lang = get_site_language();
     $currency = get_woocommerce_currency();
 
-	wp_enqueue_script( 'payu-installments-widget', 'https://static.payu.com/res/v2/widget-mini-installments.js', [], PAYU_PLUGIN_VERSION );
+	wp_enqueue_script( 'payu-installments-widget', 'https://static.payu.com/res/v2/widget-mini-installments.js' );
 
 	?>
     <tr>
@@ -535,7 +535,7 @@ function installments_mini_aware_product_block( $html, $data, $product ) {
     $lang = get_site_language();
     $currency = get_woocommerce_currency();
 
-	wp_enqueue_script( 'payu-installments-widget', 'https://static.payu.com/res/v2/widget-mini-installments.js', [], PAYU_PLUGIN_VERSION );
+	wp_enqueue_script( 'payu-installments-widget', 'https://static.payu.com/res/v2/widget-mini-installments.js' );
 
 	return "<li class=\"wc-block-grid__product\">
         <div >
