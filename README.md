@@ -139,7 +139,7 @@ From user point of view, repayment is possible:
 ## Credit widget
 Plugin provides seamless integration of [credit widget][ext14]. It's responsible for presenting minimal installment amount for a given product.
 Additionally, after clicking on the widget, information on available repayment plans is presented, as well as a list of deferred payment methods (“buy now, pay later”).
-Functionality is enabled by default. It can be deactivated in administration panel (WooCommerce->Settings->Payments->PayU - installments).
+Functionality is enabled by default. It can be deactivated in administration panel (WooCommerce->PayU settings).
 Integration points of a widget have been described in a table below.
 
 | Checkbox Installments widget | Description | Presentation |
