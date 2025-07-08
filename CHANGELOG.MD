@@ -1,3 +1,6 @@
+# 2.7.2 - 2025-07-09
+* [Fix] Limit widget script load
+
 # 2.7.1 - 2025-06-23
 * [Fix] Add missing check for payByLinks array in PayU Installments
 
