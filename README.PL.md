@@ -64,10 +64,11 @@ Parametry punktu płatności:
 
 Inne parametry - mają zastosowanie do wszystkich modułów:
 
-| Parametr                   | Opis
-|----------------------------|--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-| Domyślny status zamówienia | Status w jaki przejdzie zamówienie po rozpoczęciu płatności. Możliwe wartości to: `Wstrzymane (oczekujące na płatność) - on-hold` i `Oczekujące na płatność - pending`.<br />Zgodnie z dokomentacją WooCommerce w przypadku kontroli stanów magazynowych dla statusu `on-hold` nastąpi zmniejszenie ilości prduktów na magazynie oraz ich przywrócenie gdy zamówienie zmieni status na `canceled`, natomiast przy statusie `pending` stany magazynowe nie będę zmieniane.
-| Włącz ponawianie płatności | Umożliwia płacącemu ponowienie nieudanej płatności. Przed włączeniem proszę o zapoznanie się z rozdziałem [Ponawianie płatności](#ponawianie-płatności).
+| Parametr                                  | Opis
+|-------------------------------------------|--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+| Domyślny status zamówienia                | Status w jaki przejdzie zamówienie po rozpoczęciu płatności. Możliwe wartości to: `Wstrzymane (oczekujące na płatność) - on-hold` i `Oczekujące na płatność - pending`.<br />Zgodnie z dokomentacją WooCommerce w przypadku kontroli stanów magazynowych dla statusu `on-hold` nastąpi zmniejszenie ilości prduktów na magazynie oraz ich przywrócenie gdy zamówienie zmieni status na `canceled`, natomiast przy statusie `pending` stany magazynowe nie będę zmieniane.
+| Status zamówienia dla nieudanej płatności | Status w jaki przejdzie zamówienie po niudanej płatności. Możliwe wartości to: `Anlulowane - canceled` i `Nieudane - failed`.
+| Włącz ponawianie płatności                | Umożliwia płacącemu ponowienie nieudanej płatności. Przed włączeniem proszę o zapoznanie się z rozdziałem [Ponawianie płatności](#ponawianie-płatności).
 
 #### Konfiguracja metod płatności
 

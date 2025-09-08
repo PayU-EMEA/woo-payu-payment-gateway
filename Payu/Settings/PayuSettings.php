@@ -155,6 +155,13 @@ class PayuSettings {
 			'payu_settings_setting_section' // section
 		);
 		add_settings_field(
+			'global_after_canceled_payment_status', // id
+			__( 'Order status for failed payment', 'woo-payu-payment-gateway' ), // title
+			[ $this, 'global_after_canceled_payment_statuses_callback' ], // callback
+			'payu-settings-admin', // page
+			'payu_settings_setting_section' // section
+		);
+		add_settings_field(
 			'global_repayment', // id
 			__( 'Enable repayment', 'woo-payu-payment-gateway' ), // title
 			[ $this, 'global_repayment_callback' ], // callback
@@ -222,6 +229,10 @@ class PayuSettings {
 			$sanitary_values['global_default_on_hold_status'] = sanitize_text_field( $input['global_default_on_hold_status'] );
 		}
 
+		if ( isset( $input['global_after_canceled_payment_status'] ) ) {
+			$sanitary_values['global_after_canceled_payment_status'] = sanitize_text_field( $input['global_after_canceled_payment_status'] );
+		}
+
 		if ( isset( $input['global_repayment'] ) ) {
 			$sanitary_values['global_repayment'] = sanitize_text_field( $input['global_repayment'] );
 		}
@@ -257,12 +268,25 @@ class PayuSettings {
 		<?php
 	}
 
-	public function global_default_on_hold_status_callback(): void {
-		?>
+    public function global_default_on_hold_status_callback(): void {
+        ?>
         <select class="regular-text" type="text" name="payu_settings_option_name[global_default_on_hold_status]"
                 id="global_default_on_hold_status">
-			<?php foreach ( $this->before_payment_statuses() as $key => $value ): ?>
-                <option <?php if ( @$this->payu_settings_options['global_default_on_hold_status'] === $key )
+            <?php foreach ( $this->before_payment_statuses() as $key => $value ): ?>
+                <option <?php if ( isset( $this->payu_settings_options['global_default_on_hold_status'] ) && $this->payu_settings_options['global_default_on_hold_status'] === $key )
+                    echo 'selected="selected"' ?>
+                        value="<?php echo esc_attr( $key ) ?>"><?php echo esc_html( $value ) ?></option>
+            <?php endforeach; ?>
+        </select>
+        <?php
+    }
+
+	public function global_after_canceled_payment_statuses_callback(): void {
+		?>
+        <select class="regular-text" type="text" name="payu_settings_option_name[global_after_canceled_payment_status]"
+                id="global_after_canceled_payment_status">
+			<?php foreach ( $this->after_canceled_payment_statuses() as $key => $value ): ?>
+                <option <?php if ( isset( $this->payu_settings_options['global_after_canceled_payment_status'] ) && $this->payu_settings_options['global_after_canceled_payment_status'] === $key )
 					echo 'selected="selected"' ?>
                         value="<?php echo esc_attr( $key ) ?>"><?php echo esc_html( $value ) ?></option>
 			<?php endforeach; ?>
@@ -299,6 +323,18 @@ class PayuSettings {
 
 		return $available;
 	}
+    public function after_canceled_payment_statuses(): array {
+        $statuses  = wc_get_order_statuses();
+        $available = [];
+        foreach ( $statuses as $key => $value ) {
+            if ( in_array( $key, [ 'wc-cancelled', 'wc-failed' ] ) ) {
+                $available[ str_replace( 'wc-', '', $key ) ] = $value;
+            }
+        }
+        ksort( $available );
+
+        return $available;
+    }
 
 	private function sanitize_excluded_paytypes( array $excluded_paytypes ): array {
 		return array_filter(
