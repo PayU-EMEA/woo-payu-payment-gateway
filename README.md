@@ -62,10 +62,11 @@ POS parameters:
 
 Other parameters - applicable to all modules:
 
-| Parameter | Description
-| --------- | ----
-| Default order status | Status set after payment is started. Possible values  `on-hold` or `pending`.< br/>According to the WooCommerce documentation, when warehouse management is enabled for `on-hold` status, the number of products in the warehouse will be reduced and restored when the order changes to `canceled` status, for `pending` status, the inventory levels will not be changed.
-| Enable repayment | Allows the payer to try again after failed payment. Before using this option please check [Repayment](#repayment).
+| Parameter                       | Description
+|---------------------------------| ----
+| Default order status            | The status that the order will have after the payment process has started. Possible values  `on-hold` or `pending`.< br/>According to the WooCommerce documentation, when warehouse management is enabled for `on-hold` status, the number of products in the warehouse will be reduced and restored when the order changes to `canceled` status, for `pending` status, the inventory levels will not be changed.
+| Order status for failed payment | The status that an order will receive after an unsuccessful payment. Possible values `canceled` or `failed`.
+| Enable repayment                | Allows the payer to try again after failed payment. Before using this option please check [Repayment](#repayment).
 
 #### Payment method configuration
 Parameters available for every payment method:

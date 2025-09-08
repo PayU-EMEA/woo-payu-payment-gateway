@@ -10,6 +10,7 @@ use OpenPayU_Result;
 use OpenPayU_Retrieve;
 use OpenPayuOrderStatus;
 use Payu\PaymentGateway\Cache\OauthCache;
+use Payu\PaymentGateway\Features\WC_Payu_Waiting_Payu_Order_Status;
 use Payu\PaymentGateway\Settings\PayuSettings;
 use WC_Data_Store;
 use WC_Order;
@@ -328,7 +329,7 @@ abstract class WC_Payu_Gateways extends WC_Payment_Gateway implements WC_PayuGat
 			$fields     = PayuSettings::payu_fields();
 			$settings   = [];
 			foreach ( $fields as $field => $desc ) {
-				$field              = $field . $idSuffix;
+				$field              .= $idSuffix;
 				$settings[ $field ] = [
 					'title'             => $namePrefix . $desc['label'],
 					'type'              => 'text',
@@ -1113,7 +1114,8 @@ abstract class WC_Payu_Gateways extends WC_Payment_Gateway implements WC_PayuGat
 					switch ( $status ) {
 						case OpenPayuOrderStatus::STATUS_CANCELED:
 							if ( ! isset( get_option( 'payu_settings_option_name' )['global_repayment'] ) ) {
-								$status = apply_filters( 'woocommerce_payu_status_cancelled', 'cancelled', $order );
+								$status = get_option( 'payu_settings_option_name' )['global_after_canceled_payment_status'] ?? 'cancelled';
+								$status = apply_filters( 'woocommerce_payu_status_cancelled', $status, $order );
 								$order->update_status( $status, __( 'Payment has been cancelled.', 'woo-payu-payment-gateway' ) );
 							}
 							break;
@@ -1127,7 +1129,7 @@ abstract class WC_Payu_Gateways extends WC_Payment_Gateway implements WC_PayuGat
 								$response_order_id = $response->getResponse()->order->orderId;
 								OpenPayU_Order::cancel( $response_order_id );
 							} else {
-								$order->update_status( PAYU_PLUGIN_STATUS_WAITING,
+								$order->update_status( WC_Payu_Waiting_Payu_Order_Status::PAYU_PLUGIN_STATUS_WAITING,
 									__( 'Payment has been put on hold - merchant must approve this payment manually.',
 										'woo-payu-payment-gateway' )
 								);
