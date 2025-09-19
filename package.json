@@ -11,10 +11,12 @@
   "author": "PayU GPO",
   "license": "Apache-2.0",
   "dependencies": {
-    "clsx": "2.1.1"
+    "@wordpress/i18n": "^6.3.0",
+    "clsx": "^2.1.1"
   },
   "devDependencies": {
-    "@woocommerce/dependency-extraction-webpack-plugin": "4.0.0",
-    "@wordpress/scripts": "30.22.0"
+    "@woocommerce/dependency-extraction-webpack-plugin": "^4.0.0",
+    "@wordpress/scripts": "^30.23.0",
+    "webpack-remove-empty-scripts": "^1.1.1"
   }
 }
