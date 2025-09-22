@@ -1,39 +1,31 @@
 const defaultConfig = require( '@wordpress/scripts/config/webpack.config' );
 const WooCommerceDependencyExtractionWebpackPlugin = require( '@woocommerce/dependency-extraction-webpack-plugin' );
-const path = require( 'path' );
+const RemoveEmptyScriptsPlugin = require( 'webpack-remove-empty-scripts' );
 
 module.exports = {
-	...defaultConfig,
-	entry: {
-		payustandard: '/src/js/payustandard',
-		payulistbanks: '/src/js/payulistbanks',
-		payucreditcard: '/src/js/payucreditcard',
-		payusecureform: '/src/js/payusecureform',
-		payupaypo: '/src/js/payupaypo',
-		payuklarna: '/src/js/payuklarna',
-		payutwistopl: '/src/js/payutwistopl',
-		payuinstallments: '/src/js/payuinstallments',
-		payublik: '/src/js/payublik',
-		payutwistoslice: '/src/js/payutwistoslice',
-		creditwidget: '/src/js/creditwidget'
-	},
-	resolve: {
-		extensions: [ '.js', '.jsx', '.tsx', '.ts' ],
-		fallback: {
-			stream: false,
-			path: false,
-			fs: false,
-		},
-	},
-	output: {
-		path: path.resolve( __dirname, 'build/js/' ),
-		filename: '[name].js',
-	},
-	plugins: [
-		...defaultConfig.plugins.filter(
-			( plugin ) =>
-				plugin.constructor.name !== 'DependencyExtractionWebpackPlugin'
-		),
-		new WooCommerceDependencyExtractionWebpackPlugin(),
-	],
+  ...defaultConfig,
+  entry: {
+    'js/payu': '/src/js/payu/main',
+    'css/payu': '/src/css/main.scss',
+    'js/payustandard': '/src/js/payustandard',
+    'js/payulistbanks': '/src/js/payulistbanks',
+    'js/payucreditcard': '/src/js/payucreditcard',
+    'js/payusecureform': '/src/js/payusecureform',
+    'js/payupaypo': '/src/js/payupaypo',
+    'js/payuklarna': '/src/js/payuklarna',
+    'js/payutwistopl': '/src/js/payutwistopl',
+    'js/payuinstallments': '/src/js/payuinstallments',
+    'js/payublik': '/src/js/payublik',
+    'js/payutwistoslice': '/src/js/payutwistoslice',
+    'js/creditwidget': '/src/js/creditwidget',
+  },
+  plugins: [
+    ...defaultConfig.plugins.filter(
+      ( plugin ) =>
+        plugin.constructor.name !== 'DependencyExtractionWebpackPlugin' &&
+        plugin.constructor.name !== 'RtlCssPlugin'
+    ),
+    new RemoveEmptyScriptsPlugin(),
+    new WooCommerceDependencyExtractionWebpackPlugin(),
+  ],
 };

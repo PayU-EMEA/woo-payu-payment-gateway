@@ -11,8 +11,8 @@
  * License: Apache License 2.0
  * Text Domain: woo-payu-payment-gateway
  * Domain Path: /lang
- * WC requires at least: 4.0
- * WC tested up to: 9.9.3
+ * WC requires at least: 6.0
+ * WC tested up to: 10.1.2
  */
 
 use Automattic\WooCommerce\Blocks\Payments\PaymentMethodRegistry;

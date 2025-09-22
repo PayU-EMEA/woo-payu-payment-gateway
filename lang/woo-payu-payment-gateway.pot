@@ -3,7 +3,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PayU Payment Gateway for WooCommerce\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-09-08 06:31+0000\n"
+"POT-Creation-Date: 2025-09-19 08:59+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: PayU\n"
 "Language-Team: \n"
@@ -16,8 +16,8 @@ msgstr ""
 "X-Loco-Version: 2.5.2; wp-5.7\n"
 "X-Domain: woo-payu-payment-gateway"
 
-#: Payu/Gateways/WC_Payu_Gateways.php:987
-#: Payu/Gateways/WC_Payu_Gateways.php:1144
+#: Payu/Gateways/WC_Payu_Gateways.php:988
+#: Payu/Gateways/WC_Payu_Gateways.php:1145
 msgid " for order: "
 msgstr ""
 
@@ -30,27 +30,27 @@ msgstr ""
 msgid "<a href=\"%s\" target=\"_blank\">PayU privacy policy</a>"
 msgstr ""
 
-#: Payu/Features/WC_Payu_Receive_Discard_Payment.php:57
+#: Payu/Features/WC_Payu_Receive_Discard_Payment.php:58
 #, php-format
 msgid "[PayU] Error \"%s\" occurred during accepted payment"
 msgstr ""
 
-#: Payu/Features/WC_Payu_Receive_Discard_Payment.php:75
+#: Payu/Features/WC_Payu_Receive_Discard_Payment.php:77
 #, php-format
 msgid "[PayU] Error \"%s\" occurred during rejected payment"
 msgstr ""
 
-#: Payu/Features/WC_Payu_Receive_Discard_Payment.php:53
+#: Payu/Features/WC_Payu_Receive_Discard_Payment.php:54
 #, php-format
 msgid "[PayU] User %s accepted payment"
 msgstr ""
 
-#: Payu/Features/WC_Payu_Receive_Discard_Payment.php:71
+#: Payu/Features/WC_Payu_Receive_Discard_Payment.php:73
 #, php-format
 msgid "[PayU] User %s rejected payment"
 msgstr ""
 
-#: Payu/Gateways/WC_Payu_Gateways.php:698
+#: Payu/Gateways/WC_Payu_Gateways.php:699
 msgid "Awaiting PayU payment."
 msgstr ""
 
@@ -142,7 +142,7 @@ msgstr ""
 msgid "Description of PayU Payment Gateway that users sees on Checkout page."
 msgstr ""
 
-#: Payu/Features/WC_Payu_Receive_Discard_Payment.php:101
+#: Payu/Features/WC_Payu_Receive_Discard_Payment.php:103
 msgid "Discard payment"
 msgstr ""
 
@@ -200,7 +200,7 @@ msgstr ""
 msgid "First key from \"Configuration Keys\" section of PayU management panel."
 msgstr ""
 
-#: Payu/Gateways/WC_Payu_Gateways.php:1100
+#: Payu/Gateways/WC_Payu_Gateways.php:1101
 msgid "has status"
 msgstr ""
 
@@ -231,7 +231,7 @@ msgid ""
 "please register in Sandbox</a>."
 msgstr ""
 
-#: Payu/Gateways/WC_Payu_Gateways.php:1207
+#: Payu/Gateways/WC_Payu_Gateways.php:1208
 msgid "If you have not yet paid for the order, you can do so by going to"
 msgstr ""
 
@@ -289,19 +289,19 @@ msgstr ""
 msgid "Pay with Twisto pay in 3"
 msgstr ""
 
-#: Payu/Gateways/WC_Payu_Gateways.php:711
+#: Payu/Gateways/WC_Payu_Gateways.php:712
 msgid "Payment error. Status code: "
 msgstr ""
 
-#: Payu/Gateways/WC_Payu_Gateways.php:714
+#: Payu/Gateways/WC_Payu_Gateways.php:715
 msgid "Payment error: "
 msgstr ""
 
-#: Payu/Gateways/WC_Payu_Gateways.php:1119
+#: Payu/Gateways/WC_Payu_Gateways.php:1120
 msgid "Payment has been cancelled."
 msgstr ""
 
-#: Payu/Gateways/WC_Payu_Gateways.php:1133
+#: Payu/Gateways/WC_Payu_Gateways.php:1134
 msgid ""
 "Payment has been put on hold - merchant must approve this payment manually."
 msgstr ""
@@ -368,6 +368,10 @@ msgstr ""
 msgid "PayU installments"
 msgstr ""
 
+#: templates/thank-you-pending.php:12
+msgid "PayU payment"
+msgstr ""
+
 #. Name of the plugin
 msgid "PayU Payment Gateway for WooCommerce"
 msgstr ""
@@ -398,12 +402,12 @@ msgstr ""
 msgid "read more"
 msgstr ""
 
-#: Payu/Features/WC_Payu_Receive_Discard_Payment.php:99
+#: Payu/Features/WC_Payu_Receive_Discard_Payment.php:101
 msgid "Receive payment"
 msgstr ""
 
-#: Payu/Gateways/WC_Payu_Gateways.php:987
-#: Payu/Gateways/WC_Payu_Gateways.php:1143
+#: Payu/Gateways/WC_Payu_Gateways.php:988
+#: Payu/Gateways/WC_Payu_Gateways.php:1144
 msgid "Refund of: "
 msgstr ""
 
@@ -480,8 +484,8 @@ msgid ""
 "shared with merchants to inform them about the status of the payment."
 msgstr ""
 
-#: Payu/Gateways/WC_Payu_Gateways.php:1209
 #: Payu/Gateways/WC_Payu_Gateways.php:1210
+#: Payu/Gateways/WC_Payu_Gateways.php:1211
 msgid "the website"
 msgstr ""
 
@@ -491,6 +495,11 @@ msgstr ""
 
 #: Payu/Gateways/WC_Payu_Gateways.php:299
 msgid "Title of PayU Payment Gateway that users sees on Checkout page."
+msgstr ""
+
+#: Payu/Features/WC_Payu_Status_Retrieval_On_Thank_You.php:74
+#: src/js/payu/payment-result.ts:30
+msgid "Unknown Error"
 msgstr ""
 
 #: Payu/Gateways/WC_Payu_Gateways.php:310
@@ -507,6 +516,10 @@ msgstr ""
 
 #: Payu/Gateways/WC_Payu_Gateways.php:375
 msgid "Virtual orders"
+msgstr ""
+
+#: templates/thank-you-pending.php:15
+msgid "Wait for the payment result"
 msgstr ""
 
 #: Payu/Gateways/WC_Payu_Gateways.php:177 src/js/payublik.js:75
@@ -545,6 +558,18 @@ msgstr ""
 #: Payu/Gateways/WC_Payu_Gateways.php:246
 #: Payu/Gateways/WC_Payu_Gateways.php:253
 msgid "You will be redirected to the payment method page."
+msgstr ""
+
+#: src/js/payu/payment-result.ts:46
+msgid "Your payment failed."
+msgstr ""
+
+#: src/js/payu/payment-result.ts:53
+msgid "Your payment is being processed."
+msgstr ""
+
+#: src/js/payu/payment-result.ts:40
+msgid "Your payment was successful."
 msgstr ""
 
 #: Payu/Gateways/WC_Payu_Gateways.php:173 src/js/payublik.js:65

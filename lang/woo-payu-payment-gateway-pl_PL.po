@@ -8,7 +8,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "POT-Creation-Date: 2021-03-26 10:13+0000\n"
-"PO-Revision-Date: 2025-09-08 06:32+0000\n"
+"PO-Revision-Date: 2025-09-19 08:59+0000\n"
 "Language: pl_PL\n"
 "Plural-Forms: nplurals=3; plural=(n==1 ? 0 : n%10 >= 2 && n%10<=4 "
 "&&(n%100<10||n%100 >= 20)? 1 : 2);\n"
@@ -16,8 +16,8 @@ msgstr ""
 "X-Loco-Version: 2.8.0; wp-6.8.1; php-8.2.28\n"
 "X-Domain: woo-payu-payment-gateway\n"
 
-#: Payu/Gateways/WC_Payu_Gateways.php:987
-#: Payu/Gateways/WC_Payu_Gateways.php:1144
+#: Payu/Gateways/WC_Payu_Gateways.php:988
+#: Payu/Gateways/WC_Payu_Gateways.php:1145
 msgid " for order: "
 msgstr " dla zamówienia:"
 
@@ -30,27 +30,27 @@ msgstr "\"Zasady płatności PayU\""
 msgid "<a href=\"%s\" target=\"_blank\">PayU privacy policy</a>"
 msgstr "<a href=\"%s\" target=\"_blank\">Polityce prywatności PayU</a>"
 
-#: Payu/Features/WC_Payu_Receive_Discard_Payment.php:57
+#: Payu/Features/WC_Payu_Receive_Discard_Payment.php:58
 #, php-format
 msgid "[PayU] Error \"%s\" occurred during accepted payment"
 msgstr "[PayU] Wystąpił błąd \"%s\" podczas akceptacji płatności"
 
-#: Payu/Features/WC_Payu_Receive_Discard_Payment.php:75
+#: Payu/Features/WC_Payu_Receive_Discard_Payment.php:77
 #, php-format
 msgid "[PayU] Error \"%s\" occurred during rejected payment"
 msgstr "[PayU] Wystąpił błąd \"%s\" podczas odrzucania płatności"
 
-#: Payu/Features/WC_Payu_Receive_Discard_Payment.php:53
+#: Payu/Features/WC_Payu_Receive_Discard_Payment.php:54
 #, php-format
 msgid "[PayU] User %s accepted payment"
 msgstr "[PayU] Użytkownik %s zaakceptował płatność"
 
-#: Payu/Features/WC_Payu_Receive_Discard_Payment.php:71
+#: Payu/Features/WC_Payu_Receive_Discard_Payment.php:73
 #, php-format
 msgid "[PayU] User %s rejected payment"
 msgstr "[PayU] Użytkownik %s odrzucił płatność"
 
-#: Payu/Gateways/WC_Payu_Gateways.php:698
+#: Payu/Gateways/WC_Payu_Gateways.php:699
 msgid "Awaiting PayU payment."
 msgstr "Oczekiwanie na płatność PayU."
 
@@ -150,7 +150,7 @@ msgstr "Opis"
 msgid "Description of PayU Payment Gateway that users sees on Checkout page."
 msgstr "Opis płatności PayU widoczny przez kupującego na stronie zamówienia."
 
-#: Payu/Features/WC_Payu_Receive_Discard_Payment.php:101
+#: Payu/Features/WC_Payu_Receive_Discard_Payment.php:103
 msgid "Discard payment"
 msgstr "Odrzuć płatność"
 
@@ -214,7 +214,7 @@ msgstr "Ważna do"
 msgid "First key from \"Configuration Keys\" section of PayU management panel."
 msgstr "Pierwszy klucz (MD5) z sekcji Klucze konfiguracji w panelu managera."
 
-#: Payu/Gateways/WC_Payu_Gateways.php:1100
+#: Payu/Gateways/WC_Payu_Gateways.php:1101
 msgid "has status"
 msgstr "ma status"
 
@@ -252,7 +252,7 @@ msgstr ""
 "com/boarding/#/registerSandbox/?lang=pl\" target=\"_blank\" rel=\"nofollow\">"
 "zarejestruj się w systemie sandbox</a>."
 
-#: Payu/Gateways/WC_Payu_Gateways.php:1207
+#: Payu/Gateways/WC_Payu_Gateways.php:1208
 msgid "If you have not yet paid for the order, you can do so by going to"
 msgstr ""
 "Jeżeli jeszcze nie opłaciłeś zamówienia możesz to zrobić przechodząc na"
@@ -311,19 +311,19 @@ msgstr "Zapłać z PayU"
 msgid "Pay with Twisto pay in 3"
 msgstr "Płacę z Twisto podziel na 3"
 
-#: Payu/Gateways/WC_Payu_Gateways.php:711
+#: Payu/Gateways/WC_Payu_Gateways.php:712
 msgid "Payment error. Status code: "
 msgstr "Błąd płatności. Kod błędu: "
 
-#: Payu/Gateways/WC_Payu_Gateways.php:714
+#: Payu/Gateways/WC_Payu_Gateways.php:715
 msgid "Payment error: "
 msgstr "Błąd płatności: "
 
-#: Payu/Gateways/WC_Payu_Gateways.php:1119
+#: Payu/Gateways/WC_Payu_Gateways.php:1120
 msgid "Payment has been cancelled."
 msgstr "Płatność została anulowana."
 
-#: Payu/Gateways/WC_Payu_Gateways.php:1133
+#: Payu/Gateways/WC_Payu_Gateways.php:1134
 msgid ""
 "Payment has been put on hold - merchant must approve this payment manually."
 msgstr ""
@@ -395,6 +395,10 @@ msgstr ""
 msgid "PayU installments"
 msgstr "Raty PayU"
 
+#: templates/thank-you-pending.php:12
+msgid "PayU payment"
+msgstr "Płatność PayU"
+
 #. Name of the plugin
 msgid "PayU Payment Gateway for WooCommerce"
 msgstr "Płatności PayU dla WooCommerce"
@@ -425,12 +429,12 @@ msgstr "Id punktu płatności z sekcji Klucze konfiguracji w panelu managera."
 msgid "read more"
 msgstr "więcej"
 
-#: Payu/Features/WC_Payu_Receive_Discard_Payment.php:99
+#: Payu/Features/WC_Payu_Receive_Discard_Payment.php:101
 msgid "Receive payment"
 msgstr "Odbierz płatność"
 
-#: Payu/Gateways/WC_Payu_Gateways.php:987
-#: Payu/Gateways/WC_Payu_Gateways.php:1143
+#: Payu/Gateways/WC_Payu_Gateways.php:988
+#: Payu/Gateways/WC_Payu_Gateways.php:1144
 msgid "Refund of: "
 msgstr "Zwrot: "
 
@@ -522,8 +526,8 @@ msgstr ""
 "wymiaru sprawiedliwości. Twoje dane mogą zostać udostępnione akceptantom "
 "celem poinformowania ich o statusie realizacji płatności."
 
-#: Payu/Gateways/WC_Payu_Gateways.php:1209
 #: Payu/Gateways/WC_Payu_Gateways.php:1210
+#: Payu/Gateways/WC_Payu_Gateways.php:1211
 msgid "the website"
 msgstr "stronę"
 
@@ -534,6 +538,11 @@ msgstr "Nazwa"
 #: Payu/Gateways/WC_Payu_Gateways.php:299
 msgid "Title of PayU Payment Gateway that users sees on Checkout page."
 msgstr "Nazwa płatności PayU widoczna przez kupującego na stronie zamówienia."
+
+#: Payu/Features/WC_Payu_Status_Retrieval_On_Thank_You.php:74
+#: src/js/payu/payment-result.ts:30
+msgid "Unknown Error"
+msgstr "Nieznany błąd"
 
 #: Payu/Gateways/WC_Payu_Gateways.php:310
 msgid "Use global values"
@@ -550,6 +559,10 @@ msgstr "Używaj środowiska sandbox."
 #: Payu/Gateways/WC_Payu_Gateways.php:375
 msgid "Virtual orders"
 msgstr "Wirtualne zamówienia"
+
+#: templates/thank-you-pending.php:15
+msgid "Wait for the payment result"
+msgstr "Poczekaj na wynik płatności"
 
 #: Payu/Gateways/WC_Payu_Gateways.php:177 src/js/payublik.js:75
 #: src/js/payulistbanks.js:78 src/js/payusecureform.js:87
@@ -595,6 +608,18 @@ msgstr "Przekierujemy Cię na stronę wprowadzenia kodu BLIK."
 #: Payu/Gateways/WC_Payu_Gateways.php:253
 msgid "You will be redirected to the payment method page."
 msgstr "Przekierujemy Cię na stronę metody płatności."
+
+#: src/js/payu/payment-result.ts:46
+msgid "Your payment failed."
+msgstr "Twoja płatność nie powiodła się."
+
+#: src/js/payu/payment-result.ts:53
+msgid "Your payment is being processed."
+msgstr "Twoja płatność jest przetwarzana."
+
+#: src/js/payu/payment-result.ts:40
+msgid "Your payment was successful."
+msgstr "Twoja płatność została zrealizowana pomyślnie."
 
 #: Payu/Gateways/WC_Payu_Gateways.php:173 src/js/payublik.js:65
 #: src/js/payulistbanks.js:68 src/js/payusecureform.js:77

@@ -41,8 +41,8 @@ class WC_Payu_Receive_Discard_Payment {
 					if ( isset( $_GET['receive-payment'] ) && ! isset( $_GET['discard-payment'] ) ) {
 						$orderId             = $order->get_transaction_id();
 						$status_update       = [
-							"orderId"     => $orderId,
-							"orderStatus" => OpenPayuOrderStatus::STATUS_COMPLETED
+							'orderId'     => $orderId,
+							'orderStatus' => OpenPayuOrderStatus::STATUS_COMPLETED
 						];
 						$payment_method_name = $order->get_payment_method();
 						$payment_init        = WC_Payu_Gateways::gateways_list()[ $payment_method_name ]['class'];
@@ -50,12 +50,13 @@ class WC_Payu_Receive_Discard_Payment {
 						$payment->init_OpenPayU( $order->get_currency() );
 						try {
 							OpenPayU_Order::statusUpdate( $status_update );
-							$order->add_order_note( sprintf( __( '[PayU] User %s accepted payment', 'woo-payu-payment-gateway' ),
-								$user_nickname ) );
-
+							$order->add_order_note(
+								sprintf( __( '[PayU] User %s accepted payment', 'woo-payu-payment-gateway' ), $user_nickname )
+							);
 						} catch ( OpenPayU_Exception $e ) {
-							$order->add_order_note( sprintf( __( '[PayU] Error "%s" occurred during accepted payment', 'woo-payu-payment-gateway' ),
-								$e->getMessage() ) );
+							$order->add_order_note(
+								sprintf( __( '[PayU] Error "%s" occurred during accepted payment', 'woo-payu-payment-gateway' ), $e->getMessage() )
+							);
 						}
 						wp_redirect( $url_return );
 					}
@@ -68,12 +69,13 @@ class WC_Payu_Receive_Discard_Payment {
 						$orderId = $order->get_transaction_id();
 						try {
 							OpenPayU_Order::cancel( $orderId );
-							$order->add_order_note( sprintf( __( '[PayU] User %s rejected payment', 'woo-payu-payment-gateway' ),
-								$user_nickname ) );
-
+							$order->add_order_note(
+								sprintf( __( '[PayU] User %s rejected payment', 'woo-payu-payment-gateway' ), $user_nickname )
+							);
 						} catch ( OpenPayU_Exception $e ) {
-							$order->add_order_note( sprintf( __( '[PayU] Error "%s" occurred during rejected payment', 'woo-payu-payment-gateway' ),
-								$e->getMessage() ) );
+							$order->add_order_note(
+								sprintf( __( '[PayU] Error "%s" occurred during rejected payment', 'woo-payu-payment-gateway' ), $e->getMessage() )
+							);
 						}
 						wp_redirect( $url_return );
 					}
