@@ -24,14 +24,14 @@ class WC_Payu_Status_Retrieval_On_Thank_You {
 		$payu_gateways = WC_Payu_Gateways::gateways_list();
 
 		if ( isset( $payu_gateways[ $order->get_payment_method() ] ) ) {
-			if ( $order->has_status( wc_get_is_paid_statuses() ) || $order->has_status( [ 'failed' ] ) ) {
+			if ( $order->has_status( [ 'failed' ] ) || $order->has_status( [ 'cancelled' ] ) || $order->has_status( wc_get_is_paid_statuses() ) ) {
 				// do nothing
-			} elseif ( $order->has_status( [ 'cancelled' ] ) ) {
-				WC_Payu::template( 'thank-you-cancelled' );
 			} else {
 				$this->load_assets();
-				$url = get_rest_url() . 'payu/status/' . $order->get_id() . '/?key=' . $order->get_order_key();
-				WC_Payu::template( 'thank-you-pending', [ 'url' => $url ] );
+				$status_url = get_rest_url() . 'payu/status/' . $order->get_id() . '/?key=' . $order->get_order_key();
+				$payment_url = $order->get_checkout_payment_url();
+
+				WC_Payu::template( 'thank-you-pending', [ 'status_url' => $status_url, 'payment_url' => $payment_url ] );
 			}
 		}
 	}
@@ -80,9 +80,9 @@ class WC_Payu_Status_Retrieval_On_Thank_You {
 			$response = [ 'status' => 'success' ];
 		} else if ( in_array( $order_status, [
 			'failed',
-			'canceled'
+			'cancelled'
 		], true ) ) {
-			$response = [ 'status' => 'failed' ];
+			$response = [ 'status' => $order_status ];
 		} else {
 			$response = [ 'status' => 'pending' ];
 		}

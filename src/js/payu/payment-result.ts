@@ -9,9 +9,19 @@ window.addEventListener( 'DOMContentLoaded', () => {
     'payu-payment-status-result'
   );
 
-  const showResult = ( header: string ) => {
-    statusResultElement.innerHTML = `<h3>${ header }</h3>`;
+  const statusResultElementLink = document.getElementById(
+    'payu-payment-status-result-pay-link'
+  );
+
+  const showResult = ( header: string, withPayLink = false ) => {
+    statusResultElement.insertAdjacentHTML(
+      'afterbegin',
+      `<h3>${ header }</h3>`
+    );
     statusWaitingElement.style.display = 'none';
+    if ( withPayLink ) {
+      statusResultElementLink.style.display = 'block';
+    }
   };
 
   const getStatus = async ( counter: number ) => {
@@ -42,7 +52,11 @@ window.addEventListener( 'DOMContentLoaded', () => {
 
         return true;
       case 'failed':
-        showResult( __( 'Your payment failed.', 'woo-payu-payment-gateway' ) );
+      case 'cancelled':
+        showResult(
+          __( 'Your payment failed.', 'woo-payu-payment-gateway' ),
+          status === 'failed'
+        );
 
         return true;
       default:
