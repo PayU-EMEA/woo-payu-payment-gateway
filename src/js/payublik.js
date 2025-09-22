@@ -52,7 +52,7 @@ const TermInfo = () => {
         </div>
         <div>
           { __(
-            'The controller of your personal data is PayU S.A. with its registered office in Poznan (60-166), at Grunwaldzka Street 186 ("PayU").',
+            'The controller of your personal data is PayU S.A. with its registered office in Poznan (60–166), at Grunwaldzka Street 186 ("PayU").',
             'woo-payu-payment-gateway'
           ) }{ ' ' }
           { ! showMore2 && (
@@ -63,7 +63,7 @@ const TermInfo = () => {
           { showMore2 && (
             <>
               { __(
-                'Your personal data will be processed for purposes of processing  payment transaction, notifying You about the status of this payment, dealing with complaints and also in order to fulfill the legal obligations imposed on PayU.',
+                'Your personal data will be processed for purposes of processing payment transaction, notifying You about the status of this payment, dealing with complaints and also in order to fulfill the legal obligations imposed on PayU.',
                 'woo-payu-payment-gateway'
               ) }
               <br />
@@ -73,9 +73,9 @@ const TermInfo = () => {
               ) }
               <br />
               { __(
-                'You have the right to access, rectify, restrict or oppose the processing of data, not to be subject to automated decision making, including profiling, or to transfer and erase Your personal data. Providing personal data is voluntary however necessary for the processing the payment and failure to provide the data may result in the rejection of the payment. For more information on how PayU processes your personal data, please click ',
+                'You have the right to access, rectify, restrict or oppose the processing of data, not to be subject to automated decision making, including profiling, or to transfer and erase Your personal data. Providing personal data is voluntary however necessary for the processing the payment and failure to provide the data may result in the rejection of the payment. For more information on how PayU processes your personal data, please click',
                 'woo-payu-payment-gateway'
-              ) }
+              ) }{ ' ' }
               <a href={ privacyUrl } target="_blank" rel="noreferrer">
                 { __( 'PayU privacy policy', 'woo-payu-payment-gateway' ) }
               </a>

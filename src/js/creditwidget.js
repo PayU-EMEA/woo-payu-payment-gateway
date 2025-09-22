@@ -17,16 +17,15 @@ const lang = decodeEntities( settings.lang ) || '';
 const currency = decodeEntities( settings.currency ) || '';
 
 function getTotal( cart ) {
-    if (
-        cart?.cartTotals?.total_price &&
-        cart?.cartTotals?.currency_minor_unit
-    ) {
-        const { total_price, currency_minor_unit } = cart.cartTotals;
-        return Number(total_price / 10 ** currency_minor_unit);
-    }
-    return 0;
+  if (
+    cart?.cartTotals?.total_price &&
+    cart?.cartTotals?.currency_minor_unit
+  ) {
+    const { total_price, currency_minor_unit } = cart.cartTotals;
+    return Number( total_price / 10 ** currency_minor_unit );
+  }
+  return 0;
 }
-
 
 function Widget( { cart } ) {
   useEffect( () => {
