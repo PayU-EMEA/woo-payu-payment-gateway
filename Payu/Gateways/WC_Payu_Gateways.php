@@ -104,29 +104,45 @@ abstract class WC_Payu_Gateways extends WC_Payment_Gateway implements WC_PayuGat
 		];
 	}
 
-	public function enqueue_payu_gateway_assets() {
+	public function enqueue_payu_gateway_assets(): void {
 		wp_enqueue_script( 'payu-gateway', plugins_url( '/assets/js/payu-gateway.js', PAYU_PLUGIN_FILE ),
 			[ 'jquery' ], PAYU_PLUGIN_VERSION, true );
 		wp_enqueue_style( 'payu-gateway', plugins_url( '/assets/css/payu-gateway.css', PAYU_PLUGIN_FILE ),
 			[], PAYU_PLUGIN_VERSION );
 	}
 
-	/**
-	 * @return OpenPayU_Result
-	 */
-	protected function payu_get_paymethods() {
+	protected function payu_get_paymethods(): ?OpenPayU_Result {
 		$this->init_OpenPayU();
-		if ( isset( static::$paymethods[ $this->pos_id ] ) ) {
-			return static::$paymethods[ $this->pos_id ];
-		} else {
-			try {
-				static::$paymethods[ $this->pos_id ] = OpenPayU_Retrieve::payMethods();
 
-				return static::$paymethods[ $this->pos_id ];
-			} catch ( OpenPayU_Exception $e ) {
-				unset( $e );
-			}
+		if ( isset( static::$paymethods[ $this->pos_id ] )
+		     && static::$paymethods[ $this->pos_id ] instanceof OpenPayU_Result ) {
+			return static::$paymethods[ $this->pos_id ];
 		}
+
+		$key = 'payu_payment_methods_for_' . $this->pos_id;
+
+		$payment_methods = get_transient( $key );
+
+		if ( $payment_methods instanceof OpenPayU_Result ) {
+			static::$paymethods[ $this->pos_id ] = $payment_methods;
+
+			return static::$paymethods[ $this->pos_id ];
+		}
+
+		if ( false !== $payment_methods ) {
+			delete_transient( $key );
+		}
+
+		try {
+			static::$paymethods[ $this->pos_id ] = OpenPayU_Retrieve::payMethods();
+			set_transient( $key, static::$paymethods[ $this->pos_id ], 60 );
+
+			return static::$paymethods[ $this->pos_id ];
+		} catch ( OpenPayU_Exception $e ) {
+			// do nothing
+		}
+
+		return null;
 	}
 
 	protected function get_condition_url(): string {
@@ -183,80 +199,80 @@ abstract class WC_Payu_Gateways extends WC_Payment_Gateway implements WC_PayuGat
 		echo '</div>';
 	}
 
-    public static function gateways_list(): array {
-        return [
-            'payustandard'     => [
-                'name'                => __( 'PayU - standard', 'woo-payu-payment-gateway' ),
-                'front_name'          => __( 'Online payment by PayU', 'woo-payu-payment-gateway' ),
-                'default_description' => __( 'You will be redirected to a payment method selection page.', 'woo-payu-payment-gateway' ),
-                'api'                 => 'WC_Gateway_PayuStandard',
-                'class'               => WC_Gateway_PayuStandard::class
-            ],
-            'payulistbanks'    => [
-                'name'                => __( 'PayU - list banks', 'woo-payu-payment-gateway' ),
-                'front_name'          => __( 'Online payment by PayU', 'woo-payu-payment-gateway' ),
-                'default_description' => __( 'Choose payment method.', 'woo-payu-payment-gateway' ),
-                'api'                 => 'WC_Gateway_PayuListBanks',
-                'class'               => WC_Gateway_PayuListBanks::class
-            ],
-            'payucreditcard'   => [
-                'name'                => __( 'PayU - credit card', 'woo-payu-payment-gateway' ),
-                'front_name'          => __( 'Card payment with PayU', 'woo-payu-payment-gateway' ),
-                'default_description' => __( 'You will be redirected to a card form.', 'woo-payu-payment-gateway' ),
-                'api'                 => 'WC_Gateway_PayuCreditCard',
-                'class'               => WC_Gateway_PayuCreditCard::class
-            ],
-            'payusecureform'   => [
-                'name'                => __( 'PayU - secure form', 'woo-payu-payment-gateway' ),
-                'front_name'          => __( 'Card payment with PayU', 'woo-payu-payment-gateway' ),
-                'default_description' => __( 'You may be redirected to a payment confirmation page.', 'woo-payu-payment-gateway' ),
-                'api'                 => 'WC_Gateway_PayuSecureForm',
-                'class'               => WC_Gateway_PayuSecureForm::class
-            ],
-            'payublik'         => [
-                'name'                => __( 'PayU - Blik', 'woo-payu-payment-gateway' ),
-                'front_name'          => __( 'Blik', 'woo-payu-payment-gateway' ),
-                'default_description' => __( 'You will be redirected to BLIK.', 'woo-payu-payment-gateway' ),
-                'api'                 => 'WC_Gateway_PayuBlik',
-                'class'               => WC_Gateway_PayuBlik::class
-            ],
-            'payuinstallments' => [
-                'name'                => __( 'PayU - installments', 'woo-payu-payment-gateway' ),
-                'front_name'          => __( 'PayU installments', 'woo-payu-payment-gateway' ),
-                'default_description' => __( 'You will be redirected to an installment payment application.', 'woo-payu-payment-gateway' ),
-                'api'                 => 'WC_Gateway_PayuInstallments',
-                'class'               => WC_Gateway_PayuInstallments::class
-            ],
-            'payuklarna'       => [
-                'name'                => __( 'PayU - Klarna', 'woo-payu-payment-gateway' ),
-                'front_name'          => __( 'Pay later with Klarna', 'woo-payu-payment-gateway' ),
-                'default_description' => __( 'You will be redirected to the payment method page.', 'woo-payu-payment-gateway' ),
-                'api'                 => 'WC_Gateway_PayuKlarna',
-                'class'               => WC_Gateway_PayuKlarna::class
-            ],
-            'payupaypo'        => [
-                'name'                => __( 'PayU - PayPo', 'woo-payu-payment-gateway' ),
-                'front_name'          => __( 'Pay later with PayPo', 'woo-payu-payment-gateway' ),
-                'default_description' => __( 'You will be redirected to the payment method page.', 'woo-payu-payment-gateway' ),
-                'api'                 => 'WC_Gateway_PayuPaypo',
-                'class'               => WC_Gateway_PayuPaypo::class
-            ],
-            'payutwistopl'     => [
-                'name'                => __( 'PayU - Twisto', 'woo-payu-payment-gateway' ),
-                'front_name'          => __( 'Pay later with Twisto', 'woo-payu-payment-gateway' ),
-                'default_description' => __( 'You will be redirected to the payment method page.', 'woo-payu-payment-gateway' ),
-                'api'                 => 'WC_Gateway_PayuTwistoPl',
-                'class'               => WC_Gateway_PayuTwistoPl::class
-            ],
-            'payutwistoslice'     => [
-                'name'                => __( 'PayU - Twisto pay in 3', 'woo-payu-payment-gateway' ),
-                'front_name'          => __( 'Pay with Twisto pay in 3', 'woo-payu-payment-gateway' ),
-                'default_description' => __( 'You will be redirected to the payment method page.', 'woo-payu-payment-gateway' ),
-                'api'                 => 'WC_Gateway_PayuTwistoSlice',
-                'class'               => WC_Gateway_PayuTwistoSlice::class
-            ],
-        ];
-    }
+	public static function gateways_list(): array {
+		return [
+			'payustandard'     => [
+				'name'                => __( 'PayU - standard', 'woo-payu-payment-gateway' ),
+				'front_name'          => __( 'Online payment by PayU', 'woo-payu-payment-gateway' ),
+				'default_description' => __( 'You will be redirected to a payment method selection page.', 'woo-payu-payment-gateway' ),
+				'api'                 => 'WC_Gateway_PayuStandard',
+				'class'               => WC_Gateway_PayuStandard::class
+			],
+			'payulistbanks'    => [
+				'name'                => __( 'PayU - list banks', 'woo-payu-payment-gateway' ),
+				'front_name'          => __( 'Online payment by PayU', 'woo-payu-payment-gateway' ),
+				'default_description' => __( 'Choose payment method.', 'woo-payu-payment-gateway' ),
+				'api'                 => 'WC_Gateway_PayuListBanks',
+				'class'               => WC_Gateway_PayuListBanks::class
+			],
+			'payucreditcard'   => [
+				'name'                => __( 'PayU - credit card', 'woo-payu-payment-gateway' ),
+				'front_name'          => __( 'Card payment with PayU', 'woo-payu-payment-gateway' ),
+				'default_description' => __( 'You will be redirected to a card form.', 'woo-payu-payment-gateway' ),
+				'api'                 => 'WC_Gateway_PayuCreditCard',
+				'class'               => WC_Gateway_PayuCreditCard::class
+			],
+			'payusecureform'   => [
+				'name'                => __( 'PayU - secure form', 'woo-payu-payment-gateway' ),
+				'front_name'          => __( 'Card payment with PayU', 'woo-payu-payment-gateway' ),
+				'default_description' => __( 'You may be redirected to a payment confirmation page.', 'woo-payu-payment-gateway' ),
+				'api'                 => 'WC_Gateway_PayuSecureForm',
+				'class'               => WC_Gateway_PayuSecureForm::class
+			],
+			'payublik'         => [
+				'name'                => __( 'PayU - Blik', 'woo-payu-payment-gateway' ),
+				'front_name'          => __( 'Blik', 'woo-payu-payment-gateway' ),
+				'default_description' => __( 'You will be redirected to BLIK.', 'woo-payu-payment-gateway' ),
+				'api'                 => 'WC_Gateway_PayuBlik',
+				'class'               => WC_Gateway_PayuBlik::class
+			],
+			'payuinstallments' => [
+				'name'                => __( 'PayU - installments', 'woo-payu-payment-gateway' ),
+				'front_name'          => __( 'PayU installments', 'woo-payu-payment-gateway' ),
+				'default_description' => __( 'You will be redirected to an installment payment application.', 'woo-payu-payment-gateway' ),
+				'api'                 => 'WC_Gateway_PayuInstallments',
+				'class'               => WC_Gateway_PayuInstallments::class
+			],
+			'payuklarna'       => [
+				'name'                => __( 'PayU - Klarna', 'woo-payu-payment-gateway' ),
+				'front_name'          => __( 'Pay later with Klarna', 'woo-payu-payment-gateway' ),
+				'default_description' => __( 'You will be redirected to the payment method page.', 'woo-payu-payment-gateway' ),
+				'api'                 => 'WC_Gateway_PayuKlarna',
+				'class'               => WC_Gateway_PayuKlarna::class
+			],
+			'payupaypo'        => [
+				'name'                => __( 'PayU - PayPo', 'woo-payu-payment-gateway' ),
+				'front_name'          => __( 'Pay later with PayPo', 'woo-payu-payment-gateway' ),
+				'default_description' => __( 'You will be redirected to the payment method page.', 'woo-payu-payment-gateway' ),
+				'api'                 => 'WC_Gateway_PayuPaypo',
+				'class'               => WC_Gateway_PayuPaypo::class
+			],
+			'payutwistopl'     => [
+				'name'                => __( 'PayU - Twisto', 'woo-payu-payment-gateway' ),
+				'front_name'          => __( 'Pay later with Twisto', 'woo-payu-payment-gateway' ),
+				'default_description' => __( 'You will be redirected to the payment method page.', 'woo-payu-payment-gateway' ),
+				'api'                 => 'WC_Gateway_PayuTwistoPl',
+				'class'               => WC_Gateway_PayuTwistoPl::class
+			],
+			'payutwistoslice'  => [
+				'name'                => __( 'PayU - Twisto pay in 3', 'woo-payu-payment-gateway' ),
+				'front_name'          => __( 'Pay with Twisto pay in 3', 'woo-payu-payment-gateway' ),
+				'default_description' => __( 'You will be redirected to the payment method page.', 'woo-payu-payment-gateway' ),
+				'api'                 => 'WC_Gateway_PayuTwistoSlice',
+				'class'               => WC_Gateway_PayuTwistoSlice::class
+			],
+		];
+	}
 
 	/**
 	 * @param string $field
@@ -573,23 +589,23 @@ abstract class WC_Payu_Gateways extends WC_Payment_Gateway implements WC_PayuGat
 		return false;
 	}
 
-    protected function filter_available_paytypes(array $related_paytypes): array {
-        $response = $this->payu_get_paymethods();
-        if ( isset( $response ) && $response->getStatus() === 'SUCCESS' && $response->getResponse()->payByLinks) {
-            $allPayTypeList = array_map(static fn($paymethod) => $paymethod->value, $response->getResponse()->payByLinks);
+	protected function filter_available_paytypes( array $related_paytypes ): array {
+		$response = $this->payu_get_paymethods();
+		if ( isset( $response ) && $response->getStatus() === 'SUCCESS' && $response->getResponse()->payByLinks ) {
+			$allPayTypeList = array_map( static fn( $paymethod ) => $paymethod->value, $response->getResponse()->payByLinks );
 
-            $result = [];
-            foreach($allPayTypeList as $type){
-                if(in_array($type, $related_paytypes)){
-                    $result[] = $type;
-                }
-            }
+			$result = [];
+			foreach ( $allPayTypeList as $type ) {
+				if ( in_array( $type, $related_paytypes ) ) {
+					$result[] = $type;
+				}
+			}
 
-            return $result;
-        }
+			return $result;
+		}
 
-        return [];
-    }
+		return [];
+	}
 
 	/**
 	 * Converts the chosen rate IDs generated by Shipping Methods to a canonical 'method_id:instance_id' format.
@@ -748,10 +764,10 @@ abstract class WC_Payu_Gateways extends WC_Payment_Gateway implements WC_PayuGat
 			];
 
 			$product = $item->get_product();
-			if (is_object($product)
-			    && method_exists($product, 'is_virtual')
-			    && $product->is_virtual()) {
-				$products[$i]['virtual'] = true;
+			if ( is_object( $product )
+			     && method_exists( $product, 'is_virtual' )
+			     && $product->is_virtual() ) {
+				$products[ $i ]['virtual'] = true;
 			}
 
 
