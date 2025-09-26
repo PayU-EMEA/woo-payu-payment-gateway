@@ -15,8 +15,10 @@
  * WC tested up to: 10.1.2
  */
 
-use Automattic\WooCommerce\Blocks\Payments\PaymentMethodRegistry;
 use Automattic\WooCommerce\Blocks\Integrations\IntegrationRegistry;
+use Automattic\WooCommerce\Blocks\Payments\PaymentMethodRegistry;
+use Payu\PaymentGateway\Blocks\CreditWidget\CartCreditWidgetBlock;
+use Payu\PaymentGateway\Blocks\CreditWidget\CheckoutCreditWidgetBlock;
 use Payu\PaymentGateway\Blocks\PayuBlikBlock;
 use Payu\PaymentGateway\Blocks\PayuCreditCardBlock;
 use Payu\PaymentGateway\Blocks\PayuInstallmentsBlock;
@@ -27,8 +29,6 @@ use Payu\PaymentGateway\Blocks\PayuSecureFormBlock;
 use Payu\PaymentGateway\Blocks\PayuStandardBlock;
 use Payu\PaymentGateway\Blocks\PayuTwistoPlBlock;
 use Payu\PaymentGateway\Blocks\PayuTwistoSliceBlock;
-use Payu\PaymentGateway\Blocks\CreditWidget\CartCreditWidgetBlock;
-use Payu\PaymentGateway\Blocks\CreditWidget\CheckoutCreditWidgetBlock;
 use Payu\PaymentGateway\Gateways\WC_Gateway_PayuInstallments;
 use Payu\PaymentGateway\Gateways\WC_Payu_Gateways;
 use Payu\PaymentGateway\Gateways\WC_PayuCreditGateway;
@@ -42,6 +42,7 @@ define( 'PAYU_PLUGIN_FILE', __FILE__ );
 define( 'WC_PAYU_PLUGIN_PATH', plugin_dir_path( __FILE__ ) );
 define( 'WC_PAYU_PLUGIN_URL', trailingslashit( plugins_url( basename( WC_PAYU_PLUGIN_PATH ), basename( __FILE__ ) ) ) );
 
+add_action( 'plugins_loaded', 'upgrade_gateway_payu' );
 add_action( 'plugins_loaded', 'init_gateway_payu' );
 add_action( 'woocommerce_blocks_loaded', 'on_woocommerce_blocks_loaded' );
 add_action( 'admin_init', 'on_admin_init' );
@@ -55,6 +56,18 @@ add_action(
 		}
 	}
 );
+
+function payu_get_default_settings(): array {
+    return [
+            'global_default_on_hold_status'        => 'on-hold',
+            'global_after_canceled_payment_status' => 'failed',
+            'global_retrieve_payment_status'       => 'yes',
+            'credit_widget_on_listings'            => 'yes',
+            'credit_widget_on_product_page'        => 'yes',
+            'credit_widget_on_cart_page'           => 'yes',
+            'credit_widget_on_checkout_page'       => 'yes'
+    ];
+}
 
 function on_woocommerce_blocks_loaded() {
 	init_payu_blocks();
@@ -96,11 +109,7 @@ function init_credit_widget_blocks() {
 	}
 }
 
-/**
- * Init function that runs after plugin install.
- */
 function init_gateway_payu() {
-	handle_plugin_update();
 	if ( ! class_exists( 'WC_Payment_Gateway' ) ) {
 		return;
 	}
@@ -112,94 +121,49 @@ function init_gateway_payu() {
 
 //enable pbl and standard if first install
 register_activation_hook( __FILE__, 'payu_plugin_on_activate' );
-function payu_plugin_on_activate() {
-	if ( ! get_option( 'woocommerce_payu_settings' ) && ! get_option( '_payu_plugin_version' ) ) {
-		add_option( '_payu_plugin_version', PAYU_PLUGIN_VERSION );
-		add_option( 'woocommerce_payulistbanks_settings', [ 'enabled' => 'yes' ] );
-		add_option( 'woocommerce_payucreditcard_settings', [ 'enabled' => 'yes' ] );
-		add_option( 'payu_settings_option_name', [
-			'global_default_on_hold_status'  => 'on-hold',
-			'after_canceled_payment_status'  => 'failed',
-			'credit_widget_on_listings'      => 'yes',
-			'credit_widget_on_product_page'  => 'yes',
-			'credit_widget_on_cart_page'     => 'yes',
-			'credit_widget_on_checkout_page' => 'yes'
-		] );
-	}
+function payu_plugin_on_activate(): void {
+    if ( ! get_option( '_payu_plugin_version' ) ) {
+        add_option( '_payu_plugin_version', PAYU_PLUGIN_VERSION );
+        add_option( 'woocommerce_payulistbanks_settings', [ 'enabled' => 'yes' ] );
+        add_option( 'woocommerce_payucreditcard_settings', [ 'enabled' => 'yes' ] );
+        add_option( 'payu_settings_option_name', payu_get_default_settings() );
+    }
 }
 
-function handle_plugin_update() {
-	$stored_version = get_option( '_payu_plugin_version' );
-	if ( PAYU_PLUGIN_VERSION !== $stored_version ) {
-		$default_widget_settings = [
-			'credit_widget_on_listings'      => 'yes',
-			'credit_widget_on_product_page'  => 'yes',
-			'credit_widget_on_cart_page'     => 'yes',
-			'credit_widget_on_checkout_page' => 'yes'
-		];
-		$payu_settings = get_option( 'payu_settings_option_name' );
-		if ( empty( $payu_settings ) ) {
-			add_option( 'payu_settings_option_name', $default_widget_settings );
-		} else {
-            if (!isset($payu_settings['after_canceled_payment_status'])) {
-                $payu_settings['after_canceled_payment_status'] = 'canceled';
-            }
-			$merged_settings = array_merge( $default_widget_settings, $payu_settings );
-			update_option( 'payu_settings_option_name', $merged_settings );
-		}
+function upgrade_gateway_payu(): void {
+    $stored_version = get_option( '_payu_plugin_version', '' );
 
-		disable_widget_once_if_installments_disabled( $stored_version );
+    if ( PAYU_PLUGIN_VERSION !== $stored_version ) {
+        $payu_settings = get_option( 'payu_settings_option_name' );
 
-		update_option( '_payu_plugin_version', PAYU_PLUGIN_VERSION );
-	}
+        if ( empty( $payu_settings ) ) {
+            add_option( 'payu_settings_option_name', payu_get_default_settings() );
+        } else {
+            update_option( 'payu_settings_option_name', array_merge( payu_get_default_settings(), $payu_settings ) );
+        }
+
+        disable_widget_once_if_installments_disabled( $stored_version );
+        update_option( '_payu_plugin_version', PAYU_PLUGIN_VERSION );
+    }
 }
 
-function disable_widget_once_if_installments_disabled( $old_version ) {
-	if ( version_compare( $old_version, '2.6.2', '<=' ) ) {
-		$installments_settings = get_option( 'woocommerce_payuinstallments_settings' );
-		if ( isset( $installments_settings['enabled'] ) && $installments_settings['enabled'] === 'no' ) {
-			$disabled_widget_settings = [
-				'credit_widget_on_listings'      => 'no',
-				'credit_widget_on_product_page'  => 'no',
-				'credit_widget_on_cart_page'     => 'no',
-				'credit_widget_on_checkout_page' => 'no'
-			];
-			$merged_settings = array_merge( $installments_settings, $disabled_widget_settings );
-			update_option( 'woocommerce_payuinstallments_settings', $merged_settings );
-		}
-	}
+function disable_widget_once_if_installments_disabled( string $old_version ): void {
+    if ( version_compare( $old_version, '2.6.2', '<=' ) ) {
+        $installments_settings = get_option( 'woocommerce_payuinstallments_settings' );
+        if ( isset( $installments_settings['enabled'] ) && $installments_settings['enabled'] === 'no' ) {
+            $disabled_widget_settings = [
+                    'credit_widget_on_listings'      => 'no',
+                    'credit_widget_on_product_page'  => 'no',
+                    'credit_widget_on_cart_page'     => 'no',
+                    'credit_widget_on_checkout_page' => 'no'
+            ];
+            update_option( 'woocommerce_payuinstallments_settings', array_merge( $installments_settings, $disabled_widget_settings ) );
+        }
+    }
 }
 
 function on_admin_init() {
-	move_old_payu_settings();
 	move_old_payu_installments_settings();
-}
-
-function move_old_payu_settings() {
-	if ( $old_payu = get_option( 'woocommerce_payu_settings' ) ) {
-		unset( $old_payu['payu_feedback'] );
-
-		$global   = [];
-		$standard = [];
-		foreach ( $old_payu as $key => $value ) {
-			if ( ! in_array( $key, [ 'enabled', 'title', 'sandbox' ] ) ) {
-				$global[ 'global_' . $key ] = $value;
-			}
-		}
-		$global['global_default_on_hold_status'] = 'on-hold';
-		update_option( 'payu_settings_option_name', $global );
-		foreach ( $old_payu as $key => $value ) {
-			if ( ! in_array( $key, [ 'enabled', 'title', 'sandbox', 'description', 'enable_for_shipping' ] ) ) {
-				$standard[ $key ] = '';
-			} else {
-				$standard[ $key ] = $value;
-			}
-		}
-		$standard['use_global'] = 'yes';
-		update_option( 'woocommerce_payustandard_settings', $standard );
-		update_option( '_payu_plugin_version', PAYU_PLUGIN_VERSION );
-		delete_option( 'woocommerce_payu_settings' );
-	}
 }
 
 function move_old_payu_installments_settings() {

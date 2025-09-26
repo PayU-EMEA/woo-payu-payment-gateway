@@ -19,18 +19,18 @@ Skorzystaj z [automatycznej instalacji oraz aktywacji](https://wordpress.org/sup
 
 Wtyczka udostępnia następujące metody płatności:
 
-| Lp | Metoda                 |       Bloki        | Opis
-|:--:|------------------------|:------------------:|------------------------------------------------------------------------------------------------------------------------------------
-| 1  | PayU - standard        | :white_check_mark: |Płacący zostanie przekierowany na stronę PayU gdzie wybierze typ płatności (z listy typów dostępnych na punkcie płatności)
-| 2  | PayU - lista banków    | :white_check_mark: |Wyświetlana jest lista typów płatności, a płacący w zależności od wybranego typu zostanie przekierowany do banku lub na stronę PayU
-| 3  | PayU - karta płatnicza | :white_check_mark: |Płacący zostanie przekierowany na stronę PayU gdzie wprowadzi dane karty (kredytowej, debetowej lub prepaid)
-| 4  | PayU - secure form     | :white_check_mark: |Wyświetlany jest formularz wprowadzania danych karty
-| 5  | PayU - Blik            | :white_check_mark: |Płacący zostanie przekierowany na stronę Blik
-| 6  | PayU - raty            | :white_check_mark: |Płacący zostanie przekierowany na stronę formularza płatności ratalnej
-| 7  | PayU - Klarna          | :white_check_mark: |Płacący zostanie przekierowany na stronę formularza płatności Klarna
-| 8  | PayU - Twisto          | :white_check_mark: |Płacący zostanie przekierowany na stronę formularza płatności Twisto
-| 8  | PayU - Twisto pay in 3 | :white_check_mark: |Płacący zostanie przekierowany na stronę formularza płatności Twisto pay in 3
-| 9  | PayU - PayPo           | :white_check_mark: |Płacący zostanie przekierowany na stronę formularza płatności PayPo
+| Lp | Metoda                 |       Bloki        | Opis                                                                                                                                |
+|:--:|------------------------|:------------------:|-------------------------------------------------------------------------------------------------------------------------------------|
+| 1  | PayU - standard        | :white_check_mark: | Płacący zostanie przekierowany na stronę PayU gdzie wybierze typ płatności (z listy typów dostępnych na punkcie płatności)          |
+| 2  | PayU - lista banków    | :white_check_mark: | Wyświetlana jest lista typów płatności, a płacący w zależności od wybranego typu zostanie przekierowany do banku lub na stronę PayU |
+| 3  | PayU - karta płatnicza | :white_check_mark: | Płacący zostanie przekierowany na stronę PayU gdzie wprowadzi dane karty (kredytowej, debetowej lub prepaid)                        |
+| 4  | PayU - secure form     | :white_check_mark: | Wyświetlany jest formularz wprowadzania danych karty                                                                                |
+| 5  | PayU - Blik            | :white_check_mark: | Płacący zostanie przekierowany na stronę Blik                                                                                       |
+| 6  | PayU - raty            | :white_check_mark: | Płacący zostanie przekierowany na stronę formularza płatności ratalnej                                                              |
+| 7  | PayU - Klarna          | :white_check_mark: | Płacący zostanie przekierowany na stronę formularza płatności Klarna                                                                |
+| 8  | PayU - Twisto          | :white_check_mark: | Płacący zostanie przekierowany na stronę formularza płatności Twisto                                                                |
+| 8  | PayU - Twisto pay in 3 | :white_check_mark: | Płacący zostanie przekierowany na stronę formularza płatności Twisto pay in 3                                                       |
+| 9  | PayU - PayPo           | :white_check_mark: | Płacący zostanie przekierowany na stronę formularza płatności PayPo                                                                 |
 
 #### Uwagi do metod płatności
 
@@ -48,48 +48,49 @@ Jest dostępna w głównym menu WooCommerce jako `Ustawienia PayU`
 
 Parametry punktu płatności:
 
-| Parametr                        | Opis
-|---------------------------------|---------------------------------------------------------
-| Id punktu płatności             | Identyfikator punktu płatności z systemu PayU
-| Drugi klucz MD5                 | Drugi klucz MD5 z systemu PayU
-| OAuth - client_id               | client_id dla protokołu OAuth z systemu PayU
-| OAuth - client_secret           | client_secret dla protokołu OAuth z systemu PayU
-| Sandbox - Id punktu płatności   | Identyfikator punktu płatności z systemu Sandbox PayU
-| Sandbox - Drugi klucz MD5       | Drugi klucz MD5 z systemu Sandbox Sandbox PayU
-| Sandbox - OAuth - client_id     | client_id dla protokołu OAuth z systemu Sandbox PayU
-| Sandbox - OAuth - client_secret | client_secret dla protokołu OAuth z systemu Sandbox PayU
+| Parametr                        | Opis                                                     |
+|---------------------------------|----------------------------------------------------------|
+| Id punktu płatności             | Identyfikator punktu płatności z systemu PayU            |
+| Drugi klucz MD5                 | Drugi klucz MD5 z systemu PayU                           |
+| OAuth - client_id               | client_id dla protokołu OAuth z systemu PayU             |
+| OAuth - client_secret           | client_secret dla protokołu OAuth z systemu PayU         |
+| Sandbox - Id punktu płatności   | Identyfikator punktu płatności z systemu Sandbox PayU    |
+| Sandbox - Drugi klucz MD5       | Drugi klucz MD5 z systemu Sandbox Sandbox PayU           |
+| Sandbox - OAuth - client_id     | client_id dla protokołu OAuth z systemu Sandbox PayU     |
+| Sandbox - OAuth - client_secret | client_secret dla protokołu OAuth z systemu Sandbox PayU |
 
 * W przypadku wielu walut dla każdej waluty będzie dostępna osobna konfiguracja punktu płatności - więcej informacji w sekcji [Wielowalutowość](#wielowalutowość).
 * Domyślnie każda z metod płatności korzysta z globalnych parametrów punktu płatności.
 
 Inne parametry - mają zastosowanie do wszystkich modułów:
 
-| Parametr                                  | Opis
-|-------------------------------------------|--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-| Domyślny status zamówienia                | Status w jaki przejdzie zamówienie po rozpoczęciu płatności. Możliwe wartości to: `Wstrzymane (oczekujące na płatność) - on-hold` i `Oczekujące na płatność - pending`.<br />Zgodnie z dokomentacją WooCommerce w przypadku kontroli stanów magazynowych dla statusu `on-hold` nastąpi zmniejszenie ilości prduktów na magazynie oraz ich przywrócenie gdy zamówienie zmieni status na `canceled`, natomiast przy statusie `pending` stany magazynowe nie będę zmieniane.
-| Status zamówienia dla nieudanej płatności | Status w jaki przejdzie zamówienie po niudanej płatności. Możliwe wartości to: `Anlulowane - canceled` i `Nieudane - failed`.
-| Włącz ponawianie płatności                | Umożliwia płacącemu ponowienie nieudanej płatności. Przed włączeniem proszę o zapoznanie się z rozdziałem [Ponawianie płatności](#ponawianie-płatności).
+| Parametr                                                 | Opis                                                                                                                                                                                                                                                                                                                                                                                                                                                                      |
+|----------------------------------------------------------|---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| Domyślny status zamówienia                               | Status w jaki przejdzie zamówienie po rozpoczęciu płatności. Możliwe wartości to: `Wstrzymane (oczekujące na płatność) - on-hold` i `Oczekujące na płatność - pending`.<br />Zgodnie z dokomentacją WooCommerce w przypadku kontroli stanów magazynowych dla statusu `on-hold` nastąpi zmniejszenie ilości prduktów na magazynie oraz ich przywrócenie gdy zamówienie zmieni status na `canceled`, natomiast przy statusie `pending` stany magazynowe nie będę zmieniane. |
+| Status zamówienia dla nieudanej płatności                | Status w jaki przejdzie zamówienie po nieudanej płatności. Możliwe wartości to: `Anlulowane - canceled` i `Nieudane - failed`. W przypadku `Nieudane` możliwe jest ponowienie płatności przez kupującego.                                                                                                                                                                                                                                                                 |
+| Włącz pobieranie statusu na stronie powrotu po płatności | Na stronie powrotu po płatności gdy płatność nie ma statusu końcowego pobierany jest cyklycznie status (10 razy co 4 sekundy).                                                                                                                                                                                                                                                                                                                                            |
+| Włącz ponawianie płatności                               | Umożliwia płacącemu ponowienie płatności. Przed włączeniem proszę o zapoznanie się z rozdziałem [Ponawianie płatności](#ponawianie-płatności).                                                                                                                                                                                                                                                                                                                            |
 
 #### Konfiguracja metod płatności
 
 Parametry, które są dostępne dla każdej metody płatności:
 
-| Parametr                 | Opis
-|--------------------------|-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-| Włącz / Wyłącz           | Włącza metodę płatności
-| Nazwa                    | Nazwa metody wyświetlana na stronie wyboru metody płatności
-| Tryb sandbox             | W przypadku włączenia konfiguracja oraz płatności wykonywane są na środowisku Sandbox
-| Użyj wartości globalnych | W przypadku włączenia używane są globalne parametry punktu płatności, w przeciwnym wypadku należy wprowadzić parametry
-| Opis                     | Opis metody wyświetlany po wybraniu jej na stronie wyboru metody płatności
-| Włącz dla metod wysyłki  | Możliwość wyboru dla jakich metod wysyłki będzie dostępna metoda płatności. W przypadku gdy nie wybierzemy żadnej metody wysyłki to metoda płatności jest dostępna dla wszystkich metod wysyłki.
-| Wirtualne zamówienia     | Metoda płatności będzie dostępna dla zamówień wirtualnych
+| Parametr                 | Opis                                                                                                                                                                                             |
+|--------------------------|--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| Włącz / Wyłącz           | Włącza metodę płatności                                                                                                                                                                          |
+| Nazwa                    | Nazwa metody wyświetlana na stronie wyboru metody płatności                                                                                                                                      |
+| Tryb sandbox             | W przypadku włączenia konfiguracja oraz płatności wykonywane są na środowisku Sandbox                                                                                                            |
+| Użyj wartości globalnych | W przypadku włączenia używane są globalne parametry punktu płatności, w przeciwnym wypadku należy wprowadzić parametry                                                                           |
+| Opis                     | Opis metody wyświetlany po wybraniu jej na stronie wyboru metody płatności                                                                                                                       |
+| Włącz dla metod wysyłki  | Możliwość wyboru dla jakich metod wysyłki będzie dostępna metoda płatności. W przypadku gdy nie wybierzemy żadnej metody wysyłki to metoda płatności jest dostępna dla wszystkich metod wysyłki. |
+| Wirtualne zamówienia     | Metoda płatności będzie dostępna dla zamówień wirtualnych                                                                                                                                        |
 
 Parametry, które są dodatkowo dostępne dla metody płatności `PayU - lista banków`:
 
-| Parametr                          | Opis
-|-----------------------------------|-----------------------------------------------------------------------------------------------------------------------------------------------------
-| Własna kolejność                  | W celu ustalenia kolejności wyświetlanych ikon typów płatności należy podać ich symbole oddzielając je przecinkiem. [Lista typów płatności][ext6].
-| Pokaż nieaktywne metody płatności | W przypadku włączenia, gdy dany typ płatności jest nieaktywny pokazuje się na liście jako wyszarzony, w przeciwnym razie nie jest w ogóle pokazywany
+| Parametr                          | Opis                                                                                                                                                 |
+|-----------------------------------|------------------------------------------------------------------------------------------------------------------------------------------------------|
+| Własna kolejność                  | W celu ustalenia kolejności wyświetlanych ikon typów płatności należy podać ich symbole oddzielając je przecinkiem. [Lista typów płatności][ext6].   |
+| Pokaż nieaktywne metody płatności | W przypadku włączenia, gdy dany typ płatności jest nieaktywny pokazuje się na liście jako wyszarzony, w przeciwnym razie nie jest w ogóle pokazywany |
 
 ## Wielowalutowość
 
@@ -103,10 +104,10 @@ Dla walut dodanych w pluginie `WPML` automatycznie pojawia się osobna konfigura
 
 Plugin dostarcza dwa filtry, które umożliwiają dodanie obsługi wielu walut podczas płatności
 
-| Nazwa filtra                            | Opis                                                       | Typ
-|-----------------------------------------|------------------------------------------------------------|------
-| `woocommerce_payu_multicurrency_active` | Czy ma być włączona obsługa wielowalutowości               | bool
-| `woocommerce_payu_get_currency_codes`   | Lista walut w kodów ISO w standardzie ISO 4217, np. "PLN". | array
+| Nazwa filtra                            | Opis                                                       | Typ   |
+|-----------------------------------------|------------------------------------------------------------|-------|
+| `woocommerce_payu_multicurrency_active` | Czy ma być włączona obsługa wielowalutowości               | bool  |
+| `woocommerce_payu_get_currency_codes`   | Lista walut w kodów ISO w standardzie ISO 4217, np. "PLN". | array |
 
 Przykład:
 
@@ -133,9 +134,9 @@ Uwagi:
 
 ### Zmiana statusu zamówienia
 
-| Nazwa filtra                        | Opis                                         | Typ    | Parametry
-|-------------------------------------|----------------------------------------------|--------|----------
-| `woocommerce_payu_status_cancelled` | Status zamówienia dla notyfikacji `CANCELED` | string | Order
+| Nazwa filtra                        | Opis                                         | Typ    | Parametry |
+|-------------------------------------|----------------------------------------------|--------|-----------|
+| `woocommerce_payu_status_cancelled` | Status zamówienia dla notyfikacji `CANCELED` | string | Order     |
 
 ## Ponawianie płatności
 Dzięki tej opcji kupujący otrzymuje możliwość skutecznego opłacenia zamówienia, nawet jeśli pierwsza płatność była nieudana (np. brak środków na karcie, problemy z logowaniem do banku itp.).

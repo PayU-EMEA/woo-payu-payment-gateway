@@ -6,3 +6,5 @@
 /build
 /assets/**/*.map
 _dist
+lang/*.po~
+lang/*.pot~

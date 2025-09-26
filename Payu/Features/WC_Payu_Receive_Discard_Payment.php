@@ -3,11 +3,12 @@ declare( strict_types=1 );
 
 namespace Payu\PaymentGateway\Features;
 
-use Automattic\WooCommerce\Admin\Overrides\Order;
 use OpenPayU_Exception;
 use OpenPayU_Order;
 use OpenPayuOrderStatus;
 use Payu\PaymentGateway\Gateways\WC_Payu_Gateways;
+use WC_Order;
+use WC_Order_Refund;
 
 class WC_Payu_Receive_Discard_Payment {
 	public static function init(): void {
@@ -18,7 +19,14 @@ class WC_Payu_Receive_Discard_Payment {
 		add_action( 'woocommerce_order_item_add_action_buttons', [ $this, 'add_action_buttons' ], 10, 1 );
 	}
 
-	public function add_action_buttons( Order $order ): void {
+	/**
+	 * @param bool|WC_Order|WC_Order_Refund $order
+	 */
+	public function add_action_buttons( $order ): void {
+		if ( ! ( $order instanceof WC_Order ) ) {
+			return;
+		}
+
 		$payu_gateways   = WC_Payu_Gateways::gateways_list();
 		$payuOrderStatus = $order->get_meta( '_payu_order_status', false, '' );
 
@@ -84,7 +92,7 @@ class WC_Payu_Receive_Discard_Payment {
 		}
 	}
 
-	private function render_buttons( Order $order ): void {
+	private function render_buttons( WC_Order $order ): void {
 		$url_receive = add_query_arg( [
 			'post'            => $order->get_id(),
 			'action'          => 'edit',

@@ -109,7 +109,6 @@ class PayuSettings {
 	}
 
 	public function payu_settings_page_init(): void {
-		global $woocommerce_wpml;
 		register_setting(
 			'payu_settings_option_group', // option_group
 			'payu_settings_option_name', // option_name
@@ -147,6 +146,7 @@ class PayuSettings {
 				);
 			}
 		}
+
 		add_settings_field(
 			'global_default_on_hold_status', // id
 			__( 'Default on-hold status', 'woo-payu-payment-gateway' ), // title
@@ -154,6 +154,7 @@ class PayuSettings {
 			'payu-settings-admin', // page
 			'payu_settings_setting_section' // section
 		);
+
 		add_settings_field(
 			'global_after_canceled_payment_status', // id
 			__( 'Order status for failed payment', 'woo-payu-payment-gateway' ), // title
@@ -161,6 +162,15 @@ class PayuSettings {
 			'payu-settings-admin', // page
 			'payu_settings_setting_section' // section
 		);
+
+		add_settings_field(
+			'global_retrieve_payment_status',
+			__( 'Enable retrieve status on Thank You page', 'woo-payu-payment-gateway' ),
+			[ $this, 'global_retrieve_payment_status_callback' ],
+			'payu-settings-admin',
+			'payu_settings_setting_section' // section
+		);
+
 		add_settings_field(
 			'global_repayment', // id
 			__( 'Enable repayment', 'woo-payu-payment-gateway' ), // title
@@ -237,6 +247,9 @@ class PayuSettings {
 			$sanitary_values['global_repayment'] = sanitize_text_field( $input['global_repayment'] );
 		}
 
+        $sanitary_values['global_retrieve_payment_status'] =
+                isset( $input['global_retrieve_payment_status'] ) && $input['global_retrieve_payment_status'] === 'yes' ? 'yes' : 'no';
+
 		foreach ( $this->credit_widget_fields as $field => $desc ) {
 			$field_name = 'credit_widget_' . $field;
 			$sanitary_values[ $field_name ] = isset( $input[ $field_name ] ) ? 'yes' : 'no';
@@ -266,6 +279,13 @@ class PayuSettings {
             ] ); ?>
         </span>
 		<?php
+	}
+
+	public function global_retrieve_payment_status_callback(): void {
+		printf(
+			'<input type="checkbox" name="payu_settings_option_name[global_retrieve_payment_status]" id="global_retrieve_payment_status" value="yes" %s>',
+			( isset( $this->payu_settings_options['global_retrieve_payment_status'] ) && $this->payu_settings_options['global_retrieve_payment_status'] === 'yes' ) ? 'checked' : ''
+		);
 	}
 
     public function global_default_on_hold_status_callback(): void {

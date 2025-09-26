@@ -3,8 +3,9 @@ declare( strict_types=1 );
 
 namespace Payu\PaymentGateway\Features;
 
-use Automattic\WooCommerce\Admin\Overrides\Order;
 use Payu\PaymentGateway\Gateways\WC_Payu_Gateways;
+use WC_Order;
+use WC_Order_Refund;
 
 class WC_Payu_Repay_In_Order_Actions {
     public static function init(): void {
@@ -18,7 +19,14 @@ class WC_Payu_Repay_In_Order_Actions {
         }
     }
 
-    public function add_action( array $actions, Order $order ): array {
+    /**
+     * @param bool|WC_Order|WC_Order_Refund $order
+     */
+    public function add_action( array $actions, $order ): array {
+        if ( ! ( $order instanceof WC_Order ) ) {
+            return $actions;
+        }
+
         $order_status  = $order->get_status();
         $payu_gateways = WC_Payu_Gateways::gateways_list();
 
