@@ -15,8 +15,12 @@ class WC_Payu_Status_Retrieval_On_Thank_You {
 	}
 
 	public function __construct() {
-		add_action( 'rest_api_init', [ $this, 'get_status_by_api' ] );
-		add_action( 'woocommerce_before_thankyou', [ $this, 'status_retrieval' ], 10, 1 );
+		$payu_settings = get_option( 'payu_settings_option_name', [] );
+
+		if ( isset( $payu_settings['global_retrieve_payment_status']) && $payu_settings['global_retrieve_payment_status'] === 'yes' ) {
+			add_action( 'rest_api_init', [ $this, 'get_status_by_api' ] );
+			add_action( 'woocommerce_before_thankyou', [ $this, 'status_retrieval' ], 10, 1 );
+		}
 	}
 
 	public function status_retrieval( int $order_id ): void {
@@ -28,10 +32,13 @@ class WC_Payu_Status_Retrieval_On_Thank_You {
 				// do nothing
 			} else {
 				$this->load_assets();
-				$status_url = get_rest_url() . 'payu/status/' . $order->get_id() . '/?key=' . $order->get_order_key();
+				$status_url  = get_rest_url() . 'payu/status/' . $order->get_id() . '/?key=' . $order->get_order_key();
 				$payment_url = $order->get_checkout_payment_url();
 
-				WC_Payu::template( 'thank-you-pending', [ 'status_url' => $status_url, 'payment_url' => $payment_url ] );
+				WC_Payu::template( 'thank-you-pending', [
+					'status_url'  => $status_url,
+					'payment_url' => $payment_url
+				] );
 			}
 		}
 	}

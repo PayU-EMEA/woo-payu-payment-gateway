@@ -486,11 +486,11 @@ abstract class WC_Payu_Gateways extends WC_Payment_Gateway implements WC_PayuGat
 	/**
 	 * @throws
 	 */
-	public function init_OpenPayU( string $currency = null ): void {
+	public function init_OpenPayU( ?string $currency = null ): void {
 		$isSandbox = 'yes' === $this->get_option( 'sandbox' );
 
 		if ( woocommerce_payu_is_wmpl_active_and_configure() || woocommerce_payu_is_currency_custom_config() ) {
-			$optionSuffix = '_' . ( null !== $currency ? $currency : get_woocommerce_currency() );
+			$optionSuffix = '_' . ( $currency ?? get_woocommerce_currency() );
 		} else {
 			$optionSuffix = '';
 		}
@@ -1085,12 +1085,7 @@ abstract class WC_Payu_Gateways extends WC_Payment_Gateway implements WC_PayuGat
 		return null;
 	}
 
-	/**
-	 * @return void
-	 * @throws
-	 *
-	 */
-	function gateway_ipn() {
+	public function gateway_ipn(): void {
 		if ( $_SERVER['REQUEST_METHOD'] === 'POST' ) {
 			$body = file_get_contents( 'php://input' );
 			$data = trim( $body );
@@ -1131,9 +1126,11 @@ abstract class WC_Payu_Gateways extends WC_Payment_Gateway implements WC_PayuGat
 					switch ( $status ) {
 						case OpenPayuOrderStatus::STATUS_CANCELED:
 							if ( ! isset( get_option( 'payu_settings_option_name' )['global_repayment'] ) ) {
-								$status = get_option( 'payu_settings_option_name' )['global_after_canceled_payment_status'] ?? 'cancelled';
+								$status = get_option( 'payu_settings_option_name' )['global_after_canceled_payment_status'] ?? 'failed';
 								$status = apply_filters( 'woocommerce_payu_status_cancelled', $status, $order );
 								$order->update_status( $status, __( 'Payment has been cancelled.', 'woo-payu-payment-gateway' ) );
+							} else {
+								$order->update_status( 'failed', __( 'Payment has been cancelled.', 'woo-payu-payment-gateway' ) );
 							}
 							break;
 
