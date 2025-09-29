@@ -250,6 +250,13 @@ abstract class WC_Payu_Gateways extends WC_Payment_Gateway implements WC_PayuGat
 				'api'                 => 'WC_Gateway_PayuKlarna',
 				'class'               => WC_Gateway_PayuKlarna::class
 			],
+            'payupragma'       => [
+                'name'                => __( 'PayU - PragmaPay', 'woo-payu-payment-gateway' ),
+                'front_name'          => __( 'Pay later with PragmaPay', 'woo-payu-payment-gateway' ),
+                'default_description' => __( 'You will be redirected to the payment method page.', 'woo-payu-payment-gateway' ),
+                'api'                 => 'WC_Gateway_PayuPragma',
+                'class'               => WC_Gateway_PayuPragma::class
+            ],
 			'payupaypo'        => [
 				'name'                => __( 'PayU - PayPo', 'woo-payu-payment-gateway' ),
 				'front_name'          => __( 'Pay later with PayPo', 'woo-payu-payment-gateway' ),

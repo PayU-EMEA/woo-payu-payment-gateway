@@ -23,6 +23,7 @@ use Payu\PaymentGateway\Blocks\PayuBlikBlock;
 use Payu\PaymentGateway\Blocks\PayuCreditCardBlock;
 use Payu\PaymentGateway\Blocks\PayuInstallmentsBlock;
 use Payu\PaymentGateway\Blocks\PayuKlarnaBlock;
+use Payu\PaymentGateway\Blocks\PayuPragmaBlock;
 use Payu\PaymentGateway\Blocks\PayuListBanksBlock;
 use Payu\PaymentGateway\Blocks\PayuPaypoBlock;
 use Payu\PaymentGateway\Blocks\PayuSecureFormBlock;
@@ -89,6 +90,7 @@ function init_payu_blocks() {
 				$payment_method_registry->register( new PayuTwistoSliceBlock() );
 				$payment_method_registry->register( new PayuInstallmentsBlock() );
 				$payment_method_registry->register( new PayuBlikBlock() );
+				$payment_method_registry->register( new PayuPragmaBlock() );
 			}
 		);
 	}

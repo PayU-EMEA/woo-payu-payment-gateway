@@ -8,20 +8,20 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "POT-Creation-Date: 2021-03-26 10:13+0000\n"
-"PO-Revision-Date: 2025-09-25 12:35+0000\n"
-"Language: pl_PL\n"
+"PO-Revision-Date: 2025-09-29 09:52+0000\n"
+"Language: pl-PL\n"
 "Plural-Forms: nplurals=3; plural=(n==1 ? 0 : n%10 >= 2 && n%10<=4 "
 "&&(n%100<10||n%100 >= 20)? 1 : 2);\n"
 "X-Generator: Loco https://localise.biz/\n"
 "X-Loco-Version: 2.8.0; wp-6.8.1; php-8.2.28\n"
 "X-Domain: woo-payu-payment-gateway\n"
 
-#: Payu/Gateways/WC_Payu_Gateways.php:1004
-#: Payu/Gateways/WC_Payu_Gateways.php:1161
+#: Payu/Gateways/WC_Payu_Gateways.php:1011
+#: Payu/Gateways/WC_Payu_Gateways.php:1165
 msgid " for order: "
 msgstr " dla zamówienia:"
 
-#: src/js/payublik.js:49 src/js/payulistbanks.js:52 src/js/payusecureform.js:61
+#: src/js/payulistbanks.js:52 src/js/payublik.js:49 src/js/payusecureform.js:61
 msgid "\"PayU Payment Terms\""
 msgstr "\"Zasady płatności PayU\""
 
@@ -30,27 +30,27 @@ msgstr "\"Zasady płatności PayU\""
 msgid "<a href=\"%s\" target=\"_blank\">PayU privacy policy</a>"
 msgstr "<a href=\"%s\" target=\"_blank\">Polityce prywatności PayU</a>"
 
-#: Payu/Features/WC_Payu_Receive_Discard_Payment.php:58
+#: Payu/Features/WC_Payu_Receive_Discard_Payment.php:66
 #, php-format
 msgid "[PayU] Error \"%s\" occurred during accepted payment"
 msgstr "[PayU] Wystąpił błąd \"%s\" podczas akceptacji płatności"
 
-#: Payu/Features/WC_Payu_Receive_Discard_Payment.php:77
+#: Payu/Features/WC_Payu_Receive_Discard_Payment.php:85
 #, php-format
 msgid "[PayU] Error \"%s\" occurred during rejected payment"
 msgstr "[PayU] Wystąpił błąd \"%s\" podczas odrzucania płatności"
 
-#: Payu/Features/WC_Payu_Receive_Discard_Payment.php:54
+#: Payu/Features/WC_Payu_Receive_Discard_Payment.php:62
 #, php-format
 msgid "[PayU] User %s accepted payment"
 msgstr "[PayU] Użytkownik %s zaakceptował płatność"
 
-#: Payu/Features/WC_Payu_Receive_Discard_Payment.php:73
+#: Payu/Features/WC_Payu_Receive_Discard_Payment.php:81
 #, php-format
 msgid "[PayU] User %s rejected payment"
 msgstr "[PayU] Użytkownik %s odrzucił płatność"
 
-#: Payu/Gateways/WC_Payu_Gateways.php:715
+#: Payu/Gateways/WC_Payu_Gateways.php:722
 msgid "Awaiting PayU payment."
 msgstr "Oczekiwanie na płatność PayU."
 
@@ -75,7 +75,7 @@ msgstr ""
 msgid "Blik"
 msgstr "Blik"
 
-#: src/js/payublik.js:47 src/js/payulistbanks.js:50 src/js/payusecureform.js:59
+#: src/js/payulistbanks.js:50 src/js/payublik.js:47 src/js/payusecureform.js:59
 msgid "By paying you accept"
 msgstr "Płacąc akceptujesz"
 
@@ -124,12 +124,12 @@ msgstr "Widget kredytowy"
 msgid "Credit widget excluded payment types"
 msgstr "Wykluczone typy płatności w widżecie kredytowym"
 
-#: Payu/Gateways/WC_Gateway_PayuListBanks.php:217
-#: Payu/Gateways/WC_Gateway_PayuListBanks.php:218
+#: Payu/Gateways/WC_Gateway_PayuListBanks.php:220
+#: Payu/Gateways/WC_Gateway_PayuListBanks.php:221
 msgid "Custom order, separate payment methods with commas"
 msgstr "Własna kolejność metod płatności, oddziel metody przecinkami"
 
-#: Payu/Gateways/WC_Gateway_PayuListBanks.php:215
+#: Payu/Gateways/WC_Gateway_PayuListBanks.php:218
 msgid "Custom order:"
 msgstr "Własna kolejność"
 
@@ -142,31 +142,31 @@ msgstr "CVV"
 msgid "Default on-hold status"
 msgstr "Domyślny status zamówienia"
 
-#: Payu/Gateways/WC_Payu_Gateways.php:371
+#: Payu/Gateways/WC_Payu_Gateways.php:378
 msgid "Description"
 msgstr "Opis"
 
-#: Payu/Gateways/WC_Payu_Gateways.php:373
+#: Payu/Gateways/WC_Payu_Gateways.php:380
 msgid "Description of PayU Payment Gateway that users sees on Checkout page."
 msgstr "Opis płatności PayU widoczny przez kupującego na stronie zamówienia."
 
-#: Payu/Features/WC_Payu_Receive_Discard_Payment.php:103
+#: Payu/Features/WC_Payu_Receive_Discard_Payment.php:111
 msgid "Discard payment"
 msgstr "Odrzuć płatność"
 
-#: woocommerce-gateway-payu.php:198
+#: woocommerce-gateway-payu.php:200
 msgid "Docs"
 msgstr "Dokumentacja"
 
-#: Payu/Gateways/WC_Payu_Gateways.php:378
+#: Payu/Gateways/WC_Payu_Gateways.php:385
 msgid "Enable for shipping methods"
 msgstr "Włącz dla metod wysyłki"
 
-#: Payu/Gateways/WC_Payu_Gateways.php:393
+#: Payu/Gateways/WC_Payu_Gateways.php:400
 msgid "Enable for virtual orders"
 msgstr "Włączone na zamówień wirtualnych "
 
-#: Payu/Gateways/WC_Payu_Gateways.php:307
+#: Payu/Gateways/WC_Payu_Gateways.php:314
 msgid "Enable PayU payment method"
 msgstr "Włącz metodę płatności"
 
@@ -218,7 +218,7 @@ msgstr "Ważna do"
 msgid "First key from \"Configuration Keys\" section of PayU management panel."
 msgstr "Pierwszy klucz (MD5) z sekcji Klucze konfiguracji w panelu managera."
 
-#: Payu/Gateways/WC_Payu_Gateways.php:1117
+#: Payu/Gateways/WC_Payu_Gateways.php:1119
 msgid "has status"
 msgstr "ma status"
 
@@ -234,7 +234,7 @@ msgstr "https://github.com/PayU/woo-payu-payment-gateway"
 msgid "Id point of sales"
 msgstr "Id punktu płatności:"
 
-#: Payu/Gateways/WC_Payu_Gateways.php:383
+#: Payu/Gateways/WC_Payu_Gateways.php:390
 msgid ""
 "If PayU is only available for certain methods, set it up here. Leave blank "
 "to enable for all methods."
@@ -242,7 +242,7 @@ msgstr ""
 "Jeżeli PayU ma być dostępne tylko dla niektórych metod to ustaw je tutaj. "
 "Pozostaw puste, aby włączyć wszystkie metody."
 
-#: Payu/Gateways/WC_Payu_Gateways.php:309
+#: Payu/Gateways/WC_Payu_Gateways.php:316
 msgid ""
 "If you do not already have PayU merchant account, <a href=\"https://poland."
 "payu.com/en/how-to-activate-payu/\" target=\"_blank\" rel=\"nofollow\">"
@@ -256,12 +256,12 @@ msgstr ""
 "com/boarding/#/registerSandbox/?lang=pl\" target=\"_blank\" rel=\"nofollow\">"
 "zarejestruj się w systemie sandbox</a>."
 
-#: Payu/Gateways/WC_Payu_Gateways.php:1224
+#: Payu/Gateways/WC_Payu_Gateways.php:1228
 msgid "If you have not yet paid for the order, you can do so by going to"
 msgstr ""
 "Jeżeli jeszcze nie opłaciłeś zamówienia możesz to zrobić przechodząc na"
 
-#: Payu/Gateways/WC_Gateway_PayuListBanks.php:222
+#: Payu/Gateways/WC_Gateway_PayuListBanks.php:225
 msgid "Inactive methods"
 msgstr "Nieaktywne metody płatności"
 
@@ -295,46 +295,51 @@ msgstr "Status zamówienia dla nieudanej płatności"
 msgid "Pay later with Klarna"
 msgstr "Płacę później z Klarną"
 
-#: Payu/Gateways/WC_Payu_Gateways.php:255
+#: Payu/Gateways/WC_Payu_Gateways.php:262
 msgid "Pay later with PayPo"
 msgstr "Płacę później z PayPo"
 
-#: Payu/Gateways/WC_Payu_Gateways.php:262
+#: Payu/Gateways/WC_Payu_Gateways.php:255
+msgid "Pay later with PragmaPay"
+msgstr "Płacę później z PragmaPay"
+
+#: Payu/Gateways/WC_Payu_Gateways.php:269
 msgid "Pay later with Twisto"
 msgstr "Płacę później z Twisto"
 
-#: Payu/Features/WC_Payu_Repay_In_Order_Actions.php:64
+#: Payu/Features/WC_Payu_Repay_In_Order_Actions.php:72
 msgid "Pay with"
 msgstr "Zapłać z"
 
-#: Payu/Features/WC_Payu_Repay_In_Order_Actions.php:33
+#: Payu/Features/WC_Payu_Repay_In_Order_Actions.php:41
 msgid "Pay with PayU"
 msgstr "Zapłać z PayU"
 
-#: Payu/Gateways/WC_Payu_Gateways.php:269
+#: Payu/Gateways/WC_Payu_Gateways.php:276
 msgid "Pay with Twisto pay in 3"
 msgstr "Płacę z Twisto podziel na 3"
 
-#: Payu/Gateways/WC_Payu_Gateways.php:728
+#: Payu/Gateways/WC_Payu_Gateways.php:735
 msgid "Payment error. Status code: "
 msgstr "Błąd płatności. Kod błędu: "
 
-#: Payu/Gateways/WC_Payu_Gateways.php:731
+#: Payu/Gateways/WC_Payu_Gateways.php:738
 msgid "Payment error: "
 msgstr "Błąd płatności: "
 
-#: Payu/Gateways/WC_Payu_Gateways.php:1136
+#: Payu/Gateways/WC_Payu_Gateways.php:1138
+#: Payu/Gateways/WC_Payu_Gateways.php:1140
 msgid "Payment has been cancelled."
 msgstr "Płatność została anulowana."
 
-#: Payu/Gateways/WC_Payu_Gateways.php:1150
+#: Payu/Gateways/WC_Payu_Gateways.php:1154
 msgid ""
 "Payment has been put on hold - merchant must approve this payment manually."
 msgstr ""
 "Płatność została wstrzymana sprzedawca musi zaakceptować płatność ręcznie."
 
-#: Payu/Gateways/WC_Payu_Gateways.php:177 src/js/payublik.js:28
-#: src/js/payulistbanks.js:31 src/js/payusecureform.js:40
+#: Payu/Gateways/WC_Payu_Gateways.php:177 src/js/payulistbanks.js:31
+#: src/js/payublik.js:28 src/js/payusecureform.js:40
 msgid ""
 "Payment is processed by PayU SA; The recipient's data, the payment title and "
 "the amount are provided to PayU SA by the recipient;"
@@ -362,9 +367,13 @@ msgstr "PayU - Klarna"
 msgid "PayU - list banks"
 msgstr "PayU - lista banków"
 
-#: Payu/Gateways/WC_Payu_Gateways.php:254
+#: Payu/Gateways/WC_Payu_Gateways.php:261
 msgid "PayU - PayPo"
 msgstr "PayU - PayPo"
+
+#: Payu/Gateways/WC_Payu_Gateways.php:254
+msgid "PayU - PragmaPay"
+msgstr "PayU - PragmaPay"
 
 #: Payu/Gateways/WC_Payu_Gateways.php:226
 msgid "PayU - secure form"
@@ -374,11 +383,11 @@ msgstr "PayU - secure form"
 msgid "PayU - standard"
 msgstr "PayU - standard"
 
-#: Payu/Gateways/WC_Payu_Gateways.php:261
+#: Payu/Gateways/WC_Payu_Gateways.php:268
 msgid "PayU - Twisto"
 msgstr "PayU - Twisto"
 
-#: Payu/Gateways/WC_Payu_Gateways.php:268
+#: Payu/Gateways/WC_Payu_Gateways.php:275
 msgid "PayU - Twisto pay in 3"
 msgstr "PayU - Twisto podziel na 3"
 
@@ -407,7 +416,7 @@ msgstr "Płatność PayU"
 msgid "PayU Payment Gateway for WooCommerce"
 msgstr "Płatności PayU dla WooCommerce"
 
-#: src/js/payublik.js:80 src/js/payulistbanks.js:83 src/js/payusecureform.js:92
+#: src/js/payulistbanks.js:83 src/js/payublik.js:80 src/js/payusecureform.js:92
 msgid "PayU privacy policy"
 msgstr "Polityce prywatności PayU"
 
@@ -427,18 +436,18 @@ msgid ""
 msgstr "Id punktu płatności z sekcji Klucze konfiguracji w panelu managera."
 
 #: Payu/Gateways/WC_Payu_Gateways.php:178
-#: Payu/Gateways/WC_Payu_Gateways.php:187 src/js/payublik.js:34
-#: src/js/payublik.js:60 src/js/payulistbanks.js:37 src/js/payulistbanks.js:63
+#: Payu/Gateways/WC_Payu_Gateways.php:187 src/js/payulistbanks.js:37
+#: src/js/payulistbanks.js:63 src/js/payublik.js:34 src/js/payublik.js:60
 #: src/js/payusecureform.js:46 src/js/payusecureform.js:72
 msgid "read more"
 msgstr "więcej"
 
-#: Payu/Features/WC_Payu_Receive_Discard_Payment.php:101
+#: Payu/Features/WC_Payu_Receive_Discard_Payment.php:109
 msgid "Receive payment"
 msgstr "Odbierz płatność"
 
-#: Payu/Gateways/WC_Payu_Gateways.php:1004
-#: Payu/Gateways/WC_Payu_Gateways.php:1160
+#: Payu/Gateways/WC_Payu_Gateways.php:1011
+#: Payu/Gateways/WC_Payu_Gateways.php:1164
 msgid "Refund of: "
 msgstr "Zwrot: "
 
@@ -458,7 +467,7 @@ msgstr "Sandbox - OAuth - client_secret"
 msgid "Sandbox - Second key (MD5)"
 msgstr "Sandbox - Drugi klucz MD5"
 
-#: Payu/Gateways/WC_Payu_Gateways.php:321
+#: Payu/Gateways/WC_Payu_Gateways.php:328
 msgid "Sandbox mode"
 msgstr "Tryb sandbox"
 
@@ -471,7 +480,7 @@ msgid ""
 "Second key from \"Configuration Keys\" section of PayU management panel."
 msgstr "Drugi klucz (MD5) z sekcji Klucze konfiguracji w panelu managera."
 
-#: Payu/Gateways/WC_Payu_Gateways.php:388
+#: Payu/Gateways/WC_Payu_Gateways.php:395
 msgid "Select shipping methods"
 msgstr "Wybierz metody wysyłki"
 
@@ -479,11 +488,11 @@ msgstr "Wybierz metody wysyłki"
 msgid "Selected payment method"
 msgstr "Wybrana metoda płatności"
 
-#: Payu/Gateways/WC_Gateway_PayuListBanks.php:225
+#: Payu/Gateways/WC_Gateway_PayuListBanks.php:228
 msgid "Show as grayed out"
 msgstr "Pokaż jako wyszarzone"
 
-#: Payu/Gateways/WC_Gateway_PayuListBanks.php:224
+#: Payu/Gateways/WC_Gateway_PayuListBanks.php:227
 msgid "Show inactive payment methods as grayed out"
 msgstr "Pokaż nieaktywne metody płatności jako wyszarzone"
 
@@ -491,8 +500,8 @@ msgstr "Pokaż nieaktywne metody płatności jako wyszarzone"
 msgid "The card could not be sent"
 msgstr "Nie udało się przesłać karty"
 
-#: Payu/Gateways/WC_Payu_Gateways.php:186 src/js/payublik.js:54
-#: src/js/payulistbanks.js:57 src/js/payusecureform.js:66
+#: Payu/Gateways/WC_Payu_Gateways.php:186 src/js/payulistbanks.js:57
+#: src/js/payublik.js:54 src/js/payusecureform.js:66
 msgid ""
 "The controller of your personal data is PayU S.A. with its registered office "
 "in Poznan (60–166), at Grunwaldzka Street 186 (\"PayU\")."
@@ -500,8 +509,8 @@ msgstr ""
 "Administratorem Twoich danych osobowych jest PayU S.A. z siedzibą w Poznaniu "
 "(60–166), przy ul. Grunwaldzkiej 186."
 
-#: Payu/Gateways/WC_Payu_Gateways.php:179 src/js/payublik.js:39
-#: src/js/payulistbanks.js:42 src/js/payusecureform.js:51
+#: Payu/Gateways/WC_Payu_Gateways.php:179 src/js/payulistbanks.js:42
+#: src/js/payublik.js:39 src/js/payusecureform.js:51
 msgid ""
 "The order is sent for processing when PayU SA receives your payment. The "
 "payment is transferred to the recipient within 1 hour, not later than until "
@@ -512,8 +521,8 @@ msgstr ""
 "niż do końca następnego dnia roboczego; PayU SA nie pobiera opłaty od "
 "realizacji usługi."
 
-#: Payu/Gateways/WC_Payu_Gateways.php:191 src/js/payublik.js:70
-#: src/js/payulistbanks.js:73 src/js/payusecureform.js:82
+#: Payu/Gateways/WC_Payu_Gateways.php:191 src/js/payulistbanks.js:73
+#: src/js/payublik.js:70 src/js/payusecureform.js:82
 msgid ""
 "The recipients of your personal data may be entities cooperating with PayU "
 "during processing the payment. Depending on the payment method you choose, "
@@ -534,16 +543,16 @@ msgstr ""
 "wymiaru sprawiedliwości. Twoje dane mogą zostać udostępnione akceptantom "
 "celem poinformowania ich o statusie realizacji płatności."
 
-#: Payu/Gateways/WC_Payu_Gateways.php:1226
-#: Payu/Gateways/WC_Payu_Gateways.php:1227
+#: Payu/Gateways/WC_Payu_Gateways.php:1230
+#: Payu/Gateways/WC_Payu_Gateways.php:1231
 msgid "the website"
 msgstr "stronę"
 
-#: Payu/Gateways/WC_Payu_Gateways.php:314
+#: Payu/Gateways/WC_Payu_Gateways.php:321
 msgid "Title"
 msgstr "Nazwa"
 
-#: Payu/Gateways/WC_Payu_Gateways.php:316
+#: Payu/Gateways/WC_Payu_Gateways.php:323
 msgid "Title of PayU Payment Gateway that users sees on Checkout page."
 msgstr "Nazwa płatności PayU widoczna przez kupującego na stronie zamówienia."
 
@@ -552,19 +561,19 @@ msgstr "Nazwa płatności PayU widoczna przez kupującego na stronie zamówienia
 msgid "Unknown Error"
 msgstr "Nieznany błąd"
 
-#: Payu/Gateways/WC_Payu_Gateways.php:327
+#: Payu/Gateways/WC_Payu_Gateways.php:334
 msgid "Use global values"
 msgstr "Użyj wartości globalnych"
 
-#: Payu/Gateways/WC_Payu_Gateways.php:329
+#: Payu/Gateways/WC_Payu_Gateways.php:336
 msgid "Use global values."
 msgstr "Użyj wartości globalnych."
 
-#: Payu/Gateways/WC_Payu_Gateways.php:323
+#: Payu/Gateways/WC_Payu_Gateways.php:330
 msgid "Use sandbox environment."
 msgstr "Używaj środowiska sandbox."
 
-#: Payu/Gateways/WC_Payu_Gateways.php:392
+#: Payu/Gateways/WC_Payu_Gateways.php:399
 msgid "Virtual orders"
 msgstr "Wirtualne zamówienia"
 
@@ -572,8 +581,8 @@ msgstr "Wirtualne zamówienia"
 msgid "Wait for the payment result"
 msgstr "Poczekaj na wynik płatności"
 
-#: Payu/Gateways/WC_Payu_Gateways.php:193 src/js/payublik.js:75
-#: src/js/payulistbanks.js:78 src/js/payusecureform.js:87
+#: Payu/Gateways/WC_Payu_Gateways.php:193 src/js/payulistbanks.js:78
+#: src/js/payublik.js:75 src/js/payusecureform.js:87
 msgid ""
 "You have the right to access, rectify, restrict or oppose the processing of "
 "data, not to be subject to automated decision making, including profiling, "
@@ -614,6 +623,7 @@ msgstr "Przekierujemy Cię na stronę wprowadzenia kodu BLIK."
 #: Payu/Gateways/WC_Payu_Gateways.php:256
 #: Payu/Gateways/WC_Payu_Gateways.php:263
 #: Payu/Gateways/WC_Payu_Gateways.php:270
+#: Payu/Gateways/WC_Payu_Gateways.php:277
 msgid "You will be redirected to the payment method page."
 msgstr "Przekierujemy Cię na stronę metody płatności."
 
@@ -629,8 +639,8 @@ msgstr "Twoja płatność jest przetwarzana."
 msgid "Your payment was successful."
 msgstr "Twoja płatność została zrealizowana pomyślnie."
 
-#: Payu/Gateways/WC_Payu_Gateways.php:189 src/js/payublik.js:65
-#: src/js/payulistbanks.js:68 src/js/payusecureform.js:77
+#: Payu/Gateways/WC_Payu_Gateways.php:189 src/js/payulistbanks.js:68
+#: src/js/payublik.js:65 src/js/payusecureform.js:77
 msgid ""
 "Your personal data will be processed for purposes of processing payment "
 "transaction, notifying You about the status of this payment, dealing with "

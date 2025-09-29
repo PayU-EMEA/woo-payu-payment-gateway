@@ -120,6 +120,9 @@ class WC_Gateway_PayuListBanks extends WC_Payu_Gateways {
 					case 'payuklarna':
                         array_push($this->unset_banks, 'dpkl', 'dpklczk', 'dpkleur', 'dpklhuf', 'dpklron');
 						break;
+                    case 'payupragma':
+                        array_push($this->unset_banks, 'ppf');
+                        break;
 					case 'payupaypo':
 						array_push($this->unset_banks, 'dpp', 'dppron');
 						break;

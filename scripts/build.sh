@@ -45,9 +45,9 @@ cp lang/${PLUGIN_SLUG}*.{json,php,po,mo,pot} ${DIST_PLUGIN}/lang/
 cp -R Payu ${DIST_PLUGIN}
 cp -R vendor ${DIST_PLUGIN}
 cp -R templates ${DIST_PLUGIN}
+cp -R src ${DIST_PLUGIN}
 cp changelog.txt ${DIST_PLUGIN}
 cp readme.txt ${DIST_PLUGIN}
 cp woocommerce-gateway-payu.php ${DIST_PLUGIN}
-
 # Compress
 (cd ${DIST_DIR}; zip -r ${PLUGIN_SLUG}.zip ${PLUGIN_SLUG};)
