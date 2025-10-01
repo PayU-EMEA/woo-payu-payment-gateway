@@ -8,7 +8,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "POT-Creation-Date: 2021-03-26 10:13+0000\n"
-"PO-Revision-Date: 2025-10-01 08:47+0000\n"
+"PO-Revision-Date: 2025-10-01 12:19+0000\n"
 "Language: pl-PL\n"
 "Plural-Forms: nplurals=3; plural=(n==1 ? 0 : n%10 >= 2 && n%10<=4 "
 "&&(n%100<10||n%100 >= 20)? 1 : 2);\n"
@@ -16,8 +16,8 @@ msgstr ""
 "X-Loco-Version: 2.8.0; wp-6.8.1; php-8.2.28\n"
 "X-Domain: woo-payu-payment-gateway\n"
 
-#: Payu/Gateways/WC_Payu_Gateways.php:1011
-#: Payu/Gateways/WC_Payu_Gateways.php:1165
+#: Payu/Gateways/WC_Payu_Gateways.php:1013
+#: Payu/Gateways/WC_Payu_Gateways.php:1167
 msgid " for order: "
 msgstr " dla zamówienia:"
 
@@ -50,7 +50,7 @@ msgstr "[PayU] Użytkownik %s zaakceptował płatność"
 msgid "[PayU] User %s rejected payment"
 msgstr "[PayU] Użytkownik %s odrzucił płatność"
 
-#: Payu/Gateways/WC_Payu_Gateways.php:722
+#: Payu/Gateways/WC_Payu_Gateways.php:724
 msgid "Awaiting PayU payment."
 msgstr "Oczekiwanie na płatność PayU."
 
@@ -142,11 +142,11 @@ msgstr "CVV"
 msgid "Default on-hold status"
 msgstr "Domyślny status zamówienia"
 
-#: Payu/Gateways/WC_Payu_Gateways.php:378
+#: Payu/Gateways/WC_Payu_Gateways.php:379
 msgid "Description"
 msgstr "Opis"
 
-#: Payu/Gateways/WC_Payu_Gateways.php:380
+#: Payu/Gateways/WC_Payu_Gateways.php:381
 msgid "Description of PayU Payment Gateway that users sees on Checkout page."
 msgstr "Opis płatności PayU widoczny przez kupującego na stronie zamówienia."
 
@@ -158,11 +158,11 @@ msgstr "Odrzuć płatność"
 msgid "Docs"
 msgstr "Dokumentacja"
 
-#: Payu/Gateways/WC_Payu_Gateways.php:385
+#: Payu/Gateways/WC_Payu_Gateways.php:387
 msgid "Enable for shipping methods"
 msgstr "Włącz dla metod wysyłki"
 
-#: Payu/Gateways/WC_Payu_Gateways.php:400
+#: Payu/Gateways/WC_Payu_Gateways.php:402
 msgid "Enable for virtual orders"
 msgstr "Włączone na zamówień wirtualnych "
 
@@ -218,7 +218,7 @@ msgstr "Ważna do"
 msgid "First key from \"Configuration Keys\" section of PayU management panel."
 msgstr "Pierwszy klucz (MD5) z sekcji Klucze konfiguracji w panelu managera."
 
-#: Payu/Gateways/WC_Payu_Gateways.php:1119
+#: Payu/Gateways/WC_Payu_Gateways.php:1121
 msgid "has status"
 msgstr "ma status"
 
@@ -234,7 +234,7 @@ msgstr "https://github.com/PayU/woo-payu-payment-gateway"
 msgid "Id point of sales"
 msgstr "Id punktu płatności:"
 
-#: Payu/Gateways/WC_Payu_Gateways.php:390
+#: Payu/Gateways/WC_Payu_Gateways.php:392
 msgid ""
 "If PayU is only available for certain methods, set it up here. Leave blank "
 "to enable for all methods."
@@ -256,7 +256,7 @@ msgstr ""
 "com/boarding/#/registerSandbox/?lang=pl\" target=\"_blank\" rel=\"nofollow\">"
 "zarejestruj się w systemie sandbox</a>."
 
-#: Payu/Gateways/WC_Payu_Gateways.php:1228
+#: Payu/Gateways/WC_Payu_Gateways.php:1230
 msgid "If you have not yet paid for the order, you can do so by going to"
 msgstr ""
 "Jeżeli jeszcze nie opłaciłeś zamówienia możesz to zrobić przechodząc na"
@@ -319,20 +319,20 @@ msgstr "Zapłać z PayU"
 msgid "Pay with Twisto pay in 3"
 msgstr "Płacę z Twisto podziel na 3"
 
-#: Payu/Gateways/WC_Payu_Gateways.php:735
+#: Payu/Gateways/WC_Payu_Gateways.php:737
 msgid "Payment error. Status code: "
 msgstr "Błąd płatności. Kod błędu: "
 
-#: Payu/Gateways/WC_Payu_Gateways.php:738
+#: Payu/Gateways/WC_Payu_Gateways.php:740
 msgid "Payment error: "
 msgstr "Błąd płatności: "
 
-#: Payu/Gateways/WC_Payu_Gateways.php:1138
 #: Payu/Gateways/WC_Payu_Gateways.php:1140
+#: Payu/Gateways/WC_Payu_Gateways.php:1142
 msgid "Payment has been cancelled."
 msgstr "Płatność została anulowana."
 
-#: Payu/Gateways/WC_Payu_Gateways.php:1154
+#: Payu/Gateways/WC_Payu_Gateways.php:1156
 msgid ""
 "Payment has been put on hold - merchant must approve this payment manually."
 msgstr ""
@@ -446,8 +446,8 @@ msgstr "więcej"
 msgid "Receive payment"
 msgstr "Odbierz płatność"
 
-#: Payu/Gateways/WC_Payu_Gateways.php:1011
-#: Payu/Gateways/WC_Payu_Gateways.php:1164
+#: Payu/Gateways/WC_Payu_Gateways.php:1013
+#: Payu/Gateways/WC_Payu_Gateways.php:1166
 msgid "Refund of: "
 msgstr "Zwrot: "
 
@@ -467,7 +467,7 @@ msgstr "Sandbox - OAuth - client_secret"
 msgid "Sandbox - Second key (MD5)"
 msgstr "Sandbox - Drugi klucz MD5"
 
-#: Payu/Gateways/WC_Payu_Gateways.php:328
+#: Payu/Gateways/WC_Payu_Gateways.php:329
 msgid "Sandbox mode"
 msgstr "Tryb sandbox"
 
@@ -480,7 +480,7 @@ msgid ""
 "Second key from \"Configuration Keys\" section of PayU management panel."
 msgstr "Drugi klucz (MD5) z sekcji Klucze konfiguracji w panelu managera."
 
-#: Payu/Gateways/WC_Payu_Gateways.php:395
+#: Payu/Gateways/WC_Payu_Gateways.php:397
 msgid "Select shipping methods"
 msgstr "Wybierz metody wysyłki"
 
@@ -543,8 +543,8 @@ msgstr ""
 "wymiaru sprawiedliwości. Twoje dane mogą zostać udostępnione akceptantom "
 "celem poinformowania ich o statusie realizacji płatności."
 
-#: Payu/Gateways/WC_Payu_Gateways.php:1230
-#: Payu/Gateways/WC_Payu_Gateways.php:1231
+#: Payu/Gateways/WC_Payu_Gateways.php:1232
+#: Payu/Gateways/WC_Payu_Gateways.php:1233
 msgid "the website"
 msgstr "stronę"
 
@@ -561,19 +561,19 @@ msgstr "Nazwa płatności PayU widoczna przez kupującego na stronie zamówienia
 msgid "Unknown Error"
 msgstr "Nieznany błąd"
 
-#: Payu/Gateways/WC_Payu_Gateways.php:334
+#: Payu/Gateways/WC_Payu_Gateways.php:335
 msgid "Use global values"
 msgstr "Użyj wartości globalnych"
 
-#: Payu/Gateways/WC_Payu_Gateways.php:336
+#: Payu/Gateways/WC_Payu_Gateways.php:337
 msgid "Use global values."
 msgstr "Użyj wartości globalnych."
 
-#: Payu/Gateways/WC_Payu_Gateways.php:330
+#: Payu/Gateways/WC_Payu_Gateways.php:331
 msgid "Use sandbox environment."
 msgstr "Używaj środowiska sandbox."
 
-#: Payu/Gateways/WC_Payu_Gateways.php:399
+#: Payu/Gateways/WC_Payu_Gateways.php:401
 msgid "Virtual orders"
 msgstr "Wirtualne zamówienia"
 
