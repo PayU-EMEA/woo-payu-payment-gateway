@@ -3,12 +3,12 @@ msgstr ""
 "Project-Id-Version: PayU Payment Gateway\n"
 "Report-Msgid-Bugs-To: \n"
 "Last-Translator: \n"
-"Language-Team: Polski\n"
+"Language-Team: Polish\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "POT-Creation-Date: 2021-03-26 10:13+0000\n"
-"PO-Revision-Date: 2025-09-29 09:52+0000\n"
+"PO-Revision-Date: 2025-10-01 08:47+0000\n"
 "Language: pl-PL\n"
 "Plural-Forms: nplurals=3; plural=(n==1 ? 0 : n%10 >= 2 && n%10<=4 "
 "&&(n%100<10||n%100 >= 20)? 1 : 2);\n"
@@ -620,12 +620,19 @@ msgid "You will be redirected to BLIK."
 msgstr "Przekierujemy Cię na stronę wprowadzenia kodu BLIK."
 
 #: Payu/Gateways/WC_Payu_Gateways.php:249
-#: Payu/Gateways/WC_Payu_Gateways.php:256
 #: Payu/Gateways/WC_Payu_Gateways.php:263
 #: Payu/Gateways/WC_Payu_Gateways.php:270
 #: Payu/Gateways/WC_Payu_Gateways.php:277
 msgid "You will be redirected to the payment method page."
 msgstr "Przekierujemy Cię na stronę metody płatności."
+
+#: Payu/Gateways/WC_Payu_Gateways.php:256
+msgid ""
+"You will be redirected to the payment method page. Option available only for "
+"business clients"
+msgstr ""
+"Przekierujemy Cię na stronę metody płatności. Opcja dostępna tylko dla "
+"klientów biznesowych"
 
 #: src/js/payu/payment-result.ts:57
 msgid "Your payment failed."

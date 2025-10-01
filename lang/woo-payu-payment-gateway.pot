@@ -3,7 +3,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PayU Payment Gateway for WooCommerce\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-09-29 09:46+0000\n"
+"POT-Creation-Date: 2025-10-01 08:46+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: PayU\n"
 "Language-Team: \n"
@@ -16,8 +16,8 @@ msgstr ""
 "X-Loco-Version: 2.5.2; wp-5.7\n"
 "X-Domain: woo-payu-payment-gateway"
 
-#: Payu/Gateways/WC_Payu_Gateways.php:1011 
-#: Payu/Gateways/WC_Payu_Gateways.php:1165
+#: Payu/Gateways/WC_Payu_Gateways.php:1013 
+#: Payu/Gateways/WC_Payu_Gateways.php:1167
 msgid " for order: "
 msgstr ""
 
@@ -50,7 +50,7 @@ msgstr ""
 msgid "[PayU] User %s rejected payment"
 msgstr ""
 
-#: Payu/Gateways/WC_Payu_Gateways.php:722
+#: Payu/Gateways/WC_Payu_Gateways.php:724
 msgid "Awaiting PayU payment."
 msgstr ""
 
@@ -134,11 +134,11 @@ msgstr ""
 msgid "Default on-hold status"
 msgstr ""
 
-#: Payu/Gateways/WC_Payu_Gateways.php:378
+#: Payu/Gateways/WC_Payu_Gateways.php:379
 msgid "Description"
 msgstr ""
 
-#: Payu/Gateways/WC_Payu_Gateways.php:380
+#: Payu/Gateways/WC_Payu_Gateways.php:381
 msgid "Description of PayU Payment Gateway that users sees on Checkout page."
 msgstr ""
 
@@ -150,11 +150,11 @@ msgstr ""
 msgid "Docs"
 msgstr ""
 
-#: Payu/Gateways/WC_Payu_Gateways.php:385
+#: Payu/Gateways/WC_Payu_Gateways.php:387
 msgid "Enable for shipping methods"
 msgstr ""
 
-#: Payu/Gateways/WC_Payu_Gateways.php:400
+#: Payu/Gateways/WC_Payu_Gateways.php:402
 msgid "Enable for virtual orders"
 msgstr ""
 
@@ -204,7 +204,7 @@ msgstr ""
 msgid "First key from \"Configuration Keys\" section of PayU management panel."
 msgstr ""
 
-#: Payu/Gateways/WC_Payu_Gateways.php:1119
+#: Payu/Gateways/WC_Payu_Gateways.php:1121
 msgid "has status"
 msgstr ""
 
@@ -220,7 +220,7 @@ msgstr ""
 msgid "Id point of sales"
 msgstr ""
 
-#: Payu/Gateways/WC_Payu_Gateways.php:390
+#: Payu/Gateways/WC_Payu_Gateways.php:392
 msgid ""
 "If PayU is only available for certain methods, set it up here. Leave blank "
 "to enable for all methods."
@@ -235,7 +235,7 @@ msgid ""
 "please register in Sandbox</a>."
 msgstr ""
 
-#: Payu/Gateways/WC_Payu_Gateways.php:1228
+#: Payu/Gateways/WC_Payu_Gateways.php:1230
 msgid "If you have not yet paid for the order, you can do so by going to"
 msgstr ""
 
@@ -297,20 +297,20 @@ msgstr ""
 msgid "Pay with Twisto pay in 3"
 msgstr ""
 
-#: Payu/Gateways/WC_Payu_Gateways.php:735
+#: Payu/Gateways/WC_Payu_Gateways.php:737
 msgid "Payment error. Status code: "
 msgstr ""
 
-#: Payu/Gateways/WC_Payu_Gateways.php:738
+#: Payu/Gateways/WC_Payu_Gateways.php:740
 msgid "Payment error: "
 msgstr ""
 
-#: Payu/Gateways/WC_Payu_Gateways.php:1138 
-#: Payu/Gateways/WC_Payu_Gateways.php:1140
+#: Payu/Gateways/WC_Payu_Gateways.php:1140 
+#: Payu/Gateways/WC_Payu_Gateways.php:1142
 msgid "Payment has been cancelled."
 msgstr ""
 
-#: Payu/Gateways/WC_Payu_Gateways.php:1154
+#: Payu/Gateways/WC_Payu_Gateways.php:1156
 msgid ""
 "Payment has been put on hold - merchant must approve this payment manually."
 msgstr ""
@@ -419,8 +419,8 @@ msgstr ""
 msgid "Receive payment"
 msgstr ""
 
-#: Payu/Gateways/WC_Payu_Gateways.php:1011 
-#: Payu/Gateways/WC_Payu_Gateways.php:1164
+#: Payu/Gateways/WC_Payu_Gateways.php:1013 
+#: Payu/Gateways/WC_Payu_Gateways.php:1166
 msgid "Refund of: "
 msgstr ""
 
@@ -440,7 +440,7 @@ msgstr ""
 msgid "Sandbox - Second key (MD5)"
 msgstr ""
 
-#: Payu/Gateways/WC_Payu_Gateways.php:328
+#: Payu/Gateways/WC_Payu_Gateways.php:329
 msgid "Sandbox mode"
 msgstr ""
 
@@ -453,7 +453,7 @@ msgid ""
 "Second key from \"Configuration Keys\" section of PayU management panel."
 msgstr ""
 
-#: Payu/Gateways/WC_Payu_Gateways.php:395
+#: Payu/Gateways/WC_Payu_Gateways.php:397
 msgid "Select shipping methods"
 msgstr ""
 
@@ -501,8 +501,8 @@ msgid ""
 "shared with merchants to inform them about the status of the payment."
 msgstr ""
 
-#: Payu/Gateways/WC_Payu_Gateways.php:1230 
-#: Payu/Gateways/WC_Payu_Gateways.php:1231
+#: Payu/Gateways/WC_Payu_Gateways.php:1232 
+#: Payu/Gateways/WC_Payu_Gateways.php:1233
 msgid "the website"
 msgstr ""
 
@@ -519,19 +519,19 @@ msgstr ""
 msgid "Unknown Error"
 msgstr ""
 
-#: Payu/Gateways/WC_Payu_Gateways.php:334
+#: Payu/Gateways/WC_Payu_Gateways.php:335
 msgid "Use global values"
 msgstr ""
 
-#: Payu/Gateways/WC_Payu_Gateways.php:336
+#: Payu/Gateways/WC_Payu_Gateways.php:337
 msgid "Use global values."
 msgstr ""
 
-#: Payu/Gateways/WC_Payu_Gateways.php:330
+#: Payu/Gateways/WC_Payu_Gateways.php:331
 msgid "Use sandbox environment."
 msgstr ""
 
-#: Payu/Gateways/WC_Payu_Gateways.php:399
+#: Payu/Gateways/WC_Payu_Gateways.php:401
 msgid "Virtual orders"
 msgstr ""
 
@@ -571,11 +571,16 @@ msgid "You will be redirected to BLIK."
 msgstr ""
 
 #: Payu/Gateways/WC_Payu_Gateways.php:249 
-#: Payu/Gateways/WC_Payu_Gateways.php:256 
 #: Payu/Gateways/WC_Payu_Gateways.php:263 
 #: Payu/Gateways/WC_Payu_Gateways.php:270 
 #: Payu/Gateways/WC_Payu_Gateways.php:277
 msgid "You will be redirected to the payment method page."
+msgstr ""
+
+#: Payu/Gateways/WC_Payu_Gateways.php:256
+msgid ""
+"You will be redirected to the payment method page. Option available only for "
+"business clients"
 msgstr ""
 
 #: src/js/payu/payment-result.ts:57
