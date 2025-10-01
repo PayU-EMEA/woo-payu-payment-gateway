@@ -3,7 +3,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PayU Payment Gateway for WooCommerce\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-10-01 12:18+0000\n"
+"POT-Creation-Date: 2025-10-01 13:39+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: PayU\n"
 "Language-Team: \n"
@@ -580,7 +580,7 @@ msgstr ""
 #: Payu/Gateways/WC_Payu_Gateways.php:256
 msgid ""
 "You will be redirected to the payment method page. Option available only for "
-"business clients"
+"firms."
 msgstr ""
 
 #: src/js/payu/payment-result.ts:57
