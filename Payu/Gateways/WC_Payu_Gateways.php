@@ -50,8 +50,8 @@ abstract class WC_Payu_Gateways extends WC_Payment_Gateway implements WC_PayuGat
 		$this->init_settings();
 
 		$this->icon                = apply_filters( 'woocommerce_payu_icon', plugins_url( '/assets/images/logo-payu.svg', PAYU_PLUGIN_FILE ) );
-        $this->title               = $this->get_option('title', '') ?: $this->gateway_data('front_name') ;
-        $this->description         = $this->get_option('description', '') ?: $this->gateway_data('default_description');
+        $this->title = $this->get_option( 'title' ) ?: $this->gateway_data( 'front_name' );
+        $this->description = $this->get_option( 'description' ) ?: $this->gateway_data( 'default_description' );
 		$this->sandbox             = filter_var( $this->get_option( 'sandbox', false ), FILTER_VALIDATE_BOOLEAN );
 		$this->enable_for_shipping = $this->get_option( 'enable_for_shipping', [] );
 		$this->enable_for_virtual  = $this->get_option( 'enable_for_virtual', 'no' ) === 'yes';
@@ -322,7 +322,7 @@ abstract class WC_Payu_Gateways extends WC_Payment_Gateway implements WC_PayuGat
 				'type'        => 'text',
 				'description' => __( 'Title of PayU Payment Gateway that users sees on Checkout page.', 'woo-payu-payment-gateway' ),
 				'default'     => '',
-                'placeholder' => $this->gateway_data('front_name'),
+                'placeholder' => $this->gateway_data( 'front_name' ),
 				'desc_tip'    => true
 			],
 			'sandbox'    => [
@@ -380,7 +380,7 @@ abstract class WC_Payu_Gateways extends WC_Payment_Gateway implements WC_PayuGat
 				'type'        => 'text',
 				'description' => __( 'Description of PayU Payment Gateway that users sees on Checkout page.', 'woo-payu-payment-gateway' ),
                 'default'     => '',
-                'placeholder' => $this->gateway_data('default_description'),
+                'placeholder' => $this->gateway_data( 'default_description' ),
 				'desc_tip'    => true
 			],
 			'enable_for_shipping' => [
