@@ -30,17 +30,18 @@ The plugin offers the following payment methods:
 |  8  | PayU - Twisto          | :white_check_mark: | payer will be redirected to Twisto payment form                                                                                                         |
 |  8  | PayU - Twisto pay in 3 | :white_check_mark: | payer will be redirected to Twisto pay in 3 payment form                                                                                                |
 |  9  | PayU - PayPo           | :white_check_mark: | payer will be redirected to PayPo payment form                                                                                                          |
+| 10  | PayU - PragmaPay       | :white_check_mark: | payer will be redirected to PragmaPay payment form (only for business clients)                                                                          |
 
 #### Payment method remarks
 
 * Methods `PayU - standard` and `PayU - bank list` enable payments of any type and differ only with the way the payment type is chosen. **Should not be configured both at once**.
 * Methods `PayU - payment card` and `PayU - secure form` enable card payments and differ only with the way the card data is entered. **Should not be configured both at once**.
-* In case `PayU - bank list` method is switched on, the following payment types are removed from the list: cards if `PayU - payment card` or `PayU - secure form` is on, Blik if  `PayU - Blik` is on, installments if `PayU - installments` is on, Klarna if `Payu - Klarna` is on, Twisto if `PayU - Twisto` is on, PayPo if `PayU - PayPo` is on.
+* In case `PayU - bank list` method is switched on, the following payment types are removed from the list: cards if `PayU - payment card` or `PayU - secure form` is on, Blik if  `PayU - Blik` is on, installments if `PayU - installments` is on, Klarna if `Payu - Klarna` is on, Twisto if `PayU - Twisto` is on, PayPo if `PayU - PayPo` is on, PragmaPay if `Payu - PragmaPay` is on.
 * `PayU - secure form` method requires the shop to be available via HTTPS (for local tests, the address should be http://localhost)
-* Even though  `PayU - payment card`, `PayU - secure form`, `PayU - Blik`, `PayU - installments`, `PayU - Klarna`, `PayU - Twisto` and `PayU - PayPo` are on, they may be not visible in case they are not configured on your POS in PayU system or the amount is outside min-max range for the given payment type.
+* Even though  `PayU - payment card`, `PayU - secure form`, `PayU - Blik`, `PayU - installments`, `PayU - Klarna`, `PayU - Twisto`, `PayU - PayPo` and `PayU - PragmaPay` are on, they may be not visible in case they are not configured on your POS in PayU system or the amount is outside min-max range for the given payment type.
 
 ## Configuration
-#### Global configuration 
+#### Global configuration
 Global configuration is available in the main menu as `PayU Settings`
 
 POS parameters:
@@ -117,7 +118,7 @@ add_filter('woocommerce_payu_get_currency_codes', 'payu_set_currency_list');
 ```
 
 Notes:
-*  When the `WMPL` plugin is installed and filters are configured, the availability of currencies is checked in `WMPL` then through the filters. 
+*  When the `WMPL` plugin is installed and filters are configured, the availability of currencies is checked in `WMPL` then through the filters.
 * Seperate point of sale configurations are available when number of currencies is greater than 1.
 
 ## Filter hooks

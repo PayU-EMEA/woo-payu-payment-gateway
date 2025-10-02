@@ -31,14 +31,15 @@ Wtyczka udostępnia następujące metody płatności:
 | 8  | PayU - Twisto          | :white_check_mark: | Płacący zostanie przekierowany na stronę formularza płatności Twisto                                                                |
 | 8  | PayU - Twisto pay in 3 | :white_check_mark: | Płacący zostanie przekierowany na stronę formularza płatności Twisto pay in 3                                                       |
 | 9  | PayU - PayPo           | :white_check_mark: | Płacący zostanie przekierowany na stronę formularza płatności PayPo                                                                 |
+| 10 | PayU - PragmaPay       | :white_check_mark: | Płacący zostanie przekierowany na stronę formularza płatności PragmaPay (tylko dla firm)                                  |
 
 #### Uwagi do metod płatności
 
 * Metody `PayU - standard` i `PayU - lista banków` umożliwiają płatność dowolnym typem płatności, a różnią się tylko miejscem jego wyboru. **Nie powinny być razem włączone**.
 * Metody `PayU - karta płatnicza` i `PayU - secure form` umożliwiają płatność kartą, a różnią się tylko miejscem wprowadzenia danych karty. **Nie powinny być razem włączone**.
-* W przypadku gdy jest włączona metoda `PayU - lista banków` z listy dostępnych typów płatności usuwane są: karty, gdy włączona jest metoda `PayU - karta kredytowa` lub `PayU - secure form`, Blik, gdy włączona jest metoda `PayU - blik`, raty gdy włączona jest metoda `PayU - raty`, Klarna gdy włączona jest metoda `PayU - Klarna`, Twisto gdy włączona jest metoda `PayU - Twisto`, PayPo gdy włączona jest metoda `PayU - PayPo`.
+* W przypadku gdy jest włączona metoda `PayU - lista banków` z listy dostępnych typów płatności usuwane są: karty, gdy włączona jest metoda `PayU - karta kredytowa` lub `PayU - secure form`, Blik, gdy włączona jest metoda `PayU - blik`, raty gdy włączona jest metoda `PayU - raty`, Klarna gdy włączona jest metoda `PayU - Klarna`, Twisto gdy włączona jest metoda `PayU - Twisto`, PayPo gdy włączona jest metoda `PayU - PayPo`, PragmaPay gdy włączona jest metoda `PayU - PragmaPay`.
 * Metoda `PayU - secure form` wymaga aby sklep był dostępny za pomocą połączenia HTTPS (przy testach lokalnych adres strony powinien być http://localhost)
-* Pomimo włączenia metod  `PayU - karta kredytowa`, `PayU - secure form`, `PayU - blik`, `PayU - raty`, `PayU - Klarna`, `PayU - Twisto` i `PayU - PayPo` mogą się one nie pokazać płacącemu, jeśli dany typ płatności nie jest włączony na punkcie płatności lub jeśli kwota nie mieści się między kwotą minimalną i maksymalną dla danego typu.
+* Pomimo włączenia metod  `PayU - karta kredytowa`, `PayU - secure form`, `PayU - blik`, `PayU - raty`, `PayU - Klarna`, `PayU - Twisto`, `PayU - PayPo` i `PayU - PragmaPay` mogą się one nie pokazać płacącemu, jeśli dany typ płatności nie jest włączony na punkcie płatności lub jeśli kwota nie mieści się między kwotą minimalną i maksymalną dla danego typu.
 
 ## Konfiguracja
 

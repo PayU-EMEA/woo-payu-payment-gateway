@@ -13,6 +13,7 @@ module.exports = {
     'js/payusecureform': '/src/js/payusecureform',
     'js/payupaypo': '/src/js/payupaypo',
     'js/payuklarna': '/src/js/payuklarna',
+    'js/payupragma': '/src/js/payupragma',
     'js/payutwistopl': '/src/js/payutwistopl',
     'js/payuinstallments': '/src/js/payuinstallments',
     'js/payublik': '/src/js/payublik',
