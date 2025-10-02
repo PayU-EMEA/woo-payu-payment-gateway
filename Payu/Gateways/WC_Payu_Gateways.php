@@ -49,9 +49,9 @@ abstract class WC_Payu_Gateways extends WC_Payment_Gateway implements WC_PayuGat
 		$this->init_form_fields();
 		$this->init_settings();
 
-		$this->icon                = apply_filters( 'woocommerce_payu_icon', plugins_url( '/assets/images/logo-payu.svg', PAYU_PLUGIN_FILE ) );
-        $this->title = $this->get_option( 'title' ) ?: $this->gateway_data( 'front_name' );
-        $this->description = $this->get_option( 'description' ) ?: $this->gateway_data( 'default_description' );
+        $this->icon                = apply_filters( 'woocommerce_payu_icon', plugins_url( '/assets/images/logo-payu.svg', PAYU_PLUGIN_FILE ) );
+        $this->title               = $this->get_option( 'title' ) ?: $this->gateway_data( 'front_name' );
+        $this->description         = $this->get_option( 'description' ) ?: $this->gateway_data( 'default_description' );
 		$this->sandbox             = filter_var( $this->get_option( 'sandbox', false ), FILTER_VALIDATE_BOOLEAN );
 		$this->enable_for_shipping = $this->get_option( 'enable_for_shipping', [] );
 		$this->enable_for_virtual  = $this->get_option( 'enable_for_virtual', 'no' ) === 'yes';
