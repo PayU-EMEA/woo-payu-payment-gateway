@@ -8,7 +8,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "POT-Creation-Date: 2021-03-26 10:13+0000\n"
-"PO-Revision-Date: 2025-10-01 13:41+0000\n"
+"PO-Revision-Date: 2025-10-02 10:36+0000\n"
 "Language: pl-PL\n"
 "Plural-Forms: nplurals=3; plural=(n==1 ? 0 : n%10 >= 2 && n%10<=4 "
 "&&(n%100<10||n%100 >= 20)? 1 : 2);\n"
@@ -627,9 +627,13 @@ msgid "You will be redirected to the payment method page."
 msgstr "Przekierujemy Cię na stronę metody płatności."
 
 #: Payu/Gateways/WC_Payu_Gateways.php:256
+#, fuzzy
+#| msgid ""
+#| "You will be redirected to the payment method page. Option available only "
+#| "for firms."
 msgid ""
 "You will be redirected to the payment method page. Option available only for "
-"firms."
+"companies."
 msgstr ""
 "Przekierujemy Cię na stronę metody płatności. Opcja dostępna tylko dla firm."
 
