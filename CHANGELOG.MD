@@ -1,8 +1,9 @@
-# X.X.X - XXXX-XX-XX
+# 2.8.0 - 2025-10-06
 * [Update] Change default order status from 'canceled` to 'failed' for 'CANCELED' payment notification
 * [Add] Show info about payment on Thank You page
 * [Add] 60 seconds cache for retrieve payment methods
-* [Remove] Configuration auto migration from 1.X versions
+* [Add] PragmaPay as separate method
+* [Remove] Auto migration configuration from 1.X versions
 
 # 2.7.2 - 2025-07-09
 * [Fix] Limit widget script load

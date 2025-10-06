@@ -2,8 +2,8 @@
 Contributors: payusa
 Tags: PayU, payment, payment gateway, płatności, credit card
 Requires at least: 5.0
-Tested up to: 6.8.2
-Stable tag: 2.7.2
+Tested up to: 6.8.3
+Stable tag: 2.8.0
 Requires PHP: 7.4
 License: Apache License 2.0
 
@@ -53,6 +53,13 @@ Yes, it does.
 * For presenting credit payment options like minimal installment amount or "buy now pay later" we used [Credit Widget](https://developers.payu.com/europe/docs/payment-solutions/credit/installments/#credit-widget-installments) and plugin loads the script from the static.payu.com domain.
 
 == Changelog ==
+= 2.8.0 - 2025-10-06 =
+* [Update] Change default order status from 'canceled` to 'failed' for 'CANCELED' payment notification
+* [Add] Show info about payment on Thank You page
+* [Add] 60 seconds cache for retrieve payment methods
+* [Add] PragmaPay as separate method
+* [Remove] Auto migration configuration from 1.X versions
+
 = 2.7.2 - 2025-07-09 =
 * [Fix] Limit widget script load
 
