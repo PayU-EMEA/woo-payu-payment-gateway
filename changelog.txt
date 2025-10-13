@@ -1,4 +1,7 @@
 *** Changelog ***
+= 2.9.0 - 2025-10-13 =
+* [Update] Better configuration checking
+
 = 2.8.0 - 2025-10-06 =
 * [Update] Change default order status from 'canceled` to 'failed' for 'CANCELED' payment notification
 * [Add] Show info about payment on Thank You page
