@@ -1101,13 +1101,15 @@ abstract class WC_Payu_Gateways extends WC_Payment_Gateway implements WC_PayuGat
 
 			$currency = $this->extractCurrencyFromNotification( $data );
 
-			if ( null !== $currency ) {
-				$this->init_OpenPayU( $currency );
+			$this->init_OpenPayU( $currency );
+
+			if ( empty( OpenPayU_Configuration::getSignatureKey() ) ) {
+				header( 'HTTP/1.1 400 Bad Request', true, 400 );
+				die( 'Missing signature key' );
 			}
 
 			try {
 				$response = OpenPayU_Order::consumeNotification( $data );
-
 			} catch ( \Exception $e ) {
 				header( 'X-PHP-Response-Code: 500', true, 500 );
 
@@ -1128,6 +1130,11 @@ abstract class WC_Payu_Gateways extends WC_Payment_Gateway implements WC_PayuGat
 				$reportOutput = 'OID: ' . $order_id . '|PS: ' . $status . '|TID: ' . $transaction_id . '|';
 
 				$order = wc_get_order( $order_id );
+
+				if ( $this->id !== $order->get_payment_method() ) {
+					header( 'HTTP/1.1 400 Bad Request', true, 400 );
+					die( 'Payment method not match' );
+				}
 
 				$reportOutput .= 'WC AS: ' . $order->get_status() . '|';
 				$order->add_meta_data( '_payu_order_status', $status . '|' . $response->getResponse()->order->orderId );
