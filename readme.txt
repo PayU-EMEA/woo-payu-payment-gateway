@@ -29,17 +29,17 @@ The plugin offers the following payment methods:
 Detailed information about each method and its configuration [can be found here](https://github.com/PayU-EMEA/woo-payu-payment-gateway).
 
 == Installation ==
-If you have any questions or would like to raise an issue please contact [our technical support](https://www.payu.pl/pomoc).
+If you have any questions or would like to raise an issue please contact [our technical support](https://polandeng.support.payu.com/s/?language=en_US).
 
 = Minimum Requirements =
-PayU merchant account - if you do not have an account you can [**register a production account**](https://poland.payu.com/en/how-to-activate-payu/) or [**register a sandbox account**](https://registration-merch-prod.snd.payu.com/boarding/#/registerSandbox/?lang=en)
+PayU merchant account - if you do not have an account you can [**register a production account**](https://poland.payu.com/commercial-offer/) or [**register a sandbox account**](https://registration-merch-prod.snd.payu.com/boarding/#/registerSandbox/?lang=en)
 
 **Note:** Module works only with `REST API` POS type (POS type is configured in PayU merchant panel after you register).
 
 Following PHP libraries are required: cURL i hash.
 
 = Automatic installation =
-Use [automatic installation and activation](https://wordpress.org/support/article/managing-plugins/#automatic-plugin-installation) available in Wordpress admin panel. Module name is `PayU EU Payment Gateway for WooCommerce`.
+Use [automatic installation and activation](https://wordpress.org/support/article/managing-plugins/#automatic-plugin-installation) available in Wordpress admin panel. Module name is `PayU GPO Payment for WooCommerce`.
 
 = Updating =
 Upon plugin update from version 1.X to version 2.X the existing config data will be automatically converted.
@@ -49,7 +49,7 @@ Upon plugin update from version 1.X to version 2.X the existing config data will
 = Does this load external javascript resources ? =
 
 Yes, it does.
-* For card payment we used [PayU Secure Form](https://developers.payu.com/en/card_tokenization.html#secureform) and for proper working it is necessary to load Secure Form JS SDK from the secure.payu.com domain. As a result, you do not need to have PCI DSS, PayU does it for you.
+* For card payment we used [PayU Secure Form](https://developers.payu.com/europe/docs/checkout/secure-form/) and for proper working it is necessary to load Secure Form JS SDK from the secure.payu.com domain. As a result, you do not need to have PCI DSS, PayU does it for you.
 * For presenting credit payment options like minimal installment amount or "buy now pay later" we used [Credit Widget](https://developers.payu.com/europe/docs/payment-solutions/credit/installments/#credit-widget-installments) and plugin loads the script from the static.payu.com domain.
 
 == Changelog ==

@@ -13,7 +13,7 @@ Jeżeli nie posiadasz jeszcze konta w systemie PayU [**zarejestruj się w system
 Do prawidłowego funkcjonowania modułu wymagane są następujące rozszerzenia PHP: [cURL][ext1] i [hash][ext2].
 
 ## Instalacja
-Skorzystaj z [automatycznej instalacji oraz aktywacji](https://wordpress.org/support/article/managing-plugins/#automatic-plugin-installation) dostępnej w panelu administracyjnym Wordpress. Nazwa wtyczki PayU w repozytorium wtyczek to `WooCommerce PayU EU Payment Gateway`
+Skorzystaj z [automatycznej instalacji oraz aktywacji](https://wordpress.org/support/article/managing-plugins/#automatic-plugin-installation) dostępnej w panelu administracyjnym Wordpress. Nazwa wtyczki PayU w repozytorium wtyczek to `PayU GPO Payment dla WooCommerce`
 
 ## Metody płatności
 
@@ -29,9 +29,9 @@ Wtyczka udostępnia następujące metody płatności:
 | 6  | PayU - raty            | :white_check_mark: | Płacący zostanie przekierowany na stronę formularza płatności ratalnej                                                              |
 | 7  | PayU - Klarna          | :white_check_mark: | Płacący zostanie przekierowany na stronę formularza płatności Klarna                                                                |
 | 8  | PayU - Twisto          | :white_check_mark: | Płacący zostanie przekierowany na stronę formularza płatności Twisto                                                                |
-| 8  | PayU - Twisto pay in 3 | :white_check_mark: | Płacący zostanie przekierowany na stronę formularza płatności Twisto pay in 3                                                       |
-| 9  | PayU - PayPo           | :white_check_mark: | Płacący zostanie przekierowany na stronę formularza płatności PayPo                                                                 |
-| 10 | PayU - PragmaPay       | :white_check_mark: | Płacący zostanie przekierowany na stronę formularza płatności PragmaPay (tylko dla firm)                                  |
+| 9  | PayU - Twisto pay in 3 | :white_check_mark: | Płacący zostanie przekierowany na stronę formularza płatności Twisto pay in 3                                                       |
+| 10 | PayU - PayPo           | :white_check_mark: | Płacący zostanie przekierowany na stronę formularza płatności PayPo                                                                 |
+| 11 | PayU - PragmaPay       | :white_check_mark: | Płacący zostanie przekierowany na stronę formularza płatności PragmaPay (tylko dla firm)                                  |
 
 #### Uwagi do metod płatności
 
@@ -65,12 +65,12 @@ Parametry punktu płatności:
 
 Inne parametry - mają zastosowanie do wszystkich modułów:
 
-| Parametr                                                 | Opis                                                                                                                                                                                                                                                                                                                                                                                                                                                                      |
-|----------------------------------------------------------|---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| Domyślny status zamówienia                               | Status w jaki przejdzie zamówienie po rozpoczęciu płatności. Możliwe wartości to: `Wstrzymane (oczekujące na płatność) - on-hold` i `Oczekujące na płatność - pending`.<br />Zgodnie z dokomentacją WooCommerce w przypadku kontroli stanów magazynowych dla statusu `on-hold` nastąpi zmniejszenie ilości prduktów na magazynie oraz ich przywrócenie gdy zamówienie zmieni status na `canceled`, natomiast przy statusie `pending` stany magazynowe nie będę zmieniane. |
-| Status zamówienia dla nieudanej płatności                | Status w jaki przejdzie zamówienie po nieudanej płatności. Możliwe wartości to: `Anlulowane - canceled` i `Nieudane - failed`. W przypadku `Nieudane` możliwe jest ponowienie płatności przez kupującego.                                                                                                                                                                                                                                                                 |
-| Włącz pobieranie statusu na stronie powrotu po płatności | Na stronie powrotu gdy płatność nie ma statusu końcowego pobierany jest cyklycznie status (10 razy co 4 sekundy). W przypadku statustu `Nieudane - failed` można ponowić płatność.                                                                                                                                                                                                                                                                                        |
-| Włącz ponawianie płatności                               | Umożliwia płacącemu ponowienie płatności bez względu na status. Przed włączeniem proszę o zapoznanie się z rozdziałem [Ponawianie płatności](#ponawianie-płatności).                                                                                                                                                                                                                                                                                                      |
+| Parametr                                                 | Opis                                                                                                                                                                                                                                                                                                                                                                                                                                                                       |
+|----------------------------------------------------------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| Domyślny status zamówienia                               | Status w jaki przejdzie zamówienie po rozpoczęciu płatności. Możliwe wartości to: `Wstrzymane (oczekujące na płatność) - on-hold` i `Oczekujące na płatność - pending`.<br />Zgodnie z dokumentacją WooCommerce w przypadku kontroli stanów magazynowych dla statusu `on-hold` nastąpi zmniejszenie ilości produktów na magazynie oraz ich przywrócenie gdy zamówienie zmieni status na `canceled`, natomiast przy statusie `pending` stany magazynowe nie będę zmieniane. |
+| Status zamówienia dla nieudanej płatności                | Status w jaki przejdzie zamówienie po nieudanej płatności. Możliwe wartości to: `Anulowane - canceled` i `Nieudane - failed`. W przypadku `Nieudane` możliwe jest ponowienie płatności przez kupującego.                                                                                                                                                                                                                                                                   |
+| Włącz pobieranie statusu na stronie powrotu po płatności | Na stronie powrotu gdy płatność nie ma statusu końcowego pobierany jest cyklicznie status (10 razy co 4 sekundy). W przypadku statustu `Nieudane - failed` można ponowić płatność.                                                                                                                                                                                                                                                                                         |
+| Włącz ponawianie płatności                               | Umożliwia płacącemu ponowienie płatności bez względu na status. Przed włączeniem proszę o zapoznanie się z rozdziałem [Ponawianie płatności](#ponawianie-płatności).                                                                                                                                                                                                                                                                                                       |
 
 #### Konfiguracja metod płatności
 
@@ -97,7 +97,7 @@ Parametry, które są dodatkowo dostępne dla metody płatności `PayU - lista b
 
 Są dwie możliwości uzyskania wielowalutowości:
 
-### Pluginu `WMPL`
+### Pluginu `WPML`
 
 Dla walut dodanych w pluginie `WPML` automatycznie pojawia się osobna konfiguracja punktu płatności dla każdej z walut.
 
@@ -128,8 +128,8 @@ add_filter('woocommerce_payu_get_currency_codes', 'payu_set_currency_list');
 ```
 
 Uwagi:
-* W przypadku gdy zainstalowany jest plugin `WMPL` i są skonfigurowane filtry najpierw następuje sprawdzenie dostępności walut w `WMPL` a następnie poprzez filtry.
-* Osobne konfiguracje punktu płatności dla walut będą dostępny gdy liczba walut jest większa od 1.
+* W przypadku gdy zainstalowany jest plugin `WPML` i są skonfigurowane filtry najpierw następuje sprawdzenie dostępności walut w `WPML` a następnie poprzez filtry.
+* Osobne konfiguracje punktu płatności dla walut będą dostępne gdy liczba walut jest większa od 1.
 
 ## Hooki - Filtry
 
@@ -151,7 +151,7 @@ Ponowienie płatności umożliwia zakładanie wielu płatności w PayU do jedneg
 
 ## Widget kredytowy
 Plugin dostarcza integrację [widgetu kredytowego][ext14]. Prezentuje on minimalną kwotę raty, na którą można zakupić dany towar przy użyciu metody płatności PayU Raty. 
-Ponadto, po klikniciu w widget prezentowana jest informacja o dostępnych planach spłaty, a także lista metod płatności odroczonych tzw. "kup teraz, zapłać później".  
+Ponadto, po kliknięciu w widget prezentowana jest informacja o dostępnych planach spłaty, a także lista metod płatności odroczonych tzw. "kup teraz, zapłać później".  
 Funkcjonalność jest domyślnie włączona. Można ją dezaktywować poprzez przełączniki w panelu administracyjnym (WooCommerce->Ustawienia PayU).
 Konkretne punkty integracji widgetu przedstawione zostało w poniższej tabeli.
 
@@ -170,15 +170,15 @@ Dodatkowo, w panelu administracyjnym istnieje możliwość ograniczenia typów p
 
 Plugin nie wysyła żadnych dodatkowych maili. Nie ingeruje również w proces, kiedy maile są wysyłane.
 
-W przypadku włączonego ponownienia płatności do maila potwierdzajacego zamówienia dodawana jest informacja o możliwości wykonania płatności: `Jeżeli jeszcze nie opłaciłeś zamówienia możesz to zrobić przechodząc na stronę.`
+W przypadku włączonego ponownienia płatności do maila potwierdzającego zamówienia dodawana jest informacja o możliwości wykonania płatności: `Jeżeli jeszcze nie opłaciłeś zamówienia możesz to zrobić przechodząc na stronę.`
 
 <!--external links:-->
 
 [ext1]: http://php.net/manual/en/book.curl.php
 [ext2]: http://php.net/manual/en/book.hash.php
-[ext4]: https://www.payu.pl/oferta-handlowa
+[ext4]: https://poland.payu.com/oferta-handlowa/
 [ext5]: https://secure.snd.payu.com/boarding/#/registerSandbox/?lang=pl
-[ext6]: http://developers.payu.com/pl/overview.html#paymethods
+[ext6]: https://developers.payu.com/europe/pl/docs/get-started/integration-overview/references/#payment-methods-reference
 [ext8]: README.md
-[ext13]: https://www.payu.pl/pomoc
+[ext13]: https://poland.support.payu.com/s/?language=pl
 [ext14]: https://developers.payu.com/europe/pl/docs/payment-solutions/credit/installments/#credit-widget-installments
