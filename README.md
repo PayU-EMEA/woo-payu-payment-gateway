@@ -10,33 +10,33 @@
 
 If you do not have a PayU merchant account [**register a production account**][ext4] or [**register a sandbox account**][ext5]
 
-The following PHP libraries are required: [cURL][ext1] i [hash][ext2].
+The following PHP libraries are required: [cURL][ext1] and [hash][ext2].
 
 ## Installation
-Use [automatic installation and activation](https://wordpress.org/support/article/managing-plugins/#automatic-plugin-installation) available in the Wordpress admin panel. Look out for `WooCommerce PayU EU Payment Gateway`.
+Use [automatic installation and activation](https://wordpress.org/support/article/managing-plugins/#automatic-plugin-installation) available in the Wordpress admin panel. Look out for `PayU GPO Payment for WooCommerce`.
 
 ## Payment methods
 The plugin offers the following payment methods:
 
-| No. | Method                 |       Blocks       | Description                                                                                                                                             |
-|:---:|------------------------|:------------------:|---------------------------------------------------------------------------------------------------------------------------------------------------------|
-|  1  | PayU - standard        | :white_check_mark: | payer will be redirected to PayU's hosted payment page where any available payment type configured on your POS can be chosen                            |
-|  2  | PayU - bank list       | :white_check_mark: | payment type list will be displayed, depending on chosen type the payer will be either redirected directly to the bank or to PayU's hosted payment page |
-|  3  | PayU - payment card    | :white_check_mark: | payer will be redirected to PayU's hosted card form where credit, debit or prepaid card data can be securely entered                                    |
-|  4  | PayU - secure form     | :white_check_mark: | a secure form collecting credit, debit or prepaid card data will be displayed                                                                           |
-|  5  | PayU - Blik            | :white_check_mark: | payer will be redirected to Blik's page                                                                                                                 |
-|  6  | PayU - installments    | :white_check_mark: | payer will be redirected to installment payment form                                                                                                    |
-|  7  | PayU - Klarna          | :white_check_mark: | payer will be redirected to Klarna payment form                                                                                                         |
-|  8  | PayU - Twisto          | :white_check_mark: | payer will be redirected to Twisto payment form                                                                                                         |
-|  8  | PayU - Twisto pay in 3 | :white_check_mark: | payer will be redirected to Twisto pay in 3 payment form                                                                                                |
-|  9  | PayU - PayPo           | :white_check_mark: | payer will be redirected to PayPo payment form                                                                                                          |
-| 10  | PayU - PragmaPay       | :white_check_mark: | payer will be redirected to PragmaPay payment form (only for business clients)                                                                          |
+| Method                 |       Blocks       | Description                                                                                                                                             |
+|------------------------|:------------------:|---------------------------------------------------------------------------------------------------------------------------------------------------------|
+| PayU - standard        | :white_check_mark: | payer will be redirected to PayU's hosted payment page where any available payment type configured on your POS can be chosen                            |
+| PayU - bank list       | :white_check_mark: | payment type list will be displayed, depending on chosen type the payer will be either redirected directly to the bank or to PayU's hosted payment page |
+| PayU - payment card    | :white_check_mark: | payer will be redirected to PayU's hosted card form where credit, debit or prepaid card data can be securely entered                                    |
+| PayU - secure form     | :white_check_mark: | a secure form collecting credit, debit or prepaid card data will be displayed                                                                           |
+| PayU - Blik            | :white_check_mark: | payer will be redirected to Blik's page                                                                                                                 |
+| PayU - installments    | :white_check_mark: | payer will be redirected to installment payment form                                                                                                    |
+| PayU - Klarna          | :white_check_mark: | payer will be redirected to Klarna payment form                                                                                                         |
+| PayU - Twisto          | :white_check_mark: | payer will be redirected to Twisto payment form                                                                                                         |
+| PayU - Twisto pay in 3 | :white_check_mark: | payer will be redirected to Twisto pay in 3 payment form                                                                                                |
+| PayU - PayPo           | :white_check_mark: | payer will be redirected to PayPo payment form                                                                                                          |
+| PayU - PragmaPay       | :white_check_mark: | payer will be redirected to PragmaPay payment form (only for business clients)                                                                          |
 
 #### Payment method remarks
 
 * Methods `PayU - standard` and `PayU - bank list` enable payments of any type and differ only with the way the payment type is chosen. **Should not be configured both at once**.
 * Methods `PayU - payment card` and `PayU - secure form` enable card payments and differ only with the way the card data is entered. **Should not be configured both at once**.
-* In case `PayU - bank list` method is switched on, the following payment types are removed from the list: cards if `PayU - payment card` or `PayU - secure form` is on, Blik if  `PayU - Blik` is on, installments if `PayU - installments` is on, Klarna if `Payu - Klarna` is on, Twisto if `PayU - Twisto` is on, PayPo if `PayU - PayPo` is on, PragmaPay if `Payu - PragmaPay` is on.
+* In case `PayU - bank list` method is switched on, the following payment types are removed from the list: cards if `PayU - payment card` or `PayU - secure form` is on, Blik if  `PayU - Blik` is on, installments if `PayU - installments` is on, Klarna if `PayU - Klarna` is on, Twisto if `PayU - Twisto` is on, PayPo if `PayU - PayPo` is on, PragmaPay if `PayU - PragmaPay` is on.
 * `PayU - secure form` method requires the shop to be available via HTTPS (for local tests, the address should be http://localhost)
 * Even though  `PayU - payment card`, `PayU - secure form`, `PayU - Blik`, `PayU - installments`, `PayU - Klarna`, `PayU - Twisto`, `PayU - PayPo` and `PayU - PragmaPay` are on, they may be not visible in case they are not configured on your POS in PayU system or the amount is outside min-max range for the given payment type.
 
@@ -46,7 +46,7 @@ Global configuration is available in the main menu as `PayU Settings`
 
 POS parameters:
 
-| Parameter                       | Opis                                      |
+| Parameter                       | Description                               |
 |---------------------------------|-------------------------------------------|
 | POS ID                          | POS (point of sale) ID in PayU system     |
 | Second key MD5                  | Second key (MD5) in PayU system           |
@@ -62,12 +62,12 @@ POS parameters:
 
 Other parameters - applicable to all modules:
 
-| Parameter                                | Description                                                                                                                                                                                                                                                                                                                                                                                                       |
-|------------------------------------------|-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| Default order status                     | The status that the order will have after the payment process has started. Possible values  `on-hold` or `pending`.< br/>According to the WooCommerce documentation, when warehouse management is enabled for `on-hold` status, the number of products in the warehouse will be reduced and restored when the order changes to `canceled` status, for `pending` status, the inventory levels will not be changed. |
-| Order status for failed payment          | The status that an order will receive after an unsuccessful payment. Possible values `canceled` or `failed`. In the case of `failed` it is possible for the buyer to retry the payment.                                                                                                                                                                                                                           |
-| Enable retrieve status on Thank You page | On the Thank You page, when the payment does not have a final status, the status is checked cyclically (10 times every 4 seconds). If the status is `failed`, the buyer can retry the payment.                                                                                                                                                                                                                    |
-| Enable repayment                         | Allows the payer to try again payment regardless of status. Before using this option please check [Repayment](#repayment).                                                                                                                                                                                                                                                                                        |
+| Parameter                                | Description                                                                                                                                                                                                                                                                                                                                                                                                                                          |
+|------------------------------------------|------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| Default order status                     | The status that the order will have after the payment process has started. Possible values  `On hold` or `Pending payment - pending`.<br/>According to the WooCommerce documentation, when warehouse management is enabled for `On hold` status, the number of products in the warehouse will be reduced and restored when the order changes to `Canceled` status, for `Pending payment - pending` status, the inventory levels will not be changed. |
+| Order status for failed payment          | The status that an order will receive after an unsuccessful payment. Possible values `Canceled` or `Failed`. In the case of `Failed` it is possible for the buyer to retry the payment.                                                                                                                                                                                                                                                              |
+| Enable retrieve status on Thank You page | On the Thank You page, when the payment does not have a final status, the status is checked cyclically (10 times every 4 seconds). If the status is `Failed`, the buyer can retry the payment.                                                                                                                                                                                                                                                       |
+| Enable repayment                         | Allows the payer to try again payment regardless of status. Before using this option please check [Repayment](#repayment).                                                                                                                                                                                                                                                                                                                           |
 
 #### Payment method configuration
 Parameters available for every payment method:
@@ -91,7 +91,7 @@ Parameters available for `PayU - bank list`:
 
 ## Multicurrency
 There are two ways to handle multicurrency:
-### `WMPL` Plugin
+### `WPML` Plugin
 For every currency added to `WPML` plugin you can find separate point of sale configuration.
 ### Filters
 The plugin provides two filters, that allow to add support for multiple currencies during payment
@@ -118,8 +118,8 @@ add_filter('woocommerce_payu_get_currency_codes', 'payu_set_currency_list');
 ```
 
 Notes:
-*  When the `WMPL` plugin is installed and filters are configured, the availability of currencies is checked in `WMPL` then through the filters.
-* Seperate point of sale configurations are available when number of currencies is greater than 1.
+*  When the `WPML` plugin is installed and filters are configured, the availability of currencies is checked in `WPML` then through the filters.
+* Separate point of sale configurations are available when number of currencies is greater than 1.
 
 ## Filter hooks
 
@@ -163,9 +163,9 @@ In case repayment is configured, the mail confirming order placement is enhanced
 <!--external links:-->
 [ext1]: http://php.net/manual/en/book.curl.php
 [ext2]: http://php.net/manual/en/book.hash.php
-[ext4]: https://poland.payu.com/en/how-to-activate-payu/
+[ext4]: https://poland.payu.com/commercial-offer/
 [ext5]: https://secure.snd.payu.com/boarding/#/registerSandbox/?lang=en
-[ext6]: http://developers.payu.com/en/overview.html#paymethods
+[ext6]: https://developers.payu.com/europe/docs/get-started/integration-overview/references/#payment-methods-reference
 [ext8]: README.PL.md
-[ext13]: https://poland.payu.com/en/support/
+[ext13]: https://polandeng.support.payu.com/s/?language=en_US
 [ext14]: https://developers.payu.com/europe/docs/payment-solutions/credit/installments/#credit-widget-installments
