@@ -59,8 +59,10 @@ abstract class WC_Payu_Gateways extends WC_Payment_Gateway implements WC_PayuGat
 		if ( ! is_admin() && isset( $_GET['pay_for_order'], $_GET['key'] ) ) {
 			$order_id = wc_get_order_id_by_order_key( $_GET['key'] );
 			if ( $order_id !== 0 ) {
-				$order             = wc_get_order( $order_id );
-				$this->order_total = $order->get_total();
+				$order = wc_get_order( $order_id );
+				if ( $order instanceof WC_Order ) {
+					$this->order_total = $order->get_total();
+				}
 			}
 		}
 
@@ -1070,7 +1072,9 @@ abstract class WC_Payu_Gateways extends WC_Payment_Gateway implements WC_PayuGat
 	protected function getTotal(): float {
 		if ( $this->order_total !== null ) {
 			return $this->order_total;
-		} elseif ( WC()->cart && 0 !== count( WC()->cart->get_cart_contents() ) ) {
+		}
+
+		if ( WC()->cart && 0 !== count( WC()->cart->get_cart_contents() ) ) {
 			return WC()->cart->get_cart_contents_total() + WC()->cart->get_cart_contents_tax() + WC()->cart->get_shipping_total() + WC()->cart->get_shipping_tax();
 		}
 
