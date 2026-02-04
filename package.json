@@ -11,15 +11,15 @@
   "author": "PayU GPO",
   "license": "Apache-2.0",
   "dependencies": {
-    "@wordpress/element": "^6.31.0",
-    "@wordpress/html-entities": "^4.31.0",
-    "@wordpress/i18n": "^6.4.0",
+    "@wordpress/element": "^6.39.0",
+    "@wordpress/html-entities": "^4.39.0",
+    "@wordpress/i18n": "^6.12.0",
     "clsx": "^2.1.1"
   },
   "devDependencies": {
     "@woocommerce/dependency-extraction-webpack-plugin": "^4.0.0",
     "@woocommerce/eslint-plugin": "^2.3.0",
-    "@wordpress/scripts": "^30.24.0",
+    "@wordpress/scripts": "^31.4.0",
     "eslint-import-resolver-typescript": "^2.7.1",
     "webpack-remove-empty-scripts": "^1.1.1"
   }
