@@ -32,7 +32,7 @@ class WC_Payu_Status_Retrieval_On_Thank_You {
 				// do nothing
 			} else {
 				$this->load_assets();
-				$status_url  = get_rest_url() . 'payu/status/' . $order->get_id() . '/?key=' . $order->get_order_key();
+				$status_url  = rest_url(sprintf('/payu/status/%s/%s', $order->get_id(), $order->get_order_key()));
 				$payment_url = $order->get_checkout_payment_url();
 
 				WC_Payu::template( 'thank-you-pending', [
@@ -63,7 +63,7 @@ class WC_Payu_Status_Retrieval_On_Thank_You {
 	public function get_status_by_api(): void {
 		register_rest_route(
 			'payu',
-			'status/(?P<order_id>\d+)',
+			'status/(?P<order_id>\d+)/(?P<key>.+)',
 			[
 				'methods'             => [ WP_REST_Server::READABLE ],
 				'callback'            => [ $this, 'wc_payu_gateway_get_status' ],
