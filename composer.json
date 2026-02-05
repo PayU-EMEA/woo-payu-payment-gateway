@@ -1,23 +1,23 @@
 {
-	"name": "payu/payment_gateway",
-	"version": "2.9.0",
-	"description": "PayU GPO Payment for WooCommerce",
-	"type": "woocommerce-plugin",
-	"license": "Apache License 2.0",
-	"autoload": {
-		"psr-4": {
-			"Payu\\PaymentGateway\\": "Payu/"
-		}
-	},
-	"authors": [
-		{
-			"name": "PayU GPO"
-		}
-	],
-	"config": {
-		"optimize-autoloader": true
-	},
-	"require": {
-		"openpayu/openpayu": "2.3.*"
-	}
+  "name": "payu/payment_gateway",
+  "version": "2.9.1",
+  "description": "PayU GPO Payment for WooCommerce",
+  "type": "woocommerce-plugin",
+  "license": "Apache License 2.0",
+  "autoload": {
+    "psr-4": {
+      "Payu\\PaymentGateway\\": "Payu/"
+    }
+  },
+  "authors": [
+    {
+      "name": "PayU GPO"
+    }
+  ],
+  "config": {
+    "optimize-autoloader": true
+  },
+  "require": {
+    "openpayu/openpayu": "2.3.*"
+  }
 }
