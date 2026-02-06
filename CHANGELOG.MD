@@ -1,3 +1,8 @@
+# 2.9.1 - 2026-02-05
+* [Fix] Incorrect address when retrieving payment status
+* [Fix] "Call to a member function get_total() on bool" for WooCommerce Subscriptions
+* [Fix] sf-init.js loading in header
+
 # 2.9.0 - 2025-10-13
 * [Update] Better configuration checking
 

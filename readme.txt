@@ -2,8 +2,8 @@
 Contributors: payusa
 Tags: PayU, payment, payment gateway, płatności, credit card
 Requires at least: 5.0
-Tested up to: 6.8.3
-Stable tag: 2.9.0
+Tested up to: 6.9.1
+Stable tag: 2.9.1
 Requires PHP: 7.4
 License: Apache License 2.0
 
@@ -53,6 +53,11 @@ Yes, it does.
 * For presenting credit payment options like minimal installment amount or "buy now pay later" we used [Credit Widget](https://developers.payu.com/europe/docs/payment-solutions/credit/installments/#credit-widget-installments) and plugin loads the script from the static.payu.com domain.
 
 == Changelog ==
+= 2.9.1 - 2026-02-05 =
+* [Fix] Incorrect address when retrieving payment status
+* [Fix] "Call to a member function get_total() on bool" for WooCommerce Subscriptions
+* [Fix] sf-init.js loading in header
+
 = 2.9.0 - 2025-10-13 =
 * [Update] Better configuration checking
 
