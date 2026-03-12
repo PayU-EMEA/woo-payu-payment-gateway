@@ -150,8 +150,8 @@
                 "apiVersion": 2,
                 "apiVersionMinor": 0,
                 "merchantInfo": {
-                    "merchantName": "Example Merchant",
-                    "merchantId": "0"
+                    "merchantName": payuGooglePayConfig.merchantName,
+                    "merchantId": payuGooglePayConfig.posId
                 },
                 "allowedPaymentMethods": [
                 {

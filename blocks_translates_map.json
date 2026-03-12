@@ -3,5 +3,6 @@
 	"src/js/payulistbanks.js": "build/js/payulistbanks.js",
 	"src/js/payusecureform.js": "build/js/payusecureform.js",
 	"src/js/payu/main.ts": "build/js/payu.js",
-	"src/js/payu/payment-result.ts": "build/js/payu.js"
+	"src/js/payu/payment-result.ts": "build/js/payu.js",
+	"src/js/payugooglepay.js": "build/js/payugooglepay.js"
 }

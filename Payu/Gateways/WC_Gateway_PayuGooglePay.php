@@ -2,6 +2,8 @@
 
 namespace Payu\PaymentGateway\Gateways;
 
+use OpenPayU_Configuration;
+
 class WC_Gateway_PayuGooglePay extends WC_Payu_Gateways
 {
     protected string $paytype = 'ap';
@@ -39,14 +41,26 @@ class WC_Gateway_PayuGooglePay extends WC_Payu_Gateways
                 currency: "<?php echo esc_attr(get_woocommerce_currency()) ?>",
                 posId: "<?php echo esc_attr($this->pos_id) ?>",
                 totalPrice: "<?php echo esc_attr(WC()->cart->get_total('')) ?>",
-                env: "<?php echo $this->sandbox ? 'TEST' : 'PROD' ?>"
+                env: "<?php echo $this->sandbox ? 'TEST' : 'PROD' ?>",
+                merchantName: "<?php echo esc_attr(get_bloginfo( 'name' )) ?>"
             }
         </script>
         <input type="hidden" name="payu-google-token" id="payu-google-token" value="" />
         <?php
         $this->agreements_field();
     }
-
+    public function get_additional_data(): array {
+        $currency = get_woocommerce_currency();
+        $totalPrice = WC()->cart->get_total('');
+        $merchantName = get_bloginfo( 'name' );
+		return [
+			'posId'        => $this->pos_id,
+            'currency'     => $currency,
+            'totalPrice'   => $totalPrice,
+            'env'          => $this->sandbox ? 'TEST' : 'PROD',
+            'merchantName' => $merchantName,
+		];
+	}
     public function include_scripts(): void
     {
         wp_enqueue_script('google-pay', "https://pay.google.com/gp/p/js/pay.js", [], null);
