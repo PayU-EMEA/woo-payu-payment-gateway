@@ -101,7 +101,7 @@ const TermInfo = () => {
 };
 
 const canMakePayment = () => {
-  if ( ! paymentsClient ) {
+  if ( ! available || ! paymentsClient ) {
     return false;
   }
 
@@ -139,8 +139,8 @@ const Content = ( { eventRegistration, emitResponse } ) => {
         apiVersion: 2,
         apiVersionMinor: 0,
         merchantInfo: {
-          merchantName: merchantName,
-          merchantId: merchantId,
+          merchantName,
+          merchantId,
         },
         allowedPaymentMethods: [
           {
@@ -162,7 +162,7 @@ const Content = ( { eventRegistration, emitResponse } ) => {
         transactionInfo: {
           totalPriceStatus: 'FINAL',
           countryCode: 'PL',
-          totalPrice: totalPrice,
+          totalPrice,
           currencyCode: currency,
         },
       };

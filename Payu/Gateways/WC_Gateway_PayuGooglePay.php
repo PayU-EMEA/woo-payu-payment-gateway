@@ -51,7 +51,6 @@ class WC_Gateway_PayuGooglePay extends WC_Payu_Gateways
     public function get_additional_data(): array {
         $currency = get_woocommerce_currency();
         $totalPrice = WC()->cart->get_total('');
-        $merchantName = get_bloginfo( 'name' );
 		return [
 			'posId'        => $this->pos_id,
             'currency'     => $currency,
