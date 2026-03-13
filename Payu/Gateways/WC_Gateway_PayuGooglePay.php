@@ -2,8 +2,6 @@
 
 namespace Payu\PaymentGateway\Gateways;
 
-use OpenPayU_Configuration;
-
 class WC_Gateway_PayuGooglePay extends WC_Payu_Gateways
 {
     protected string $paytype = 'ap';
@@ -41,8 +39,9 @@ class WC_Gateway_PayuGooglePay extends WC_Payu_Gateways
                 currency: "<?php echo esc_attr(get_woocommerce_currency()) ?>",
                 posId: "<?php echo esc_attr($this->pos_id) ?>",
                 totalPrice: "<?php echo esc_attr(WC()->cart->get_total('')) ?>",
-                env: "<?php echo $this->sandbox ? 'TEST' : 'PROD' ?>",
-                merchantName: "<?php echo esc_attr(get_bloginfo( 'name' )) ?>"
+                env: "<?php echo $this->sandbox ? 'TEST' : 'PRODUCTION'?>",
+                merchantName: "<?php echo $this->get_option('merchant_name', '') ?>",
+                merchantId: "<?php echo $this->sandbox ? '0' : get_option('merchant_id', '') ?>"
             }
         </script>
         <input type="hidden" name="payu-google-token" id="payu-google-token" value="" />
@@ -57,13 +56,14 @@ class WC_Gateway_PayuGooglePay extends WC_Payu_Gateways
 			'posId'        => $this->pos_id,
             'currency'     => $currency,
             'totalPrice'   => $totalPrice,
-            'env'          => $this->sandbox ? 'TEST' : 'PROD',
-            'merchantName' => $merchantName,
+            'env'          => $this->sandbox ? 'TEST' : 'PRODUCTION',
+            'merchantName' => $this->get_option('merchant_name', ''),
+            'merchantId'   => $this->sandbox ? '0' : get_option('merchant_id', '0')
 		];
 	}
     public function include_scripts(): void
     {
-        wp_enqueue_script('google-pay', "https://pay.google.com/gp/p/js/pay.js", [], null);
+        wp_enqueue_script('google-pay', 'https://pay.google.com/gp/p/js/pay.js');
     }
 
     protected function get_payu_pay_method(): array
@@ -77,7 +77,22 @@ class WC_Gateway_PayuGooglePay extends WC_Payu_Gateways
                 'authorizationCode' => $token
             ]
         ];
-
-        return $this->get_payu_pay_method_array('CARD_TOKEN', $token);
     }
+
+    protected function get_additional_gateway_fields(): array {
+		return [
+            'merchant_name'        => [
+                'title'       => __( 'Google Merchant name:', 'woo-payu-payment-gateway' ),
+                'type'        => 'text',
+                'description' => __( 'Your Google Merchant name, visible for customers.', 'woo-payu-payment-gateway' ),
+                'desc_tip'    => true
+            ],
+			'merchant_id'          => [
+				'title'       => __( 'Google Merchant Id:', 'woo-payu-payment-gateway' ),
+				'type'        => 'text',
+				'description' => __( 'Your Google Merchant Id.', 'woo-payu-payment-gateway' ),
+				'desc_tip'    => true
+			]
+		];
+	}
 }

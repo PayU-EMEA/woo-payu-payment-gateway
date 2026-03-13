@@ -19,10 +19,13 @@ const currency = decodeEntities( settings.additionalData?.currency );
 const totalPrice = decodeEntities( settings.additionalData?.totalPrice );
 const env = decodeEntities( settings.additionalData?.env );
 const merchantName = decodeEntities( settings.additionalData?.merchantName );
+const merchantId = decodeEntities( settings.additionalData?.merchantId );
 const termsLinks = settings.termsLinks;
-const paymentsClient = window.google?.payments?.api?.PaymentsClient ? new google.payments.api.PaymentsClient( {
-    environment: env,
-  } ) : null;
+const paymentsClient = window.google?.payments?.api?.PaymentsClient
+  ? new google.payments.api.PaymentsClient( {
+      environment: env,
+    } )
+  : null;
 
 const TermInfo = () => {
   const [ showMore1, setShowMore1 ] = useState( false );
@@ -117,10 +120,10 @@ const canMakePayment = () => {
   };
   return paymentsClient
     .isReadyToPay( isReadyToPayRequest )
-    .then(true)
-    .catch(() => {
+    .then( true )
+    .catch( () => {
       return false;
-    });
+    } );
 };
 
 const Content = ( { eventRegistration, emitResponse } ) => {
@@ -132,19 +135,12 @@ const Content = ( { eventRegistration, emitResponse } ) => {
     const unsubscribe = onPaymentSetup( () => {
       setError( undefined );
 
-
-
-      // var googleToken = document.getElementById('payu-google-token');
-      // console.log(googleToken.value);
-      // if ( googleToken.value === '' ) {
-      console.log( env );
-
       const paymentDataRequest = {
         apiVersion: 2,
         apiVersionMinor: 0,
         merchantInfo: {
           merchantName: merchantName,
-          merchantId: posId,
+          merchantId: merchantId,
         },
         allowedPaymentMethods: [
           {
@@ -171,27 +167,26 @@ const Content = ( { eventRegistration, emitResponse } ) => {
         },
       };
 
-        return paymentsClient
-          .loadPaymentData( paymentDataRequest )
-          .then( function ( paymentData ) {
-            const paymentToken =
-              paymentData.paymentMethodData.tokenizationData.token;
-            // googleToken.value = btoa( paymentToken );
-            return {
-              type: emitResponse.responseTypes.SUCCESS,
-              meta: {
-                paymentMethodData: {
-                  'payu-google-token': btoa( paymentToken ),
-                },
+      return paymentsClient
+        .loadPaymentData( paymentDataRequest )
+        .then( function ( paymentData ) {
+          const paymentToken =
+            paymentData.paymentMethodData.tokenizationData.token;
+          return {
+            type: emitResponse.responseTypes.SUCCESS,
+            meta: {
+              paymentMethodData: {
+                'payu-google-token': btoa( paymentToken ),
               },
-            };
-          } )
-          .catch( function ( err ) {
-            console.error( err );
-            return {
-              type: emitResponse.responseTypes.ERROR,
-            };
-          } );
+            },
+          };
+        } )
+        .catch( function ( err ) {
+          console.error( err );
+          return {
+            type: emitResponse.responseTypes.ERROR,
+          };
+        } );
     } );
 
     return unsubscribe;

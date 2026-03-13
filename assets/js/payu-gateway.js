@@ -94,9 +94,9 @@
     }
 
     function show_error(){
-        const errorMessage = document.querySelector(".payu-google-pay-error");
+        var errorMessage = document.querySelector('.payu-google-pay-error');
         if (errorMessage) {
-            errorMessage.style.display = "block";
+            errorMessage.style.display = 'block';
         }
         $('html, body').animate({
             scrollTop: $('.payment_method_payugooglepay').offset().top
@@ -126,55 +126,55 @@
             return false;
         }
 
-        var googleToken = document.getElementById("payu-google-token");
+        var googleToken = document.getElementById('payu-google-token');
         if (googleToken.value === '') {
 
             const paymentsClient =
                 new google.payments.api.PaymentsClient({environment: payuGooglePayConfig.env});
 
             const isReadyToPayRequest = {
-                "apiVersion": 2,
-                "apiVersionMinor": 0,
-                "allowedPaymentMethods": [
+                apiVersion: 2,
+                apiVersionMinor: 0,
+                allowedPaymentMethods: [
                     {
-                        "type": "CARD",
-                        "parameters": {
-                            "allowedAuthMethods": ["PAN_ONLY", "CRYPTOGRAM_3DS"],
-                            "allowedCardNetworks": ["MASTERCARD", "VISA"]
+                        type: 'CARD',
+                        parameters: {
+                            allowedAuthMethods: ['PAN_ONLY', 'CRYPTOGRAM_3DS'],
+                            allowedCardNetworks: ['MASTERCARD', 'VISA']
                         }
                     }
                 ]
             }
 
             const paymentDataRequest = {
-                "apiVersion": 2,
-                "apiVersionMinor": 0,
-                "merchantInfo": {
-                    "merchantName": payuGooglePayConfig.merchantName,
-                    "merchantId": payuGooglePayConfig.posId
+                apiVersion: 2,
+                apiVersionMinor: 0,
+                merchantInfo: {
+                    merchantName: payuGooglePayConfig.merchantName,
+                    merchantId: payuGooglePayConfig.merchantId
                 },
-                "allowedPaymentMethods": [
+                allowedPaymentMethods: [
                 {
-                    "type": "CARD",
-                    "parameters": {
-                        "allowedAuthMethods": ["PAN_ONLY", "CRYPTOGRAM_3DS"],
-                        "allowedCardNetworks": ["MASTERCARD", "VISA"],
-                        "billingAddressRequired": false
+                    type: 'CARD',
+                    parameters: {
+                        allowedAuthMethods: ['PAN_ONLY', 'CRYPTOGRAM_3DS'],
+                        allowedCardNetworks: ['MASTERCARD', 'VISA'],
+                        billingAddressRequired: false
                     },
-                    "tokenizationSpecification": {
-                        "type": "PAYMENT_GATEWAY",
-                        "parameters": {
-                            "gateway": "payu",
-                            "gatewayMerchantId": payuGooglePayConfig.posId
+                    tokenizationSpecification: {
+                        type: 'PAYMENT_GATEWAY',
+                        parameters: {
+                            gateway: 'payu',
+                            gatewayMerchantId: payuGooglePayConfig.posId
                         }
                     }
                 }
                 ],
-                "transactionInfo": {
-                    "totalPriceStatus": "FINAL",
-                    "countryCode": "PL",
-                    "totalPrice": payuGooglePayConfig.totalPrice,
-                    "currencyCode": payuGooglePayConfig.currency
+                transactionInfo: {
+                    totalPriceStatus: 'FINAL',
+                    countryCode: 'PL',
+                    totalPrice: payuGooglePayConfig.totalPrice,
+                    currencyCode: payuGooglePayConfig.currency
                 }
             }
             paymentsClient.isReadyToPay(isReadyToPayRequest)
