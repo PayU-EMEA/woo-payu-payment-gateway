@@ -18,7 +18,7 @@ class WC_Gateway_PayuGooglePay extends WC_Payu_Gateways
 
     public function is_available(): bool
     {
-        if (! $this->try_retrieve_banks()) {
+        if (! $this->try_retrieve_banks() || empty(get_option('merchant_name')) || empty(get_option('merchant_id'))) {
             return false;
         }
 
@@ -49,15 +49,13 @@ class WC_Gateway_PayuGooglePay extends WC_Payu_Gateways
         $this->agreements_field();
     }
     public function get_additional_data(): array {
-        $currency = get_woocommerce_currency();
-        $totalPrice = WC()->cart->get_total('');
 		return [
 			'posId'        => $this->pos_id,
-            'currency'     => $currency,
-            'totalPrice'   => $totalPrice,
+            'currency'     => get_woocommerce_currency(),
+            'totalPrice'   => WC()->cart->get_total(''),
             'env'          => $this->sandbox ? 'TEST' : 'PRODUCTION',
-            'merchantName' => $this->get_option('merchant_name', ''),
-            'merchantId'   => $this->sandbox ? '0' : get_option('merchant_id', '0')
+            'merchantName' => $this->get_option('merchant_name'),
+            'merchantId'   => $this->sandbox ? '0' : get_option('merchant_id')
 		];
 	}
     public function include_scripts(): void
