@@ -21,6 +21,7 @@ use Payu\PaymentGateway\Blocks\CreditWidget\CartCreditWidgetBlock;
 use Payu\PaymentGateway\Blocks\CreditWidget\CheckoutCreditWidgetBlock;
 use Payu\PaymentGateway\Blocks\PayuBlikBlock;
 use Payu\PaymentGateway\Blocks\PayuCreditCardBlock;
+use Payu\PaymentGateway\Blocks\PayuGooglePayBlock;
 use Payu\PaymentGateway\Blocks\PayuInstallmentsBlock;
 use Payu\PaymentGateway\Blocks\PayuKlarnaBlock;
 use Payu\PaymentGateway\Blocks\PayuPragmaBlock;
@@ -91,6 +92,7 @@ function init_payu_blocks() {
 				$payment_method_registry->register( new PayuInstallmentsBlock() );
 				$payment_method_registry->register( new PayuBlikBlock() );
 				$payment_method_registry->register( new PayuPragmaBlock() );
+				$payment_method_registry->register( new PayuGooglePayBlock() );
 			}
 		);
 	}

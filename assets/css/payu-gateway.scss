@@ -190,6 +190,10 @@ label[for*="payment_method_payu"] {
   }
 }
 
+.payu-google-pay-error {
+  display: none;
+}
+
 // blocks
 .payu-block-method {
   gap: 10px;

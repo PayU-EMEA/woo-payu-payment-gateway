@@ -114,6 +114,9 @@ class WC_Gateway_PayuListBanks extends WC_Payu_Gateways {
 					case 'payublik':
 						$this->unset_banks[] = 'blik';
 						break;
+					case 'payugooglepay':
+						$this->unset_banks[] = 'ap';
+						break;
 					case 'payuinstallments':
 						$this->unset_banks[] = 'ai';
 						break;

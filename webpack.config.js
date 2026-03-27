@@ -10,6 +10,7 @@ module.exports = {
     'js/payustandard': '/src/js/payustandard',
     'js/payulistbanks': '/src/js/payulistbanks',
     'js/payucreditcard': '/src/js/payucreditcard',
+    'js/payugooglepay': '/src/js/payugooglepay',
     'js/payusecureform': '/src/js/payusecureform',
     'js/payupaypo': '/src/js/payupaypo',
     'js/payuklarna': '/src/js/payuklarna',

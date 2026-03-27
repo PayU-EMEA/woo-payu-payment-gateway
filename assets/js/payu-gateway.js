@@ -23,6 +23,8 @@
             validateResult = validate_payu_secure_form(this);
         } else if (paymentMethod === 'payulistbanks') {
             validateResult = validate_payu_list_banks();
+        } else if (paymentMethod === 'payugooglepay') {
+            validateResult = validate_payu_google_pay(this);
         }
 
         if (!validateResult) {
@@ -40,6 +42,10 @@
 
     $form.on('checkout_place_order_payulistbanks', function () {
         return validate_payu_list_banks();
+    });
+
+    $form.on('checkout_place_order_payugooglepay', function () {
+        return validate_payu_google_pay(this);
     });
 
     function validate_payu_secure_form(form) {
@@ -87,6 +93,17 @@
         return true;
     }
 
+    function show_error(){
+        var errorMessage = document.querySelector('.payu-google-pay-error');
+        if (errorMessage) {
+            errorMessage.style.display = 'block';
+        }
+        $('html, body').animate({
+            scrollTop: $('.payment_method_payugooglepay').offset().top
+        }, 300);
+        $('.payu-google-pay-error').slideDown(250);
+    }
+
     function validate_payu_list_banks() {
         if (!$('.payu-list-banks').find('.payu-active .active').length) {
             $('html, body').animate({
@@ -102,4 +119,83 @@
         }
     }
 
+    function validate_payu_google_pay(form){
+        $('.payu-google-pay-error').slideUp(250);
+        if (!window.google?.payments?.api?.PaymentsClient) {
+            show_error();
+            return false;
+        }
+
+        var googleToken = document.getElementById('payu-google-token');
+        if (googleToken.value === '') {
+
+            const paymentsClient =
+                new google.payments.api.PaymentsClient({environment: payuGooglePayConfig.env});
+
+            const isReadyToPayRequest = {
+                apiVersion: 2,
+                apiVersionMinor: 0,
+                allowedPaymentMethods: [
+                    {
+                        type: 'CARD',
+                        parameters: {
+                            allowedAuthMethods: ['PAN_ONLY', 'CRYPTOGRAM_3DS'],
+                            allowedCardNetworks: ['MASTERCARD', 'VISA']
+                        }
+                    }
+                ]
+            }
+
+            const paymentDataRequest = {
+                apiVersion: 2,
+                apiVersionMinor: 0,
+                merchantInfo: {
+                    merchantName: payuGooglePayConfig.merchantName,
+                    merchantId: payuGooglePayConfig.merchantId
+                },
+                allowedPaymentMethods: [
+                {
+                    type: 'CARD',
+                    parameters: {
+                        allowedAuthMethods: ['PAN_ONLY', 'CRYPTOGRAM_3DS'],
+                        allowedCardNetworks: ['MASTERCARD', 'VISA'],
+                        billingAddressRequired: false
+                    },
+                    tokenizationSpecification: {
+                        type: 'PAYMENT_GATEWAY',
+                        parameters: {
+                            gateway: 'payu',
+                            gatewayMerchantId: payuGooglePayConfig.posId
+                        }
+                    }
+                }
+                ],
+                transactionInfo: {
+                    totalPriceStatus: 'FINAL',
+                    countryCode: 'PL',
+                    totalPrice: payuGooglePayConfig.totalPrice,
+                    currencyCode: payuGooglePayConfig.currency
+                }
+            }
+            paymentsClient.isReadyToPay(isReadyToPayRequest)
+                .then(function(response) {
+                    if (response.result) {
+                        paymentsClient.loadPaymentData(paymentDataRequest).then(function(paymentData){
+                            paymentToken = paymentData.paymentMethodData.tokenizationData.token;
+                            googleToken.value = btoa(paymentToken);
+                            $(form).submit();
+                        }).catch(function(err){
+                            console.error(err);
+                        });
+                    }
+                })
+                .catch(function(err) {
+                    console.error(err);
+                    show_error();
+                });
+            return false;
+        }
+        
+        return true;
+    }
 })(jQuery);

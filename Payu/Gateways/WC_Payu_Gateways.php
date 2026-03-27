@@ -280,6 +280,13 @@ abstract class WC_Payu_Gateways extends WC_Payment_Gateway implements WC_PayuGat
 				'api'                 => 'WC_Gateway_PayuTwistoSlice',
 				'class'               => WC_Gateway_PayuTwistoSlice::class
 			],
+			'payugooglepay'	   => [
+				'name'				  => __( 'PayU - Google Pay', 'woo-payu-payment-gateway' ),
+				'front_name'		  => __( 'Pay with Google Pay', 'woo-payu-payment-gateway' ),
+				'default_description' => __( 'You may be redirected to a payment confirmation page.', 'woo-payu-payment-gateway' ),
+				'api'				  => 'WC_Gateway_PayuGooglePay',
+				'class'				  => WC_Gateway_PayuGooglePay::class
+			],
 		];
 	}
 
