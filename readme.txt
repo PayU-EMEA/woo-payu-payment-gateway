@@ -2,8 +2,8 @@
 Contributors: payusa
 Tags: PayU, payment, payment gateway, płatności, credit card
 Requires at least: 5.0
-Tested up to: 6.9.1
-Stable tag: 2.9.1
+Tested up to: 6.9.4
+Stable tag: 2.10.0
 Requires PHP: 7.4
 License: Apache License 2.0
 
@@ -19,6 +19,7 @@ The plugin offers the following payment methods:
 * PayU - payment card - payer will be redirected to PayU's hosted card form where credit, debit or prepaid card data can be securely entered
 * PayU - secure form - a secure form collecting credit, debit or prepaid card data will be displayed
 * PayU - Blik - payer will be redirected to Blik's page
+* PayU - Google Pay - payer can use their saved Google Pay cards directly on the checkout page
 * PayU - installments - payer will be redirected to installment payment form
 * PayU - Klarna - payer will be redirected to Klarna payment form
 * PayU - PayPo - payer will be redirected to PayPo payment form
@@ -51,8 +52,12 @@ Upon plugin update from version 1.X to version 2.X the existing config data will
 Yes, it does.
 * For card payment we used [PayU Secure Form](https://developers.payu.com/europe/docs/checkout/secure-form/) and for proper working it is necessary to load Secure Form JS SDK from the secure.payu.com domain. As a result, you do not need to have PCI DSS, PayU does it for you.
 * For presenting credit payment options like minimal installment amount or "buy now pay later" we used [Credit Widget](https://developers.payu.com/europe/docs/payment-solutions/credit/installments/#credit-widget-installments) and plugin loads the script from the static.payu.com domain.
+* For integrate with Google Pay we used [pay.js](https://pay.google.com/gp/p/js/pay.js)
 
 == Changelog ==
+= 2.10.0 - 2026-03-27 =
+* [Add] Google Pay as separate method
+
 = 2.9.1 - 2026-02-05 =
 * [Fix] Incorrect address when retrieving payment status
 * [Fix] "Call to a member function get_total() on bool" for WooCommerce Subscriptions

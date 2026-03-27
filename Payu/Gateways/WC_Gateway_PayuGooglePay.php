@@ -81,8 +81,7 @@ class WC_Gateway_PayuGooglePay extends WC_Payu_Gateways
             'merchant_id'          => [
 				'title'       => __( 'Google Merchant Id:', 'woo-payu-payment-gateway' ),
 				'type'        => 'text',
-				'description' => __( 'Your Google Merchant Id.', 'woo-payu-payment-gateway' ),
-				'desc_tip'    => true
+				'description' => __( 'Your Google Merchant Id. You need to verify your shop in Google, following <a href="https://developers.google.com/pay/api/web/guides/test-and-deploy/publish-your-integration#create-your-profile" target="_blank" rel="nofollow">the instructions</a>.', 'woo-payu-payment-gateway' ),
 			],
             'merchant_name'        => [
                 'title'       => __( 'Google Merchant name:', 'woo-payu-payment-gateway' ),

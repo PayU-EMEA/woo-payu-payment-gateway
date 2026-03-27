@@ -22,7 +22,7 @@ const merchantName = decodeEntities( settings.additionalData?.merchantName );
 const merchantId = decodeEntities( settings.additionalData?.merchantId );
 const termsLinks = settings.termsLinks;
 const paymentsClient = window.google?.payments?.api?.PaymentsClient
-  ? new google.payments.api.PaymentsClient( {
+  ? new window.google.payments.api.PaymentsClient( {
       environment: env,
     } )
   : null;
@@ -169,7 +169,7 @@ const Content = ( { eventRegistration, emitResponse } ) => {
 
       return paymentsClient
         .loadPaymentData( paymentDataRequest )
-        .then( function ( paymentData ) {
+        .then( ( paymentData ) => {
           const paymentToken =
             paymentData.paymentMethodData.tokenizationData.token;
           return {
@@ -181,7 +181,8 @@ const Content = ( { eventRegistration, emitResponse } ) => {
             },
           };
         } )
-        .catch( function ( err ) {
+        .catch( ( err ) => {
+          // eslint-disable-next-line no-console
           console.error( err );
           return {
             type: emitResponse.responseTypes.ERROR,

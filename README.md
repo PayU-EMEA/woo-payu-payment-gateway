@@ -25,6 +25,7 @@ The plugin offers the following payment methods:
 | PayU - payment card    | :white_check_mark: | payer will be redirected to PayU's hosted card form where credit, debit or prepaid card data can be securely entered                                    |
 | PayU - secure form     | :white_check_mark: | a secure form collecting credit, debit or prepaid card data will be displayed                                                                           |
 | PayU - Blik            | :white_check_mark: | payer will be redirected to Blik's page                                                                                                                 |
+| PayU - Google Pay      | :white_check_mark: | payer can use their saved Google Pay cards directly on the checkout page                                                                                |
 | PayU - installments    | :white_check_mark: | payer will be redirected to installment payment form                                                                                                    |
 | PayU - Klarna          | :white_check_mark: | payer will be redirected to Klarna payment form                                                                                                         |
 | PayU - Twisto          | :white_check_mark: | payer will be redirected to Twisto payment form                                                                                                         |
@@ -38,6 +39,7 @@ The plugin offers the following payment methods:
 * Methods `PayU - payment card` and `PayU - secure form` enable card payments and differ only with the way the card data is entered. **Should not be configured both at once**.
 * In case `PayU - bank list` method is switched on, the following payment types are removed from the list: cards if `PayU - payment card` or `PayU - secure form` is on, Blik if  `PayU - Blik` is on, installments if `PayU - installments` is on, Klarna if `PayU - Klarna` is on, Twisto if `PayU - Twisto` is on, PayPo if `PayU - PayPo` is on, PragmaPay if `PayU - PragmaPay` is on.
 * `PayU - secure form` method requires the shop to be available via HTTPS (for local tests, the address should be http://localhost)
+* `PayU - Google Pay` method requires providing Google Merchant ID. To obtain the identifier, you need to verify your shop in Google, following the [instructions][ext3].
 * Even though  `PayU - payment card`, `PayU - secure form`, `PayU - Blik`, `PayU - installments`, `PayU - Klarna`, `PayU - Twisto`, `PayU - PayPo` and `PayU - PragmaPay` are on, they may be not visible in case they are not configured on your POS in PayU system or the amount is outside min-max range for the given payment type.
 
 ## Configuration
@@ -88,6 +90,13 @@ Parameters available for `PayU - bank list`:
 |-------------------------------|------------------------------------------------------------------------------------------------------------------------------------------------------------|
 | Own ordering                  | To use your own ordering of payment types, you need to provide a comma-separated list of payment types codes from PayU system. [Payment types list][ext6]. |
 | Show inactive payment methods | In case a given payment type is not active it is still displayed, but greyed out, otherwise not displayed.                                                 |
+
+Parameters available for `PayU - Google Pay`:
+
+| Parameter            | Description                                                                                                |
+|----------------------|------------------------------------------------------------------------------------------------------------|
+| Google Merchant Id   | Merchant identifier in Google. You need to verify your shop in Google, following the [instructions][ext3]. |
+| Google Merchant name | Merchant name is rendered in the payment sheet.                                                            |
 
 ## Multicurrency
 There are two ways to handle multicurrency:
@@ -163,6 +172,7 @@ In case repayment is configured, the mail confirming order placement is enhanced
 <!--external links:-->
 [ext1]: http://php.net/manual/en/book.curl.php
 [ext2]: http://php.net/manual/en/book.hash.php
+[ext3]: https://developers.google.com/pay/api/web/guides/test-and-deploy/publish-your-integration#create-your-profile
 [ext4]: https://poland.payu.com/commercial-offer/
 [ext5]: https://secure.snd.payu.com/boarding/#/registerSandbox/?lang=en
 [ext6]: https://developers.payu.com/europe/docs/get-started/integration-overview/references/#payment-methods-reference
