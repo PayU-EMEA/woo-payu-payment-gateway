@@ -1,3 +1,6 @@
+# 2.10.0 - 2026-03-27
+* [Add] Google Pay as separate method (thanks to @antonikakolewski)
+
 # 2.9.1 - 2026-02-05
 * [Fix] Incorrect address when retrieving payment status
 * [Fix] "Call to a member function get_total() on bool" for WooCommerce Subscriptions

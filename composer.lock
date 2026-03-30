@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "78992791bf0fbc68ad7605e6859a9e7f",
+    "content-hash": "3b26437d511aad94803872c7d50031a4",
     "packages": [
         {
             "name": "openpayu/openpayu",
