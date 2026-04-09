@@ -40,7 +40,7 @@ Wtyczka udostępnia następujące metody płatności:
 * Metody `PayU - karta płatnicza` i `PayU - secure form` umożliwiają płatność kartą, a różnią się tylko miejscem wprowadzenia danych karty. **Nie powinny być razem włączone**.
 * W przypadku gdy jest włączona metoda `PayU - lista banków` z listy dostępnych typów płatności usuwane są: karty, gdy włączona jest metoda `PayU - karta kredytowa` lub `PayU - secure form`, Blik, gdy włączona jest metoda `PayU - blik`, raty gdy włączona jest metoda `PayU - raty`, Klarna gdy włączona jest metoda `PayU - Klarna`, Twisto gdy włączona jest metoda `PayU - Twisto`, PayPo gdy włączona jest metoda `PayU - PayPo`, PragmaPay gdy włączona jest metoda `PayU - PragmaPay`.
 * Metoda `PayU - secure form` wymaga, aby sklep był dostępny za pomocą połączenia HTTPS (przy testach lokalnych adres strony powinien być http://localhost)
-* Metoda `PayU - Google Pay` wymaga podania Google Merchant ID (identyfikator sprzedawcy). W celu uzyskania identyfikatora należy wykonać weryfikację swojego sklepu w Google, postępując zgodnie z [instrukcją][ext4].
+* Metoda `PayU - Google Pay` wymaga podania Google Merchant ID (identyfikator sprzedawcy). W celu uzyskania identyfikatora należy wykonać weryfikację swojego sklepu w Google, postępując zgodnie z [instrukcją][ext3].
 * Pomimo włączenia metod  `PayU - karta kredytowa`, `PayU - secure form`, `PayU - blik`, `PayU - raty`, `PayU - Klarna`, `PayU - Twisto`, `PayU - PayPo` i `PayU - PragmaPay` mogą się one nie pokazać płacącemu, jeśli dany typ płatności nie jest włączony na punkcie płatności lub jeśli kwota nie mieści się między kwotą minimalną i maksymalną dla danego typu.
 
 ## Konfiguracja
@@ -97,10 +97,10 @@ Parametry, które są dodatkowo dostępne dla metody płatności `PayU - lista b
 
 Parametry, które są dodatkowo dostępne dla metody płatności `PayU - Google Pay`:
 
-| Parametr             | Opis                                                                                                               |
-|----------------------|--------------------------------------------------------------------------------------------------------------------|
-| Google Merchant Id   | Identyfikator sprzedawcy w Google. Należy zweryfikować swoją stronę w Google postępując zgodnie z [instrukcją][ext4] |
-| Google Merchant name | Nazwa sprzedawcy, która jest wyświetlana w oknie płatności                                                         |
+| Parametr             | Opis                                                                                                                 |
+|----------------------|----------------------------------------------------------------------------------------------------------------------|
+| Google Merchant Id   | Identyfikator sprzedawcy w Google. Należy zweryfikować swoją stronę w Google postępując zgodnie z [instrukcją][ext3] |
+| Google Merchant name | Nazwa sprzedawcy, która jest wyświetlana w oknie płatności                                                           |
 
 ## Wielowalutowość
 
