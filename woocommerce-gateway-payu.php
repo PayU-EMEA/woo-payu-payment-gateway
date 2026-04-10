@@ -5,14 +5,14 @@
  * Plugin URI: https://github.com/PayU/woo-payu-payment-gateway
  * GitHub Plugin URI: https://github.com/PayU-EMEA/woo-payu-payment-gateway
  * Description: PayU fast online payments for WooCommerce. Banks, BLIK, credit or debit cards, Installments, Apple Pay, Google Pay.
- * Version: 2.10.0
+ * Version: 2.10.1
  * Author: PayU SA
  * Author URI: http://www.payu.com
  * License: Apache License 2.0
  * Text Domain: woo-payu-payment-gateway
  * Domain Path: /lang
  * WC requires at least: 6.0
- * WC tested up to: 10.6.1
+ * WC tested up to: 10.6.2
  */
 
 use Automattic\WooCommerce\Blocks\Integrations\IntegrationRegistry;
@@ -38,7 +38,7 @@ use Payu\PaymentGateway\WC_Payu;
 
 require __DIR__ . '/vendor/autoload.php';
 
-define( 'PAYU_PLUGIN_VERSION', '2.10.0' );
+define( 'PAYU_PLUGIN_VERSION', '2.10.1' );
 define( 'PAYU_PLUGIN_FILE', __FILE__ );
 
 define( 'WC_PAYU_PLUGIN_PATH', plugin_dir_path( __FILE__ ) );
@@ -363,7 +363,7 @@ function is_shipping_method_in_supported_methods_set( $chosenShippingMethod, $av
 
 add_action( 'wc_ajax_payu_installments_get_cart_total', 'installments_get_cart_total' );
 function installments_get_cart_total() {
-	$price = WC()->cart->get_total( '' );
+	$price = WC()->cart ? WC()->cart->get_total( '' ) : '0';
 	echo $price;
 	wp_die();
 }
@@ -382,7 +382,7 @@ function installments_mini_total() {
 		return;
 	}
 
-	$price = WC()->cart->get_total( '' );
+	$price = WC()->cart ? WC()->cart->get_total( '' ) : '0';
 
 	$posId     = get_installment_option( 'pos_id' );
 	$widgetKey = get_installment_option( 'widget_key' );

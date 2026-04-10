@@ -1,3 +1,6 @@
+# 2.10.1 - 2026-04-10
+* [Fix] Error when edit page with block editor
+
 # 2.10.0 - 2026-03-27
 * [Add] Google Pay as separate method (thanks to @antonikakolewski)
 

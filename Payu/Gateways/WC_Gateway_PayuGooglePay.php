@@ -38,7 +38,7 @@ class WC_Gateway_PayuGooglePay extends WC_Payu_Gateways
             var payuGooglePayConfig = {
                 currency: "<?php echo esc_attr(get_woocommerce_currency()) ?>",
                 posId: "<?php echo esc_attr($this->pos_id) ?>",
-                totalPrice: "<?php echo esc_attr(WC()->cart->get_total('')) ?>",
+                totalPrice: "<?php echo esc_attr(WC()->cart ? WC()->cart->get_total('') : '0') ?>",
                 env: "<?php echo $this->sandbox ? 'TEST' : 'PRODUCTION'?>",
                 merchantName: "<?php echo esc_attr($this->get_option('merchant_name', '')) ?>",
                 merchantId: "<?php echo $this->sandbox ? '0' : esc_attr($this->get_option('merchant_id', '')) ?>"
@@ -52,7 +52,7 @@ class WC_Gateway_PayuGooglePay extends WC_Payu_Gateways
 		return [
 			'posId'        => $this->pos_id,
             'currency'     => get_woocommerce_currency(),
-            'totalPrice'   => WC()->cart->get_total(''),
+            'totalPrice'   => WC()->cart ? WC()->cart->get_total('') : '0',
             'env'          => $this->sandbox ? 'TEST' : 'PRODUCTION',
             'merchantName' => $this->get_option('merchant_name'),
             'merchantId'   => $this->sandbox ? '0' : $this->get_option('merchant_id')
