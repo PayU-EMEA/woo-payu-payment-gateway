@@ -102,6 +102,9 @@ Parametry, które są dodatkowo dostępne dla metody płatności `PayU - Google 
 | Google Merchant Id   | Identyfikator sprzedawcy w Google. Należy zweryfikować swoją stronę w Google postępując zgodnie z [instrukcją][ext3] |
 | Google Merchant name | Nazwa sprzedawcy, która jest wyświetlana w oknie płatności                                                           |
 
+## FAQ
+Jeżeli masz problem z działaniem, skorzystaj ze strony [najczęściej zadawane pytania][ext7].
+
 ## Wielowalutowość
 
 Są dwie możliwości uzyskania wielowalutowości:
@@ -189,6 +192,7 @@ W przypadku włączonego ponownienia płatności do maila potwierdzającego zam�
 [ext4]: https://poland.payu.com/oferta-handlowa/
 [ext5]: https://secure.snd.payu.com/boarding/#/registerSandbox/?lang=pl
 [ext6]: https://developers.payu.com/europe/pl/docs/get-started/integration-overview/references/#payment-methods-reference
+[ext7]: https://developers.payu.com/europe/pl/docs/faq
 [ext8]: README.md
 [ext13]: https://poland.support.payu.com/s/?language=pl
 [ext14]: https://developers.payu.com/europe/pl/docs/payment-solutions/credit/installments/#credit-widget-installments
