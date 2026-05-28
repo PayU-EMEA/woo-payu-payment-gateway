@@ -98,6 +98,10 @@ Parameters available for `PayU - Google Pay`:
 | Google Merchant Id   | Merchant identifier in Google. You need to verify your shop in Google, following the [instructions][ext3]. |
 | Google Merchant name | Merchant name is rendered in the payment sheet.                                                            |
 
+## FAQ
+If you have issues with functionality, first read the [Frequently Asked Questions][ext7] page.
+
+
 ## Multicurrency
 There are two ways to handle multicurrency:
 ### `WPML` Plugin
@@ -176,6 +180,7 @@ In case repayment is configured, the mail confirming order placement is enhanced
 [ext4]: https://poland.payu.com/commercial-offer/
 [ext5]: https://secure.snd.payu.com/boarding/#/registerSandbox/?lang=en
 [ext6]: https://developers.payu.com/europe/docs/get-started/integration-overview/references/#payment-methods-reference
+[ext7]: https://developers.payu.com/europe/docs/faq/
 [ext8]: README.PL.md
 [ext13]: https://polandeng.support.payu.com/s/?language=en_US
 [ext14]: https://developers.payu.com/europe/docs/payment-solutions/credit/installments/#credit-widget-installments
