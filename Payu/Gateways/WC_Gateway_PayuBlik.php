@@ -5,12 +5,10 @@ namespace Payu\PaymentGateway\Gateways;
 class WC_Gateway_PayuBlik extends WC_Payu_Gateways {
 	protected string $paytype = 'blik';
 
-	function __construct() {
+	public function __construct() {
 		parent::__construct( 'payublik' );
 
-		if ( $this->is_enabled() ) {
-			$this->icon = apply_filters( 'woocommerce_payu_icon', plugins_url( '/assets/images/blik.svg', PAYU_PLUGIN_FILE ) );
-		}
+		$this->icon = apply_filters( 'woocommerce_payu_icon', plugins_url( '/assets/images/blik.svg', PAYU_PLUGIN_FILE ) );
 	}
 
 	public function is_available(): bool {

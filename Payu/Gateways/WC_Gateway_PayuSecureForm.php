@@ -8,14 +8,14 @@ class WC_Gateway_PayuSecureForm extends WC_Payu_Gateways {
 	protected string $paytype = 'c';
 	private string $payu_sdk_url;
 
-	function __construct() {
+	public function __construct() {
 		parent::__construct( 'payusecureform' );
 
 		$this->payu_sdk_url = $this->sandbox ? 'https://secure.snd.payu.com/javascript/sdk' : 'https://secure.payu.com/javascript/sdk';
 
-		if ( $this->is_enabled() ) {
-			$this->icon = apply_filters( 'woocommerce_payu_icon', plugins_url( '/assets/images/card-visa-mc.svg', PAYU_PLUGIN_FILE ) );
+        $this->icon = apply_filters( 'woocommerce_payu_icon', plugins_url( '/assets/images/card-visa-mc.svg', PAYU_PLUGIN_FILE ) );
 
+		if ( $this->is_enabled() ) {
 			add_action( 'wp_enqueue_scripts', [ $this, 'include_payu_sf_scripts' ] );
 
 			//refresh card iframe after checkout change
@@ -126,7 +126,6 @@ class WC_Gateway_PayuSecureForm extends WC_Payu_Gateways {
 	public function include_payu_sf_scripts(): void {
 		$payu_sdk_url = $this->sandbox ? 'https://secure.snd.payu.com/javascript/sdk' : 'https://secure.payu.com/javascript/sdk';
 		wp_enqueue_script( 'payu-sfsdk', $payu_sdk_url, [], null );
-		wp_enqueue_script( 'payu-promise-polyfill', plugins_url( '/assets/js/es6-promise.auto.min.js', PAYU_PLUGIN_FILE ), [], null );
 		wp_enqueue_script( 'payu-sf-init', plugins_url( '/assets/js/sf-init.js', PAYU_PLUGIN_FILE ), [], PAYU_PLUGIN_VERSION );
 	}
 }

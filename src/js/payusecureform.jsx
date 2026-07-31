@@ -1,7 +1,9 @@
 import { decodeEntities } from '@wordpress/html-entities';
+import { select } from '@wordpress/data';
 import { getSetting } from '@woocommerce/settings';
 import { StoreNotice } from '@woocommerce/blocks-components';
 import { registerPaymentMethod } from '@woocommerce/blocks-registry';
+import { validationStore } from '@woocommerce/block-data';
 import { __ } from '@wordpress/i18n';
 import { useEffect, useState } from '@wordpress/element';
 import { scriptUtil } from './util';
@@ -162,6 +164,12 @@ const Content = ( { eventRegistration, emitResponse } ) => {
             behavior: 'smooth',
           } );
 
+        return {
+          type: emitResponse.responseTypes.ERROR,
+        };
+      }
+
+      if ( select( validationStore ).hasValidationErrors() ) {
         return {
           type: emitResponse.responseTypes.ERROR,
         };

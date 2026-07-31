@@ -7,12 +7,10 @@ class WC_Gateway_PayuPragma extends WC_Payu_Gateways implements WC_PayuCreditGat
 
     protected string $paytype = 'ppf';
 
-    function __construct() {
+    public function __construct() {
         parent::__construct( 'payupragma' );
 
-        if ( $this->is_enabled() ) {
-            $this->icon = apply_filters( 'woocommerce_payu_icon', plugins_url( '/assets/images/pragmapay.svg', PAYU_PLUGIN_FILE ) );
-        }
+        $this->icon = apply_filters( 'woocommerce_payu_icon', plugins_url( '/assets/images/pragmapay.svg', PAYU_PLUGIN_FILE ) );
     }
 
     public function is_available(): bool {

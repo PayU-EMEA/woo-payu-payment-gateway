@@ -1,31 +1,33 @@
 import { decodeEntities } from '@wordpress/html-entities';
+import { select } from '@wordpress/data';
 import { getSetting } from '@woocommerce/settings';
 import { registerPaymentMethod } from '@woocommerce/blocks-registry';
-import { useEffect, useState } from '@wordpress/element';
+import { validationStore } from '@woocommerce/block-data';
+import { useEffect, useState, useMemo } from '@wordpress/element';
 import { __ } from '@wordpress/i18n';
 import { StoreNotice } from '@woocommerce/blocks-components';
 import ReadMore from './read-more';
 
-const name = 'payugooglepay';
+const name = 'payuapplepay';
+
+const APPLE_PAY_API_MAX_VERSION = 14; // https://developer.apple.com/documentation/applepayontheweb/apple-pay-on-the-web-version-history
 
 const settings = getSetting( `${ name }_data`, {} );
 
 const available = decodeEntities( settings.available || false );
-const title = decodeEntities( settings.title || 'Google Pay' );
+const title = decodeEntities( settings.title || 'Apple Pay' );
 const description = decodeEntities( settings.description || '' );
 const iconUrl = settings.icon;
-const posId = decodeEntities( settings.additionalData?.posId );
-const currency = decodeEntities( settings.additionalData?.currency );
-const totalPrice = decodeEntities( settings.additionalData?.totalPrice );
-const env = decodeEntities( settings.additionalData?.env );
-const merchantName = decodeEntities( settings.additionalData?.merchantName );
-const merchantId = decodeEntities( settings.additionalData?.merchantId );
+
+const currency = decodeEntities( settings.additionalData.currency );
+const totalPrice = decodeEntities( settings.additionalData.totalPrice );
+const appleDisplayName = decodeEntities(
+  settings.additionalData.appleDisplayName
+);
+const createSessionUrl = decodeEntities(
+  settings.additionalData.createSessionUrl
+);
 const termsLinks = settings.termsLinks;
-const paymentsClient = window.google?.payments?.api?.PaymentsClient
-  ? new window.google.payments.api.PaymentsClient( {
-      environment: env,
-    } )
-  : null;
 
 const TermInfo = () => {
   const [ showMore1, setShowMore1 ] = useState( false );
@@ -101,93 +103,138 @@ const TermInfo = () => {
 };
 
 const canMakePayment = () => {
-  if ( ! available || ! paymentsClient ) {
+  if ( ! available ) {
     return false;
   }
 
-  const isReadyToPayRequest = {
-    apiVersion: 2,
-    apiVersionMinor: 0,
-    allowedPaymentMethods: [
-      {
-        type: 'CARD',
-        parameters: {
-          allowedAuthMethods: [ 'PAN_ONLY', 'CRYPTOGRAM_3DS' ],
-          allowedCardNetworks: [ 'MASTERCARD', 'VISA' ],
-        },
-      },
-    ],
-  };
-  return paymentsClient
-    .isReadyToPay( isReadyToPayRequest )
-    .then( true )
-    .catch( () => {
-      return false;
-    } );
+  let applePayAvailable;
+
+  try {
+    applePayAvailable =
+      window.ApplePaySession && ApplePaySession.canMakePayments();
+  } catch ( _e ) {
+    applePayAvailable = false;
+  }
+
+  return applePayAvailable;
 };
 
 const Content = ( { eventRegistration, emitResponse } ) => {
+  const applePayApiVersion = useMemo( () => {
+    let apiVersion = 1;
+
+    for ( let i = APPLE_PAY_API_MAX_VERSION; i > 1; i-- ) {
+      if ( ApplePaySession.supportsVersion( i ) ) {
+        apiVersion = i;
+        break;
+      }
+    }
+
+    return apiVersion;
+  }, [] );
+
+  const applePayPaymentRequest = useMemo( () => {
+    return {
+      merchantCapabilities: [
+        'supports3DS',
+        'supportsCredit',
+        'supportsDebit',
+      ],
+      supportedNetworks: [ 'masterCard', 'visa' ],
+      countryCode: 'PL',
+      total: {
+        type: 'final',
+        label: appleDisplayName,
+        amount: totalPrice,
+      },
+      currencyCode: currency,
+    };
+  }, [ appleDisplayName, totalPrice, currency ] );
+
   const { onPaymentSetup } = eventRegistration;
 
   const [ error, setError ] = useState();
 
   useEffect( () => {
-    const unsubscribe = onPaymentSetup( () => {
+    const unsubscribe = onPaymentSetup( async () => {
+      if ( select( validationStore ).hasValidationErrors() ) {
+        return {
+          type: emitResponse.responseTypes.ERROR,
+        };
+      }
+
       setError( undefined );
 
-      const paymentDataRequest = {
-        apiVersion: 2,
-        apiVersionMinor: 0,
-        merchantInfo: {
-          merchantName,
-          merchantId,
-        },
-        allowedPaymentMethods: [
-          {
-            type: 'CARD',
-            parameters: {
-              allowedAuthMethods: [ 'PAN_ONLY', 'CRYPTOGRAM_3DS' ],
-              allowedCardNetworks: [ 'MASTERCARD', 'VISA' ],
-              billingAddressRequired: false,
-            },
-            tokenizationSpecification: {
-              type: 'PAYMENT_GATEWAY',
-              parameters: {
-                gateway: 'payu',
-                gatewayMerchantId: posId,
-              },
-            },
-          },
-        ],
-        transactionInfo: {
-          totalPriceStatus: 'FINAL',
-          countryCode: 'PL',
-          totalPrice,
-          currencyCode: currency,
-        },
-      };
+      const applePaySession = new ApplePaySession(
+        applePayApiVersion,
+        applePayPaymentRequest
+      );
 
-      return paymentsClient
-        .loadPaymentData( paymentDataRequest )
-        .then( ( paymentData ) => {
-          const paymentToken =
-            paymentData.paymentMethodData.tokenizationData.token;
-          return {
+      const errorMessage = __(
+        'There was a problem with Apple Pay payment. Please try again or use a different payment method.',
+        'woo-payu-payment-gateway'
+      );
+
+      return new Promise( ( resolve ) => {
+        applePaySession.onvalidatemerchant = ( event ) => {
+          const getApplePaySession = async () => {
+            let sessionResponse;
+
+            sessionResponse = await fetch( createSessionUrl, {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+            } );
+
+            if ( ! sessionResponse.ok ) {
+              resolve( {
+                type: emitResponse.responseTypes.ERROR,
+                message: errorMessage,
+              } );
+
+              applePaySession.abort();
+              return;
+            }
+
+            const session = await sessionResponse.json();
+
+            try {
+              applePaySession.completeMerchantValidation( session );
+            } catch ( error ) {
+              resolve( {
+                type: emitResponse.responseTypes.ERROR,
+                message: errorMessage,
+              } );
+
+              applePaySession.abort();
+            }
+          };
+
+          void getApplePaySession();
+        };
+
+        applePaySession.onpaymentauthorized = ( event ) => {
+          applePaySession.completePayment( ApplePaySession.STATUS_SUCCESS );
+
+          resolve( {
             type: emitResponse.responseTypes.SUCCESS,
             meta: {
               paymentMethodData: {
-                'payu-google-token': btoa( paymentToken ),
+                'payu-apple-token': btoa(
+                  JSON.stringify( event.payment.token.paymentData )
+                ),
               },
             },
-          };
-        } )
-        .catch( ( err ) => {
-          // eslint-disable-next-line no-console
-          console.error( err );
-          return {
+          } );
+        };
+
+        applePaySession.oncancel = ( ) => {
+          resolve( {
             type: emitResponse.responseTypes.ERROR,
-          };
-        } );
+          } );
+        };
+
+        applePaySession.begin();
+      } );
     } );
 
     return unsubscribe;
@@ -217,7 +264,7 @@ const Label = ( props ) => {
     <>
       <PaymentMethodLabel text={ title } className="payu-block-method" />
       <span className="payu-block-method-logo">
-        <img src={ iconUrl } alt="Google Pay" name={ title } />
+        <img src={ iconUrl } alt="Apple Pay" name={ title } />
       </span>
     </>
   );

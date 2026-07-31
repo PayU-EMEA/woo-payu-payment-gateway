@@ -7,7 +7,7 @@ use OpenPayU_Result;
 class WC_Gateway_PayuListBanks extends WC_Payu_Gateways {
 	private array $unset_banks = [];
 
-	function __construct() {
+	public function __construct() {
 		parent::__construct( 'payulistbanks' );
 	}
 
@@ -116,6 +116,9 @@ class WC_Gateway_PayuListBanks extends WC_Payu_Gateways {
 						break;
 					case 'payugooglepay':
 						$this->unset_banks[] = 'ap';
+						break;
+					case 'payuapplepay':
+						$this->unset_banks[] = 'jp';
 						break;
 					case 'payuinstallments':
 						$this->unset_banks[] = 'ai';

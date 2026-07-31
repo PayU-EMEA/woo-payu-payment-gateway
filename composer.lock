@@ -8,16 +8,16 @@
     "packages": [
         {
             "name": "openpayu/openpayu",
-            "version": "2.4.2",
+            "version": "2.4.4",
             "source": {
                 "type": "git",
                 "url": "https://github.com/PayU-EMEA/openpayu_php.git",
-                "reference": "f6fb871d373b5b2f451608206771d2da7a2cd67d"
+                "reference": "01c311fa27fc4165c52b22db6fc87e30d36f224d"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/PayU-EMEA/openpayu_php/zipball/f6fb871d373b5b2f451608206771d2da7a2cd67d",
-                "reference": "f6fb871d373b5b2f451608206771d2da7a2cd67d",
+                "url": "https://api.github.com/repos/PayU-EMEA/openpayu_php/zipball/01c311fa27fc4165c52b22db6fc87e30d36f224d",
+                "reference": "01c311fa27fc4165c52b22db6fc87e30d36f224d",
                 "shasum": ""
             },
             "require": {
@@ -53,9 +53,9 @@
             "description": "OpenPayU PHP Library",
             "support": {
                 "issues": "https://github.com/PayU/openpayu_php/issues",
-                "source": "https://github.com/PayU-EMEA/openpayu_php/tree/v2.4.2"
+                "source": "https://github.com/PayU-EMEA/openpayu_php/tree/v2.4.4"
             },
-            "time": "2026-05-14T12:25:44+00:00"
+            "time": "2026-07-29T07:04:46+00:00"
         }
     ],
     "packages-dev": [],
