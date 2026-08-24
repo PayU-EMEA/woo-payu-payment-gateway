@@ -40,7 +40,7 @@ class WC_Gateway_PayuApplePay extends WC_Payu_Gateways {
         <script>
             var payuApplePayConfig = {
                 currency: "<?php echo esc_attr( get_woocommerce_currency() ) ?>",
-                totalPrice: "<?php echo esc_attr( WC()->cart ? WC()->cart->get_total( '' ) : '0' ) ?>",
+                totalPrice: "<?php echo esc_attr( $this->getTotalPrice() ) ?>",
                 appleDisplayName: "<?php echo esc_attr( mb_substr( $this->get_option( 'apple_display_name', '' ), 0, 64 ) ) ?>",
                 createSessionUrl: "<?php echo rest_url( '/payu/createApplepaySession' )?>"
             }
@@ -53,7 +53,7 @@ class WC_Gateway_PayuApplePay extends WC_Payu_Gateways {
     public function get_additional_data(): array {
         return [
                 'currency'         => get_woocommerce_currency(),
-                'totalPrice'       => WC()->cart ? WC()->cart->get_total( '' ) : '0',
+                'totalPrice'       => $this->getTotalPrice(),
                 'appleDisplayName' => mb_substr($this->get_option( 'apple_display_name', '' ), 0, 64),
                 'createSessionUrl' => rest_url( '/payu/createApplepaySession' )
         ];
@@ -115,4 +115,14 @@ class WC_Gateway_PayuApplePay extends WC_Payu_Gateways {
             return new WP_REST_Response( [ 'message' => $e->getMessage() ], 400 );
         }
     }
+
+    private function getTotalPrice(): string
+    {
+        if (WC()->cart) {
+            return WC()->cart->get_total('');
+        }
+
+        return $this->order_total ?: '0';
+    }
+
 }
