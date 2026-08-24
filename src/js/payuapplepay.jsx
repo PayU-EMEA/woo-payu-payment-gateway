@@ -10,8 +10,6 @@ import ReadMore from './read-more';
 
 const name = 'payuapplepay';
 
-const APPLE_PAY_API_MAX_VERSION = 14; // https://developer.apple.com/documentation/applepayontheweb/apple-pay-on-the-web-version-history
-
 const settings = getSetting( `${ name }_data`, {} );
 
 const available = decodeEntities( settings.available || false );
@@ -121,16 +119,16 @@ const canMakePayment = () => {
 
 const Content = ( { eventRegistration, emitResponse } ) => {
   const applePayApiVersion = useMemo( () => {
-    let apiVersion = 1;
+    const APPLE_PAY_API_MIN_VERSION = 1;
+    const APPLE_PAY_API_MAX_VERSION = 14; // https://developer.apple.com/documentation/applepayontheweb/apple-pay-on-the-web-version-history
 
-    for ( let i = APPLE_PAY_API_MAX_VERSION; i > 1; i-- ) {
+    for ( let i = APPLE_PAY_API_MAX_VERSION; i > APPLE_PAY_API_MIN_VERSION; i-- ) {
       if ( ApplePaySession.supportsVersion( i ) ) {
-        apiVersion = i;
-        break;
+        return i;
       }
     }
 
-    return apiVersion;
+    return APPLE_PAY_API_MIN_VERSION;
   }, [] );
 
   const applePayPaymentRequest = useMemo( () => {

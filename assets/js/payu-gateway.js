@@ -250,18 +250,18 @@
   }
 
   function getApplePayApiVersion() {
+    var APPLE_PAY_API_MIN_VERSION = 1;
     var APPLE_PAY_API_MAX_VERSION = 14; // https://developer.apple.com/documentation/applepayontheweb/apple-pay-on-the-web-version-history
-    var apiVersion = 1;
 
-    for ( var i = APPLE_PAY_API_MAX_VERSION; i > 1; i-- ) {
+    for ( var i = APPLE_PAY_API_MAX_VERSION; i > APPLE_PAY_API_MIN_VERSION; i-- ) {
       if ( ApplePaySession.supportsVersion( i ) ) {
-        apiVersion = i;
-        break;
+        return i;
       }
     }
 
-    return apiVersion;
+    return APPLE_PAY_API_MIN_VERSION;
   }
+
   function validate_payu_apple_pay( form ) {
     var methodClass = '.payment_method_payuapplepay';
     var applepayToken = document.getElementById( 'payu-apple-token' );

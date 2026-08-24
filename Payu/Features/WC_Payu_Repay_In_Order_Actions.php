@@ -39,7 +39,10 @@ class WC_Payu_Repay_In_Order_Actions {
                     [
                             'pay' => [
                                     'name' => __( 'Pay with PayU', 'woo-payu-payment-gateway' ),
-                                    'url'  => wc_get_endpoint_url( 'order-pay', $order->get_id(), wc_get_checkout_url() ) . '?pay_for_order=true&key=' . $order->get_order_key()
+                                    'url'  => add_query_arg( [
+                                            'pay_for_order' => 'true',
+                                            'key'           => $order->get_order_key()
+                                    ], wc_get_endpoint_url( 'order-pay', $order->get_id(), wc_get_checkout_url() ) )
                             ]
                     ],
                     $actions
