@@ -1,3 +1,6 @@
+# 2.10.2 - 2026-09-01
+* [Fix] Availability of methods by shipping
+
 # 2.10.1 - 2026-04-10
 * [Fix] Error when edit page with block editor
 

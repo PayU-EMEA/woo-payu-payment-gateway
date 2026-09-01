@@ -2,8 +2,8 @@
 Contributors: payusa
 Tags: PayU, payment, payment gateway, płatności, credit card
 Requires at least: 5.0
-Tested up to: 6.9.4
-Stable tag: 2.10.1
+Tested up to: 7.1
+Stable tag: 2.10.2
 Requires PHP: 7.4
 License: Apache License 2.0
 
@@ -55,7 +55,10 @@ Yes, it does.
 * For integrate with Google Pay we used [pay.js](https://pay.google.com/gp/p/js/pay.js)
 
 == Changelog ==
-= 2.10.1 - 2026-04-10
+= 2.10.2 - 2026-09-01 =
+* [Fix] Availability of methods by shipping
+
+= 2.10.1 - 2026-04-10 =
 * [Fix] Error when edit page with block editor
 
 = 2.10.0 - 2026-03-27 =
