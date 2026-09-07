@@ -12,7 +12,7 @@
  * Text Domain: woo-payu-payment-gateway
  * Domain Path: /lang
  * WC requires at least: 6.0
- * WC tested up to: 11.0.1
+ * WC tested up to: 11.1.0
  */
 
 use Payu\PaymentGateway\Gateways\WC_Gateway_PayuInstallments;
