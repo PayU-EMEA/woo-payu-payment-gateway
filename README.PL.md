@@ -26,8 +26,8 @@ Wtyczka udostępnia następujące metody płatności:
 | PayU - karta płatnicza | :white_check_mark: | Płacący zostanie przekierowany na stronę PayU gdzie wprowadzi dane karty (kredytowej, debetowej lub prepaid)                        |
 | PayU - secure form     | :white_check_mark: | Wyświetlany jest formularz wprowadzania danych karty                                                                                |
 | PayU - Blik            | :white_check_mark: | Płacący zostanie przekierowany na stronę Blik                                                                                       |
-| PayU - Google Pay      | :white_check_mark: | Płacący może użyć swoich zapisanych kart z Google Pay bezpośrednio na stronie składania zamówienia                                  |
-| PayU - Apple Pay       | :white_check_mark: | Płacący może użyć swoich zapisanych kart z Apple Pay bezpośrednio na stronie składania zamówienia                                   |
+| PayU - Google Pay      | :white_check_mark: | Płacący może użyć swoich zapisanych kart w portfelu Google Pay bezpośrednio na stronie składania zamówienia                         |
+| PayU - Apple Pay       | :white_check_mark: | Płacący może użyć swoich zapisanych kart w portfelu Apple Pay bezpośrednio na stronie składania zamówienia                          |
 | PayU - raty            | :white_check_mark: | Płacący zostanie przekierowany na stronę formularza płatności ratalnej                                                              |
 | PayU - Klarna          | :white_check_mark: | Płacący zostanie przekierowany na stronę formularza płatności Klarna                                                                |
 | PayU - Twisto          | :white_check_mark: | Płacący zostanie przekierowany na stronę formularza płatności Twisto                                                                |
