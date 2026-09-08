@@ -5,12 +5,14 @@ const RemoveEmptyScriptsPlugin = require( 'webpack-remove-empty-scripts' );
 module.exports = {
   ...defaultConfig,
   entry: {
+    ...defaultConfig.entry,
     'js/payu': '/src/js/payu/main',
     'css/payu': '/src/css/main.scss',
     'js/payustandard': '/src/js/payustandard',
     'js/payulistbanks': '/src/js/payulistbanks',
     'js/payucreditcard': '/src/js/payucreditcard',
     'js/payugooglepay': '/src/js/payugooglepay',
+    'js/payuapplepay': '/src/js/payuapplepay',
     'js/payusecureform': '/src/js/payusecureform',
     'js/payupaypo': '/src/js/payupaypo',
     'js/payuklarna': '/src/js/payuklarna',
@@ -24,8 +26,7 @@ module.exports = {
   plugins: [
     ...defaultConfig.plugins.filter(
       ( plugin ) =>
-        plugin.constructor.name !== 'DependencyExtractionWebpackPlugin' &&
-        plugin.constructor.name !== 'RtlCssPlugin'
+        plugin.constructor.name !== 'DependencyExtractionWebpackPlugin'
     ),
     new RemoveEmptyScriptsPlugin(),
     new WooCommerceDependencyExtractionWebpackPlugin(),

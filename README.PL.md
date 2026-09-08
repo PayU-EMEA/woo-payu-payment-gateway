@@ -27,6 +27,7 @@ Wtyczka udostępnia następujące metody płatności:
 | PayU - secure form     | :white_check_mark: | Wyświetlany jest formularz wprowadzania danych karty                                                                                |
 | PayU - Blik            | :white_check_mark: | Płacący zostanie przekierowany na stronę Blik                                                                                       |
 | PayU - Google Pay      | :white_check_mark: | Płacący może użyć swoich zapisanych kart z Google Pay bezpośrednio na stronie składania zamówienia                                  |
+| PayU - Apple Pay       | :white_check_mark: | Płacący może użyć swoich zapisanych kart z Apple Pay bezpośrednio na stronie składania zamówienia                                   |
 | PayU - raty            | :white_check_mark: | Płacący zostanie przekierowany na stronę formularza płatności ratalnej                                                              |
 | PayU - Klarna          | :white_check_mark: | Płacący zostanie przekierowany na stronę formularza płatności Klarna                                                                |
 | PayU - Twisto          | :white_check_mark: | Płacący zostanie przekierowany na stronę formularza płatności Twisto                                                                |
@@ -38,9 +39,10 @@ Wtyczka udostępnia następujące metody płatności:
 
 * Metody `PayU - standard` i `PayU - lista banków` umożliwiają płatność dowolnym typem płatności, a różnią się tylko miejscem jego wyboru. **Nie powinny być razem włączone**.
 * Metody `PayU - karta płatnicza` i `PayU - secure form` umożliwiają płatność kartą, a różnią się tylko miejscem wprowadzenia danych karty. **Nie powinny być razem włączone**.
-* W przypadku gdy jest włączona metoda `PayU - lista banków` z listy dostępnych typów płatności usuwane są: karty, gdy włączona jest metoda `PayU - karta kredytowa` lub `PayU - secure form`, Blik, gdy włączona jest metoda `PayU - blik`, raty gdy włączona jest metoda `PayU - raty`, Klarna gdy włączona jest metoda `PayU - Klarna`, Twisto gdy włączona jest metoda `PayU - Twisto`, PayPo gdy włączona jest metoda `PayU - PayPo`, PragmaPay gdy włączona jest metoda `PayU - PragmaPay`.
+* W przypadku gdy jest włączona metoda `PayU - lista banków` z listy dostępnych typów płatności usuwane są: karty, gdy włączona jest metoda `PayU - karta kredytowa` lub `PayU - secure form`, Blik, gdy włączona jest metoda `PayU - blik`, raty, gdy włączona jest metoda `PayU - raty`, Klarna, gdy włączona jest metoda `PayU - Klarna`, Twisto, gdy włączona jest metoda `PayU - Twisto`, PayPo, gdy włączona jest metoda `PayU - PayPo`, PragmaPay, gdy włączona jest metoda `PayU - PragmaPay`, Apple Pay, gdy włączona jest metoda `PayU - Apple Pay`.
 * Metoda `PayU - secure form` wymaga, aby sklep był dostępny za pomocą połączenia HTTPS (przy testach lokalnych adres strony powinien być http://localhost)
 * Metoda `PayU - Google Pay` wymaga podania Google Merchant ID (identyfikator sprzedawcy). W celu uzyskania identyfikatora należy wykonać weryfikację swojego sklepu w Google, postępując zgodnie z [instrukcją][ext3].
+* Metoda `PayU - Apple Pay` wymaga podania domeny, która jest zarejestrowana w Apple. W celu rejestracji domeny należy postępować zgodnie z [instrukcją][ext10].
 * Pomimo włączenia metod  `PayU - karta kredytowa`, `PayU - secure form`, `PayU - blik`, `PayU - raty`, `PayU - Klarna`, `PayU - Twisto`, `PayU - PayPo` i `PayU - PragmaPay` mogą się one nie pokazać płacącemu, jeśli dany typ płatności nie jest włączony na punkcie płatności lub jeśli kwota nie mieści się między kwotą minimalną i maksymalną dla danego typu.
 
 ## Konfiguracja
@@ -102,6 +104,12 @@ Parametry, które są dodatkowo dostępne dla metody płatności `PayU - Google 
 | Google Merchant Id   | Identyfikator sprzedawcy w Google. Należy zweryfikować swoją stronę w Google postępując zgodnie z [instrukcją][ext3] |
 | Google Merchant name | Nazwa sprzedawcy, która jest wyświetlana w oknie płatności                                                           |
 
+Parametry, które są dodatkowo dostępne dla metody płatności `PayU - Apple Pay`:
+
+| Parametr               | Opis                                                                                                                                                                                                                                                                       |
+|------------------------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| Apple Pay Domain       | Nazwa domeny zarejestrowanej w Apple. W celu rejestracji domeny należy postępować zgodnie z [instrukcją][ext10]. <br /> **WAŻNE**: Domena musi być zgodna z domeną strony procesu zakupowego, w innym przypadku płatność zostanie odrzucona przez Apple.                   |
+| Apple Pay Display Name | Nazwa wyświetlana w Apple Pay. Ciąg znaków UTF-8 o długości nieprzekraczającej 64 znaków, zawierający kanoniczną nazwę Twojego sklepu, nadającą się do wyświetlenia.                                                                                                       |
 ## FAQ
 Jeżeli masz problem z działaniem, skorzystaj ze strony [najczęściej zadawane pytania][ext7].
 
@@ -194,5 +202,6 @@ W przypadku włączonego ponownienia płatności do maila potwierdzającego zam�
 [ext6]: https://developers.payu.com/europe/pl/docs/get-started/integration-overview/references/#payment-methods-reference
 [ext7]: https://developers.payu.com/europe/pl/docs/faq
 [ext8]: README.md
+[ext10]: https://developers.payu.com/europe/pl/docs/payment-solutions/cards/digital-wallets/apple-pay/
 [ext13]: https://poland.support.payu.com/s/?language=pl
 [ext14]: https://developers.payu.com/europe/pl/docs/payment-solutions/credit/installments/#credit-widget-installments

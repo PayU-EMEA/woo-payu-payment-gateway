@@ -6,15 +6,13 @@ class WC_Gateway_PayuPaypo extends WC_Payu_Gateways implements WC_PayuCreditGate
     private $available_paypo_paytypes;
 	private array $related_paytypes = ['dpp', 'dppron'];
 
-	function __construct() {
+	public function __construct() {
         parent::__construct( 'payupaypo' );
 
         $this->get_available_paypo_paytypes();
         $this->paytype = $this->available_paypo_paytypes[0] ?? '';
 
-		if ( $this->is_enabled() ) {
-			$this->icon = apply_filters( 'woocommerce_payu_icon', plugins_url( '/assets/images/paypo.svg', PAYU_PLUGIN_FILE ) );
-		}
+		$this->icon = apply_filters( 'woocommerce_payu_icon', plugins_url( '/assets/images/paypo.svg', PAYU_PLUGIN_FILE ) );
 	}
 
 	public function is_available(): bool {

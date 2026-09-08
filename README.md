@@ -26,6 +26,7 @@ The plugin offers the following payment methods:
 | PayU - secure form     | :white_check_mark: | a secure form collecting credit, debit or prepaid card data will be displayed                                                                           |
 | PayU - Blik            | :white_check_mark: | payer will be redirected to Blik's page                                                                                                                 |
 | PayU - Google Pay      | :white_check_mark: | payer can use their saved Google Pay cards directly on the checkout page                                                                                |
+| PayU - Apple Pay       | :white_check_mark: | payer can use their saved Apple Pay cards directly on the checkout page                                                                                 |
 | PayU - installments    | :white_check_mark: | payer will be redirected to installment payment form                                                                                                    |
 | PayU - Klarna          | :white_check_mark: | payer will be redirected to Klarna payment form                                                                                                         |
 | PayU - Twisto          | :white_check_mark: | payer will be redirected to Twisto payment form                                                                                                         |
@@ -37,9 +38,10 @@ The plugin offers the following payment methods:
 
 * Methods `PayU - standard` and `PayU - bank list` enable payments of any type and differ only with the way the payment type is chosen. **Should not be configured both at once**.
 * Methods `PayU - payment card` and `PayU - secure form` enable card payments and differ only with the way the card data is entered. **Should not be configured both at once**.
-* In case `PayU - bank list` method is switched on, the following payment types are removed from the list: cards if `PayU - payment card` or `PayU - secure form` is on, Blik if  `PayU - Blik` is on, installments if `PayU - installments` is on, Klarna if `PayU - Klarna` is on, Twisto if `PayU - Twisto` is on, PayPo if `PayU - PayPo` is on, PragmaPay if `PayU - PragmaPay` is on.
+* In case `PayU - bank list` method is switched on, the following payment types are removed from the list: cards if `PayU - payment card` or `PayU - secure form` is on, Blik if  `PayU - Blik` is on, installments if `PayU - installments` is on, Klarna if `PayU - Klarna` is on, Twisto if `PayU - Twisto` is on, PayPo if `PayU - PayPo` is on, PragmaPay if `PayU - PragmaPay` is on, Apple Pay if `PayU - Apple Pay` is on.
 * `PayU - secure form` method requires the shop to be available via HTTPS (for local tests, the address should be http://localhost)
 * `PayU - Google Pay` method requires providing Google Merchant ID. To obtain the identifier, you need to verify your shop in Google, following the [instructions][ext3].
+* `PayU - Apple Pay` method requires the domain to be registered in Apple. To register the domain follow the [instructions][ext10].
 * Even though  `PayU - payment card`, `PayU - secure form`, `PayU - Blik`, `PayU - installments`, `PayU - Klarna`, `PayU - Twisto`, `PayU - PayPo` and `PayU - PragmaPay` are on, they may be not visible in case they are not configured on your POS in PayU system or the amount is outside min-max range for the given payment type.
 
 ## Configuration
@@ -97,6 +99,13 @@ Parameters available for `PayU - Google Pay`:
 |----------------------|------------------------------------------------------------------------------------------------------------|
 | Google Merchant Id   | Merchant identifier in Google. You need to verify your shop in Google, following the [instructions][ext3]. |
 | Google Merchant name | Merchant name is rendered in the payment sheet.                                                            |
+
+Parameters available for `PayU - Apple Pay`:
+
+| Parameter              | Description                                                                                                                                                                                                      |
+|------------------------|------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| Apple Pay Domain       | Domain name registered in Apple. To register the domain follow the [instructions][ext10]. <br /> **IMPORTANT**: The domain must match the checkout page domain, otherwise Apple will reject the payment request. |
+| Apple Pay Display Name | Apple Pay display name. A string of 64 or fewer UTF-8 characters containing the canonical name for your store, suitable for display.                                                                             |
 
 ## FAQ
 If you have issues with functionality, first read the [Frequently Asked Questions][ext7] page.
@@ -171,7 +180,7 @@ Additionally, in the administration panel, it is possible to limit the types of 
 ## Emails
 The plugin does not send any additional emails and does not interfere with any mailing process.
 
-In case repayment is configured, the mail confirming order placement is enhanced with information about the possibility to pay the order.
+In case repayment is configured, the mail confirming order placement is enhanced with information about the possibility to pay the order: `If you have not yet paid for the order, you can do so by going to the website.`
 
 <!--external links:-->
 [ext1]: http://php.net/manual/en/book.curl.php
@@ -182,5 +191,6 @@ In case repayment is configured, the mail confirming order placement is enhanced
 [ext6]: https://developers.payu.com/europe/docs/get-started/integration-overview/references/#payment-methods-reference
 [ext7]: https://developers.payu.com/europe/docs/faq/
 [ext8]: README.PL.md
+[ext10]: https://developers.payu.com/europe/docs/payment-solutions/cards/digital-wallets/apple-pay/
 [ext13]: https://polandeng.support.payu.com/s/?language=en_US
 [ext14]: https://developers.payu.com/europe/docs/payment-solutions/credit/installments/#credit-widget-installments

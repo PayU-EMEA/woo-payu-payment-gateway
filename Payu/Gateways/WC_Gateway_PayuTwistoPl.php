@@ -6,16 +6,13 @@ class WC_Gateway_PayuTwistoPl extends WC_Payu_Gateways implements WC_PayuCreditG
     private $available_twisto_paytypes;
 	private array $related_paytypes = ['dpt', 'dpcz'];
 
-		function __construct() {
+	public function __construct() {
         parent::__construct( 'payutwistopl' );
 
         $this->get_available_twisto_paytypes();
         $this->paytype = $this->available_twisto_paytypes[0] ?? '';
 
-
-		if ( $this->is_enabled() ) {
-			$this->icon = apply_filters( 'woocommerce_payu_icon', plugins_url( '/assets/images/twisto-pl.svg', PAYU_PLUGIN_FILE ) );
-		}
+		$this->icon = apply_filters( 'woocommerce_payu_icon', plugins_url( '/assets/images/twisto-pl.svg', PAYU_PLUGIN_FILE ) );
 	}
 
 	public function is_available(): bool {

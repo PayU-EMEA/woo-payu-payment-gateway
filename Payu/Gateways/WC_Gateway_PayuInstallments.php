@@ -5,7 +5,7 @@ namespace Payu\PaymentGateway\Gateways;
 class WC_Gateway_PayuInstallments extends WC_Payu_Gateways implements WC_PayuCreditGateway {
 	protected string $paytype = 'ai';
 
-	function __construct() {
+	public function __construct() {
 		parent::__construct( 'payuinstallments' );
 	}
 

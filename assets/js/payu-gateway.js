@@ -1,201 +1,342 @@
-(function ($) {
-    var $form = $('form.checkout');
+( function ( $ ) {
+  var $form = $( 'form.checkout' );
 
-    $('body').on('click', '.payu-list-banks li.payu-active label', function () {
-        $('.payu-list-banks label').removeClass('active');
-        $(this).addClass('active');
-    });
+  $( 'body' ).on(
+    'click',
+    '.payu-list-banks li.payu-active label',
+    function () {
+      $( '.payu-list-banks label' ).removeClass( 'active' );
+      $( this ).addClass( 'active' );
+    }
+  );
 
-    $('body').on('click', '.payu-list-banks .payu-active', function () {
-        $('.pbl-error').slideUp(250);
-    });
+  $( 'body' ).on( 'click', '.payu-list-banks .payu-active', function () {
+    $( '.pbl-error' ).slideUp( 250 );
+  } );
 
-    $('body').on('click', '.payu-conditions-description .payu-read-more', function () {
-        $(this).next('.payu-more-hidden').show();
-        $(this).remove();
-    });
+  $( 'body' ).on(
+    'click',
+    '.payu-conditions-description .payu-read-more',
+    function () {
+      $( this ).next( '.payu-more-hidden' ).show();
+      $( this ).remove();
+    }
+  );
 
-    $('form#order_review').on('submit', function (e) {
-        var paymentMethod = $(this).find('input[name="payment_method"]:checked').val();
-        var validateResult = true;
+  $( 'form#order_review' ).on( 'submit', function ( e ) {
+    var paymentMethod = $( this )
+      .find( 'input[name="payment_method"]:checked' )
+      .val();
+    var validateResult = true;
 
-        if (paymentMethod === 'payusecureform') {
-            validateResult = validate_payu_secure_form(this);
-        } else if (paymentMethod === 'payulistbanks') {
-            validateResult = validate_payu_list_banks();
-        } else if (paymentMethod === 'payugooglepay') {
-            validateResult = validate_payu_google_pay(this);
-        }
+    if ( paymentMethod === 'payusecureform' ) {
+      validateResult = validate_payu_secure_form( this );
+    } else if ( paymentMethod === 'payulistbanks' ) {
+      validateResult = validate_payu_list_banks();
+    } else if ( paymentMethod === 'payugooglepay' ) {
+      validateResult = validate_payu_google_pay( this );
+    } else if ( paymentMethod === 'payuapplepay' ) {
+      validateResult = validate_payu_apple_pay( this );
+    }
 
-        if (!validateResult) {
-            setTimeout(function () {
-                $(e.target).unblock();
-            }, 500);
-        }
+    if ( ! validateResult ) {
+      setTimeout( function () {
+        $( e.target ).unblock();
+      }, 500 );
+    }
 
-        return validateResult;
-    });
+    return validateResult;
+  } );
 
-    $form.on('checkout_place_order_payusecureform', function () {
-        return validate_payu_secure_form(this);
-    });
+  $form.on( 'checkout_place_order_payusecureform', function () {
+    return validate_payu_secure_form( this );
+  } );
 
-    $form.on('checkout_place_order_payulistbanks', function () {
-        return validate_payu_list_banks();
-    });
+  $form.on( 'checkout_place_order_payulistbanks', function () {
+    return validate_payu_list_banks();
+  } );
 
-    $form.on('checkout_place_order_payugooglepay', function () {
-        return validate_payu_google_pay(this);
-    });
+  $form.on( 'checkout_place_order_payugooglepay', function () {
+    return validate_payu_google_pay( this );
+  } );
 
-    function validate_payu_secure_form(form) {
-        var payuTokenElement = document.getElementsByName('payu_sf_token')[0];
+  $form.on( 'checkout_place_order_payuapplepay', function () {
+    return validate_payu_apple_pay( this );
+  } );
 
-        if (payuTokenElement.value === '') {
-            try {
-                window.payuSdkForms.tokenize()
-                    .then(function (result) {
-                        $('.payu-sf-validation-error, .payu-sf-technical-error')
-                            .html('')
-                            .slideUp(250);
-                        if (result.status === 'SUCCESS') {
-                            payuTokenElement.value = result.body.token;
-                            document.getElementsByName('payu_browser[screenWidth]')[0].value = screen.width;
-                            document.getElementsByName('payu_browser[javaEnabled]')[0].value = navigator.javaEnabled();
-                            document.getElementsByName('payu_browser[timezoneOffset]')[0].value = new Date().getTimezoneOffset();
-                            document.getElementsByName('payu_browser[screenHeight]')[0].value = screen.height;
-                            document.getElementsByName('payu_browser[userAgent]')[0].value = navigator.userAgent;
-                            document.getElementsByName('payu_browser[colorDepth]')[0].value = screen.colorDepth;
-                            document.getElementsByName('payu_browser[language]')[0].value = navigator.language;
-                            $(form).submit();
-                        } else {
-                            $(result.error.messages).each(function (i, error) {
-                                var source = error.source || 'technical';
-                                $('.payu-sf-' + error.type + '-error[data-type="' + source + '"]')
-                                    .html(error.message)
-                                    .slideDown(250);
-                                $('html, body').animate({
-                                    scrollTop: $('.card-container').offset().top
-                                }, 300);
-                            });
-                        }
-                    })
-                    .catch(function (e) {
-                        console.log(e);
-                    });
-            } catch (e) {
-                console.log(e);
+  function validate_payu_secure_form( form ) {
+    var payuTokenElement = document.getElementsByName( 'payu_sf_token' )[ 0 ];
+
+    if (payuTokenElement.value === '') {
+      try {
+        window.payuSdkForms.tokenize()
+          .then(function (result) {
+            $('.payu-sf-validation-error, .payu-sf-technical-error')
+              .html('').slideUp(250);
+            if (result.status === 'SUCCESS') {
+              payuTokenElement.value = result.body.token;
+              document.getElementsByName('payu_browser[screenWidth]')[0].value = screen.width;
+              document.getElementsByName('payu_browser[javaEnabled]')[0].value = navigator.javaEnabled();
+              document.getElementsByName('payu_browser[timezoneOffset]')[0].value = new Date().getTimezoneOffset();
+              document.getElementsByName('payu_browser[screenHeight]')[0].value = screen.height;
+              document.getElementsByName('payu_browser[userAgent]')[0].value = navigator.userAgent;
+              document.getElementsByName('payu_browser[colorDepth]')[0].value = screen.colorDepth;
+              document.getElementsByName('payu_browser[language]')[0].value = navigator.language;
+              $(form).submit();
+            } else {
+              $(result.error.messages).each(function (i, error) {
+                var source = error.source || 'technical';
+                $('.payu-sf-' + error.type + '-error[data-type="' + source + '"]')
+                  .html(error.message)
+                  .slideDown(250);
+                $('html, body')
+                  .animate({
+                    scrollTop: $('.card-container').offset().top},
+                    300
+                  );
+              });
             }
+          })
+          .catch(function (e) {
+              console.log(e);
+          });
+      } catch (e) {
+          console.log(e);
+      }
 
-            return false;
-        }
-
-        return true;
+      return false;
     }
 
-    function show_error(){
-        var errorMessage = document.querySelector('.payu-google-pay-error');
-        if (errorMessage) {
-            errorMessage.style.display = 'block';
-        }
-        $('html, body').animate({
-            scrollTop: $('.payment_method_payugooglepay').offset().top
-        }, 300);
-        $('.payu-google-pay-error').slideDown(250);
+    return true;
+  }
+
+  function hide_error(method) {
+    var errorMessage = document.querySelector( method + ' .payu-pay-error' );
+    if ( errorMessage ) {
+      errorMessage.style.display = 'none';
+    }
+  }
+
+  function show_error(method) {
+    var errorMessage = document.querySelector( method + ' .payu-pay-error' );
+    if ( errorMessage ) {
+      errorMessage.style.display = 'block';
+    }
+    $( 'html, body' ).animate(
+      {
+        scrollTop: $( method ).offset().top,
+      },
+      300
+    );
+  }
+
+  function validate_payu_list_banks() {
+    if ( ! $( '.payu-list-banks' ).find( '.payu-active .active' ).length ) {
+      $( 'html, body' ).animate(
+        {
+          scrollTop: $( '.payu-list-banks' ).offset().top,
+        },
+        300
+      );
+      $( '.pbl-error' ).slideDown( 250 );
+
+      return false;
+    } else {
+      $( '.pbl-error' ).slideUp( 250 );
+
+      return true;
+    }
+  }
+
+  function validate_payu_google_pay( form ) {
+    var methodClass = '.payment_method_payugooglepay';
+    hide_error(methodClass);
+
+    if ( ! window.google?.payments?.api?.PaymentsClient ) {
+      show_error(methodClass);
+      return false;
     }
 
-    function validate_payu_list_banks() {
-        if (!$('.payu-list-banks').find('.payu-active .active').length) {
-            $('html, body').animate({
-                scrollTop: $('.payu-list-banks').offset().top
-            }, 300);
-            $('.pbl-error').slideDown(250);
+    var googleToken = document.getElementById( 'payu-google-token' );
 
-            return false;
-        } else {
-            $('.pbl-error').slideUp(250);
+    if ( googleToken.value === '' ) {
+      const paymentsClient = new google.payments.api.PaymentsClient( {
+        environment: payuGooglePayConfig.env,
+      } );
 
-            return true;
-        }
+      const isReadyToPayRequest = {
+        apiVersion: 2,
+        apiVersionMinor: 0,
+        allowedPaymentMethods: [
+          {
+            type: 'CARD',
+            parameters: {
+              allowedAuthMethods: [ 'PAN_ONLY', 'CRYPTOGRAM_3DS' ],
+              allowedCardNetworks: [ 'MASTERCARD', 'VISA' ],
+            },
+          },
+        ],
+      };
+
+      const paymentDataRequest = {
+        apiVersion: 2,
+        apiVersionMinor: 0,
+        merchantInfo: {
+          merchantName: payuGooglePayConfig.merchantName,
+          merchantId: payuGooglePayConfig.merchantId,
+        },
+        allowedPaymentMethods: [
+          {
+            type: 'CARD',
+            parameters: {
+              allowedAuthMethods: [ 'PAN_ONLY', 'CRYPTOGRAM_3DS' ],
+              allowedCardNetworks: [ 'MASTERCARD', 'VISA' ],
+              billingAddressRequired: false,
+            },
+            tokenizationSpecification: {
+              type: 'PAYMENT_GATEWAY',
+              parameters: {
+                gateway: 'payu',
+                gatewayMerchantId: payuGooglePayConfig.posId,
+              },
+            },
+          },
+        ],
+        transactionInfo: {
+          totalPriceStatus: 'FINAL',
+          countryCode: 'PL',
+          totalPrice: payuGooglePayConfig.totalPrice,
+          currencyCode: payuGooglePayConfig.currency,
+        },
+      };
+      paymentsClient
+        .isReadyToPay( isReadyToPayRequest )
+        .then( function ( response ) {
+          if ( response.result ) {
+            paymentsClient
+              .loadPaymentData( paymentDataRequest )
+              .then( function ( paymentData ) {
+                paymentToken =
+                  paymentData.paymentMethodData.tokenizationData.token;
+                googleToken.value = btoa( paymentToken );
+                $( form ).submit();
+              } )
+              .catch( function ( err ) {
+                console.error( err );
+              } );
+          }
+        } )
+        .catch( function ( err ) {
+          console.error( err );
+          show_error(methodClass);
+        } );
+      return false;
     }
 
-    function validate_payu_google_pay(form){
-        $('.payu-google-pay-error').slideUp(250);
-        if (!window.google?.payments?.api?.PaymentsClient) {
-            show_error();
-            return false;
-        }
+    return true;
+  }
 
-        var googleToken = document.getElementById('payu-google-token');
-        if (googleToken.value === '') {
+  function applePayCanMakePayment() {
+    var applePayAvailable;
 
-            const paymentsClient =
-                new google.payments.api.PaymentsClient({environment: payuGooglePayConfig.env});
-
-            const isReadyToPayRequest = {
-                apiVersion: 2,
-                apiVersionMinor: 0,
-                allowedPaymentMethods: [
-                    {
-                        type: 'CARD',
-                        parameters: {
-                            allowedAuthMethods: ['PAN_ONLY', 'CRYPTOGRAM_3DS'],
-                            allowedCardNetworks: ['MASTERCARD', 'VISA']
-                        }
-                    }
-                ]
-            }
-
-            const paymentDataRequest = {
-                apiVersion: 2,
-                apiVersionMinor: 0,
-                merchantInfo: {
-                    merchantName: payuGooglePayConfig.merchantName,
-                    merchantId: payuGooglePayConfig.merchantId
-                },
-                allowedPaymentMethods: [
-                {
-                    type: 'CARD',
-                    parameters: {
-                        allowedAuthMethods: ['PAN_ONLY', 'CRYPTOGRAM_3DS'],
-                        allowedCardNetworks: ['MASTERCARD', 'VISA'],
-                        billingAddressRequired: false
-                    },
-                    tokenizationSpecification: {
-                        type: 'PAYMENT_GATEWAY',
-                        parameters: {
-                            gateway: 'payu',
-                            gatewayMerchantId: payuGooglePayConfig.posId
-                        }
-                    }
-                }
-                ],
-                transactionInfo: {
-                    totalPriceStatus: 'FINAL',
-                    countryCode: 'PL',
-                    totalPrice: payuGooglePayConfig.totalPrice,
-                    currencyCode: payuGooglePayConfig.currency
-                }
-            }
-            paymentsClient.isReadyToPay(isReadyToPayRequest)
-                .then(function(response) {
-                    if (response.result) {
-                        paymentsClient.loadPaymentData(paymentDataRequest).then(function(paymentData){
-                            paymentToken = paymentData.paymentMethodData.tokenizationData.token;
-                            googleToken.value = btoa(paymentToken);
-                            $(form).submit();
-                        }).catch(function(err){
-                            console.error(err);
-                        });
-                    }
-                })
-                .catch(function(err) {
-                    console.error(err);
-                    show_error();
-                });
-            return false;
-        }
-        
-        return true;
+    try {
+      applePayAvailable =
+        window.ApplePaySession && ApplePaySession.canMakePayments();
+    } catch ( _e ) {
+      applePayAvailable = false;
     }
-})(jQuery);
+
+    return applePayAvailable;
+  }
+
+  function getApplePayApiVersion() {
+    var APPLE_PAY_API_MIN_VERSION = 1;
+    var APPLE_PAY_API_MAX_VERSION = 14; // https://developer.apple.com/documentation/applepayontheweb/apple-pay-on-the-web-version-history
+
+    for ( var i = APPLE_PAY_API_MAX_VERSION; i > APPLE_PAY_API_MIN_VERSION; i-- ) {
+      if ( ApplePaySession.supportsVersion( i ) ) {
+        return i;
+      }
+    }
+
+    return APPLE_PAY_API_MIN_VERSION;
+  }
+
+  function validate_payu_apple_pay( form ) {
+    var methodClass = '.payment_method_payuapplepay';
+    var applepayToken = document.getElementById( 'payu-apple-token' );
+
+    hide_error( methodClass );
+
+    if (!applePayCanMakePayment()) {
+      show_error(methodClass);
+      return false;
+    }
+
+    if ( applepayToken.value === '' ) {
+      var applePaySession = new ApplePaySession( getApplePayApiVersion(), {
+        merchantCapabilities: [
+          'supports3DS',
+          'supportsCredit',
+          'supportsDebit',
+        ],
+        supportedNetworks: [ 'masterCard', 'visa' ],
+        countryCode: 'PL',
+        total: {
+          type: 'final',
+          label: payuApplePayConfig.appleDisplayName,
+          amount: payuApplePayConfig.totalPrice,
+        },
+        currencyCode: payuApplePayConfig.currency,
+      } );
+
+      applePaySession.onvalidatemerchant = ( event ) => {
+        var getApplePaySession = async () => {
+          let sessionResponse;
+
+          sessionResponse = await fetch( payuApplePayConfig.createSessionUrl, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+          } );
+
+          if ( ! sessionResponse.ok ) {
+            show_error( methodClass );
+
+            applePaySession.abort();
+            return;
+          }
+
+          var session = await sessionResponse.json();
+
+          try {
+            applePaySession.completeMerchantValidation( session );
+          } catch ( error ) {
+            show_error( methodClass );
+
+            applePaySession.abort();
+          }
+        };
+
+        void getApplePaySession();
+      };
+
+      applePaySession.onpaymentauthorized = ( event ) => {
+        applePaySession.completePayment( ApplePaySession.STATUS_SUCCESS );
+        applepayToken.value = btoa(
+          JSON.stringify( event.payment.token.paymentData )
+        );
+        $( form ).submit();
+      };
+
+      applePaySession.oncancel = () => {
+        // Do nothing
+      };
+
+      applePaySession.begin();
+
+      return false;
+    }
+
+    return true;
+  }
+} )( jQuery );

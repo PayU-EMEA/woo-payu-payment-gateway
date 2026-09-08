@@ -30,7 +30,7 @@ abstract class WC_Payu_Gateways extends WC_Payment_Gateway implements WC_PayuGat
 
 	protected bool $sandbox;
 
-	private $order_total = null;
+	protected $order_total = null;
 
 	const CONDITION_PL = 'http://static.payu.com/sites/terms/files/payu_terms_of_service_single_transaction_pl_pl.pdf';
 	const CONDITION_EN = 'http://static.payu.com/sites/terms/files/payu_terms_of_service_single_transaction_pl_en.pdf';
@@ -39,7 +39,7 @@ abstract class WC_Payu_Gateways extends WC_Payment_Gateway implements WC_PayuGat
 	const PRIVACY_EN = 'https://static.payu.com/sites/terms/files/payu_privacy_policy_en_en.pdf';
 	const PRIVACY_CS = 'https://static.payu.com/sites/terms/files/payu_privacy_policy_cs.pdf';
 
-	function __construct( string $id ) {
+	public function __construct( string $id ) {
 		$this->id                 = $id;
 		$this->method_title       = $this->gateway_data( 'name' );
 		$this->method_description = __( 'Official PayU payment gateway for WooCommerce.', 'woo-payu-payment-gateway' );
@@ -231,6 +231,20 @@ abstract class WC_Payu_Gateways extends WC_Payment_Gateway implements WC_PayuGat
 				'api'                 => 'WC_Gateway_PayuSecureForm',
 				'class'               => WC_Gateway_PayuSecureForm::class
 			],
+			'payugooglepay'	   => [
+				'name'				  => __( 'PayU - Google Pay', 'woo-payu-payment-gateway' ),
+				'front_name'		  => __( 'Pay with Google Pay', 'woo-payu-payment-gateway' ),
+				'default_description' => __( 'You may be redirected to a payment confirmation page.', 'woo-payu-payment-gateway' ),
+				'api'				  => 'WC_Gateway_PayuGooglePay',
+				'class'				  => WC_Gateway_PayuGooglePay::class
+			],
+			'payuapplepay'	   => [
+				'name'				  => __( 'PayU - Apple Pay', 'woo-payu-payment-gateway' ),
+				'front_name'		  => __( 'Pay with Apple Pay', 'woo-payu-payment-gateway' ),
+				'default_description' => __( 'You may be redirected to a payment confirmation page.', 'woo-payu-payment-gateway' ),
+				'api'				  => 'WC_Gateway_PayuApplePay',
+				'class'				  => WC_Gateway_PayuApplePay::class
+			],
 			'payublik'         => [
 				'name'                => __( 'PayU - Blik', 'woo-payu-payment-gateway' ),
 				'front_name'          => __( 'Blik', 'woo-payu-payment-gateway' ),
@@ -279,13 +293,6 @@ abstract class WC_Payu_Gateways extends WC_Payment_Gateway implements WC_PayuGat
 				'default_description' => __( 'You will be redirected to the payment method page.', 'woo-payu-payment-gateway' ),
 				'api'                 => 'WC_Gateway_PayuTwistoSlice',
 				'class'               => WC_Gateway_PayuTwistoSlice::class
-			],
-			'payugooglepay'	   => [
-				'name'				  => __( 'PayU - Google Pay', 'woo-payu-payment-gateway' ),
-				'front_name'		  => __( 'Pay with Google Pay', 'woo-payu-payment-gateway' ),
-				'default_description' => __( 'You may be redirected to a payment confirmation page.', 'woo-payu-payment-gateway' ),
-				'api'				  => 'WC_Gateway_PayuGooglePay',
-				'class'				  => WC_Gateway_PayuGooglePay::class
 			],
 		];
 	}

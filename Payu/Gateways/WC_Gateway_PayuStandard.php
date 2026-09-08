@@ -4,7 +4,7 @@ namespace Payu\PaymentGateway\Gateways;
 
 class WC_Gateway_PayuStandard extends WC_Payu_Gateways {
 
-	function __construct() {
+	public function __construct() {
 		parent::__construct( 'payustandard' );
 	}
 

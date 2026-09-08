@@ -6,12 +6,12 @@ class WC_Gateway_PayuGooglePay extends WC_Payu_Gateways
 {
     protected string $paytype = 'ap';
 
-    function __construct()
+    public function __construct()
     {
         parent::__construct('payugooglepay');
+        $this->icon = apply_filters('woocommerce_payu_icon', plugins_url('/assets/images/ap.svg', PAYU_PLUGIN_FILE));
 
         if ($this->is_enabled()) {
-            $this->icon = apply_filters('woocommerce_payu_icon', plugins_url('/assets/images/ap.svg', PAYU_PLUGIN_FILE));
             add_action('wp_enqueue_scripts', [$this, 'include_scripts']);
         }
     }
@@ -28,7 +28,7 @@ class WC_Gateway_PayuGooglePay extends WC_Payu_Gateways
     public function payment_fields(): void
     {
         ?>
-        <ul class="payu-google-pay-error woocommerce-error" role="alert">
+        <ul class="payu-pay-error woocommerce-error" role="alert">
             <li><?php esc_html_e('This payment method is not available.', 'woo-payu-payment-gateway') ?></li>
         </ul>
         <?php
@@ -38,7 +38,7 @@ class WC_Gateway_PayuGooglePay extends WC_Payu_Gateways
             var payuGooglePayConfig = {
                 currency: "<?php echo esc_attr(get_woocommerce_currency()) ?>",
                 posId: "<?php echo esc_attr($this->pos_id) ?>",
-                totalPrice: "<?php echo esc_attr(WC()->cart ? WC()->cart->get_total('') : '0') ?>",
+                totalPrice: "<?php echo esc_attr($this->getTotal()) ?>",
                 env: "<?php echo $this->sandbox ? 'TEST' : 'PRODUCTION'?>",
                 merchantName: "<?php echo esc_attr($this->get_option('merchant_name', '')) ?>",
                 merchantId: "<?php echo $this->sandbox ? '0' : esc_attr($this->get_option('merchant_id', '')) ?>"
@@ -52,7 +52,7 @@ class WC_Gateway_PayuGooglePay extends WC_Payu_Gateways
 		return [
 			'posId'        => $this->pos_id,
             'currency'     => get_woocommerce_currency(),
-            'totalPrice'   => WC()->cart ? WC()->cart->get_total('') : '0',
+            'totalPrice'   => $this->getTotal(),
             'env'          => $this->sandbox ? 'TEST' : 'PRODUCTION',
             'merchantName' => $this->get_option('merchant_name'),
             'merchantId'   => $this->sandbox ? '0' : $this->get_option('merchant_id')

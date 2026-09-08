@@ -1,6 +1,8 @@
 import { decodeEntities } from '@wordpress/html-entities';
+import { select } from '@wordpress/data';
 import { getSetting } from '@woocommerce/settings';
 import { registerPaymentMethod } from '@woocommerce/blocks-registry';
+import { validationStore } from '@woocommerce/block-data';
 import { useEffect, useState } from '@wordpress/element';
 import { __ } from '@wordpress/i18n';
 import { StoreNotice } from '@woocommerce/blocks-components';
@@ -132,7 +134,13 @@ const Content = ( { eventRegistration, emitResponse } ) => {
   const [ error, setError ] = useState();
 
   useEffect( () => {
-    const unsubscribe = onPaymentSetup( () => {
+    const unsubscribe = onPaymentSetup( async () => {
+      if ( select( validationStore ).hasValidationErrors() ) {
+        return {
+          type: emitResponse.responseTypes.ERROR,
+        };
+      }
+
       setError( undefined );
 
       const paymentDataRequest = {

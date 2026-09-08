@@ -1,8 +1,9 @@
 {
 	"src/js/payublik.js": "build/js/payublik.js",
 	"src/js/payulistbanks.js": "build/js/payulistbanks.js",
-	"src/js/payusecureform.js": "build/js/payusecureform.js",
+	"src/js/payusecureform.jsx": "build/js/payusecureform.js",
 	"src/js/payu/main.ts": "build/js/payu.js",
 	"src/js/payu/payment-result.ts": "build/js/payu.js",
-	"src/js/payugooglepay.js": "build/js/payugooglepay.js"
+	"src/js/payugooglepay.jsx": "build/js/payugooglepay.js",
+	"src/js/payuapplepay.jsx": "build/js/payu/payuapplepay.js"
 }
