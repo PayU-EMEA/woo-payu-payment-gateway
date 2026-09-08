@@ -1,3 +1,8 @@
+# 2.11.0 - 2026-09-08
+* [Add] Apple Pay as separate method
+* [Fix] Total in Google Pay and repayment
+* [Fix] Icons size
+
 # 2.10.3 - 2026-09-08
 * [Fix] Error in older WooCommerce
 

@@ -3,7 +3,7 @@ Contributors: payusa
 Tags: PayU, payment, payment gateway, płatności, credit card
 Requires at least: 5.0
 Tested up to: 7.1
-Stable tag: 2.10.3
+Stable tag: 2.11.0
 Requires PHP: 7.4
 License: Apache License 2.0
 
@@ -19,7 +19,8 @@ The plugin offers the following payment methods:
 * PayU - payment card - payer will be redirected to PayU's hosted card form where credit, debit or prepaid card data can be securely entered
 * PayU - secure form - a secure form collecting credit, debit or prepaid card data will be displayed
 * PayU - Blik - payer will be redirected to Blik's page
-* PayU - Google Pay - payer can use their saved Google Pay cards directly on the checkout page
+* PayU - Google Pay - payer can use their saved cards in Google Pay wallet directly on the checkout page
+* PayU - Apple Pay - payer can use their saved cards in Apple Pay wallet directly on the checkout page
 * PayU - installments - payer will be redirected to installment payment form
 * PayU - Klarna - payer will be redirected to Klarna payment form
 * PayU - PayPo - payer will be redirected to PayPo payment form
@@ -42,9 +43,6 @@ Following PHP libraries are required: cURL i hash.
 = Automatic installation =
 Use [automatic installation and activation](https://wordpress.org/support/article/managing-plugins/#automatic-plugin-installation) available in Wordpress admin panel. Module name is `PayU GPO Payment for WooCommerce`.
 
-= Updating =
-Upon plugin update from version 1.X to version 2.X the existing config data will be automatically converted.
-
 == Frequently Asked Questions ==
 
 = Does this load external javascript resources ? =
@@ -53,8 +51,14 @@ Yes, it does.
 * For card payment we used [PayU Secure Form](https://developers.payu.com/europe/docs/checkout/secure-form/) and for proper working it is necessary to load Secure Form JS SDK from the secure.payu.com domain. As a result, you do not need to have PCI DSS, PayU does it for you.
 * For presenting credit payment options like minimal installment amount or "buy now pay later" we used [Credit Widget](https://developers.payu.com/europe/docs/payment-solutions/credit/installments/#credit-widget-installments) and plugin loads the script from the static.payu.com domain.
 * For integrate with Google Pay we used [pay.js](https://pay.google.com/gp/p/js/pay.js)
+* For integrate with Apple Pay we used [apple-pay-sdk.js](https://applepay.cdn-apple.com/jsapi/1.latest/apple-pay-sdk.js)
 
 == Changelog ==
+= 2.11.0 - 2026-09-08 =
+* [Add] Apple Pay as separate method
+* [Fix] Total in Google Pay and repayment
+* [Fix] Icons size
+
 = 2.10.3 - 2026-09-08 =
 * [Fix] Error in older WooCommerce
 

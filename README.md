@@ -25,8 +25,8 @@ The plugin offers the following payment methods:
 | PayU - payment card    | :white_check_mark: | payer will be redirected to PayU's hosted card form where credit, debit or prepaid card data can be securely entered                                    |
 | PayU - secure form     | :white_check_mark: | a secure form collecting credit, debit or prepaid card data will be displayed                                                                           |
 | PayU - Blik            | :white_check_mark: | payer will be redirected to Blik's page                                                                                                                 |
-| PayU - Google Pay      | :white_check_mark: | payer can use their saved Google Pay cards directly on the checkout page                                                                                |
-| PayU - Apple Pay       | :white_check_mark: | payer can use their saved Apple Pay cards directly on the checkout page                                                                                 |
+| PayU - Google Pay      | :white_check_mark: | payer can use their saved cards in Google Pay wallet directly on the checkout page                                                                      |
+| PayU - Apple Pay       | :white_check_mark: | payer can use their saved cards in Apple Pay wallet directly on the checkout page                                                                       |
 | PayU - installments    | :white_check_mark: | payer will be redirected to installment payment form                                                                                                    |
 | PayU - Klarna          | :white_check_mark: | payer will be redirected to Klarna payment form                                                                                                         |
 | PayU - Twisto          | :white_check_mark: | payer will be redirected to Twisto payment form                                                                                                         |
