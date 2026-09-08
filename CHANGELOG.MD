@@ -1,3 +1,6 @@
+# 2.10.3 - 2026-09-08
+* [Fix] Error in older WooCommerce
+
 # 2.10.2 - 2026-09-01
 * [Fix] Availability of methods by shipping
 
