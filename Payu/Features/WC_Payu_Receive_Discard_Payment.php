@@ -7,6 +7,7 @@ use OpenPayU_Exception;
 use OpenPayU_Order;
 use OpenPayuOrderStatus;
 use Payu\PaymentGateway\Gateways\WC_Payu_Gateways;
+use Payu\PaymentGateway\WC_Payu;
 use WC_Order;
 use WC_Order_Refund;
 
@@ -28,65 +29,62 @@ class WC_Payu_Receive_Discard_Payment {
 		}
 
 		$payu_gateways   = WC_Payu_Gateways::gateways_list();
-		$payuOrderStatus = $order->get_meta( '_payu_order_status', false, '' );
 
-		if ( isset( $payu_gateways[ $order->get_payment_method() ] ) && ! isset( get_option( 'payu_settings_option_name' )['global_repayment'] ) && $payuOrderStatus ) {
-			$payu_statuses = WC_Payu_Gateways::clean_payu_statuses( $payuOrderStatus );
+		if ( isset( $payu_gateways[ $order->get_payment_method() ] )
+		     && ! isset( get_option( 'payu_settings_option_name' )['global_repayment'] )
+			 && ! WC_Payu::payu_status_available_in_wc_order(OpenPayuOrderStatus::STATUS_COMPLETED, $order )
+			 && WC_Payu::payu_status_available_in_wc_order(OpenPayuOrderStatus::STATUS_WAITING_FOR_CONFIRMATION, $order )
+		) {
+			$this->render_buttons( $order );
 
-			if ( ! in_array( OpenPayuOrderStatus::STATUS_COMPLETED, $payu_statuses, true )
-			     && in_array( OpenPayuOrderStatus::STATUS_WAITING_FOR_CONFIRMATION, $payu_statuses, true )
-			) {
-				$this->render_buttons( $order );
+			$url_return = add_query_arg( [
+				'post'   => $order->get_id(),
+				'action' => 'edit',
+			], admin_url( 'post.php' ) );
 
-				$url_return = add_query_arg( [
-					'post'   => $order->get_id(),
-					'action' => 'edit',
-				], admin_url( 'post.php' ) );
+			if ( ( isset( $_GET['receive-payment'] ) || isset( $_GET['discard-payment'] ) ) && is_admin() ) {
+				$user_nickname = wp_get_current_user()->nickname;
 
-				if ( ( isset( $_GET['receive-payment'] ) || isset( $_GET['discard-payment'] ) ) && is_admin() ) {
-					$user_nickname = wp_get_current_user()->nickname;
-
-					if ( isset( $_GET['receive-payment'] ) && ! isset( $_GET['discard-payment'] ) ) {
-						$orderId             = $order->get_transaction_id();
-						$status_update       = [
-							'orderId'     => $orderId,
-							'orderStatus' => OpenPayuOrderStatus::STATUS_COMPLETED
-						];
-						$payment_method_name = $order->get_payment_method();
-						$payment_init        = WC_Payu_Gateways::gateways_list()[ $payment_method_name ]['class'];
-						$payment             = new $payment_init;
-						$payment->init_OpenPayU( $order->get_currency() );
-						try {
-							OpenPayU_Order::statusUpdate( $status_update );
-							$order->add_order_note(
-								sprintf( __( '[PayU] User %s accepted payment', 'woo-payu-payment-gateway' ), $user_nickname )
-							);
-						} catch ( OpenPayU_Exception $e ) {
-							$order->add_order_note(
-								sprintf( __( '[PayU] Error "%s" occurred during accepted payment', 'woo-payu-payment-gateway' ), $e->getMessage() )
-							);
-						}
-						wp_redirect( $url_return );
+				if ( isset( $_GET['receive-payment'] ) && ! isset( $_GET['discard-payment'] ) ) {
+					$orderId             = $order->get_transaction_id();
+					$status_update       = [
+						'orderId'     => $orderId,
+						'orderStatus' => OpenPayuOrderStatus::STATUS_COMPLETED
+					];
+					$payment_method_name = $order->get_payment_method();
+					$payment_init        = WC_Payu_Gateways::gateways_list()[ $payment_method_name ]['class'];
+					$payment             = new $payment_init;
+					$payment->init_OpenPayU( $order->get_currency() );
+					try {
+						OpenPayU_Order::statusUpdate( $status_update );
+						$order->add_order_note(
+							sprintf( __( '[PayU] User %s accepted payment', 'woo-payu-payment-gateway' ), $user_nickname )
+						);
+					} catch ( OpenPayU_Exception $e ) {
+						$order->add_order_note(
+							sprintf( __( '[PayU] Error "%s" occurred during accepted payment', 'woo-payu-payment-gateway' ), $e->getMessage() )
+						);
 					}
+					wp_redirect( $url_return );
+				}
 
-					if ( ! isset( $_GET['receive-payment'] ) && isset( $_GET['discard-payment'] ) ) {
-						$payment_method_name = $order->get_payment_method();
-						$payment_init        = WC_Payu_Gateways::gateways_list()[ $payment_method_name ]['class'];
-						$payment             = new $payment_init;
-						$payment->init_OpenPayU( $order->get_currency() );
-						$orderId = $order->get_transaction_id();
-						try {
-							OpenPayU_Order::cancel( $orderId );
-							$order->add_order_note(
-								sprintf( __( '[PayU] User %s rejected payment', 'woo-payu-payment-gateway' ), $user_nickname )
-							);
-						} catch ( OpenPayU_Exception $e ) {
-							$order->add_order_note(
-								sprintf( __( '[PayU] Error "%s" occurred during rejected payment', 'woo-payu-payment-gateway' ), $e->getMessage() )
-							);
-						}
-						wp_redirect( $url_return );
+				if ( ! isset( $_GET['receive-payment'] ) && isset( $_GET['discard-payment'] ) ) {
+					$payment_method_name = $order->get_payment_method();
+					$payment_init        = WC_Payu_Gateways::gateways_list()[ $payment_method_name ]['class'];
+					$payment             = new $payment_init;
+					$payment->init_OpenPayU( $order->get_currency() );
+					$orderId = $order->get_transaction_id();
+					try {
+						OpenPayU_Order::cancel( $orderId );
+						$order->add_order_note(
+							sprintf( __( '[PayU] User %s rejected payment', 'woo-payu-payment-gateway' ), $user_nickname )
+						);
+					} catch ( OpenPayU_Exception $e ) {
+						$order->add_order_note(
+							sprintf( __( '[PayU] Error "%s" occurred during rejected payment', 'woo-payu-payment-gateway' ), $e->getMessage() )
+						);
 					}
+					wp_redirect( $url_return );
 				}
 			}
 		}

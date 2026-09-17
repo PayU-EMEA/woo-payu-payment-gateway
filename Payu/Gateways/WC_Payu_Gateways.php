@@ -12,6 +12,7 @@ use OpenPayuOrderStatus;
 use Payu\PaymentGateway\Cache\OauthCache;
 use Payu\PaymentGateway\Features\WC_Payu_Waiting_Payu_Order_Status;
 use Payu\PaymentGateway\Settings\PayuSettings;
+use Payu\PaymentGateway\WC_Payu;
 use WC_Data_Store;
 use WC_Order;
 use WC_Order_Item_Product;
@@ -987,24 +988,6 @@ abstract class WC_Payu_Gateways extends WC_Payment_Gateway implements WC_PayuGat
 
 	/**
 	 * @param int $order_id
-	 *
-	 * @return string|bool
-	 */
-	protected function completed_transaction_id( $order_id ) {
-		$order         = wc_get_order( $order_id );
-		$payu_statuses = $order->get_meta( '_payu_order_status', false, '' );
-		foreach ( $payu_statuses as $payu_status ) {
-			$ps = explode( '|', $payu_status->value );
-			if ( $ps[0] === OpenPayuOrderStatus::STATUS_COMPLETED ) {
-				return $ps[1];
-			}
-		}
-
-		return false;
-	}
-
-	/**
-	 * @param int $order_id
 	 * @param null|float $amount
 	 * @param string $reason
 	 *
@@ -1015,8 +998,9 @@ abstract class WC_Payu_Gateways extends WC_Payment_Gateway implements WC_PayuGat
 	public function process_refund( $order_id, $amount = null, $reason = '' ) {
 		if ( $amount > 0 ) {
 			$order   = wc_get_order( $order_id );
-			$orderId = $this->completed_transaction_id( $order_id );
-			if ( empty( $orderId ) ) {
+			$orderId = WC_Payu::payu_status_get_completed_from_wc_order( $order );
+
+			if ( ! $orderId ) {
 				return false;
 			}
 
@@ -1152,8 +1136,9 @@ abstract class WC_Payu_Gateways extends WC_Payment_Gateway implements WC_PayuGat
 				}
 
 				$reportOutput .= 'WC AS: ' . $order->get_status() . '|';
-				$order->add_meta_data( '_payu_order_status', $status . '|' . $response->getResponse()->order->orderId );
-				if ( $order->get_status() !== 'completed' && $order->get_status() !== 'processing' ) {
+				WC_Payu::payu_status_add_to_wc_order($status . '|' . $transaction_id, $order);
+
+				if ( ! WC_Payu::payu_status_available_in_wc_order(OpenPayuOrderStatus::STATUS_COMPLETED, $order ) ) {
 					switch ( $status ) {
 						case OpenPayuOrderStatus::STATUS_CANCELED:
 							if ( ! isset( get_option( 'payu_settings_option_name' )['global_repayment'] ) ) {
@@ -1171,41 +1156,25 @@ abstract class WC_Payu_Gateways extends WC_Payment_Gateway implements WC_PayuGat
 
 						case OpenPayuOrderStatus::STATUS_WAITING_FOR_CONFIRMATION:
 							if ( $order->get_status() === 'cancelled' ) {
-								$response_order_id = $response->getResponse()->order->orderId;
-								OpenPayU_Order::cancel( $response_order_id );
+								OpenPayU_Order::cancel( $transaction_id );
 							} else {
-								$order->update_status( WC_Payu_Waiting_Payu_Order_Status::PAYU_PLUGIN_STATUS_WAITING,
-									__( 'Payment has been put on hold - merchant must approve this payment manually.',
-										'woo-payu-payment-gateway' )
-								);
 								if ( isset( get_option( 'payu_settings_option_name' )['global_repayment'] ) ) {
-									$payu_statuses = $order->get_meta( '_payu_order_status', false );
-
-									if ( in_array( OpenPayuOrderStatus::STATUS_COMPLETED,
-										$this->clean_payu_statuses( $payu_statuses ) ) ) {
-										OpenPayU_Refund::create(
-											$transaction_id,
-											__( 'Refund of: ',
-												'woo-payu-payment-gateway' ) . ' ' . $order->get_total() . $this->getOrderCurrency( $order ) . __( ' for order: ',
-												'woo-payu-payment-gateway' ) . $order_id,
-											$this->toAmount( $order->get_total() )
-										);
-									} else {
-										$status_update = [
-											"orderId"     => $transaction_id,
-											"orderStatus" => OpenPayuOrderStatus::STATUS_COMPLETED
-										];
-										OpenPayU_Order::statusUpdate( $status_update );
-									}
+									$status_update = [
+										"orderId"     => $transaction_id,
+										"orderStatus" => OpenPayuOrderStatus::STATUS_COMPLETED
+									];
+									OpenPayU_Order::statusUpdate( $status_update );
+								} else {
+									$order->update_status( WC_Payu_Waiting_Payu_Order_Status::PAYU_PLUGIN_STATUS_WAITING,
+										__( 'Payment has been put on hold - merchant must approve this payment manually.',
+											'woo-payu-payment-gateway' )
+									);
 								}
 							}
 							break;
 					}
-				} else {
-					if ( $status === OpenPayuOrderStatus::STATUS_WAITING_FOR_CONFIRMATION ) {
-						$response_order_id = $response->getResponse()->order->orderId;
-						OpenPayU_Order::cancel( $response_order_id );
-					}
+				} else if ( $status === OpenPayuOrderStatus::STATUS_WAITING_FOR_CONFIRMATION ) {
+					OpenPayU_Order::cancel( $transaction_id );
 				}
 				$reportOutput .= 'WC BS: ' . $order->get_status() . '|';
 			}
@@ -1216,23 +1185,6 @@ abstract class WC_Payu_Gateways extends WC_Payment_Gateway implements WC_PayuGat
 		}
 
 		ob_flush();
-	}
-
-	/**
-	 * @param array $payu_statuses
-	 *
-	 * @return array
-	 */
-	public static function clean_payu_statuses( $payu_statuses ) {
-		$result = [];
-		if ( is_array( $payu_statuses ) ) {
-			foreach ( $payu_statuses as $payu_status ) {
-				$status = explode( '|', $payu_status->value )[0];
-				array_push( $result, $status );
-			}
-		}
-
-		return $result;
 	}
 
 	/**
