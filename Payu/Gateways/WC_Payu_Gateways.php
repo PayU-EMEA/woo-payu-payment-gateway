@@ -782,7 +782,7 @@ abstract class WC_Payu_Gateways extends WC_Payment_Gateway implements WC_PayuGat
 
 			$products[ $i ] = [
 				'name'      => $name,
-				'unitPrice' => $this->toAmount( $order->get_item_total( $item, true ) ),
+				'unitPrice' => $this->toAmount( $order->get_item_subtotal( $item, true ) ),
 				'quantity'  => $quantity,
 			];
 
