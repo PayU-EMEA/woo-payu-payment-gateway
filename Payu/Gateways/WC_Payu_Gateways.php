@@ -1136,9 +1136,10 @@ abstract class WC_Payu_Gateways extends WC_Payment_Gateway implements WC_PayuGat
 				}
 
 				$reportOutput .= 'WC AS: ' . $order->get_status() . '|';
+				$already_completed = WC_Payu::payu_status_available_in_wc_order( OpenPayuOrderStatus::STATUS_COMPLETED, $order );
 				WC_Payu::payu_status_add_to_wc_order($status . '|' . $transaction_id, $order);
 
-				if ( ! WC_Payu::payu_status_available_in_wc_order(OpenPayuOrderStatus::STATUS_COMPLETED, $order ) ) {
+				if ( ! $already_completed ) {
 					switch ( $status ) {
 						case OpenPayuOrderStatus::STATUS_CANCELED:
 							if ( ! isset( get_option( 'payu_settings_option_name' )['global_repayment'] ) ) {
