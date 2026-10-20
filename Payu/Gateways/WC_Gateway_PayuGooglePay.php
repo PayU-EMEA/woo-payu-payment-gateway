@@ -18,7 +18,7 @@ class WC_Gateway_PayuGooglePay extends WC_Payu_Gateways
 
     public function is_available(): bool
     {
-        if (! $this->try_retrieve_banks() || empty($this->get_option('merchant_name')) || empty($this->get_option('merchant_id'))) {
+        if ( ! $this->try_retrieve_banks() || empty($this->get_option('merchant_name')) || empty($this->get_option('merchant_id'))) {
             return false;
         }
 
@@ -60,7 +60,11 @@ class WC_Gateway_PayuGooglePay extends WC_Payu_Gateways
 	}
     public function include_scripts(): void
     {
+        if ( ! is_checkout() && ! is_checkout_pay_page()){
+            return;
+        }
         wp_enqueue_script('google-pay', 'https://pay.google.com/gp/p/js/pay.js');
+        add_filter( 'wp_script_attributes', [$this, 'add_data_optimize'] );
     }
 
     protected function get_payu_pay_method(): array
@@ -91,4 +95,11 @@ class WC_Gateway_PayuGooglePay extends WC_Payu_Gateways
             ]
 		];
 	}
+
+    public function add_data_optimize( array $attributes ): array {
+        if ( $attributes['id'] === 'google-pay-js' ){
+            $attributes['data-no-optimize'] = 1;
+        }
+        return $attributes;
+    }
 }
