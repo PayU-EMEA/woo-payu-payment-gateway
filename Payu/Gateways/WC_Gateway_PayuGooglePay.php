@@ -11,7 +11,7 @@ class WC_Gateway_PayuGooglePay extends WC_Payu_Gateways
         parent::__construct('payugooglepay');
         $this->icon = apply_filters('woocommerce_payu_icon', plugins_url('/assets/images/ap.svg', PAYU_PLUGIN_FILE));
 
-        if ( $this->is_enabled() && ( is_checkout() || is_checkout_pay_page() ) ) {
+        if ( $this->is_enabled() ) {
             add_action('wp_enqueue_scripts', [$this, 'include_scripts']);
         }
     }
@@ -60,6 +60,9 @@ class WC_Gateway_PayuGooglePay extends WC_Payu_Gateways
 	}
     public function include_scripts(): void
     {
+        if ( ! is_checkout() && ! is_checkout_pay_page(true) ) {
+            return;
+        }
         wp_enqueue_script('google-pay', 'https://pay.google.com/gp/p/js/pay.js');
         add_filter( 'wp_script_attributes', [$this, 'add_data_no_optimize'] );
     }
@@ -94,7 +97,7 @@ class WC_Gateway_PayuGooglePay extends WC_Payu_Gateways
 	}
 
     public function add_data_no_optimize( array $attributes ): array {
-        if ( $attributes['id'] === 'google-pay-js' ){
+        if ( $attributes['id'] === 'google-pay-js' ) {
             $attributes['data-no-optimize'] = 1;
         }
         return $attributes;

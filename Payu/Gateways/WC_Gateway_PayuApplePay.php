@@ -15,7 +15,7 @@ class WC_Gateway_PayuApplePay extends WC_Payu_Gateways {
 
         $this->icon = apply_filters( 'woocommerce_payu_icon', plugins_url( '/assets/images/jp.svg', PAYU_PLUGIN_FILE ) );
 
-        if ( $this->is_enabled() && ( is_checkout() || is_checkout_pay_page() ) ) {
+        if ( $this->is_enabled() ) {
             add_action( 'wp_enqueue_scripts', [ $this, 'include_scripts' ] );
             add_action( 'rest_api_init', [ $this, 'create_apple_pay_session_by_api' ] );
         }
@@ -60,6 +60,9 @@ class WC_Gateway_PayuApplePay extends WC_Payu_Gateways {
     }
 
     public function include_scripts(): void {
+        if ( ! is_checkout() && ! is_checkout_pay_page(true) ) {
+            return;
+        }
         wp_enqueue_script( 'apple-pay', 'https://applepay.cdn-apple.com/jsapi/1.latest/apple-pay-sdk.js' );
         add_filter( 'wp_script_attributes', [$this, 'add_data_no_optimize'] );
     }
@@ -119,7 +122,7 @@ class WC_Gateway_PayuApplePay extends WC_Payu_Gateways {
     }
 
     public function add_data_no_optimize( array $attributes ): array {
-        if ( $attributes['id'] === 'apple-pay-js' ){
+        if ( $attributes['id'] === 'apple-pay-js' ) {
             $attributes['data-no-optimize'] = 1;
         }
         return $attributes;
