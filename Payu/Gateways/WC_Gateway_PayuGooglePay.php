@@ -60,7 +60,7 @@ class WC_Gateway_PayuGooglePay extends WC_Payu_Gateways
 	}
     public function include_scripts(): void
     {
-        if ( ! is_checkout() && ! is_checkout_pay_page(true) ) {
+        if ( ! is_checkout() && ! is_checkout_pay_page( true ) && ! has_block( 'woocommerce/checkout' )) {
             return;
         }
         wp_enqueue_script('google-pay', 'https://pay.google.com/gp/p/js/pay.js');

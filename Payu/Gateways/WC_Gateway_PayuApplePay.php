@@ -60,7 +60,7 @@ class WC_Gateway_PayuApplePay extends WC_Payu_Gateways {
     }
 
     public function include_scripts(): void {
-        if ( ! is_checkout() && ! is_checkout_pay_page(true) ) {
+        if ( ! is_checkout() && ! is_checkout_pay_page( true ) && ! has_block( 'woocommerce/checkout' )) {
             return;
         }
         wp_enqueue_script( 'apple-pay', 'https://applepay.cdn-apple.com/jsapi/1.latest/apple-pay-sdk.js' );
