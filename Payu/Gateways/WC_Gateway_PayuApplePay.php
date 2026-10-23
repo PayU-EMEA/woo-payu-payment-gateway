@@ -60,7 +60,11 @@ class WC_Gateway_PayuApplePay extends WC_Payu_Gateways {
     }
 
     public function include_scripts(): void {
+        if ( ! is_checkout() && ! is_checkout_pay_page( true ) && ! has_block( 'woocommerce/checkout' )) {
+            return;
+        }
         wp_enqueue_script( 'apple-pay', 'https://applepay.cdn-apple.com/jsapi/1.latest/apple-pay-sdk.js' );
+        add_filter( 'wp_script_attributes', [$this, 'add_data_no_optimize'] );
     }
 
     protected function get_payu_pay_method(): array {
@@ -116,4 +120,12 @@ class WC_Gateway_PayuApplePay extends WC_Payu_Gateways {
             return new WP_REST_Response( [ 'message' => $e->getMessage() ], 400 );
         }
     }
+
+    public function add_data_no_optimize( array $attributes ): array {
+        if ( $attributes['id'] === 'apple-pay-js' ) {
+            $attributes['data-no-optimize'] = 1;
+        }
+        return $attributes;
+    }
 }
+
