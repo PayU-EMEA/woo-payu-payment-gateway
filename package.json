@@ -1,28 +1,31 @@
 {
   "name": "woo-payu-payment-gateway",
-  "version": "2.11.0",
+  "version": "2.12.0",
   "description": "PayU Payment Gateway for WooCommerce",
   "scripts": {
     "start": "wp-scripts start",
     "build": "wp-scripts build",
     "format": "wp-scripts format ./src",
-    "lint:js": "wp-scripts lint-js ./src/js"
+    "lint:js": "wp-scripts lint-js ./src/js",
+    "lint:js-fix": "npm run lint:js -- --fix"
   },
   "author": "PayU GPO",
   "license": "Apache-2.0",
   "dependencies": {
-    "@wordpress/data": "^10.51.0",
-    "@wordpress/element": "^8.3.0",
-    "@wordpress/html-entities": "^4.51.0",
-    "@wordpress/i18n": "^6.24.0",
+    "@wordpress/data": "^11.0.0",
+    "@wordpress/element": "^10.0.0",
+    "@wordpress/html-entities": "^5.0.0",
+    "@wordpress/i18n": "^7.0.0",
     "clsx": "^2.1.1",
-    "typescript": "^5.9.3"
+    "typescript": "^6.0.3"
   },
   "devDependencies": {
+    "@types/applepayjs": "^14.0.9",
     "@woocommerce/dependency-extraction-webpack-plugin": "^5.1.0",
-    "@woocommerce/eslint-plugin": "^3.0.0",
-    "@wordpress/scripts": "^33.0.0",
+    "@woocommerce/eslint-plugin": "^4.0.0",
+    "@wordpress/scripts": "^37.0.0",
     "eslint-import-resolver-typescript": "4.4.5",
+    "globals": "17.14.0",
     "webpack-remove-empty-scripts": "^1.1.1"
   }
 }

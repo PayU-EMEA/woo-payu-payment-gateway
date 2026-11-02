@@ -1,5 +1,5 @@
-import CardFieldErrors from './error';
 import { useEffect, useState } from '@wordpress/element';
+import CardFieldErrors from './error';
 
 const CardCvv = ( { secureForms, formOptions, errors, focus } ) => {
   const [ secureForm ] = useState( () =>

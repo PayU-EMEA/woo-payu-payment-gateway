@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "e8a4b0818a884ef2bc512c5a69e7d797",
+    "content-hash": "0b4f830b68d904aef2204391cd0bddd1",
     "packages": [
         {
             "name": "openpayu/openpayu",
@@ -55,7 +55,8 @@
                 "issues": "https://github.com/PayU/openpayu_php/issues",
                 "source": "https://github.com/PayU-EMEA/openpayu_php/tree/v2.4.4"
             },
-            "time": "2026-07-29T07:04:46+00:00"
+            "time": "2026-07-29T07:04:46+00:00",
+            "published-time": "2026-07-29T07:08:14+00:00"
         }
     ],
     "packages-dev": [],
@@ -66,5 +67,5 @@
     "prefer-lowest": false,
     "platform": {},
     "platform-dev": {},
-    "plugin-api-version": "2.9.0"
+    "plugin-api-version": "2.11.0"
 }

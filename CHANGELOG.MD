@@ -1,3 +1,8 @@
+# 2.12.0 - 2026-11-02
+* [Fix] Change order status for custom statuses
+* [Update] Optimized loading Google Pay and Apple Pay scripts
+* [Fix] Products without discount
+
 # 2.11.0 - 2026-09-08
 * [Add] Apple Pay as separate method
 * [Fix] Total in Google Pay and repayment
