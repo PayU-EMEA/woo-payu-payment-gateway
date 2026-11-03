@@ -141,7 +141,7 @@ const Content = ( { eventRegistration, emitResponse } ) => {
       if ( ! isApplePay ) {
         return false;
       }
-    } catch ( error ) {
+    } catch ( _e ) {
       return false;
     }
 

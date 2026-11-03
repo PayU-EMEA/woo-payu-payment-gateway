@@ -1,5 +1,5 @@
-import CardFieldErrors from './error';
 import { useEffect } from '@wordpress/element';
+import CardFieldErrors from './error';
 
 const CardNumber = ( {
   secureForms,

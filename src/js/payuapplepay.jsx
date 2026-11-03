@@ -109,7 +109,7 @@ const canMakePayment = () => {
 
   try {
     applePayAvailable =
-      window.ApplePaySession && ApplePaySession.canMakePayments();
+      window.ApplePaySession && window.ApplePaySession.canMakePayments();
   } catch ( _e ) {
     applePayAvailable = false;
   }
@@ -122,8 +122,12 @@ const Content = ( { eventRegistration, emitResponse } ) => {
     const APPLE_PAY_API_MIN_VERSION = 1;
     const APPLE_PAY_API_MAX_VERSION = 14; // https://developer.apple.com/documentation/applepayontheweb/apple-pay-on-the-web-version-history
 
-    for ( let i = APPLE_PAY_API_MAX_VERSION; i > APPLE_PAY_API_MIN_VERSION; i-- ) {
-      if ( ApplePaySession.supportsVersion( i ) ) {
+    for (
+      let i = APPLE_PAY_API_MAX_VERSION;
+      i > APPLE_PAY_API_MIN_VERSION;
+      i--
+    ) {
+      if ( window.ApplePaySession.supportsVersion( i ) ) {
         return i;
       }
     }
@@ -147,7 +151,7 @@ const Content = ( { eventRegistration, emitResponse } ) => {
       },
       currencyCode: currency,
     };
-  }, [ appleDisplayName, totalPrice, currency ] );
+  }, [] );
 
   const { onPaymentSetup } = eventRegistration;
 
@@ -163,7 +167,7 @@ const Content = ( { eventRegistration, emitResponse } ) => {
 
       setError( undefined );
 
-      const applePaySession = new ApplePaySession(
+      const applePaySession = new window.ApplePaySession(
         applePayApiVersion,
         applePayPaymentRequest
       );
@@ -174,11 +178,9 @@ const Content = ( { eventRegistration, emitResponse } ) => {
       );
 
       return new Promise( ( resolve ) => {
-        applePaySession.onvalidatemerchant = ( event ) => {
+        applePaySession.onvalidatemerchant = ( _event ) => {
           const getApplePaySession = async () => {
-            let sessionResponse;
-
-            sessionResponse = await fetch( createSessionUrl, {
+            const sessionResponse = await fetch( createSessionUrl, {
               method: 'POST',
               headers: { 'Content-Type': 'application/json' },
             } );
@@ -197,7 +199,7 @@ const Content = ( { eventRegistration, emitResponse } ) => {
 
             try {
               applePaySession.completeMerchantValidation( session );
-            } catch ( error ) {
+            } catch ( _error ) {
               resolve( {
                 type: emitResponse.responseTypes.ERROR,
                 message: errorMessage,
@@ -211,7 +213,9 @@ const Content = ( { eventRegistration, emitResponse } ) => {
         };
 
         applePaySession.onpaymentauthorized = ( event ) => {
-          applePaySession.completePayment( ApplePaySession.STATUS_SUCCESS );
+          applePaySession.completePayment(
+            window.ApplePaySession.STATUS_SUCCESS
+          );
 
           resolve( {
             type: emitResponse.responseTypes.SUCCESS,
@@ -225,7 +229,7 @@ const Content = ( { eventRegistration, emitResponse } ) => {
           } );
         };
 
-        applePaySession.oncancel = ( ) => {
+        applePaySession.oncancel = () => {
           resolve( {
             type: emitResponse.responseTypes.ERROR,
           } );
@@ -240,6 +244,8 @@ const Content = ( { eventRegistration, emitResponse } ) => {
     onPaymentSetup,
     emitResponse.responseTypes.ERROR,
     emitResponse.responseTypes.SUCCESS,
+    applePayApiVersion,
+    applePayPaymentRequest,
   ] );
 
   return (
