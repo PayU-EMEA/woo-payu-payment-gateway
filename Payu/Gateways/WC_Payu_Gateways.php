@@ -1137,7 +1137,6 @@ abstract class WC_Payu_Gateways extends WC_Payment_Gateway implements WC_PayuGat
 
 				$reportOutput .= 'WC AS: ' . $order->get_status() . '|';
 				$already_completed = WC_Payu::payu_status_available_in_wc_order( OpenPayuOrderStatus::STATUS_COMPLETED, $order );
-				WC_Payu::payu_status_add_to_wc_order($status . '|' . $transaction_id, $order);
 
 				if ( ! $already_completed ) {
 					switch ( $status ) {
@@ -1145,14 +1144,24 @@ abstract class WC_Payu_Gateways extends WC_Payment_Gateway implements WC_PayuGat
 							if ( ! isset( get_option( 'payu_settings_option_name' )['global_repayment'] ) ) {
 								$status = get_option( 'payu_settings_option_name' )['global_after_canceled_payment_status'] ?? 'failed';
 								$status = apply_filters( 'woocommerce_payu_status_cancelled', $status, $order );
-								$order->update_status( $status, __( 'Payment has been cancelled.', 'woo-payu-payment-gateway' ) );
 							} else {
-								$order->update_status( 'failed', __( 'Payment has been cancelled.', 'woo-payu-payment-gateway' ) );
+								$status = 'failed';
+							}
+
+							$success = $order->update_status( $status, __( 'Payment has been cancelled.', 'woo-payu-payment-gateway' ) );
+
+							if ( !$success ) {
+								header( 'HTTP/1.1 400 Bad Request', true, 400 );
+								die( 'Error updating status to "' . $status . '"' );
 							}
 							break;
 
 						case OpenPayuOrderStatus::STATUS_COMPLETED:
-							$order->payment_complete( $transaction_id );
+							$success = $order->payment_complete( $transaction_id );
+							if ( !$success ) {
+								header( 'HTTP/1.1 400 Bad Request', true, 400 );
+								die( 'Error completing payment' );
+							}
 							break;
 
 						case OpenPayuOrderStatus::STATUS_WAITING_FOR_CONFIRMATION:
@@ -1177,6 +1186,9 @@ abstract class WC_Payu_Gateways extends WC_Payment_Gateway implements WC_PayuGat
 				} else if ( $status === OpenPayuOrderStatus::STATUS_WAITING_FOR_CONFIRMATION ) {
 					OpenPayU_Order::cancel( $transaction_id );
 				}
+
+				WC_Payu::payu_status_add_to_wc_order( $status . '|' . $transaction_id, $order );
+
 				$reportOutput .= 'WC BS: ' . $order->get_status() . '|';
 			}
 
