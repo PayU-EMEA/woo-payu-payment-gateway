@@ -3,7 +3,7 @@ Contributors: payusa
 Tags: PayU, payment, payment gateway, płatności, credit card
 Requires at least: 5.0
 Tested up to: 7.1.4
-Stable tag: 2.12.0
+Stable tag: 2.12.1
 Requires PHP: 7.4
 License: Apache License 2.0
 
@@ -54,6 +54,9 @@ Yes, it does.
 * For integrate with Apple Pay we used [apple-pay-sdk.js](https://applepay.cdn-apple.com/jsapi/1.latest/apple-pay-sdk.js)
 
 == Changelog ==
+= 2.12.1 - 2026-11-17 =
+* [Fix] Add order status to meta after successful status update
+
 = 2.12.0 - 2026-11-02 =
 * [Fix] Change order status for custom statuses
 * [Update] Optimized loading Google Pay and Apple Pay scripts
@@ -112,22 +115,5 @@ Yes, it does.
 
 = 2.5.0 - 2024-07-23 =
 * [Add] PayU - bank list via WooCommerce Blocks
-
-= 2.4.1 - 2024-07-16 =
-* [Fix] #73 - Not send e-mail to administrator about a new order
-* [Fix] Showing error in empty cart (blocks) when installments are active
-
-= 2.4.0 - 2024-07-07 =
-* [Add] PayU - BLIK via WooCommerce Blocks
-
-= 2.3.1 - 2024-06-24 =
-* [Fix] "Call to a member function get_total() on null" for Installments
-
-= 2.3.0 - 2024-06-21 =
-* [Add] PayU - installments via WooCommerce Blocks
-* [Add] PayU - Klarna via WooCommerce Blocks
-* [Add] PayU - Twisto via WooCommerce Blocks
-* [Add] PayU - PayPo via WooCommerce Blocks
-* [Fix] Not showing Installments Mini Widget on product and products list page
 
 [See changelog for all versions](https://raw.githubusercontent.com/PayU-EMEA/woo-payu-payment-gateway/master/changelog.txt).
