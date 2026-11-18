@@ -7,6 +7,7 @@ import { useEffect, useState } from '@wordpress/element';
 import { __ } from '@wordpress/i18n';
 import { StoreNotice } from '@woocommerce/blocks-components';
 import ReadMore from './read-more';
+import { formatCartTotal } from './util';
 
 const name = 'payugooglepay';
 
@@ -17,8 +18,6 @@ const title = decodeEntities( settings.title || 'Google Pay' );
 const description = decodeEntities( settings.description || '' );
 const iconUrl = settings.icon;
 const posId = decodeEntities( settings.additionalData?.posId );
-const currency = decodeEntities( settings.additionalData?.currency );
-const totalPrice = decodeEntities( settings.additionalData?.totalPrice );
 const env = decodeEntities( settings.additionalData?.env );
 const merchantName = decodeEntities( settings.additionalData?.merchantName );
 const merchantId = decodeEntities( settings.additionalData?.merchantId );
@@ -128,8 +127,10 @@ const canMakePayment = () => {
     } );
 };
 
-const Content = ( { eventRegistration, emitResponse } ) => {
+const Content = ( { eventRegistration, emitResponse, billing } ) => {
   const { onPaymentSetup } = eventRegistration;
+  const totalPrice = formatCartTotal( billing );
+  const currencyCode = billing.currency.code;
 
   const [ error, setError ] = useState();
 
@@ -171,7 +172,7 @@ const Content = ( { eventRegistration, emitResponse } ) => {
           totalPriceStatus: 'FINAL',
           countryCode: 'PL',
           totalPrice,
-          currencyCode: currency,
+          currencyCode,
         },
       };
 
@@ -203,6 +204,8 @@ const Content = ( { eventRegistration, emitResponse } ) => {
     onPaymentSetup,
     emitResponse.responseTypes.ERROR,
     emitResponse.responseTypes.SUCCESS,
+    totalPrice,
+    currencyCode,
   ] );
 
   return (

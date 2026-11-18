@@ -50,4 +50,12 @@ const scriptUtil = ( src ) => {
   };
 };
 
-export { scriptUtil };
+const formatCartTotal = ( billing ) => {
+  const { minorUnit } = billing.currency;
+
+  return ( billing.cartTotal.value / Math.pow( 10, minorUnit ) ).toFixed(
+    minorUnit
+  );
+};
+
+export { scriptUtil, formatCartTotal };

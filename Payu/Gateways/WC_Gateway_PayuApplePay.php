@@ -52,8 +52,6 @@ class WC_Gateway_PayuApplePay extends WC_Payu_Gateways {
 
     public function get_additional_data(): array {
         return [
-                'currency'         => get_woocommerce_currency(),
-                'totalPrice'       => $this->getTotal(),
                 'appleDisplayName' => mb_substr($this->get_option( 'apple_display_name', '' ), 0, 64),
                 'createSessionUrl' => rest_url( '/payu/createApplepaySession' )
         ];

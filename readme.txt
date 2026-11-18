@@ -3,7 +3,7 @@ Contributors: payusa
 Tags: PayU, payment, payment gateway, płatności, credit card
 Requires at least: 5.0
 Tested up to: 7.1.4
-Stable tag: 2.12.1
+Stable tag: 2.12.2
 Requires PHP: 7.4
 License: Apache License 2.0
 
@@ -54,6 +54,9 @@ Yes, it does.
 * For integrate with Apple Pay we used [apple-pay-sdk.js](https://applepay.cdn-apple.com/jsapi/1.latest/apple-pay-sdk.js)
 
 == Changelog ==
+= 2.12.2 - 2026-11-19 =
+* [Fix] Incorrect amount in Apple Pay and Google Pay on blocks checkout
+
 = 2.12.1 - 2026-11-17 =
 * [Fix] Add order status to meta after successful status update
 
