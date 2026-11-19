@@ -51,8 +51,6 @@ class WC_Gateway_PayuGooglePay extends WC_Payu_Gateways
     public function get_additional_data(): array {
 		return [
 			'posId'        => $this->pos_id,
-            'currency'     => get_woocommerce_currency(),
-            'totalPrice'   => $this->getTotal(),
             'env'          => $this->sandbox ? 'TEST' : 'PRODUCTION',
             'merchantName' => $this->get_option('merchant_name'),
             'merchantId'   => $this->sandbox ? '0' : $this->get_option('merchant_id')

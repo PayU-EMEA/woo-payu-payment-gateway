@@ -1,3 +1,6 @@
+# 2.12.2 - 2026-11-19
+* [Fix] Incorrect amount in Apple Pay and Google Pay on blocks checkout
+
 # 2.12.1 - 2026-11-17
 * [Fix] Add order status to meta after successful status update
 

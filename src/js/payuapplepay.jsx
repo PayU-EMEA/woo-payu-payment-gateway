@@ -7,6 +7,7 @@ import { useEffect, useState, useMemo } from '@wordpress/element';
 import { __ } from '@wordpress/i18n';
 import { StoreNotice } from '@woocommerce/blocks-components';
 import ReadMore from './read-more';
+import { formatCartTotal } from './util';
 
 const name = 'payuapplepay';
 
@@ -17,8 +18,6 @@ const title = decodeEntities( settings.title || 'Apple Pay' );
 const description = decodeEntities( settings.description || '' );
 const iconUrl = settings.icon;
 
-const currency = decodeEntities( settings.additionalData.currency );
-const totalPrice = decodeEntities( settings.additionalData.totalPrice );
 const appleDisplayName = decodeEntities(
   settings.additionalData.appleDisplayName
 );
@@ -117,7 +116,10 @@ const canMakePayment = () => {
   return applePayAvailable;
 };
 
-const Content = ( { eventRegistration, emitResponse } ) => {
+const Content = ( { eventRegistration, emitResponse, billing } ) => {
+  const totalPrice = formatCartTotal( billing );
+  const currencyCode = billing.currency.code;
+
   const applePayApiVersion = useMemo( () => {
     const APPLE_PAY_API_MIN_VERSION = 1;
     const APPLE_PAY_API_MAX_VERSION = 14; // https://developer.apple.com/documentation/applepayontheweb/apple-pay-on-the-web-version-history
@@ -149,9 +151,9 @@ const Content = ( { eventRegistration, emitResponse } ) => {
         label: appleDisplayName,
         amount: totalPrice,
       },
-      currencyCode: currency,
+      currencyCode,
     };
-  }, [] );
+  }, [ totalPrice, currencyCode ] );
 
   const { onPaymentSetup } = eventRegistration;
 
