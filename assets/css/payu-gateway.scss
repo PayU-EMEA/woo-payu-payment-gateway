@@ -190,7 +190,7 @@ label[for*="payment_method_payu"] {
   }
 }
 
-.payu-pay-error {
+:is(.payment_method_payuapplepay, payment_method_payugooglepay) .payu-pay-error {
   display: none;
 }
 
